@@ -14,17 +14,17 @@
 <body>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:700,600' rel='stylesheet' type='text/css'>
 
-<form method="post" action="index.html">
+<form method="post" action="/AutoFw/login_handle/">
 <div class="box">
 <h1>Auto Test FrameWork</h1>
 
-<input type="text" name="username" value="username" onFocus="field_focus(this, 'username');" onblur="field_blur(this, 'username');" class="email" />
+<input type="text" name="username" id="name_input" value="username" onFocus="field_focus(this, 'username');" onblur="field_blur(this, 'username');" class="email" />
   
-<input type="password" name="email" value="email" onFocus="field_focus(this, 'email');" onblur="field_blur(this, 'email');" class="email" />
-  
-<a href="#"><div class="btn">Sign In</div></a> <!-- End Btn -->
+<input type="password" name="password" id="passwd_input" value="password" onFocus="field_focus(this, 'password');" onblur="field_blur(this, 'password');" class="email" />
 
-<a href="#"><div id="btn2">Sign Up</div></a> <!-- End Btn2 -->
+<div class="btn"><input type="submit" value="Sign In" class="input_submit"></div> <!-- End Btn -->
+
+<a href="https://github.com/"><div id="btn2">Sign Up</div></a> <!-- End Btn2 -->
   
 </div> <!-- End Box -->
   
