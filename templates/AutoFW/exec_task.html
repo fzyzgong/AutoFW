@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+		<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="/static/workbench/css/workbench.css" />
+		<link rel="stylesheet" type="text/css" href="/static/exec_task/css/exec_task.css" />
+	</head>
+	<body>
+		<h1 class="titil">Automation Test Framework</h1>
+		<hr class="headline" />
+
+		<div id="menu_bench" class="menu">
+			<ul id="menu_ul" class="menu_box">
+				<li>
+					<a href="/AutoFW/go_header/"><span>首页</span></a>
+				</li>
+				<li>
+					<a href="/AutoFW/exec_task/"><span>执行任务</span></a>
+				</li>
+				<li>
+					<a href="#"><span>测试用例管理</span></a>
+				</li>
+				<li>
+					<a href="#"><span>日志管理</span></a>
+				</li>
+				<li>
+					<a href="#"><span>报告查看</span></a>
+				</li>
+				<li>
+					<a href="#"><span>发送邮件</span></a>
+				</li>
+				<li>
+					<a href="#"><span>关于</span></a>
+				</li>
+			</ul>
+			<div id="user_ul"  class="menu_user_ul">
+				<span>欢迎：glp |</span>
+				<a href="#">[注销]</a>
+			</div>
+		</div>
+		
+		<div class="exec_task">
+			<form action="#" class="exec_form">
+				<br />
+				<label>请选择测试类型：</label><br />
+
+				<input type="radio" name="test_type" value="IF_type">接口测试</input>
+				<input type="radio" name="test_type" value="UI_type">UI自动化测试</input>
+				<br /><br /><br />
+				<label>请选择测试用例：</label><br />
+
+				<input type="radio" name="case_type" value="module_type" >模组测试用例</input>
+				<input type="radio" name="case_type" value="list_type" >列表测试用例</input>
+				<br /><br /><br />
+				<div style="display: none;" class="module_case" id="module_case">
+					<label>请选择模组测试用例：</label>
+					<br />
+					<input type="checkbox" name="module_case" value=""/>用户中心模块
+					<input type="checkbox" name="module_case" value=""/>购物车模块
+					<input type="checkbox" name="module_case" value=""/>结算模块
+				</div>
+				<textarea style="display: none;" value="" id="list_case">注意：输入测试用例id，以逗号分隔。</textarea>
+				
+				<br />
+				<br />
+				<input type="submit" class="exec_submit" value="开始执行测试用例" />
+			</form>
+			
+			<br />
+			<br />
+				<div>
+					<p style="color: red;">TODO:此处应该有一个任务执行进度条；根据总用例数和执行完成用例数来预估执行时间；</p>
+				</div>
+		</div>
+		
+		
+		
+		<script type="text/javascript" src="/static/common/js/jquery-1.12.4.min.js"></script>
+		<script type="text/javascript" src="/static/exec_task/js/radio_switch.js"></script>
+
+	</body>
+</html>

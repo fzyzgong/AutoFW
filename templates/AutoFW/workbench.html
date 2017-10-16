@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="/static/workbench/css/workbench.css" />
+	</head>
+	<body>
+		<h1 class="titil">Automation Test Framework</h1>
+		<hr class="headline" />
+
+		<div id="menu_bench" class="menu">
+			<ul id="menu_ul" class="menu_box">
+				<li>
+					<a href="/AutoFW/go_header/"><span>首页</span></a>
+				</li>
+				<li>
+					<a href="/AutoFW/exec_task/"><span>执行任务</span></a>
+				</li>
+				<li>
+					<a href="#"><span>测试用例管理</span></a>
+				</li>
+				<li>
+					<a href="#"><span>日志管理</span></a>
+				</li>
+				<li>
+					<a href="#"><span>报告查看</span></a>
+				</li>
+				<li>
+					<a href="#"><span>发送邮件</span></a>
+				</li>
+				<li>
+					<a href="#"><span>关于</span></a>
+				</li>
+			</ul>
+			<div id="user_ul"  class="menu_user_ul">
+				<span>欢迎：glp |</span>
+				<a href="#">[注销]</a>
+			</div>
+		</div>
+		
+		<div id='content' class="wizard">
+			<p class="p_head">操作指南</p>
+			<ul id="content_ul" class="content_ul">
+				<li>
+					<span>操作流程</span>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;①:在[执行任务]中选择测试类型(接口、UI自动化等)；</p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;②:在[执行任务]中选择测试用例，测试用例分为模组用例和单选用例；</p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;③:在[执行任务]中确定执行用例任务，待执行条完成后可看报告；</p>
+				</li>
+				<li>
+					<span>执行任务功能介绍：</span>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;该模块是完成选择测试类型、测试用例类型、执行测试的功能；测试类型分接口和UI自动化等（待扩展），测试用例分为
+					模组用例和单选用例，根据模组用例和单选用例id作为过滤条件，最后执行用例完成测试。</p>
+				</li>
+				<li>
+					<span>测试用例管理介绍：</span>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;该模块是用于查询、新增、删除、修改用例的功能，可根据测试用例类型、测试用例标识（成功与失败）、测试用例创建时间等过滤查询以及变更操作。</p>
+				</li>
+				<li>
+					<span>日志管理介绍：</span>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;该模块是用于调试用例、查看执行失败用例的功能，可根据用例id作为过滤条件查看执行日志。</p>
+				</li>
+				<li>
+					<span>报告查看介绍：</span>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;该模块适用于生成测试报告、查看测试报告的功能，可根据执行场景来生成测试报告。</p>
+				</li>
+				<li>
+					<span>发送邮件介绍：</span>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;该模块适用于发送测试报告邮件，可根据执行场景选择生成测试报告，发送测试邮件。</p>
+					<br>
+					<br>
+					<br>
+
+				</li>
+			</ul>
+			
+		</div>
+	</body>
+</html>

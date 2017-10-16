@@ -1,0 +1,28 @@
+.exec_task{
+	margin: 0px auto;
+    padding: 0px;
+    width: 800px;
+    height: 750px;
+    border: 2px solid blue;
+    text-align: center; /*会让此元素的内容和子元素的内容水平居中，注意：此元素和子元素并不水平居中*/
+	
+}
+
+.exec_form{
+	margin-top: 50px;
+}
+
+.exec_task label{
+	font-size: 30px;
+
+}
+
+#list_case{
+	height: 200px;
+	width: 400px;
+}
+
+.exec_submit{
+	font-size: 20px;
+	background: chartreuse;
+}

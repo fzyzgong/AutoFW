@@ -14,13 +14,15 @@
 <body>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:700,600' rel='stylesheet' type='text/css'>
 
-<form method="post" action="/AutoFw/login_handle/">
+<form method="post" action="/AutoFW/login_handle/" onkeydown="if(event.keyCode==13){return false;}">
 <div class="box">
 <h1>Auto Test FrameWork</h1>
+{%csrf_token%}
+<input type="text" name="username" id="name_input" value="" class="email"  placeholder="请输入用户名" />
+<div class="user_error"></div>
+<input type="password" name="password" id="passwd_input" value="" class="email"  placeholder="请输入密码" />
+<div class="pwd_error"></div>
 
-<input type="text" name="username" id="name_input" value="username" onFocus="field_focus(this, 'username');" onblur="field_blur(this, 'username');" class="email" />
-  
-<input type="password" name="password" id="passwd_input" value="password" onFocus="field_focus(this, 'password');" onblur="field_blur(this, 'password');" class="email" />
 
 <div class="btn"><input type="submit" value="Sign In" class="input_submit"></div> <!-- End Btn -->
 
@@ -32,8 +34,9 @@
 
 <p>Forgot your password? <u style="color:#f1c40f;">Click Here!</u></p>
   
-<script src="/static/AutoLogin/js/jquery-1.12.4.min.js" type="text/javascript"></script>
+<script src="/static/common/js/jquery-1.12.4.min.js" type="text/javascript"></script>
     <script  src="/static/AutoLogin/js/index.js"></script>
+    <script  src="/static/AutoLogin/js/login_check.js"></script>
 
 </body>
 </html>
