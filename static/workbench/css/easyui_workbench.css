@@ -1,0 +1,45 @@
+.content_ul p{
+	color: black;
+	font-size: 16px;
+}
+
+.wizard{
+	background: url(../img/fcontent.jpg);
+}
+
+.wizard span,p{
+	list-style: none;
+	margin-left: 50px;
+	font-size: 20px;
+	color: red;
+}
+
+.wizard .p_head{
+	text-align: center;
+	font-size: 30px;
+	color: midnightblue;
+}
+
+.e_north{
+	margin-top: 1px;
+	overflow: hidden;
+	height: 35px;
+	background: url("../../media/layout-browser-hd-bg.gif") repeat-x center 50%;
+}
+
+.e_north .span_titil{
+	color: gold;
+	text-align: center;
+	margin: 0 auto;
+	font-size: 25px;
+	margin-top: 8px;
+}
+
+.e_north .head{
+	float: right;
+	padding-right:20px;
+}
+
+.head{
+	color: white;
+}

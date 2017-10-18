@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/static/jquery_easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/static/jquery_easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/static/workbench/css/easyui_workbench.css" />
+
+    <script type="text/javascript" src="/static/jquery_easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/jquery_easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/static/jquery_easyui/locale/easyui-lang-zh_CN.js"></script>
+
+
+    <script type="text/javascript">
+
+        //设置登录窗口
+        function openPwd() {
+            $('#w').window({
+                title: '修改密码',
+                width: 300,
+                modal: true,
+                shadow: true,
+                closed: true,
+                height: 160,
+                resizable:false
+            });
+        }
+        //关闭登录窗口
+        function closePwd() {
+            $('#w').window('close');
+        }
+
+        //修改密码
+        function serverLogin() {
+            var $newpass = $('#txtNewPass');
+            var $rePass = $('#txtRePass');
+
+            if ($newpass.val() == '') {
+                msgShow('系统提示', '请输入密码！', 'warning');
+                return false;
+            }
+            if ($rePass.val() == '') {
+                msgShow('系统提示', '请在一次输入密码！', 'warning');
+                return false;
+            }
+
+            if ($newpass.val() != $rePass.val()) {
+                msgShow('系统提示', '两次密码不一至！请重新输入', 'warning');
+                return false;
+            }
+
+            $.post('/ajax/editpassword.ashx?newpass=' + $newpass.val(), function(msg) {
+                msgShow('系统提示', '恭喜，密码修改成功！<br>您的新密码为：' + msg, 'info');
+                $newpass.val('');
+                $rePass.val('');
+                close();
+            })
+
+        }
+
+        $(function() {
+
+            openPwd();
+
+            $('#editpass').click(function() {
+                $('#w').window('open');
+            });
+
+            $('#btnEp').click(function() {
+                serverLogin();
+            })
+
+			$('#btnCancel').click(function(){closePwd();})
+
+            $('#loginOut').click(function() {
+                $.messager.confirm('系统提示', '您确定要退出本次登录吗?', function(r) {
+
+                    if (r) {
+                        location.href = '/ajax/loginout.ashx';
+                    }
+                });
+            })
+        });
+
+
+        //------------------------------------------------
+        $(document).ready(function () {
+           $('.easyui-accordion li a').click(function () {
+               var tabTitle = $(this).text();
+               var url = $(this).attr("href");
+               addTab(tabTitle, url);
+               $('.easyui-accordion li div').removeClass("selected");
+               $(this).parent().addClass("selected");
+           }).hover(function () {
+               $(this).parent().addClass("hover");
+           }, function () {
+               $(this).parent().removeClass("hover");
+           });
+
+           function addTab(subtitle, url) {
+               if (!$('#tabs').tabs('exists', subtitle)) {
+                   $('#tabs').tabs('add', {
+                       title: subtitle,
+                       content: createFrame(url),
+                       closable: true,
+                       width: $('#mainPanle').width() - 10,
+                       height: $('#mainPanle').height() - 26
+                   });
+               } else {
+                   $('#tabs').tabs('select', subtitle);
+              }
+               tabClose();
+           }
+
+
+           function createFrame(url) {
+               var s = '<iframe name="mainFrame" scrolling="auto" frameborder="0"  src="' + url + '" style="width:100%;height:100%;"></iframe>';
+               return s;
+           }
+
+
+           function tabClose() {
+               /*双击关闭TAB选项卡*/
+               $(".tabs-inner").dblclick(function () {
+                   var subtitle = $(this).children("span").text();
+                   $('#tabs').tabs('close', subtitle);
+               })
+
+               $(".tabs-inner").bind('contextmenu', function (e) {
+                   $('#mm').menu('show', {
+                       left: e.pageX,
+                       top: e.pageY,
+                   });
+                   var subtitle = $(this).children("span").text();
+                   $('#mm').data("currtab", subtitle);
+                   return false;
+               });
+           }
+
+//           //绑定右键菜单事件
+//      function tabCloseEven() {
+//               //关闭当前
+//        $('#mm-tabclose').click(function () {
+//                   var currtab_title = $('#mm').data("currtab");
+//                   $('#tabs').tabs('close', currtab_title);
+//               })
+//               //全部关闭
+//        $('#mm-tabcloseall').click(function () {
+//                   $('.tabs-inner span').each(function (i, n) {
+//                       var t = $(n).text();
+//                      $('#tabs').tabs('close', t);
+//                   });
+//               });
+//
+//               //关闭除当前之外的TAB
+//               $('#mm-tabcloseother').click(function () {
+//                   var currtab_title = $('#mm').data("currtab");
+//                   $('.tabs-inner span').each(function (i, n) {
+//                       var t = $(n).text();
+//                       if (t != currtab_title)
+//                           $('#tabs').tabs('close', t);
+//                   });
+//               });
+//               //关闭当前右侧的TAB
+//               $('#mm-tabcloseright').click(function () {
+//                   var nextall = $('.tabs-selected').nextAll();
+//                   if (nextall.length == 0) {
+//                      //msgShow('系统提示','后边没有啦~~','error');
+//                       alert('后边没有啦~~');
+//                       return false;
+//                   }
+//                   nextall.each(function (i, n) {
+//                       var t = $('a:eq(0) span', $(n)).text();
+//                       $('#tabs').tabs('close', t);
+//                   });
+//                   return false;
+//              });
+//               //关闭当前左侧的TAB
+//               $('#mm-tabcloseleft').click(function () {
+//                   var prevall = $('.tabs-selected').prevAll();
+//                   if (prevall.length == 0) {
+//                       alert('到头了，前边没有啦~~');
+//                       return false;
+//                   }
+//                   prevall.each(function (i, n) {
+//                       var t = $('a:eq(0) span', $(n)).text();
+//                       $('#tabs').tabs('close', t);
+//                   });
+//                   return false;
+//               });
+//
+//               //退出
+//               $("#mm-exit").click(function () {
+//                   $('#mm').menu('hide');
+//
+//               })
+//           }
+       });
+
+
+     </script>
+
+</head>
+<body>
+<!--fit="true" 它将自动最大化到整个页面的全部尺寸-->
+    <div id="easyui" class="easyui-layout"  split="true" fit="true">
+        <div region="north" class="e_north">
+            <span class="head">
+                欢迎 gonglp <a href="#" id="editpass">[修改密码]</a> <a href="#" id="loginOut">[安全退出]</a></span>
+            <div>
+                <img src="/static/media/head_tips.gif" style="float: left" />
+            </div>
+            <span class="span_titil">Automation Test FrameWork</span>
+        </div>
+
+
+        <div region="south" split="true" style="height: 30px; background: #D2E0F2;" >
+            <p style="text-align: center;margin: 0 auto">Test FrameWork V1.0</p></div>
+
+        <div region="west" title="功能导航" split="true" style="width:150px;">
+            <!-- 左侧菜单导航-->
+            <div id="left_mean" class="easyui-accordion" border="false" >
+                <div title="用户中心" iconcls="icon-more">
+                    <ul class="easyui-tree">
+                        <li>
+                            <span>用户中心</span>
+                            <ul>
+                                <li>
+                                   <span>个人资料</span>
+                                   <ul>
+                                        <li>
+                                            <span><a target="mainFrame" href="http://www.baidu.com">审核博客</a></span>
+                                        </li>
+                                        <li>
+                                            <span><a target="mainFrame" href="http://blog.csdn.net/fzyzgong/article/details/78260599">个人权限</a></span>
+                                        </li>
+                                        <li>
+                                            <span>任务审核</span>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <span>File 2</span>
+                                </li>
+                                <li>
+                                    <span>File 3</span>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span><a href="#">File21</a></span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div title="测试用例" iconcls="icon-reload">
+                    <ul class="easyui-tree">
+                        <li>
+                            <span>用例管理</span>
+                            <ul>
+                                <li>
+                                    <span><a href="#">增加测试用例</a></span>
+                                </li>
+                                <li>
+                                    <span><a href="#">修改测试用例</a></span>
+                                </li>
+                                <li>
+                                    <span><a href="#">删除测试用例</a></span>
+                                </li>
+                                <li>
+                                    <span><a href="#">查询测试用例</a></span>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div title="日志管理" iconcls="icon-back"></div>
+                <div title="测试报告" iconcls="icon-sum"></div>
+            </div>
+        </div>
+
+
+        <div id="mainPanle" region="center" title="work station">
+            <div id="tabs" class="easyui-tabs" fit="true" border="false">
+                <div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
+                    <div id='content' class="wizard">
+                        <p class="p_head">操作指南</p>
+                        <ul id="content_ul" class="content_ul">
+                            <li>
+                                <span>操作流程</span>
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;①:在[执行任务]中选择测试类型(接口、UI自动化等)；</p>
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;②:在[执行任务]中选择测试用例，测试用例分为模组用例和单选用例；</p>
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;③:在[执行任务]中确定执行用例任务，待执行条完成后可看报告；</p>
+                            </li>
+                            <li>
+                                <span>执行任务功能介绍：</span>
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;该模块是完成选择测试类型、测试用例类型、执行测试的功能；测试类型分接口和UI自动化等（待扩展），测试用例分为
+                                模组用例和单选用例，根据模组用例和单选用例id作为过滤条件，最后执行用例完成测试。</p>
+                            </li>
+                            <li>
+                                <span>测试用例管理介绍：</span>
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;该模块是用于查询、新增、删除、修改用例的功能，可根据测试用例类型、测试用例标识（成功与失败）、测试用例创建时间等过滤查询以及变更操作。</p>
+                            </li>
+                            <li>
+                                <span>日志管理介绍：</span>
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;该模块是用于调试用例、查看执行失败用例的功能，可根据用例id作为过滤条件查看执行日志。</p>
+                            </li>
+                            <li>
+                                <span>报告查看介绍：</span>
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;该模块适用于生成测试报告、查看测试报告的功能，可根据执行场景来生成测试报告。</p>
+                            </li>
+                            <li>
+                                <span>发送邮件介绍：</span>
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;该模块适用于发送测试报告邮件，可根据执行场景选择生成测试报告，发送测试邮件。</p>
+                                <br>
+                                <br>
+                                <br>
+
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+        <!--修改密码窗口-->
+    <div id="w" class="easyui-window" title="修改密码" collapsible="false" minimizable="false"
+        maximizable="false" icon="icon-save"  style="width: 300px; height: 150px; padding: 5px;
+        background: #fafafa;">
+        <div class="easyui-layout" fit="true">
+            <div region="center" border="false" style="padding: 10px; background: #fff; border: 1px solid #ccc;">
+                <table cellpadding=3>
+                    <tr>
+                        <td>新密码：</td>
+                        <td><input id="txtNewPass" type="Password" class="txt01" /></td>
+                    </tr>
+                    <tr>
+                        <td>确认密码：</td>
+                        <td><input id="txtRePass" type="Password" class="txt01" /></td>
+                    </tr>
+                </table>
+            </div>
+            <div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">
+                <a id="btnEp" class="easyui-linkbutton" icon="icon-ok" href="javascript:void(0)" >确定</a>
+                <a id="btnCancel" class="easyui-linkbutton" icon="icon-cancel" href="javascript:void(0)">取消</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

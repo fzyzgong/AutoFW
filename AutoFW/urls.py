@@ -21,8 +21,8 @@ from . import views
 urlpatterns = [
     url(r'^login/$', views.login),
     url(r'^login_handle/$', views.login_handle),
-    url(r'^go_header/$',views.go_header),
-    url(r'^exec_task/$',views.exec_task),
+    # url(r'^go_header/$',views.go_header),
+    # url(r'^exec_task/$',views.exec_task),
     url(r'^login_check_name/$',views.login_check_name),
     url(r'^login_check_passwd/$', views.login_check_passwd),
 ]

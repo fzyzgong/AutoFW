@@ -54,7 +54,7 @@ def login_handle(request):
 
             context = {'username':username,'position':position}
 
-            return render(request,'AutoFW/workbench.html')
+            return render(request,'AutoFW/easyui_workbench.html')
         else:
             # return HttpResponse("username or passwd1 error")
             return render(request, 'AutoFW/login.html')
@@ -63,12 +63,12 @@ def login_handle(request):
         return render(request, 'AutoFW/login.html')
 
 
-#first page
-def go_header(request):
-
-    return render(request,'AutoFW/workbench.html')
-
-
-def exec_task(request):
-
-    return render(request,'AutoFW/exec_task.html')
+# #first page
+# def go_header(request):
+#
+#     return render(request,'AutoFW/workbench.html')
+#
+#
+# def exec_task(request):
+#
+#     return render(request,'AutoFW/exec_task.html')
