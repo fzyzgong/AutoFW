@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/jquery_easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/static/jquery_easyui/themes/icon.css">
+
+    <script type="text/javascript" src="/static/jquery_easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/jquery_easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/static/jquery_easyui/locale/easyui-lang-zh_CN.js"></script>
+
+    <!--<script type="text/javascript" src="/static/workbench/js/workon_project.js"></script>-->
+
+
+    <!--<script type="text/javascript">-->
+        <!--function deleteProjectModule() {-->
+            <!--var row = $('#dg').datagrid('getSelected');-->
+            <!--var data = JSON.stringify(row)-->
+            <!--$.messager.confirm('Confirm','1 Are you sure you want to destroy this module?',function(r){-->
+              <!--if (r){-->
+                  <!--$.ajax({-->
+                    <!--url: '/AutoFW/removeModule/',-->
+                    <!--type: 'POST',-->
+                    <!--data: {id:row.module_id},-->
+                    <!--success: function(data) {-->
+                        <!--if (data=="REMOVE"){-->
+                            <!--$('#dg').datagrid('reload');    // reload the user data bug-->
+                        <!--}-->
+                    <!--},-->
+                    <!--error: function(data) {alert("error")}-->
+                 <!--});-->
+              <!--}-->
+            <!--});-->
+        <!--}-->
+    <!--</script>-->
+
+    <style type="text/css">
+        .project_attribute_table{
+            border: solid 1px;
+            height: 300px;
+            width: 400px;
+        }
+
+        .project_attribute_table td{
+            border: solid 1px;
+            width: 100px;
+            background: #ffe48d;
+        }
+
+        .project_attribute_table span{
+            font-size: 22px;
+        }
+
+        .project_attribute_table .span_head{
+            font-weight: 600;
+        }
+
+        .project_attribute_table td{
+            text-align: center;
+        }
+
+        .module_switch_label{
+            font-size: 20px;
+            background: #D2E0F2;
+        }
+
+
+        #module_detail{
+            border: solid 1px;
+            height: 300px;
+            width: 500px;
+            border-collapse:collapse;
+        }
+
+        #module_detail td{
+            border: solid;
+            text-align: center;
+        }
+
+        .module_detail_td{
+            background: #ffe48d;
+            font-size: 20px;
+            border: solid;
+        }
+
+        .module_detail_td_pass{
+            background: #00ee00;
+        }
+
+        .module_detail_td_failed{
+            background: #e62e2e;
+        }
+
+    </style>
+</head>
+<body>
+    <h2>项目{{ project_id }}管理中心</h2>
+    <p>OG （增 删  改 查）</p>
+    <a href="/AutoFW/income_project/{{ project_id }}">refrash</a>
+
+    <div id="tt" class="easyui-tabs" style="width:1600px;height:700px;">
+        <div title="项目首页" name="project_first_page" id="project_first_page" iconCls="icon-add" style="padding:40px;display:none;">
+            <table class="project_attribute_table">
+                <tr class="project_attribute_tr">
+                    <td colspan="2"><span class="span_head" id="project_head_name">项目名称{{project_id}}</span></td>
+                </tr>
+                <tr class="project_attribute_tr">
+                    <td><span>项目编号</span></td>
+                    <td><span class="span_2" id="td_project_id" name="project_id">{{project_id}}</span></td>
+                </tr>
+                <tr class="project_attribute_tr" >
+                    <td><span>创建时间</span></td>
+                    <td><span class="span_2" id="create_time"></span></td>
+                </tr>
+                <tr class="project_attribute_tr">
+                    <td><span>创建者</span></td>
+                    <td><span class="span_2"  id="creator"></span></td>
+                </tr>
+                <tr class="project_attribute_tr">
+                    <td><span>所属部门</span></td>
+                    <td><span class="span_2" id="department"></span></td>
+                </tr>
+                <tr class="project_attribute_tr">
+                    <td><span>紧急程度</span></td>
+                    <td><span class="span_2" id="prioirty"></span></td>
+                </tr>
+                <tr class="project_attribute_tr">
+                    <td><span>用例总数</span></td>
+                    <td><span class="span_2" id="case_count"></span></td>
+                </tr>
+                <tr class="project_attribute_tr">
+                    <td><span>系统模块个数</span></td>
+                    <td><span class="span_2" id="module_count"></span></td>
+                </tr>
+            </table>
+            <br/>
+            <!--<input class="easyui-switchbutton" checked>-->
+            <label class="module_switch_label">是否查看系统详细模块测试结果：</label>
+            <input type="submit" id="easyui-switchbutton" value="显示模块信息" onclick="display_detail()" >
+            <br />
+            <br />
+            <table id="module_detail" hidden="true">
+                {% for module in list %}
+                    <td class="module_detail_td" colspan="2">{{ module.module_name}}</td>
+                    <tr>
+                        <td class="module_detail_td_pass">test pass</td>
+                        <td class="module_detail_td_failed">test failed</td>
+                    </tr>
+                    <tr>
+                        <td>{{count}}&nbsp;个</td>
+                        <td>{{count}}&nbsp;个</td>
+                    </tr>
+                <tr><td colspan="2"></td></tr>
+                {% endfor %}
+            </table>
+            <br />
+            <br />
+            <br />
+
+        </div>
+        <div title="项目配置" style="overflow:auto;padding:80px;display:none;">
+            <h2>项目模块管理</h2>
+            <p>OG （增 删  改 查）</p>
+            <table id="dg" title="Project Module Manage" class="easyui-datagrid" style="width:1000px;height:350px"
+                    url="/AutoFW/module_read/{{ project_id }}" idField="itemid"
+                    toolbar="#toolbar" pagination="true"
+                    rownumbers="true" fitColumns="true" singleSelect="true" >
+                <thead>
+                    <tr>
+                        <th field="ck" checkbox="true"></th>
+                        <th field="module_id" width="50">模块编号</th>
+                        <th field="module_name" width="50">模块名称</th>
+                        <th field="description" width="50">模块描述</th>
+                        <th field="project_id" width="50">项目编号</th>
+                        <th field="module_count" width="50">模块用例个数</th>
+                    </tr>
+                </thead>
+            </table>
+            <div id="toolbar">
+                <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newProjectModule()">Add Project Module</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editProjectModule()">Edit Project Module</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteProjectModule()">Remove Project Module</a>
+            </div>
+
+            <div id="dlg" class="easyui-dialog" style="width:400px"
+                    closed="true" buttons="#dlg-buttons">
+                <form id="fm" method="post" novalidate style="margin:0;padding:20px 50px">
+                    <div style="margin-bottom:20px;font-size:14px;border-bottom:1px solid #ccc">新建项目模块</div>
+                    <div style="margin-bottom:10px">
+                        <input name="module_id" id="module_id" class="easyui-textbox" required="true" label="模块编号:" style="width:100%">
+                    </div>
+                    <div style="margin-bottom:10px">
+                        <input name="module_name" class="easyui-textbox" required="true" label="模块名称:" style="width:100%">
+                    </div>
+                    <div style="margin-bottom:10px">
+                        <input name="description" class="easyui-textbox" required="true" label="描述:" style="width:100%">
+                    </div>
+                    <div style="margin-bottom:10px">
+                        <input name="project_id" class="easyui-textbox" value="{{project_id}}" disabled="disabled" required="true" label="项目编号:" style="width:100%">
+                    </div>
+                </form>
+            </div>
+            <div id="dlg-buttons">
+                <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveProjectModule()" style="width:90px">Save</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
+            </div>
+            <script type="text/javascript" src="/static/workbench/js/project_manage.js"></script>
+        </div>
+        <div title="API配置" style="padding:80px;display:none;">
+            tab3
+        </div>
+        <div title="全局配置" style="padding:80px;display:none;">
+            tab4
+        </div>
+    </div>
+    <script type="text/javascript" src="/static/workbench/js/workon_project.js"></script>
+</body>
+</html>

@@ -25,4 +25,18 @@ urlpatterns = [
     # url(r'^exec_task/$',views.exec_task),
     url(r'^login_check_name/$',views.login_check_name),
     url(r'^login_check_passwd/$', views.login_check_passwd),
+    url(r'^project_manage/$',views.project_manage),
+    url(r'^start/$', views.app_start),
+    url(r'^read/$', views.Read_all_SQL),
+    url(r'^edit/(?P<id>\d+)', views.Edit_UserNmae),
+    url(r'^remove/$', views.Remove_US_ID),
+    # url(r'^income_project/(?P<project_id>\d+)', views.income_project),
+    url(r'^income_project/(\d+)', views.income_project),
+    url(r'^project_attribute/', views.project_attribute),
+    url(r'^module_append/', views.module_append),
+    url(r'^module_read/(\d+)', views.module_Read_all_SQL),
+    url(r'^startModule/(\d+)$', views.Module_start),
+    url(r'^editModule/(.*)/(.*)', views.Edit_Module),
+    url(r'^removeModule/$', views.Remove_Module),
+
 ]

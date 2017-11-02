@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/jquery_easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/static/jquery_easyui/themes/icon.css">
+
+    <script type="text/javascript" src="/static/jquery_easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/jquery_easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/static/jquery_easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="/static/workbench/js/project_manage.js"></script>
+
+</head>
+<body>
+    <h2>项目管理中心</h2>
+    <p>OG （增 删  改 查）</p>
+
+    <table id="dg" title="Project Manage" class="easyui-datagrid" style="width:1000px;height:350px"
+            url="/AutoFW/read/" idField="itemid"
+            toolbar="#toolbar" pagination="true"
+            rownumbers="true" fitColumns="true" singleSelect="true" >
+        <thead>
+            <tr>
+                <th field="ck" checkbox="true"></th>
+                <th field="project_id" width="50">项目编号</th>
+                <th field="project_name" width="50">项目名称</th>
+                <th field="creator" width="50">创建者</th>
+                <th field="create_time" width="50">创建时间</th>
+                <th field="prioirty" width="50">优先级</th>
+                <th field="department" width="50">所属部门</th>
+            </tr>
+        </thead>
+    </table>
+    <div id="toolbar">
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newProject()">Add Project</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editProject()">Edit Project</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyProject()">Remove Project</a>
+        <span style="float: right;">[勾选一个]</span>
+        <a href="#" id="income_project" class="easyui-linkbutton" iconCls="icon-edit" onclick="incomeProject()" style="float: right;font-size: 18px;">进入项目</a>
+        <!--<a href="javascript:incomeProject()" class="easyui-linkbutton" iconCls="icon-edit" plain="true" style="float: right;font-size: 18px;">进入项目</a>-->
+    </div>
+
+    <div id="dlg" class="easyui-dialog" style="width:400px"
+            closed="true" buttons="#dlg-buttons">
+        <form id="fm" method="post" novalidate style="margin:0;padding:20px 50px">
+            <div style="margin-bottom:20px;font-size:14px;border-bottom:1px solid #ccc">新建项目</div>
+            <div style="margin-bottom:10px">
+                <input name="project_id" id="project_id" class="easyui-textbox" required="true" label="项目编号:" style="width:100%">
+            </div>
+            <div style="margin-bottom:10px">
+                <input name="project_name" class="easyui-textbox" required="true" label="项目名称:" style="width:100%">
+            </div>
+            <div style="margin-bottom:10px">
+                <input name="creator" class="easyui-textbox" required="true" label="创建者:" style="width:100%">
+            </div>
+            <div style="margin-bottom:10px">
+                <input name="create_time" class="easyui-datetimebox" required="true" label="创建日期:" style="width:100%">
+            </div>
+            <div style="margin-bottom:10px">
+                <input name="prioirty" class="easyui-textbox" value="[选项：低/中/高]" required="true"  label="优先权:" style="width:100%">
+            </div>
+            <div style="margin-bottom:10px">
+                <input name="department" class="easyui-textbox" required="true"  label="所属部门:" style="width:100%">
+            </div>
+        </form>
+    </div>
+    <div id="dlg-buttons">
+        <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveProject()" style="width:90px">Save</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
+    </div>
+
+</body>
+</html>
