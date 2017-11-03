@@ -4,7 +4,7 @@
 }
 
 .wizard{
-	background: url(../img/fcontent.jpg);
+	background: url(../media/fcontent.jpg);
 }
 
 .wizard span,p{
@@ -24,7 +24,7 @@
 	margin-top: 1px;
 	overflow: hidden;
 	height: 35px;
-	background: url("../../media/layout-browser-hd-bg.gif") repeat-x center 50%;
+	background: url("../media/layout-browser-hd-bg.gif") repeat-x center 50%;
 }
 
 .e_north .span_titil{

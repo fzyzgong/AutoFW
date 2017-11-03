@@ -3,94 +3,13 @@
 <head>
     <link rel="stylesheet" type="text/css" href="/static/jquery_easyui/themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="/static/jquery_easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/workbench_module.css">
 
     <script type="text/javascript" src="/static/jquery_easyui/jquery.min.js"></script>
 	<script type="text/javascript" src="/static/jquery_easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="/static/jquery_easyui/locale/easyui-lang-zh_CN.js"></script>
 
-    <!--<script type="text/javascript" src="/static/workbench/js/workon_project.js"></script>-->
 
-
-    <!--<script type="text/javascript">-->
-        <!--function deleteProjectModule() {-->
-            <!--var row = $('#dg').datagrid('getSelected');-->
-            <!--var data = JSON.stringify(row)-->
-            <!--$.messager.confirm('Confirm','1 Are you sure you want to destroy this module?',function(r){-->
-              <!--if (r){-->
-                  <!--$.ajax({-->
-                    <!--url: '/AutoFW/removeModule/',-->
-                    <!--type: 'POST',-->
-                    <!--data: {id:row.module_id},-->
-                    <!--success: function(data) {-->
-                        <!--if (data=="REMOVE"){-->
-                            <!--$('#dg').datagrid('reload');    // reload the user data bug-->
-                        <!--}-->
-                    <!--},-->
-                    <!--error: function(data) {alert("error")}-->
-                 <!--});-->
-              <!--}-->
-            <!--});-->
-        <!--}-->
-    <!--</script>-->
-
-    <style type="text/css">
-        .project_attribute_table{
-            border: solid 1px;
-            height: 300px;
-            width: 400px;
-        }
-
-        .project_attribute_table td{
-            border: solid 1px;
-            width: 100px;
-            background: #ffe48d;
-        }
-
-        .project_attribute_table span{
-            font-size: 22px;
-        }
-
-        .project_attribute_table .span_head{
-            font-weight: 600;
-        }
-
-        .project_attribute_table td{
-            text-align: center;
-        }
-
-        .module_switch_label{
-            font-size: 20px;
-            background: #D2E0F2;
-        }
-
-
-        #module_detail{
-            border: solid 1px;
-            height: 300px;
-            width: 500px;
-            border-collapse:collapse;
-        }
-
-        #module_detail td{
-            border: solid;
-            text-align: center;
-        }
-
-        .module_detail_td{
-            background: #ffe48d;
-            font-size: 20px;
-            border: solid;
-        }
-
-        .module_detail_td_pass{
-            background: #00ee00;
-        }
-
-        .module_detail_td_failed{
-            background: #e62e2e;
-        }
-
-    </style>
 </head>
 <body>
     <h2>项目{{ project_id }}管理中心</h2>
@@ -203,15 +122,39 @@
                 <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveProjectModule()" style="width:90px">Save</a>
                 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
             </div>
-            <script type="text/javascript" src="/static/workbench/js/project_manage.js"></script>
         </div>
+
         <div title="API配置" style="padding:80px;display:none;">
-            tab3
+            <h2>项目用例管理</h2>
+            <p>OG （增 删  改 查）</p>
+            <table id="dg_case" title="Project Case Manage" class="easyui-datagrid" style="width:1000px;height:350px"
+                    url="/AutoFW/case_read/{{ project_id }}" idField="itemid"
+                    toolbar="#toolbar_case" pagination="true"
+                    rownumbers="true" fitColumns="true" singleSelect="true" >
+                <thead>
+                    <tr>
+                        <th field="ck" checkbox="true"></th>
+                        <th field="case_id" width="50">模块编号</th>
+                        <th field="case_name" width="50">模块名称</th>
+                        <th field="description" width="50">模块描述</th>
+                        <th field="case_id" width="50">项目编号</th>
+                        <th field="case_count" width="50">模块用例个数</th>
+                    </tr>
+                </thead>
+            </table>
+            <div id="toolbar_case">
+                <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newProjectModule()">Add Project Module</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editProjectModule()">Edit Project Module</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteProjectModule()">Remove Project Module</a>
+            </div>
         </div>
         <div title="全局配置" style="padding:80px;display:none;">
             tab4
         </div>
     </div>
-    <script type="text/javascript" src="/static/workbench/js/workon_project.js"></script>
+
+    <!--该处的js必须放在这里，否则读不到html的标签属性-->
+    <script type="text/javascript" src="/static/js/workon_project.js"></script>
+
 </body>
 </html>

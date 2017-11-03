@@ -52,7 +52,7 @@ $('#tt').tabs({
 //                alert(project_id+' is project_id');
         $.get('/AutoFW/project_attribute/?project_id='+project_id, function (data) {
             if(data.project_code = project_id){
-//                        alert(data.create_time);
+                       // alert(data.create_time);
 //                        $("#create_time").innerHTML(data.create_time)
                 $("#create_time").html(data.create_time)
                 $("#creator").html(data.creator)
@@ -96,7 +96,6 @@ function newProjectModule(){
 
 //编辑 module
 function editProjectModule(){
-    alert("123");
     var project_id = document.getElementById("td_project_id").textContent
     var row = $('#dg').datagrid('getSelected');
            // alert(row.module_id);

@@ -16,7 +16,7 @@ class UserInfo(models.Model):
 class Project(models.Model):
     id = models.IntegerField
     project_code = models.CharField(max_length=20,unique=True)
-    project_name = models.CharField(max_length=50)
+    project_name = models.CharField(max_length=50,unique=True)
     PRI = models.CharField(max_length=10)
     create_time = models.DateTimeField()
     creator = models.CharField(max_length=20)
@@ -29,8 +29,25 @@ class Project(models.Model):
 class Project_Module(models.Model):
     project = models.ForeignKey(Project,to_field="project_code")
     module_id = models.CharField(max_length=20)
-    module_name = models.CharField(max_length=50)
+    module_name = models.CharField(max_length=50,unique=True)
     description = models.CharField(max_length=100)
 
     class Meta:
         db_table = 'project_module'
+
+
+class Project_Case(models.Model):
+    case_id = models.CharField(max_length=30,primary_key=True)
+    module_name = models.ForeignKey(Project_Module,to_field="module_name")
+    project_name = models.ForeignKey(Project,to_field="project_name")
+    case_name = models.CharField(max_length=30,unique=True)
+    creator = models.CharField(max_length=20)
+    url_path = models.CharField(max_length=150)
+    port = models.IntegerField
+    method = models.CharField(max_length=20)
+    parameter = models.CharField(max_length=300)
+    expected = models.CharField(max_length=300)
+    description = models.CharField(max_length=100)
+
+    class Meta:
+        db_table = 'project_case'

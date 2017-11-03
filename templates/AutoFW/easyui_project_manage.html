@@ -7,7 +7,7 @@
     <script type="text/javascript" src="/static/jquery_easyui/jquery.min.js"></script>
 	<script type="text/javascript" src="/static/jquery_easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="/static/jquery_easyui/locale/easyui-lang-zh_CN.js"></script>
-    <script type="text/javascript" src="/static/workbench/js/project_manage.js"></script>
+
 
 </head>
 <body>
@@ -67,6 +67,20 @@
         <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveProject()" style="width:90px">Save</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
     </div>
-
+    <script type="text/javascript" src="/static/js/project_manage.js"></script>
+    <script type="text/javascript">
+        function incomeProject() {
+            var row = $('#dg').datagrid('getSelected');
+            if(row == null){
+                alert("请选择一个项目在点击进入项目");
+            }else{
+        //                alert(row.project_id);
+        //                url = '/AutoFW/project_'+row.project_id+'/';
+                url = '/AutoFW/income_project/'+row.project_id;
+                //a标签herf动态地址
+                $("#income_project").attr("href",url);
+            }
+        }
+    </script>
 </body>
 </html>

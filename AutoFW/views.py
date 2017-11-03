@@ -122,7 +122,7 @@ def Edit_UserNmae(request, id):
 
 
 def income_project(request, project_id):
-    print ("income_project" + str(project_id))
+    print ("income_project::" + str(project_id))
 
     module = Project_Module.objects.filter(project=project_id)
 
