@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>workbench_userinfo_manage</title>
+    <link rel="stylesheet" type="text/css" href="/static/jquery_easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/static/jquery_easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/workbench_module.css">
+
+    <script type="text/javascript" src="/static/jquery_easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/jquery_easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/static/jquery_easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="/static/js/userinfo_manage_curd.js"></script>
+</head>
+<body>
+    <h2 style="text-align: center">用户信息管理中心</h2>
+    <p style="color: #ff4200">功能说明：<br/><span>&nbsp;&nbsp;① 查看所有成员信息; </span><br/>
+        <span>&nbsp;&nbsp;② 增删改成员信息(超级用户不能删除或修改);</span><br/><span>&nbsp;&nbsp;③ 分派项目给成员（待扩增）;</span></p>
+
+    <table id="dg_user" title="UserInfo Manage Center" class="easyui-datagrid" style="width:1000px;height:350px"
+            url="/AutoFW/userinfo_show/{{ username }}" idField="itemid"
+            toolbar="#toolbar" pagination="true"
+            rownumbers="true" fitColumns="true" singleSelect="true" >
+        <thead>
+            <tr>
+                <th field="ck" checkbox="true"></th>
+                <th field="username" width="50">成员名字</th>
+                <th field="authority" width="50">权限级别</th>
+                <th field="position" width="50">成员职位</th>
+                <!--<th field="password" width="50">密码重置</th>-->
+                <th field="gender" width="50">成员性别</th>
+                <th field="remark" width="50">备注</th>
+            </tr>
+        </thead>
+    </table>
+    <div id="toolbar">
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUserInfo()">Add UserInfo</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUserInfo()">Edit UserInfo</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteUserInfo()">Remove UserInfo</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="resetPassword()">Reset Password</a>
+    </div>
+
+    <div id="dlg_user" class="easyui-dialog" style="width:400px"
+            closed="true" buttons="#dlg-buttons">
+        <form id="fm_user" method="post" novalidate style="margin:0;padding:20px 50px">
+            <div style="margin-bottom:20px;font-size:14px;border-bottom:1px solid #ccc">新建成员信息(初始密码123456)</div>
+            <div style="margin-bottom:10px">
+                <input name="username" class="easyui-textbox" required="true" label="用户名字:" style="width:100%">
+            </div>
+            <div style="margin-bottom:10px">
+                <!--<input name="authority" class="easyui-textbox" required="true" label="权限级别:" style="width:100%">-->
+                <!--<span>权限级别:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+                <section name="authority" class="easyui-combobox" required="true" label="权限级别:" style="width:100%">
+                    <!--<option>superman</option>-->
+                    <option>primary</option>
+                    <option>secend</option>
+                </section>
+            </div>
+            <div style="margin-bottom:10px">
+                <input name="remark" class="easyui-textbox" required="true" label="备注:" style="width:100%">
+            </div>
+            <div style="margin-bottom:10px">
+                <section name="position" class="easyui-combobox" required="true" label="职位:" style="width:100%">
+                    <option>development</option>
+                    <option>tester</option>
+                    <option>product manager</option>
+                    <option>project manager</option>
+                    <option>CTO</option>
+                </section>
+            </div>
+            <div style="margin-bottom:10px">
+                <section name="gender" class="easyui-combobox" required="true" label="性别:" style="width:100%">
+                    <option>男</option>
+                    <option>女</option>
+                </section>
+            </div>
+        </form>
+    </div>
+    <div id="dlg-buttons">
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveUserInfo()" style="width:90px">Save</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg_user').dialog('close')" style="width:90px">Cancel</a>
+    </div>
+
+
+</body>
+</html>

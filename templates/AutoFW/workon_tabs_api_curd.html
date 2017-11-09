@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/jquery_easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/static/jquery_easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/workbench_module.css">
+
+    <script type="text/javascript" src="/static/jquery_easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/jquery_easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/static/jquery_easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="/static/js/project_API_curd.js"></script>
+</head>
+<body>
+    <a href="/AutoFW/workon_tabs_api/{{ project_id }}" hidden="hidden">refrash</a>
+
+    <form action="/AutoFW/income_project/{{ project_id }}">
+        <div style="width: 150px;padding-bottom: 10px">
+            <input type="submit" value=" 返回 [项目首页]" >
+        </div>
+    </form>
+
+    <h2 style="text-align: center">项目{{ project_id }}管理中心</h2>
+    <p style="color: #ff4200">功能说明：<br/><span>&nbsp;&nbsp;① 查看项目总体信息，包括测试信息; </span><br/>
+        <span>&nbsp;&nbsp;② 针对项目进行模块的管理，模块编号唯一值;</span><br/><span>&nbsp;&nbsp;③ 针对项目所有的API配置，接口编号唯一值;</span></p>
+    <!--<a href="/AutoFW/income_project/{{ project_id }}">refrash</a>-->
+
+    <!--{% for list in module_name_list %}-->
+    <!--<a href="#">{{ list.module_name }}</a>-->
+    <!--{% endfor %}-->
+    <input type="hidden" id="project_id_flag" value="{{project_id}}">
+    <table id="dg_case" title="Project Case Manage" class="easyui-datagrid" style="width:1200px;height:350px"
+            url="/AutoFW/case_read/{{ project_id }}" idField="itemid"
+            toolbar="#toolbar_case" pagination="true"
+            rownumbers="true" fitColumns="true" singleSelect="true" >
+        <thead>
+            <tr>
+                <th field="ck" checkbox="true"></th>
+                <th field="case_id" width="150">接口编号</th>
+                <th field="case_name" width="100">接口名称</th>
+                <th field="url_path" width="150">url</th>
+                <th field="method" width="30">方法</th>
+                <th field="parameter" width="100">参数</th>
+                <th field="expected" width="100">预期值</th>
+                <th field="module_name" width="100">所属模块</th>
+                <th field="project_name" width="100">所属项目</th>
+                <th field="creator" width="50">创建者</th>
+                <th field="description" width="50">测试状态</th>
+            </tr>
+        </thead>
+    </table>
+    <div id="toolbar_case">
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newProjectAPI()">Add Project API</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editProjectAPI()">Edit Project API</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteProjectAPI()">Remove Project API</a>
+    </div>
+
+    <!--easyui框架问题，不能写两个class="easyui-dialog" 导致不能使用tabs-->
+    <div id="dlg" class="easyui-dialog" style="width:400px"
+            closed="true" buttons="#dlg-buttons">
+        <form id="fm" method="post" novalidate style="margin:0;padding:20px 50px">
+            <div style="margin-bottom:20px;font-size:14px;border-bottom:1px solid #ccc">新建项目API</div>
+            <div style="margin-bottom:10px">
+                <input name="case_id" id="fm_case_id" class="easyui-textbox" required="true" label="接口编号:" style="width:100%">
+            </div>
+            <div style="margin-bottom:10px">
+                <input name="case_name" class="easyui-textbox" required="true" label="接口名称:" style="width:100%">
+            </div>
+            <div style="margin-bottom:10px">
+                <input name="url_path" class="easyui-textbox" required="true" label="url地址:" style="width:100%">
+            </div>
+            <div style="margin-bottom:10px">
+                <span>method:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <section id="easyui-combobox" class="easyui-combobox" required="true" name="method"  style="width: 200px">
+                    <option value="method">GET</option>
+                    <option>POST</option>
+                </section>
+            </div>
+            <div style="margin-bottom:10px">
+                <input name="parameter" class="easyui-textbox" required="true" label="参数(json):" style="width:100%">
+            </div>
+            <div style="margin-bottom:10px">
+                <input name="expected" class="easyui-textbox" required="true" label="预期值(json):" style="width:100%">
+            </div>
+            <div style="margin-bottom:10px">
+                <span>所属模块:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <section id="easyui-combobox1" class="easyui-combobox" required="true" name="module_name" style="width: 198px">
+                    {% for list in module_name_list %}
+                    <option>{{ list.module_name }}</option>
+                    {% endfor %}
+                </section>
+            </div>
+            <div style="margin-bottom:10px">
+                <input name="project_id" class="easyui-textbox" value="{{project_id}}" disabled="disabled" required="true" label="项目编号:" style="width:100%">
+            </div>
+            <div style="margin-bottom:10px">
+                <input name="creator" class="easyui-textbox" required="true" label="创建者:" style="width:100%">
+            </div>
+            <div style="margin-bottom:10px">
+                <!--<input name="discription" class="easyui-textbox" required="true" label="测试状态:" value="P[通过]/F[失败]/N[未测]" style="width:100%">-->
+                <span>测试状态:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <section name="description" id="test_status" class="easyui-combobox" required="true" style="width: 198px" >
+                    <option>PASS</option>
+                    <option>FAILED</option>
+                    <option>NONE</option>
+                </section>
+            </div>
+        </form>
+        <div class="dlg-buttons">
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="float:right;width:90px">Cancel</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveProjectAPI()" style="float:right;width:90px">Save</a>
+        </div>
+    </div>
+
+    <!--<script type="text/javascript">-->
+        <!--function editProjectAPI(){-->
+             <!--var project_id = document.getElementById("project_id_flag").value;-->
+<!--//             alert(project_id);-->
+             <!--var row = $('#dg_case').datagrid('getSelected');-->
+<!--//             alert(row.module_name);-->
+             <!--if(row){-->
+                 <!--$('#dlg').dialog('open').dialog('center').dialog('setTitle','Edit Project API');-->
+                 <!--//导入表单的数据-->
+                 <!--$('#fm').form('load',row);-->
+                 <!--url = '/AutoFW/editAPI/'+project_id;-->
+             <!--}-->
+        <!--}-->
+    <!--</script>-->
+</body>
+</html>

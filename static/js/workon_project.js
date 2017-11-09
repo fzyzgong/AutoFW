@@ -53,32 +53,19 @@ $('#tt').tabs({
         $.get('/AutoFW/project_attribute/?project_id='+project_id, function (data) {
             if(data.project_code = project_id){
                        // alert(data.create_time);
-//                        $("#create_time").innerHTML(data.create_time)
                 $("#create_time").html(data.create_time)
                 $("#creator").html(data.creator)
                 $("#department").html(data.department)
                 $("#prioirty").html(data.prioirty)
                 $("#project_head_name").html(data.project_name)
-
-//                        $("#module_count").html("None")
-//                        $("#case_count").html("None")
-//                        $("#test_pass_count").html("None")
-//                        $("#test_failed_count").html("None")
-//                        $("#passing_rate").html("None")
-
+                $("#case_count").html(data.project_case_count)
+                $("#module_count").html(data.project_module_count)
             }else{
                 alert("数据异常，请确认项目编号："+project_id);
             }
         })
-
-//                $.get('/AutoFW/module_append/?project_id='+project_id,function (dic) {//{data:[[],[],[]]}
-//                alert(dic.data);
-//                    var list_module = dic.data;
-//                    return list_module;
-//                })
     }
 });
-
 
 
 //模块管理js
@@ -114,7 +101,7 @@ function editProjectModule(){
 function deleteProjectModule(){
     var row = $('#dg').datagrid('getSelected');
     var data = JSON.stringify(row)
-    $.messager.confirm('Confirm','123 Are you sure you want to destroy this module?',function(r){
+    $.messager.confirm('Confirm','Are you sure you want to destroy this module?',function(r){
       if (r){
           $.ajax({
             url: '/AutoFW/removeModule/',
@@ -132,7 +119,7 @@ function deleteProjectModule(){
 }
 
 
-// 创建——USER 并 SAVE  保存
+// 创建——module 并 SAVE  保存
 function saveProjectModule(){
 //            alert('saveUser:'+url)
    $('#fm').form('submit',{

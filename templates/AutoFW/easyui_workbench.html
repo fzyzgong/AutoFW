@@ -14,70 +14,69 @@
 
     <script type="text/javascript">
 
-        //设置登录窗口
-        function openPwd() {
-            $('#w').window({
-                title: '修改密码',
-                width: 300,
-                modal: true,
-                shadow: true,
-                closed: true,
-                height: 160,
-                resizable:false
-            });
-        }
-        //关闭登录窗口
-        function closePwd() {
-            $('#w').window('close');
-        }
-
-        //修改密码
-        function serverLogin() {
-            var $newpass = $('#txtNewPass');
-            var $rePass = $('#txtRePass');
-
-            if ($newpass.val() == '') {
-                msgShow('系统提示', '请输入密码！', 'warning');
-                return false;
-            }
-            if ($rePass.val() == '') {
-                msgShow('系统提示', '请在一次输入密码！', 'warning');
-                return false;
-            }
-
-            if ($newpass.val() != $rePass.val()) {
-                msgShow('系统提示', '两次密码不一至！请重新输入', 'warning');
-                return false;
-            }
-
-            $.post('/ajax/editpassword.ashx?newpass=' + $newpass.val(), function(msg) {
-                msgShow('系统提示', '恭喜，密码修改成功！<br>您的新密码为：' + msg, 'info');
-                $newpass.val('');
-                $rePass.val('');
-                close();
-            })
-
-        }
+//        //设置登录窗口
+//        function openPwd() {
+//            $('#w').window({
+//                title: '修改密码',
+//                width: 300,
+//                modal: true,
+//                shadow: true,
+//                closed: true,
+//                height: 160,
+//                resizable:false
+//            });
+//        }
+//        //关闭登录窗口
+//        function closePwd() {
+//            $('#w').window('close');
+//        }
+//
+//        //修改密码
+//        function serverLogin() {
+//
+//            var $newpass = $('#txtNewPass').val();
+//            var $rePass = $('#txtRePass').val();
+//
+//            if ($newpass.val() == '') {
+//                alert("kong");
+//
+//            }
+//            if ($rePass.val() == '') {
+//                msgShow('系统提示', '请在一次输入密码！', 'warning');
+//                return false;
+//            }
+//
+//            if ($newpass.val() != $rePass.val()) {
+//                msgShow('系统提示', '两次密码不一至！请重新输入', 'warning');
+//                return false;
+//            }
+//
+//            $.post('/ajax/editpassword.ashx?newpass=' + $newpass.val(), function(msg) {
+//                msgShow('系统提示', '恭喜，密码修改成功！<br>您的新密码为：' + msg, 'info');
+//                $newpass.val('');
+//                $rePass.val('');
+//                close();
+//            })
+//
+//        }
 
         $(function() {
-
-            openPwd();
-
-            $('#editpass').click(function() {
-                $('#w').window('open');
-            });
-
-            $('#btnEp').click(function() {
-                serverLogin();
-            })
-
-			$('#btnCancel').click(function(){closePwd();})
+//            openPwd();
+//            $('#editpass').click(function() {
+//                $('#w').window('open');
+//            });
+//
+//            $('#btnEp').click(function() {
+//                serverLogin();
+//            })
+//
+//			$('#btnCancel').click(function(){closePwd();})
 
             $('#loginOut').click(function() {
                 $.messager.confirm('系统提示', '您确定要退出本次登录吗?', function(r) {
 
                     if (r) {
-                        location.href = '/ajax/loginout.ashx';
+                        location.href = '/AutoFW/login/';
                     }
                 });
             })
@@ -207,7 +206,7 @@
     <div id="easyui" class="easyui-layout"  split="true" fit="true">
         <div region="north" class="e_north">
             <span class="head">
-                欢迎 gonglp <a href="#" id="editpass">[修改密码]</a> <a href="#" id="loginOut">[安全退出]</a></span>
+                欢迎 {{username}}({{position}}) <a href="#" id="editpass">[修改密码]</a> <a href="#" id="loginOut">[安全退出]</a></span>
             <div>
                 <img src="/static/media/head_tips.gif" style="float: left" />
             </div>
@@ -233,32 +232,10 @@
                 <div title="用户中心" iconcls="icon-more">
                     <ul class="easyui-tree">
                         <li>
-                            <span>用户中心</span>
-                            <ul>
-                                <li>
-                                   <span>个人资料</span>
-                                   <ul>
-                                        <li>
-                                            <span><a target="mainFrame" href="http://www.baidu.com">审核博客</a></span>
-                                        </li>
-                                        <li>
-                                            <span><a target="mainFrame" href="http://blog.csdn.net/fzyzgong/article/details/78260599">个人权限</a></span>
-                                        </li>
-                                        <li>
-                                            <span>任务审核</span>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <span>File 2</span>
-                                </li>
-                                <li>
-                                    <span>File 3</span>
-                                </li>
-                            </ul>
+                            <span><a target="mainFrame" href="/AutoFW/user_manage/{{username}}">用户信息管理</a></span>
                         </li>
                         <li>
-                            <span><a href="#">File21</a></span>
+                            <span><a target="mainFrame" href="/AutoFW/personal_manage/{{username}}">个人信息管理</a></span>
                         </li>
                     </ul>
                 </div>
@@ -337,28 +314,28 @@
     </div>
 
         <!--修改密码窗口-->
-    <div id="w" class="easyui-window" title="修改密码" collapsible="false" minimizable="false"
-        maximizable="false" icon="icon-save"  style="width: 300px; height: 150px; padding: 5px;
-        background: #fafafa;">
-        <div class="easyui-layout" fit="true">
-            <div region="center" border="false" style="padding: 10px; background: #fff; border: 1px solid #ccc;">
-                <table cellpadding=3>
-                    <tr>
-                        <td>新密码：</td>
-                        <td><input id="txtNewPass" type="Password" class="txt01" /></td>
-                    </tr>
-                    <tr>
-                        <td>确认密码：</td>
-                        <td><input id="txtRePass" type="Password" class="txt01" /></td>
-                    </tr>
-                </table>
-            </div>
-            <div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">
-                <a id="btnEp" class="easyui-linkbutton" icon="icon-ok" href="javascript:void(0)" >确定</a>
-                <a id="btnCancel" class="easyui-linkbutton" icon="icon-cancel" href="javascript:void(0)">取消</a>
-            </div>
-        </div>
-    </div>
+    <!--<div id="w" class="easyui-window" title="修改密码" collapsible="false" minimizable="false"-->
+        <!--maximizable="false" icon="icon-save"  style="width: 300px; height: 150px; padding: 5px;-->
+        <!--background: #fafafa;">-->
+        <!--<div class="easyui-layout" fit="true">-->
+            <!--<div region="center" border="false" style="padding: 10px; background: #fff; border: 1px solid #ccc;">-->
+                <!--<table cellpadding=3>-->
+                    <!--<tr>-->
+                        <!--<td>新密码：</td>-->
+                        <!--<td><input id="txtNewPass" type="Password" class="txt01" /></td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td>确认密码：</td>-->
+                        <!--<td><input id="txtRePass" type="Password" class="txt01" /></td>-->
+                    <!--</tr>-->
+                <!--</table>-->
+            <!--</div>-->
+            <!--<div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">-->
+                <!--<a id="btnEp" class="easyui-linkbutton" icon="icon-ok" href="javascript:void(0)"  >确定</a>-->
+                <!--<a id="btnCancel" class="easyui-linkbutton" icon="icon-cancel" href="javascript:void(0)">取消</a>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
 
 </body>
 </html>

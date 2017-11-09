@@ -8,16 +8,22 @@
     <script type="text/javascript" src="/static/jquery_easyui/jquery.min.js"></script>
 	<script type="text/javascript" src="/static/jquery_easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="/static/jquery_easyui/locale/easyui-lang-zh_CN.js"></script>
-
+    <script type="text/javascript" src="/static/js/project_API_curd.js"></script>
 
 </head>
 <body>
-    <h2>项目{{ project_id }}管理中心</h2>
-    <p>OG （增 删  改 查）</p>
-    <a href="/AutoFW/income_project/{{ project_id }}">refrash</a>
+    <h2 style="text-align: center">项目{{ project_id }}管理中心</h2>
+    <p style="color: #ff4200">功能说明：<br/><span>&nbsp;&nbsp;① 查看项目总体信息，包括测试信息; </span><br/>
+        <span>&nbsp;&nbsp;② 针对项目进行模块的管理，模块编号唯一值;</span><br/><span>&nbsp;&nbsp;③ 针对项目所有的API配置，接口编号唯一值;</span></p>
+    <!--<a href="/AutoFW/income_project/{{ project_id }}">refrash</a>-->
 
     <div id="tt" class="easyui-tabs" style="width:1600px;height:700px;">
         <div title="项目首页" name="project_first_page" id="project_first_page" iconCls="icon-add" style="padding:40px;display:none;">
+            <form action="/AutoFW/income_project/{{ project_id }}">
+                <div style="width: 150px;padding-bottom: 10px">
+                    <input type="submit" value=" 刷新 [项目首页数据]" >
+                </div>
+            </form>
             <table class="project_attribute_table">
                 <tr class="project_attribute_tr">
                     <td colspan="2"><span class="span_head" id="project_head_name">项目名称{{project_id}}</span></td>
@@ -57,18 +63,21 @@
             <input type="submit" id="easyui-switchbutton" value="显示模块信息" onclick="display_detail()" >
             <br />
             <br />
+
             <table id="module_detail" hidden="true">
-                {% for module in list %}
-                    <td class="module_detail_td" colspan="2">{{ module.module_name}}</td>
+                {% for key,value in list.items %}
+                    <td class="module_detail_td" colspan="3">{{ key }}</td>
                     <tr>
                         <td class="module_detail_td_pass">test pass</td>
                         <td class="module_detail_td_failed">test failed</td>
+                        <td class="module_detail_td_none">test none</td>
                     </tr>
                     <tr>
-                        <td>{{count}}&nbsp;个</td>
-                        <td>{{count}}&nbsp;个</td>
+                        <td>{{value.pass}}&nbsp;个</td>
+                        <td>{{value.failed}}&nbsp;个</td>
+                        <td>{{value.none}}&nbsp;个</td>
                     </tr>
-                <tr><td colspan="2"></td></tr>
+                <tr><td colspan="3"></td></tr>
                 {% endfor %}
             </table>
             <br />
@@ -76,7 +85,7 @@
             <br />
 
         </div>
-        <div title="项目配置" style="overflow:auto;padding:80px;display:none;">
+        <div title="项目模块配置" style="overflow:auto;padding:80px;display:none;">
             <h2>项目模块管理</h2>
             <p>OG （增 删  改 查）</p>
             <table id="dg" title="Project Module Manage" class="easyui-datagrid" style="width:1000px;height:350px"
@@ -119,38 +128,18 @@
                 </form>
             </div>
             <div id="dlg-buttons">
-                <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveProjectModule()" style="width:90px">Save</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveProjectModule()" style="width:90px">Save</a>
                 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
             </div>
         </div>
 
-        <div title="API配置" style="padding:80px;display:none;">
-            <h2>项目用例管理</h2>
-            <p>OG （增 删  改 查）</p>
-            <table id="dg_case" title="Project Case Manage" class="easyui-datagrid" style="width:1000px;height:350px"
-                    url="/AutoFW/case_read/{{ project_id }}" idField="itemid"
-                    toolbar="#toolbar_case" pagination="true"
-                    rownumbers="true" fitColumns="true" singleSelect="true" >
-                <thead>
-                    <tr>
-                        <th field="ck" checkbox="true"></th>
-                        <th field="case_id" width="50">模块编号</th>
-                        <th field="case_name" width="50">模块名称</th>
-                        <th field="description" width="50">模块描述</th>
-                        <th field="case_id" width="50">项目编号</th>
-                        <th field="case_count" width="50">模块用例个数</th>
-                    </tr>
-                </thead>
-            </table>
-            <div id="toolbar_case">
-                <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newProjectModule()">Add Project Module</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editProjectModule()">Edit Project Module</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteProjectModule()">Remove Project Module</a>
-            </div>
+        <div title="项目API配置" style="padding:80px;display:none;">
+            <img src="/static/media/jiantou_x.png">
+            <span style="font-size: 50px;margin: 0 auto"><a target="mainFrame" href="/AutoFW/workon_tabs_api/{{project_id}}">进入项目[{{project_id}}]接口管理</a></span>
         </div>
-        <div title="全局配置" style="padding:80px;display:none;">
-            tab4
-        </div>
+        <!--<div title="全局配置" style="padding:80px;display:none;">-->
+            <!--tab4-->
+        <!--</div>-->
     </div>
 
     <!--该处的js必须放在这里，否则读不到html的标签属性-->

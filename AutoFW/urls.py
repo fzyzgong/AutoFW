@@ -38,5 +38,16 @@ urlpatterns = [
     url(r'^startModule/(\d+)$', views.Module_start),
     url(r'^editModule/(.*)/(.*)', views.Edit_Module),
     url(r'^removeModule/$', views.Remove_Module),
-
+    url(r'^case_read/(\d+)', views.case_Read_all_SQL),
+    url(r'^startAPI/(\d+)', views.API_start),
+    url(r'^workon_tabs_api/(\d+)', views.workon_tabs_api),
+    url(r'^editAPI/(\d+)', views.editAPI),
+    url(r'^removeAPI/$', views.removeAPI),
+    url(r'^user_manage/(.*)', views.user_manage),
+    url(r'^userinfo_show/(.*)', views.userinfo_show),
+    url(r'^add_userinfo/$', views.add_userinfo),
+    url(r'^edit_userinfo/(.*)', views.edit_userinfo),
+    url(r'^remove_userinfo/(.*)', views.remove_userinfo),
+    url(r'^resetPW_userinfo/(.*)', views.resetPW_userinfo),
+    url(r'^personal_manage/(.*)', views.personal_manage),
 ]
