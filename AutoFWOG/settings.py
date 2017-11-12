@@ -98,7 +98,8 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+#timezone problem
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)

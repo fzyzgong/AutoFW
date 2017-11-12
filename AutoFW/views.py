@@ -1,7 +1,7 @@
 #coding=utf-8
 import json
 
-import datetime
+import datetime,time
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,JsonResponse
 from models import *
@@ -576,11 +576,67 @@ def resetPW_userinfo(request,username):
 
 #个人信息管理page
 def personal_manage(request,username):
-    userinfo = UserInfo.objects.filter(username=username)[0]
-    if userinfo.gender:
-        gender = "男"
-    else:
-        gender = "女"
-    context = {"username":username,"authority":userinfo.authority,"position":userinfo.position,
-                    "gender":gender}
-    return render(request,"AutoFW/personal_manage_page.html",context)
+    print ("personal_manage")
+    # userinfo = UserInfo.objects.filter(username=username)[0]
+    emp_info = Emp_Info.objects.filter(user_id=username)[0]
+    name = Emp_Info.objects.filter(user_id=username)[0].name
+
+    birthday = str(emp_info.birthday).split(' ')[0]
+
+    content = {"username": username,"name":name, "birthday": birthday, "phone_id": emp_info.phone_id,
+               "position": emp_info.position, "email": emp_info.email, "job_number": emp_info.job_number}
+    print(content)
+    return render(request,"AutoFW/personal_manage_page.html",content)
+
+
+#个人信息修改页面 更新个人信息
+def update_emp_info(request,username):
+    if request.method == "POST":
+        print ("update_emp_info POST")
+        name = request.POST.get("name")
+        birthday = request.POST.get("birthday")
+        print (birthday)
+        birthday = str(birthday)+" 00:00:00"
+        birthday_fmt = datetime.datetime.strptime(birthday, "%Y-%m-%d %H:%M:%S").date()
+        phone_id = request.POST.get("phone_id")
+        position = request.POST.get("position")
+        email = request.POST.get("email")
+        job_number = request.POST.get("job_number")
+        job_number_fmi = int(job_number)
+
+        content = {"name":name,"birthday":birthday_fmt,"phone_id":phone_id,
+                   "position":position,"email":email,"job_number":job_number_fmi}
+        print (content)
+        Emp_Info.objects.filter(user_id=username).update(**content)
+        print (birthday_fmt)
+
+        #重新构造时间数据格式给前端使用，否则出现系统默认格式
+        emp_info = Emp_Info.objects.filter(user_id=username)[0]
+        birthday = str(emp_info.birthday).split(' ')[0]
+        content = {"username":username,"name": name, "birthday": birthday, "phone_id": phone_id,
+                   "position": position, "email": email, "job_number": job_number_fmi}
+        return render(request,"AutoFW/personal_manage_page.html",content)
+
+
+#修改个人密码
+def change_pw(request,username):
+    print ("change_pw")
+    if request.method == "POST":
+        post = request.POST.get
+        password = UserInfo.objects.filter(username=username)[0].password
+        print (password)
+        old_pw = post("old_pw")
+        new_pw = post("new_pw")
+        confirm_pw = post("confirm_pw")
+        #判断输入的旧密码是否正确
+        if old_pw == password:
+            #判断输入的两次密码是否相同
+            if new_pw == confirm_pw:
+                content = {"password":new_pw}
+                UserInfo.objects.filter(username=username).update(**content)
+                return personal_manage(request,username)
+            else:
+                print ("The two input password is incorrect")
+        else:
+            print ("old password error!")
+        return personal_manage(request, username)

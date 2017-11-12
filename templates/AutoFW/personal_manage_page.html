@@ -3,12 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <title>personal_manage_page</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/personal_pageinfo.css" />
+    <script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
 </head>
 <body>
     <h2>个人信息中心</h2>
-    <label>{{username}}</label>
-    <label>{{authority}}</label>
-    <label>{{position}}</label>
-    <label>{{gender}}</label>
+    <!--<label>{{username}}</label>-->
+    <!--<label>{{authority}}</label>-->
+    <!--<label>{{position}}</label>-->
+    <!--<label>{{gender}}</label>-->
+    <div class="col-md-7 header-right">
+        <div>
+            <h1>Hi !</h1>
+            <h6 >{{username}}</h6>
+        </div>
+        <form method="post" action="/AutoFW/change_pw/{{username}}">
+            <input name="change_pw" type="button" value="修改个人账户密码" id="change_pw_b" class="passwd_b" onclick="modify_pw()">
+            <input type="submit" hidden="true" value="提交修改密码" id="change_pw_s" class="passwd_s">
+            <br />
+            <div id="passwd_t" hidden="true">
+                <input name="old_pw" type="text" placeholder="输入OLD密码" class="passwd_t">
+                <input name="new_pw" type="text" placeholder="输入NEW密码" class="passwd_t">
+                <input name="confirm_pw" type="text" placeholder="确认新密码" class="passwd_t">
+            </div>
+        </form>
+        <hr />
+        <ul class="address">
+            <form method="post" action="/AutoFW/update_emp_info/{{username}}" >
+                <li>
+                    <ul class="address-text">
+                        <li><b>NAME</b></li>
+                        <li><input name="name" type="text" disabled="disabled" value="{{name}}" ></li>
+                    </ul>
+                </li>
+                <li>
+                    <ul class="address-text">
+                        <li><b>BRITHDAY</b></li>
+                        <li><input name="birthday" type="text" disabled="disabled" value="{{birthday}}" >
+                            <span style="color: white;background: black;font-size: 14px;text-align: center;padding-left: 20px;padding-right: 20px;">格式：1971-01-01</span></li>
+                    </ul>
+                </li>
+                <li>
+                    <ul class="address-text">
+                        <li><b>PHONE </b></li>
+                        <li><input name="phone_id" type="text" disabled="disabled" value="{{phone_id}}" ></li>
+                    </ul>
+                </li>
+                <li>
+                    <ul class="address-text">
+                        <li><b>POSITION </b></li>
+                        <li><input name="position" type="text" disabled="disabled" value="{{position}}" ></li>
+                    </ul>
+                </li>
+                <li>
+                    <ul class="address-text">
+                        <li><b>E-MAIL </b></li>
+                        <li><input name="email" type="text" disabled="disabled" value="{{email}}" ></li>
+                    </ul>
+                </li>
+                <li>
+                    <ul class="address-text">
+                        <li><b>JOB_NUMBER </b></li>
+                        <li><input name="job_number" type="text" disabled="disabled" value="{{job_number}}" ></li>
+                        <input id="switch_button" type="button" onclick="change_empinfo()" value="更改个人信息">
+                        <input id="switch_submit" type="submit" hidden="" value="提交更新">
+                    </ul>
+                </li>
+            </form>
+        </ul>
+    </div>
+    <div>
+        <form>
+
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        function change_empinfo() {
+            $("input").removeAttr("disabled");
+            var switch_submit = document.getElementById("switch_submit");
+            switch_submit.hidden = false;
+            var switch_button = document.getElementById("switch_button");
+            switch_button.hidden = true;
+        }
+
+        function modify_pw() {
+            $("#passwd_t").removeAttr("hidden");
+            var change_pw_b = document.getElementById("change_pw_b");
+            change_pw_b.hidden = true;
+            var change_pw_s = document.getElementById("change_pw_s");
+            change_pw_s.hidden = false;
+        }
+    </script>
 </body>
 </html>

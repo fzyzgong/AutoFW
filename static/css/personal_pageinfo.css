@@ -1,0 +1,71 @@
+/*--banner-info--*/
+
+
+.header-left {
+    padding: 3em;
+}
+.header-right {
+    float: left;
+    width: 600px;
+    padding: 3em;
+}
+ul.address-text {
+    padding: 19px;
+}
+ul.address {
+    padding: 0;
+    background: #bfbfbf;
+}
+
+
+.header-right h1 {
+    font-size: 2.5em;
+    color: #fff;
+    margin: 0.5em 0 0;
+    font-weight: bold;
+}
+.header-right h1 {
+    font-size: 1.2em;
+    color: #FFF;
+    background: #00a78e;
+    display: inline-block;
+    padding: .5em 1.5em;
+    position: relative;
+	    box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.header-right h6 {
+       font-size: 1em;
+    color: #C7C7C7;
+    margin-top: 0.8em;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+ul.address {
+    margin-top: 2em;
+    border-top: 1px solid #AFAFAF;
+    padding-top: 0.5em;
+}
+ul.address li {
+    display: block;
+}
+ul.address li ul.address-text li {
+    display: inline-block;
+    font-size: 1em;
+    color: #00ee00;
+    margin-top: 1em;
+	font-weight: 400;
+}
+ul.address li ul.address-text li:nth-child(1){
+	width: 20%;
+}
+ul.address li ul.address-text li a {
+    color: blue;
+	text-decoration:none;
+}
+ul.address li ul.address-text li a:hover{
+        color: #00a78e;
+}
+ul.address-text b {
+    color: black;
+}

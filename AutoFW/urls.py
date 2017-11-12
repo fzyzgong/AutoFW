@@ -50,4 +50,6 @@ urlpatterns = [
     url(r'^remove_userinfo/(.*)', views.remove_userinfo),
     url(r'^resetPW_userinfo/(.*)', views.resetPW_userinfo),
     url(r'^personal_manage/(.*)', views.personal_manage),
+    url(r'^update_emp_info/(.*)', views.update_emp_info),
+    url(r'^change_pw/(.*)', views.change_pw),
 ]

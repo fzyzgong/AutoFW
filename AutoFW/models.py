@@ -51,3 +51,20 @@ class Project_Case(models.Model):
 
     class Meta:
         db_table = 'project_case'
+
+
+class Emp_Info(models.Model):
+    user_id =models.ForeignKey(UserInfo,to_field="username")
+    name = models.CharField(max_length=20)
+    birthday = models.DateTimeField()
+    email = models.CharField(max_length=50,unique=True)
+    phone_id = models.CharField(max_length=11)
+    position = models.CharField(max_length=30)
+    salery = models.IntegerField
+    work_year = models.IntegerField
+    remark = models.CharField(max_length=50)
+    job_number = models.IntegerField(primary_key=True)
+    other = models.CharField(max_length=30)
+
+    class Meta:
+        db_table = 'emp_info'
