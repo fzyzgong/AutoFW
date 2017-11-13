@@ -31,11 +31,11 @@ ul.address {
     display: inline-block;
     padding: .5em 1.5em;
     position: relative;
-	    box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
 .header-right h6 {
-       font-size: 1em;
+    font-size: 1em;
     color: #C7C7C7;
     margin-top: 0.8em;
     letter-spacing: 3px;
@@ -64,7 +64,7 @@ ul.address li ul.address-text li a {
 	text-decoration:none;
 }
 ul.address li ul.address-text li a:hover{
-        color: #00a78e;
+    color: #00a78e;
 }
 ul.address-text b {
     color: black;

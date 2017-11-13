@@ -4,6 +4,7 @@
     <link rel="stylesheet" type="text/css" href="/static/jquery_easyui/themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="/static/jquery_easyui/themes/icon.css">
     <link rel="stylesheet" type="text/css" href="/static/css/workbench_module.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/project_globle_config.css">
 
     <script type="text/javascript" src="/static/jquery_easyui/jquery.min.js"></script>
 	<script type="text/javascript" src="/static/jquery_easyui/jquery.easyui.min.js"></script>
@@ -137,9 +138,48 @@
             <img src="/static/media/jiantou_x.png">
             <span style="font-size: 50px;margin: 0 auto"><a target="mainFrame" href="/AutoFW/workon_tabs_api/{{project_id}}">进入项目[{{project_id}}]接口管理</a></span>
         </div>
-        <!--<div title="全局配置" style="padding:80px;display:none;">-->
-            <!--tab4-->
-        <!--</div>-->
+        <div title="全局配置" style="padding:80px;display:none;">
+            <div id="project_globle_config" class="project_config">
+                <span style="font-size: 28px;padding-bottom: 10px">全局配置</span>
+                <hr />
+                <ul class="config">
+                    <form method="post" action="/AutoFW/project_globel_config/{{project_id}}" >
+                        <li>
+                            <ul class="config-text">
+                                <li><b>IP&nbsp;&nbsp;&nbsp;</b></li>
+                                <li><input name="ip" type="text" disabled="disabled" id="project_config_ip" ></li>
+                            </ul>
+                        </li>
+                        <br />
+                        <li>
+                            <ul class="config-text">
+                                <li><b>域名</b></li>
+                                <li><input name="domain" type="text" disabled="disabled" id="project_config_domain" >
+                            </ul>
+                        </li>
+                        <br />
+                        <li>
+                            <ul class="config-text">
+                                <li><b>端口 </b></li>
+                                <li><input name="port" type="text" disabled="disabled" id="project_config_port" ></li>
+                                <input id="switch_button_c" type="button" onclick="change_config()" value="更改项目全局变量">
+                                <input id="switch_submit_c" type="submit" hidden="" value="提交更新">
+                            </ul>
+                        </li>
+                    </form>
+                </ul>
+            </div>
+
+            <script type="text/javascript">
+                function change_config() {
+                    $("input").removeAttr("disabled");
+                    var switch_submit_c = document.getElementById("switch_submit_c");
+                    switch_submit_c.hidden = false;
+                    var switch_button_c = document.getElementById("switch_button_c");
+                    switch_button_c.hidden = true;
+                }
+            </script>
+        </div>
     </div>
 
     <!--该处的js必须放在这里，否则读不到html的标签属性-->

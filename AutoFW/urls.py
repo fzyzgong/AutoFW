@@ -33,6 +33,8 @@ urlpatterns = [
     # url(r'^income_project/(?P<project_id>\d+)', views.income_project),
     url(r'^income_project/(\d+)', views.income_project),
     url(r'^project_attribute/', views.project_attribute),
+    url(r'^project_globel_config/(.*)', views.project_globel_config),
+
     url(r'^module_append/', views.module_append),
     url(r'^module_read/(\d+)', views.module_Read_all_SQL),
     url(r'^startModule/(\d+)$', views.Module_start),

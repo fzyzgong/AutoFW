@@ -189,18 +189,53 @@ def project_attribute(request):
     project_case_count = Project_Case.objects.filter(project_name=project_name).count()
     print ("project_case_count:" + str(project_case_count))
 
-    # print (str(create_times))
-    # # 把Unicode转成str
-    # print (str(creator.encode("utf8")))
-    # print (str(department.encode("utf8")))
-    # print (prioirty.encode("utf8"))
-    # print (str(project_name.encode("utf8")))
+    #获取全局变量
+    project_config = Project_Config.objects.filter(project_id=project_id)[0]
+    print ("project_attribute project_config:"+str(project_config))
+    project_ip = project_config.ip
+    project_domain = project_config.domain
+    project_port = project_config.port
+    project_port_str = str(project_port)
 
-    content={'create_time':create_times,'creator':creator,
+    content = {'create_time':create_times,'creator':creator,
               'department':department,'prioirty':prioirty,'project_name':project_name,
-             'project_module_count':project_module_count,'project_case_count':project_case_count}
-
+             'project_module_count':project_module_count,'project_case_count':project_case_count,
+               'ip':project_ip,'domain':project_domain,'port':project_port_str}
+    print (content)
     return JsonResponse(content)
+
+
+#更新配置项目全局变量
+def project_globel_config(request,project_id):
+    if request.method == "POST":
+        print ("project_globel_config post")
+        project_ip = request.POST.get('ip')
+        project_domain = request.POST.get('domain')
+        project_port = request.POST.get('port')
+        if project_port.strip() != '':
+            project_port = int(project_port)
+
+        content = {"ip":project_ip,"domain":project_domain,"port":project_port}
+        print (content)
+        #判断项目是否存在配置，不存在就新建，存在就修改
+        project_config_count = Project_Config.objects.filter(project_id=project_id).count()
+        print ("project_config_count:"+str(project_config_count))
+
+        if project_config_count > 0 and str(project_ip).strip() != '' and str(project_domain).strip() != '' and str(project_port).strip() != '':
+            print ("project_globel_config 进入[update]分支！")
+            Project_Config.objects.filter(project_id=project_id).update(**content)
+            return HttpResponse("update success")
+        elif project_config_count == 0:
+            print ("project_globel_config 进入[create]分支！")
+            content = {"ip": project_ip, "domain": project_domain, "port": project_port,
+                       "project_id_id":project_id,"bak_field1":"bak1","bak_field2":"bak2"}
+            print (content)
+            Project_Config.objects.create(**content)
+            return HttpResponse("create success")
+        else:
+            print ("ip/domain/port 不能为空!")
+            return HttpResponse("ip/domain/port 不能为空!")
+
 
 
 def module_append(request):

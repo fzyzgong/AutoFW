@@ -1,5 +1,8 @@
+#coding=utf-8
 from django.db import models
 
+
+#用户信息
 class UserInfo(models.Model):
     id = models.IntegerField
     username = models.CharField(max_length=30,unique=True)
@@ -13,6 +16,8 @@ class UserInfo(models.Model):
     class Meta:
         db_table = 'userinfo'
 
+
+#项目信息
 class Project(models.Model):
     id = models.IntegerField
     project_code = models.CharField(max_length=20,unique=True)
@@ -26,6 +31,20 @@ class Project(models.Model):
         db_table = 'project'
 
 
+# 项目全局设置
+class Project_Config(models.Model):
+    project_id = models.ForeignKey(Project, to_field="project_code")
+    ip = models.CharField(max_length=30, primary_key=True)
+    domain = models.CharField(max_length=200)
+    port = models.IntegerField()
+    bak_field1 = models.CharField(max_length=100)
+    bak_field2 = models.CharField(max_length=100)
+
+    class Meta:
+        db_table = 'project_config'
+
+
+#项目模块信息
 class Project_Module(models.Model):
     project = models.ForeignKey(Project,to_field="project_code")
     module_id = models.CharField(max_length=20)
@@ -36,6 +55,7 @@ class Project_Module(models.Model):
         db_table = 'project_module'
 
 
+#接口信息
 class Project_Case(models.Model):
     case_id = models.CharField(max_length=30,primary_key=True)
     module_name = models.ForeignKey(Project_Module,to_field="module_name")
@@ -53,6 +73,7 @@ class Project_Case(models.Model):
         db_table = 'project_case'
 
 
+#成员信息（使用该系统的成员）
 class Emp_Info(models.Model):
     user_id =models.ForeignKey(UserInfo,to_field="username")
     name = models.CharField(max_length=20)
