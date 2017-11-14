@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+
+    <style type="text/css">
+        #search_table{
+            border: solid 1px;
+            cellspacing: "0";
+            cellpadding: "0";
+        }
+        #search_tr{
+            padding-top: 30px;
+            width: 30px;
+        }
+        #search_table td{
+            width: 560px;
+            height: 30px;
+        }
+        #search_tr td{
+            width: 560px;
+            height: 60px;
+        }
+    </style>
+</head>
+<body>
+    <h2>测试用例构造中心</h2>
+    <hr />
+    <div>
+        <table id="search_table">
+                <tr id="search_tr">
+                    <td>查询用例</td>
+                    <td>
+                        <input name="seach_case_b" type="button" class="search_button" value="查询" onclick="search_case()">
+                        <input name="reset_b" type="button" class="reset_button" value="重置">
+                    </td>
+                </tr>
+                <tr style="background: black">
+                    <td colspan="3" style="height: 2px"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="project_name_label">项目名称：</label>
+                        <select name="project_name_section" id="project_name_section" style="width: 100px">
+                            <option></option>
+                            {% for list in project_name_list %}
+                            <option>{{list.project_name}}</option>
+                            {%endfor%}
+                        </select>
+                    </td>
+                    <td>
+                        <label id="creator_label">创&nbsp;建&nbsp;者&nbsp;：</label>
+                        <select id="creator_section" style="width: 100px">
+                            <option></option>
+                            {% for list in creator_list %}
+                            <option>{{list.name}}</option>
+                            {%endfor%}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="project_module_label">项目模块：</label>
+                        <select id="project_module_section" style="width: 100px">
+                            <option></option>
+                        </select>
+                    </td>
+                    <td>
+                        <label id="case_status_label">用例状态：</label>
+                        <select id="case_status_section" style="width: 100px">
+                            <option></option>
+                            <option>PASS</option>
+                            <option>FAILED</option>
+                            <option>NONE</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="project_case_name_label">用例名称：</label>
+
+                        <input id="project_case_name_input" class="project_case_name_input" type="text">
+
+                    </td>
+                </tr>
+        </table>
+
+
+        <script type="text/javascript">
+            /////////////手动触发selectd的change事件////////////////
+            $("#project_name_section").change(function () {
+                var project_name = $("#project_name_section option:selected").text();
+                $(".project_name_option").remove();
+                $.ajax({
+                   url: "/AutoFW/select_load_module/"+project_name,
+                    type: "get",
+                    success:function (data) {
+                        if(data.status == "success"){
+                            for(var i = 0; i < data.module_name.length;i++){
+                                $('#project_module_section').append('<option class="project_name_option">' + data.module_name[i] + '</option>');
+                            }
+                        }
+                    }
+                });
+
+            });
+//            $("#creator_section").trigger("change");
+
+            function search_case() {
+                var project_name = $("#project_name_section option:selected").text();
+                var creator_name = $("#creator_section option:selected").text();
+                var project_module = $("#project_module_section option:selected").text();
+                var case_status = $("#case_status_section option:selected").text();
+                var case_name = $("#project_case_name_input").val();
+
+//                alert(project_name);
+//                alert(creator_name);
+//                alert(project_module);
+//                alert(case_status);
+//                alert(case_name);
+                $.ajax({
+                    url:"/AutoFW/search_case/?project_name="+project_name+"&creator_name="+creator_name+"&project_module="+project_module+"&case_status="+case_status+"&case_name="+case_name,
+                    type: "get",
+                    success:function (data) {
+                        if(data.status == "success"){
+                            alert(data);
+                        }
+                    }
+                });
+            };
+        </script>
+    </div>
+</body>
+</html>

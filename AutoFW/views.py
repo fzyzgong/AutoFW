@@ -7,6 +7,8 @@ from django.http import HttpResponse,JsonResponse
 from models import *
 from django.core import serializers
 import MySQLdb
+from django.forms.models import model_to_dict
+
 
 def login(request):
     return render(request, 'AutoFW/login.html')
@@ -612,17 +614,27 @@ def resetPW_userinfo(request,username):
 #个人信息管理page
 def personal_manage(request,username):
     print ("personal_manage")
-    # userinfo = UserInfo.objects.filter(username=username)[0]
-    emp_info = Emp_Info.objects.filter(user_id=username)[0]
-    name = Emp_Info.objects.filter(user_id=username)[0].name
+    emp_info_obj = Emp_Info.objects.filter(user_id=username)
 
-    birthday = str(emp_info.birthday).split(' ')[0]
+    print ("emp_info:"+str(emp_info_obj))
 
-    content = {"username": username,"name":name, "birthday": birthday, "phone_id": emp_info.phone_id,
+    if emp_info_obj:
+        # print ("if fenzhi")
+        emp_info = Emp_Info.objects.filter(user_id=username)[0]
+
+        name = Emp_Info.objects.filter(user_id=username)[0].name
+
+        birthday = str(emp_info.birthday).split(' ')[0]
+
+        content = {"username": username,"name":name, "birthday": birthday, "phone_id": emp_info.phone_id,
                "position": emp_info.position, "email": emp_info.email, "job_number": emp_info.job_number}
-    print(content)
-    return render(request,"AutoFW/personal_manage_page.html",content)
-
+        print(content)
+        return render(request,"AutoFW/personal_manage_page.html",content)
+    else:
+        # print ("else fenzhi")
+        content = {"username": username, "name": "", "birthday": "", "phone_id": "",
+                   "position": "", "email": "", "job_number": ""}
+        return render(request, "AutoFW/personal_manage_page.html", content)
 
 #个人信息修改页面 更新个人信息
 def update_emp_info(request,username):
@@ -642,8 +654,16 @@ def update_emp_info(request,username):
         content = {"name":name,"birthday":birthday_fmt,"phone_id":phone_id,
                    "position":position,"email":email,"job_number":job_number_fmi}
         print (content)
-        Emp_Info.objects.filter(user_id=username).update(**content)
-        print (birthday_fmt)
+
+        #判断是否存在该成员信息
+        emp_info_obj = Emp_Info.objects.filter(user_id=username)
+        if emp_info_obj:
+            Emp_Info.objects.filter(user_id=username).update(**content)
+        else:
+            content = {"user_id_id":username,"name": name, "birthday": birthday_fmt, "phone_id": phone_id,
+                       "position": position, "email": email, "job_number": job_number_fmi,"salery":0,
+                       "work_year":0,"remark":"tester","other":"other"}
+            Emp_Info.objects.create(**content)
 
         #重新构造时间数据格式给前端使用，否则出现系统默认格式
         emp_info = Emp_Info.objects.filter(user_id=username)[0]
@@ -675,3 +695,56 @@ def change_pw(request,username):
         else:
             print ("old password error!")
         return personal_manage(request, username)
+
+
+#测试用例过滤和生成测试用例
+def test_case_genirate_page(request,username):
+    print ("test_case_genirate_page")
+    #项目名称ValuesQuerySet
+    project_qs = Project.objects.values("project_name")
+    #获取成员姓名
+    creator = Emp_Info.objects.values("name")
+
+    print (creator)
+    content = {"project_name_list":project_qs,"creator_list":creator}
+
+    return render(request,"AutoFW/test_case_genirate_page.html",content)
+
+
+#select下拉框ajax出发事件 （根据项目名称更新模块）
+def select_load_module(request,project_name):
+    print ("select_load_module")
+    project_code = Project.objects.filter(project_name=project_name)[0].project_code
+    print (project_code)
+
+    module_name = Project_Module.objects.filter(project=project_code).values("module_name")
+    module_name_list = []
+    #将module_name存放到list中
+    for i in module_name:
+        module_name_list.append(i["module_name"])
+    print (module_name_list)
+
+    data = {"status":"success","module_name":module_name_list}
+
+    return JsonResponse(data)
+
+
+#根据提交条件查询测试用例
+def search_case(request):
+    print ("search_case")
+    get = request.GET.get
+    project_name = get("project_name")
+    creator_name = get("creator_name")
+    project_module = get("project_module")
+    case_status = get("case_status")
+    case_name = get("case_name")
+    print (project_name)
+    print (creator_name)
+    print (project_module)
+    print (case_status)
+    print (case_name)
+
+    case_obj = Project_Case.objects.filter(project_name=project_name,module_name=project_module)
+    print case_obj
+
+    return JsonResponse(1)

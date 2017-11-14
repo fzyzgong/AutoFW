@@ -54,4 +54,9 @@ urlpatterns = [
     url(r'^personal_manage/(.*)', views.personal_manage),
     url(r'^update_emp_info/(.*)', views.update_emp_info),
     url(r'^change_pw/(.*)', views.change_pw),
+
+    url(r'^test_case_genirate_page/(.*)', views.test_case_genirate_page),
+
+    url(r'^select_load_module/(.*)', views.select_load_module),
+    url(r'^search_case/$', views.search_case),
 ]
