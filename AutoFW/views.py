@@ -2,12 +2,16 @@
 import json
 
 import datetime,time
+
+import os
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,JsonResponse
+from .util.copyFileAndUpdataUtil import copyFile
 from models import *
-from django.core import serializers
 import MySQLdb
-from django.forms.models import model_to_dict
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 
 def login(request):
@@ -722,10 +726,10 @@ def select_load_module(request,project_name):
     #将module_name存放到list中
     for i in module_name:
         module_name_list.append(i["module_name"])
-    print (module_name_list)
+    # print (module_name_list)
 
     data = {"status":"success","module_name":module_name_list}
-
+    print (data)
     return JsonResponse(data)
 
 
@@ -734,17 +738,216 @@ def search_case(request):
     print ("search_case")
     get = request.GET.get
     project_name = get("project_name")
+    #unicode转str
+    project_name = project_name.encode("utf8")
     creator_name = get("creator_name")
+    # unicode转str
+    creator_name = creator_name.encode("utf8")
     project_module = get("project_module")
     case_status = get("case_status")
     case_name = get("case_name")
     print (project_name)
     print (creator_name)
     print (project_module)
-    print (case_status)
-    print (case_name)
+    print (str(case_status))
+    print (str(case_name))
+    #获取全局配置IP/PORT变量
+    project_obj = Project.objects.filter(project_name=project_name)[0]
+    # print (project_obj)
+    project_id = project_obj.project_code
+    # print (project_id)
+    prject_obj = Project_Config.objects.filter(project_id=project_id)[0]
+    prject_config_ip = prject_obj.ip
+    prject_config_port = prject_obj.port
+    #存放给前端table用的case数据
+    case_obj_list = []
 
-    case_obj = Project_Case.objects.filter(project_name=project_name,module_name=project_module)
-    print case_obj
+    #创建者/用例状态/用例名 为空时查询分支
+    if creator_name == "" and str(case_status) == "" and str(case_name) == "":
+        print ("创建者/用例状态/用例名 为空时查询分支")
+        case_obj = Project_Case.objects.filter(project_name=project_name,module_name=project_module)
+        for list in case_obj:
+            case_obj_dict = {"case_name":list.case_name,"project_name":list.project_name_id,"module_name":list.module_name_id,
+                             "url_path":list.url_path,"method":list.method,"ip":prject_config_ip,"parameter":list.parameter,
+                             "expected":list.expected,"port":prject_config_port,"creator":list.creator,"case_status":list.description}
+            case_obj_list.append(case_obj_dict)
+        # print (case_obj_list)
+        content = {"status": "success", "case_list": case_obj_list}
+        print (content)
+        return JsonResponse(content)
+    # 创建者/用例状态 为空时查询分支
+    elif creator_name == "" and str(case_status) == "":
+        print ("创建者/用例状态 为空时查询分支")
+        #case_name支持模糊查询
+        case_obj = Project_Case.objects.filter(project_name=project_name,
+                                               module_name=project_module,case_name__contains=case_name)
+        for list in case_obj:
+            case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,"module_name": list.module_name_id,
+                             "url_path": list.url_path, "method": list.method, "ip": prject_config_ip,"parameter": list.parameter,
+                             "expected": list.expected, "port": prject_config_port,"creator":list.creator,"case_status":list.description}
+            case_obj_list.append(case_obj_dict)
+        # print (case_obj_list)
+        content = {"status": "success", "case_list": case_obj_list}
+        print (content)
+        return JsonResponse(content)
+    # 创建者/用例名称 为空时查询分支
+    elif creator_name == "" and str(case_name) == "":
+        print ("创建者/用例名称 为空时查询分支")
+        case_obj = Project_Case.objects.filter(project_name=project_name,
+                                               module_name=project_module,description=case_status)
+        for list in case_obj:
+            case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,"module_name": list.module_name_id,
+                             "url_path": list.url_path, "method": list.method, "ip": prject_config_ip,"parameter": list.parameter,
+                             "expected": list.expected, "port": prject_config_port,"creator":list.creator,"case_status":list.description}
+            case_obj_list.append(case_obj_dict)
+        # print (case_obj_list)
+        content = {"status": "success", "case_list": case_obj_list}
+        print (content)
+        return JsonResponse(content)
+    # 用例名称/用例状态 为空时查询分支
+    elif str(case_status) == "" and str(case_name) == "":
+        print ("用例名称/用例状态 为空时查询分支")
+        #获取用户id
+        creator_n = Emp_Info.objects.filter(name=creator_name)[0].user_id_id
+        print (creator_n)
+        case_obj = Project_Case.objects.filter(project_name=project_name,
+                                               module_name=project_module,creator=creator_n)
+        # print (case_obj)
+        for list in case_obj:
+            case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,"module_name": list.module_name_id,
+                             "url_path": list.url_path, "method": list.method, "ip": prject_config_ip,"parameter": list.parameter,
+                             "expected": list.expected, "port": prject_config_port,"creator":list.creator,"case_status":list.description}
+            case_obj_list.append(case_obj_dict)
+        # print (case_obj_list)
+        content = {"status": "success", "case_list": case_obj_list}
+        print (content)
+        return JsonResponse(content)
+    # 创建者 为空时查询分支
+    elif creator_name == "":
+        print ("创建者 为空时查询分支")
+        # case_name支持模糊查询
+        case_obj = Project_Case.objects.filter(project_name=project_name,module_name=project_module,
+                                               case_name__contains=case_name,description=case_status)
+        # print (case_obj)
+        for list in case_obj:
+            case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,
+                             "module_name": list.module_name_id,
+                             "url_path": list.url_path, "method": list.method, "ip": prject_config_ip,
+                             "parameter": list.parameter,
+                             "expected": list.expected, "port": prject_config_port, "creator": list.creator,
+                             "case_status": list.description}
+            case_obj_list.append(case_obj_dict)
+        # print (case_obj_list)
+        content = {"status": "success", "case_list": case_obj_list}
+        print (content)
+        return JsonResponse(content)
+    # 用例状态 为空时查询分支
+    elif case_status == "":
+        print ("用例状态 为空时查询分支")
+        # 获取用户id
+        creator_n = Emp_Info.objects.filter(name=creator_name)[0].user_id_id
 
-    return JsonResponse(1)
+        case_obj = Project_Case.objects.filter(project_name=project_name,module_name=project_module,
+                                               case_name__contains=case_name,creator=creator_n)
+        for list in case_obj:
+            case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,
+                             "module_name": list.module_name_id,
+                             "url_path": list.url_path, "method": list.method, "ip": prject_config_ip,
+                             "parameter": list.parameter,
+                             "expected": list.expected, "port": prject_config_port, "creator": list.creator,
+                             "case_status": list.description}
+            case_obj_list.append(case_obj_dict)
+        # print (case_obj_list)
+        content = {"status": "success", "case_list": case_obj_list}
+        print (content)
+        return JsonResponse(content)
+    # 用例名称 为空时查询分支
+    elif case_name == "":
+        print ("用例名称 为空时查询分支")
+        # 获取用户id
+        creator_n = Emp_Info.objects.filter(name=creator_name)[0].user_id_id
+        case_obj = Project_Case.objects.filter(project_name=project_name,module_name=project_module,
+                                               description=case_status,creator=creator_n)
+        for list in case_obj:
+            case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,
+                             "module_name": list.module_name_id,
+                             "url_path": list.url_path, "method": list.method, "ip": prject_config_ip,
+                             "parameter": list.parameter,
+                             "expected": list.expected, "port": prject_config_port, "creator": list.creator,
+                             "case_status": list.description}
+            case_obj_list.append(case_obj_dict)
+        # print (case_obj_list)
+        content = {"status": "success", "case_list": case_obj_list}
+        print (content)
+        return JsonResponse(content)
+    else:
+        print ("所有查询条件不为空时查询分支")
+        # 获取用户id
+        creator_n = Emp_Info.objects.filter(name=creator_name)[0].user_id_id
+        case_obj = Project_Case.objects.filter(project_name=project_name, module_name=project_module,
+                                               description=case_status, creator=creator_n,case_name__contains=case_name)
+        for list in case_obj:
+            case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,
+                             "module_name": list.module_name_id,
+                             "url_path": list.url_path, "method": list.method, "ip": prject_config_ip,
+                             "parameter": list.parameter,
+                             "expected": list.expected, "port": prject_config_port, "creator": list.creator,
+                             "case_status": list.description}
+            case_obj_list.append(case_obj_dict)
+        # print (case_obj_list)
+        content = {"status": "success", "case_list": case_obj_list}
+        print (content)
+        return JsonResponse(content)
+
+
+#生成测试脚本（全选模式/单选）
+def chose_all_genritor_test_script(request):
+    print ("chose_all_genritor_test_script")
+    case_name = request.GET.get("case_name_json")
+    # case_name = case_name.encode("utf-8")
+    case_name_list = str(case_name).split(',')
+
+    #移除空列元素
+    case_name_list.remove('')
+
+    '''sourceFile/targetFile相对路径'''
+    sourceFile = "script/HTTP_API_case_templates/"
+    targetFile = "script/genirtor_script/"
+
+    for list in case_name_list:
+        print (list)
+        project_case_obj = Project_Case.objects.filter(case_name=list)[0]
+        #project_name ForigenKye
+        project_name = project_case_obj.project_name_id
+        project_obj = Project.objects.filter(project_name=project_name)[0]
+        project_id = project_obj.project_code
+        project_config_obj = Project_Config.objects.filter(project_id=project_id)[0]
+
+        ip = str(project_config_obj.ip)
+        url = str(project_case_obj.url_path)
+        param = str(project_case_obj.parameter)
+        expected = str(project_case_obj.expected)
+        fileName = str(project_case_obj.case_name) + "_" + str(datetime.datetime.now().year) + \
+            "_" + str(datetime.datetime.now().month) + "_" + str(datetime.datetime.now().day) + \
+            "_" + str(datetime.datetime.now().hour) + "_" + str(datetime.datetime.now().minute) + ".py"
+
+        # '''复制重命名'''
+        # fileName = "1234.py"
+        # ip = "http://www.sojson.com"
+        # url = "/open/api/weather/json.shtml"
+        #
+        # '''以字符串格式传给复制替换，否则遇中文转码'''
+        # param = '{"city": "北京"}'
+        # expected = '{"message": "Success !"}'
+        #
+
+        copyFile(sourceFile, targetFile, fileName, ip, url, param, expected)
+
+    parent_path = os.getcwd() + "/util/" + targetFile
+
+    content = {"status":"genirtor_script_success","targetDir":parent_path}
+    return JsonResponse(content)
+
+
+def execute_test_script(request):
+    return render(request,"AutoFW/execute_test_script_page.html")

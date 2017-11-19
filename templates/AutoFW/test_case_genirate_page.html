@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/jquery_easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/static/jquery_easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/workbench_module.css">
+
+    <script type="text/javascript" src="/static/jquery_easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/jquery_easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/static/jquery_easyui/locale/easyui-lang-zh_CN.js"></script>
 
     <style type="text/css">
         #search_table{
@@ -22,6 +29,20 @@
         #search_tr td{
             width: 560px;
             height: 60px;
+        }
+
+        /*列表展示*/
+        #case_list_t{
+            width: 1600px;
+        }
+        #case_list_t td{
+            border: solid 1px;
+            text-align: center;
+        }
+        #case_list_t td span{
+            font-size: 20px;
+            font-weight: bold;
+            padding: 5px;
         }
     </style>
 </head>
@@ -43,7 +64,7 @@
                 <tr>
                     <td>
                         <label id="project_name_label">项目名称：</label>
-                        <select name="project_name_section" id="project_name_section" style="width: 100px">
+                        <select name="project_name_section" id="project_name_section" required style="width: 100px">
                             <option></option>
                             {% for list in project_name_list %}
                             <option>{{list.project_name}}</option>
@@ -63,7 +84,7 @@
                 <tr>
                     <td>
                         <label id="project_module_label">项目模块：</label>
-                        <select id="project_module_section" style="width: 100px">
+                        <select id="project_module_section" required style="width: 100px">
                             <option></option>
                         </select>
                     </td>
@@ -86,8 +107,37 @@
                     </td>
                 </tr>
         </table>
+    </div>
+        <br />
+        <hr />
+        <br />
+    <div style="padding-left: 300px">
+        <input type="button" value="生成测试脚本" onclick="genritor_test_script()">
+        <span style="padding-left: 100px"></span>
 
-
+    </div>
+    <br />
+    <div>
+        <table id="case_list_t" cellspacing="0" cellpadding="0">
+            <tr style="height: 40px;">
+                <td><span>全选</span><input id="chose_all_c" type="checkbox" name="chose_all_c" onclick="chose_all_c()"></td>
+                <td><span>用例名称</span></td>
+                <td><span>所属项目</span></td>
+                <td><span>所属模块</span></td>
+                <td><span>接口地址（URL）</span></td>
+                <td style="width: 50px"><span>方法</span></td>
+                <td><span>服务器地址</span></td>
+                <td style="width: 50px"><span>端口</span></td>
+                <td><span>参数</span></td>
+                <td><span>预期结果</span></td>
+                <td><span>创建者</span></td>
+                <td><span>用例状态</span></td>
+            </tr>
+            <tr id="case_list_tr_f" style="background: black">
+                <td colspan="12" style="height: 1px"></td>
+            </tr>
+        </table>
+    </div>
         <script type="text/javascript">
             /////////////手动触发selectd的change事件////////////////
             $("#project_name_section").change(function () {
@@ -109,28 +159,134 @@
 //            $("#creator_section").trigger("change");
 
             function search_case() {
+                $("#chose_all_c").attr("checked",false);
+
                 var project_name = $("#project_name_section option:selected").text();
                 var creator_name = $("#creator_section option:selected").text();
                 var project_module = $("#project_module_section option:selected").text();
                 var case_status = $("#case_status_section option:selected").text();
                 var case_name = $("#project_case_name_input").val();
-
-//                alert(project_name);
-//                alert(creator_name);
-//                alert(project_module);
-//                alert(case_status);
-//                alert(case_name);
+                //判断项目名称和模块名称必选
+                if(project_name.length ==0){
+                    alert("项目名称为必选项！");
+                    return;
+                }
+                if(project_module.length ==0){
+                    alert("模块名称为必选项！");
+                    return;
+                }
+                //clear td data
+                $(".case_list_td").remove();
                 $.ajax({
-                    url:"/AutoFW/search_case/?project_name="+project_name+"&creator_name="+creator_name+"&project_module="+project_module+"&case_status="+case_status+"&case_name="+case_name,
+                    url:"/AutoFW/search_case/",
                     type: "get",
+                    data: "project_name="+project_name+"&creator_name="+creator_name+"&project_module="+project_module+"&case_status="+case_status+"&case_name="+case_name,
                     success:function (data) {
+                        console.log(data.status);
+
+                        console.log(data.case_list);
                         if(data.status == "success"){
-                            alert(data);
+                            if(data.case_list.length > 0){
+                                $(".case_list_td").remove();
+                                for(var i = 0; i < data.case_list.length; i++){
+    //                                alert(data.case_list[i].case_name);
+
+                                    $("#case_list_t").append(
+                                        '<tr id="case_list_tr" class="case_list_td">' +
+                                            '<td class="case_list_td"><input class="checkbox_input_case_name" type="checkbox" value="'+data.case_list[i].case_name+'" onclick="cancel_all()"></td><td class="case_list_td">'+data.case_list[i].case_name+'</td><td class="case_list_td">'+data.case_list[i].project_name+'</td>'+
+                                            '<td class="case_list_td">'+data.case_list[i].module_name+'</td><td class="case_list_td">'+data.case_list[i].url_path+'</td>' +
+                                            '<td class="case_list_td">'+data.case_list[i].method+'</td><td class="case_list_td">'+data.case_list[i].ip+'</td>' +
+                                            '<td class="case_list_td">'+data.case_list[i].port+'</td><td class="case_list_td">'+data.case_list[i].parameter+'</td><td class="case_list_td">'+data.case_list[i].expected+'</td>' +
+                                            '<td class="case_list_td">'+data.case_list[i].creator+'</td><td class="case_list_td">'+data.case_list[i].case_status+'</td>' +
+                                        '</tr>'
+                                    );
+                                }
+                            }else {
+//                                alert("没有匹配到数据");
+                                $(".case_list_td").remove();
+                                $("#case_list_t").append('<tr style="text-align: center" class="case_list_td"><td colspan="12" class="case_list_td">没有匹配到数据</td></tr>');
+                            }
+
+                        }else {
+                            alert("error");
                         }
                     }
                 });
             };
+
+
+            var isCheckAll = false;
+            function chose_all_c() {
+                //checkbox 全选/取消全选
+                if (isCheckAll) {
+                    $("input[type='checkbox']").each(function() {
+                        this.checked = false;
+                    });
+                    isCheckAll = false;
+                } else {
+                    $("input[type='checkbox']").each(function() {
+                        this.checked = true;
+                    });
+                    isCheckAll = true;
+                }
+            }
+
+
+            function genritor_test_script() {
+                //判断全选是否勾选
+                var case_name_json = "";
+                if($("#chose_all_c").is(":checked")){
+//                    alert("checked");
+                    //获取所有选择中case_name
+                    var case_name_list = document.getElementsByClassName("checkbox_input_case_name");
+//                    alert(case_name_list.length);
+
+
+                    $(".checkbox_input_case_name").each(function () {
+                        case_name_json += $(this).val()+',';
+                    })
+//                    alert(case_name_json);
+                }else{
+//                    判断没有全选生成测试脚本时
+//                    alert("no checked all");
+                    $(".checkbox_input_case_name:checked").each(function (i) {
+                        case_name_json += $(this).val() + ','
+                    })
+                }
+                if(case_name_json){
+                    $.ajax({
+                        url: "/AutoFW/chose_all_genritor_test_script",
+                        type: "get",
+                        data: "case_name_json="+case_name_json,
+                        success: function (data) {
+                            if(data.status == "genirtor_script_success"){
+                                $.messager.show({
+                                    title: '脚本生成提示',
+                                    msg: "接口测试脚本生成成功所在目录："+data.targetDir,
+                                    width: 300,
+                                    height: 200,
+                                    showType:null,
+                                    style:{
+
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }else {
+                    alert("未选择要生成脚本的数据！");
+                }
+            };
+
+
+//            点击取消单条选择，取消全选状态
+            function cancel_all() {
+                if($(".checkbox_input_case_name").is(':checked')){
+                    $("#chose_all_c").attr("checked", false);
+                }
+
+            };
+
         </script>
-    </div>
 </body>
 </html>
