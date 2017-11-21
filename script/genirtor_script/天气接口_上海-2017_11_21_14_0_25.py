@@ -8,11 +8,12 @@ class TestAPI:
 
         r = requests.get(ip + url,params=param)
         rs = r.json()
+        print (rs)
         #断言 判断接口返回数据是否正常
         if rs[expected.keys()[0]] == expected.values()[0]:
-            print ("test success")
+            print ("AutoFW test reslut:PASS")
         else:
-            print ("test failed")
+            print ("AutoFW test reslut:FAILED")
 
 
 

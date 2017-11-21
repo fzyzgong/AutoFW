@@ -237,6 +237,37 @@
 
         };
 
+        //删除测试脚本
+        function delete_test_script() {
+            //提示确认是否删除脚本
+            $.messager.confirm('Confirm','Are you sure you want to destroy this test script?',function(r){
+                if(r){
+                    var script_name_json = "";
+                    $(".checkbox_input_script_name:checked").each(function () {
+                        script_name_json += $(this).val() + ','
+                    })
+                    if(script_name_json){
+                        $.ajax({
+                            url: "/AutoFW/delete_test_script",
+                            type: "get",
+                            data: "script_name_json="+script_name_json,
+                            success: function (data) {
+                                if(data.status == "delete_script_success"){
+                                    $.messager.show({
+                                        title: '脚本删除提示',
+                                        msg: "接口测试脚本删除成功！",
+                                    });
+                                    search_case();
+                                }
+                            }
+                        });
+                    }else {
+                        alert("未选择要删除脚本的数据！");
+                    }
+                }
+            });
+        }
+
         //执行测试脚本
         function execute_test_script() {
             //判断全选是否勾选

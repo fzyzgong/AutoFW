@@ -1162,11 +1162,40 @@ def execute_test_script(request):
         for list in script_name_list:
 
             script_info_obj = Script_Info.objects.filter(script_name=list)[0]
-            script_path = script_info_obj.script_path
+            script_path = str(script_info_obj.script_path)
             print (script_path)
-            r = execute_script_Popen(script_path)
-            print (r)
-
+            rs = execute_script_Popen(script_path,4) #脚本路径/休眠时间 (当前测试接口需要等待3秒才能再次访问)
+            result =rs.split('AutoFW test reslut:')[1]
+            result = str(result).replace("\n","")
+            # 修改脚本实例表 脚本状态字段标识
+            if result:
+                if "PASS" == result:
+                    dict = {"script_status":"PASS"}
+                elif "FAILED" == result:
+                    dict = {"script_status": "FAILED"}
+            else:
+                dict = {"script_status": "NONE"}
+            Script_Info.objects.filter(script_name=list).update(**dict)
 
         content = {"status":"execute_script_success"}
+        return JsonResponse(content)
+
+
+def delete_test_script(request):
+    print ("delete_test_script")
+    if request.method == "GET":
+        script_name = request.GET.get("script_name_json")
+        script_name_list = str(script_name).split(',')
+        # 移除空列元素
+        script_name_list.remove('')
+        for list in script_name_list:
+            script_info_obj = Script_Info.objects.filter(script_name=list)[0]
+            script_path = str(script_info_obj.script_path)
+            #删除物理存储文件
+            os.remove(script_path)
+            print ("Delete File: " + script_path)
+            script_obj = Script_Info.objects.get(script_name=list)
+            #删除数据库存储数据
+            script_obj.delete()
+        content = {"status": "delete_script_success"}
         return JsonResponse(content)

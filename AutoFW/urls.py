@@ -63,4 +63,5 @@ urlpatterns = [
     url(r'^execute_test_script_page/(.*)', views.execute_test_script_page),
     url(r'^search_script/$', views.search_script),
     url(r'^execute_test_script/$', views.execute_test_script),
+    url(r'^delete_test_script/$', views.delete_test_script),
 ]
