@@ -182,9 +182,9 @@
                     type: "get",
                     data: "project_name="+project_name+"&creator_name="+creator_name+"&project_module="+project_module+"&case_status="+case_status+"&case_name="+case_name,
                     success:function (data) {
-                        console.log(data.status);
-
-                        console.log(data.case_list);
+//                        console.log(data.status);
+//
+//                        console.log(data.case_list);
                         if(data.status == "success"){
                             if(data.case_list.length > 0){
                                 $(".case_list_td").remove();
@@ -249,7 +249,7 @@
                 }else{
 //                    判断没有全选生成测试脚本时
 //                    alert("no checked all");
-                    $(".checkbox_input_case_name:checked").each(function (i) {
+                    $(".checkbox_input_case_name:checked").each(function () {
                         case_name_json += $(this).val() + ','
                     })
                 }

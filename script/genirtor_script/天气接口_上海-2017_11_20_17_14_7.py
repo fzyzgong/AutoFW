@@ -20,7 +20,7 @@ if __name__ == "__main__":
 
     ip = "http://www.sojson.com"
     url = "/open/api/weather/json.shtml"
-    param = {"city": "湖南"}
+    param = {"city": "上海"}
     expected = {"message": "Success !"}
 
     t = TestAPI()

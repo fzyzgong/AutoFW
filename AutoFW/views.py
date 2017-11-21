@@ -2,10 +2,11 @@
 import json
 
 import datetime,time
-
 import os
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,JsonResponse
+
+from .util.execute_script_Popen import execute_script_Popen
 from .util.copyFileAndUpdataUtil import copyFile
 from models import *
 import MySQLdb
@@ -914,6 +915,10 @@ def chose_all_genritor_test_script(request):
     sourceFile = "script/HTTP_API_case_templates/"
     targetFile = "script/genirtor_script/"
 
+    # print (os.getcwd()) #/home/fzyzgong/project/AutoFWOG
+
+    parent_path = os.getcwd() + "/" + targetFile
+
     for list in case_name_list:
         print (list)
         project_case_obj = Project_Case.objects.filter(case_name=list)[0]
@@ -927,9 +932,10 @@ def chose_all_genritor_test_script(request):
         url = str(project_case_obj.url_path)
         param = str(project_case_obj.parameter)
         expected = str(project_case_obj.expected)
-        fileName = str(project_case_obj.case_name) + "_" + str(datetime.datetime.now().year) + \
+        fileName = str(project_case_obj.case_name) + "-" + str(datetime.datetime.now().year) + \
             "_" + str(datetime.datetime.now().month) + "_" + str(datetime.datetime.now().day) + \
-            "_" + str(datetime.datetime.now().hour) + "_" + str(datetime.datetime.now().minute) + ".py"
+            "_" + str(datetime.datetime.now().hour) + "_" + str(datetime.datetime.now().minute)+ \
+            "_" + str(datetime.datetime.now().second) + ".py"
 
         # '''复制重命名'''
         # fileName = "1234.py"
@@ -942,12 +948,225 @@ def chose_all_genritor_test_script(request):
         #
 
         copyFile(sourceFile, targetFile, fileName, ip, url, param, expected)
-
-    parent_path = os.getcwd() + "/util/" + targetFile
+        create_time = fileName.split('-')[1].split('.')[0]
+        print (create_time)
+        dict = {"script_name":fileName,"script_path":parent_path+fileName,"script_case_name_id":project_case_obj.case_name,
+                "create_time":create_time,"script_module_name_id":project_case_obj.module_name_id,
+                "script_status":"NONE","script_project_name_id":project_name,"remark":"remark"}
+        print (dict)
+        Script_Info.objects.create(**dict)
 
     content = {"status":"genirtor_script_success","targetDir":parent_path}
     return JsonResponse(content)
 
 
+#进入执行脚本页面
+def execute_test_script_page(request,username):
+    print ("execute_test_script")
+    # 项目名称ValuesQuerySet
+    project_qs = Project.objects.values("project_name")
+
+    content = {"project_name_list": project_qs}
+    return render(request,"AutoFW/execute_test_script_page.html",content)
+
+
+#查询脚本
+def search_script(request):
+    print ("search_script")
+    get = request.GET.get
+    project_name = get("project_name")
+    # unicode转str
+    project_name = project_name.encode("utf8")
+    create_time = get("create_time") #2017-11-20 11:50:02
+    #转换格式
+    create_time_w = str(create_time).split(' ')[0].replace("-","_")
+    # unicode转str
+    create_time = create_time.encode("utf8")
+    project_module = get("project_module")
+    script_status = get("script_status")
+    script_name = get("script_name")
+    print (project_name)
+    print (create_time_w)
+    print (project_module)
+    print (script_status)
+    print (script_name)
+    # 获取全局配置IP/PORT变量
+    # script_info = Script_Info.objects.filter(script_module_name=project_module)[0]
+    # print (project_obj)
+
+
+    # 存放给前端table用的case数据
+    script_obj_list = []
+
+    # # 创建时间/用例状态/脚本名称 为空时查询分支
+    if create_time == "" and str(script_status) == "" and str(script_name) == "":
+        print ("创建时间/脚本状态/脚本名称 为空时查询分支")
+        script_obj = Script_Info.objects.filter(script_project_name=project_name, script_module_name=project_module)
+        for list in script_obj:
+            create_times = list.create_time #2017_11_20_10_4_54
+            #转换格式 2017_11_20
+            create_time_h = str(create_times).rsplit('_',3)[0].replace("_","-")
+
+            script_obj_dict = {"script_name": list.script_name, "script_path": list.script_path,
+                             "script_case_name": list.script_case_name_id,
+                             "create_time": create_time_h, "script_module_name": list.script_module_name_id,
+                               "script_status":list.script_status,"script_project_name":list.script_project_name_id}
+            script_obj_list.append(script_obj_dict)
+        # print (case_obj_list)
+        content = {"status": "success", "script_list": script_obj_list}
+        print (content)
+        return JsonResponse(content)
+    # 创建时间/脚本状态 为空时查询分支
+    elif create_time == "" and str(script_status) == "":
+        print ("创建时间/脚本状态 为空时查询分支")
+        # script_name支持模糊查询
+        script_obj = Script_Info.objects.filter(script_project_name=project_name,
+                                               script_module_name=project_module, script_name__contains=script_name)
+        for list in script_obj:
+            create_times = list.create_time  # 2017_11_20_10_4_54
+            # 转换格式 2017_11_20
+            create_time_h = str(create_times).rsplit('_', 3)[0].replace("_", "-")
+            script_obj_dict = {"script_name": list.script_name, "script_path": list.script_path,
+                             "script_case_name": list.script_case_name_id,
+                             "create_time": create_time_h, "script_module_name": list.script_module_name_id,
+                               "script_status":list.script_status,"script_project_name":list.script_project_name_id}
+            script_obj_list.append(script_obj_dict)
+        # print (case_obj_list)
+        content = {"status": "success", "script_list": script_obj_list}
+        print (content)
+        return JsonResponse(content)
+    # 创建时间/脚本名称 为空时查询分支
+    elif create_time == "" and str(script_name) == "":
+        print ("创建时间/脚本名称 为空时查询分支")
+        script_obj = Script_Info.objects.filter(script_project_name=project_name,
+                                               script_module_name=project_module, script_status=script_status)
+        for list in script_obj:
+            create_times = list.create_time  # 2017_11_20_10_4_54
+            # 转换格式 2017_11_20
+            create_time_h = str(create_times).rsplit('_', 3)[0].replace("_", "-")
+            script_obj_dict = {"script_name": list.script_name, "script_path": list.script_path,
+                               "script_case_name": list.script_case_name_id,
+                               "create_time": create_time_h, "script_module_name": list.script_module_name_id,
+                               "script_status": list.script_status, "script_project_name": list.script_project_name_id}
+            script_obj_list.append(script_obj_dict)
+        # print (case_obj_list)
+        content = {"status": "success", "script_list": script_obj_list}
+        print (content)
+        return JsonResponse(content)
+    # 脚本状态/脚本名称 为空时查询分支
+    elif str(script_status) == "" and str(script_name) == "":
+        print ("脚本状态/脚本名称 为空时查询分支")
+        # 2017-11-20 11:50:02 转成 2017_11_20_11_50_02
+        create_time = str(create_time).split(' ')[0].replace("-","_")
+        # print ("create_time:转成"+create_time)
+        script_obj = Script_Info.objects.filter(script_project_name=project_name,
+                                               script_module_name=project_module, create_time__contains=create_time)
+
+        for list in script_obj:
+            script_obj_dict = {"script_name": list.script_name, "script_path": list.script_path,
+                               "script_case_name": list.script_case_name_id,
+                               "create_time": create_time, "script_module_name": list.script_module_name_id,
+                               "script_status": list.script_status, "script_project_name": list.script_project_name_id}
+            script_obj_list.append(script_obj_dict)
+
+        content = {"status": "success", "script_list": script_obj_list}
+        print (content)
+        return JsonResponse(content)
+    # 创建时间 为空时查询分支
+    elif create_time == "":
+        print ("创建时间 为空时查询分支")
+        # script_name支持模糊查询
+        script_obj = Script_Info.objects.filter(script_project_name=project_name, script_module_name=project_module,
+                                                script_name__contains=script_name, script_status=script_status)
+        # print (case_obj)
+        for list in script_obj:
+            create_times = list.create_time  # 2017_11_20_10_4_54
+            # 转换格式 2017_11_20
+            create_time_h = str(create_times).rsplit('_', 3)[0].replace("_", "-")
+            script_obj_dict = {"script_name": list.script_name, "script_path": list.script_path,
+                               "script_case_name": list.script_case_name_id,
+                               "create_time": create_time_h, "script_module_name": list.script_module_name_id,
+                               "script_status": list.script_status, "script_project_name": list.script_project_name_id}
+            script_obj_list.append(script_obj_dict)
+
+        content = {"status": "success", "script_list": script_obj_list}
+        print (content)
+        return JsonResponse(content)
+    # 脚本状态 为空时查询分支
+    elif script_status == "":
+        print ("脚本状态 为空时查询分支")
+        # 2017-11-20 11:50:02 转成 2017_11_20_11_50_02
+        create_time = str(create_time).split(' ')[0].replace("-", "_")
+        # script_name支持模糊查询
+        script_obj = Script_Info.objects.filter(script_project_name=project_name, script_module_name=project_module,
+                                                script_name__contains=script_name, create_time__contains=create_time)
+
+        for list in script_obj:
+            script_obj_dict = {"script_name": list.script_name, "script_path": list.script_path,
+                               "script_case_name": list.script_case_name_id,
+                               "create_time": create_time, "script_module_name": list.script_module_name_id,
+                               "script_status": list.script_status, "script_project_name": list.script_project_name_id}
+            script_obj_list.append(script_obj_dict)
+
+        content = {"status": "success", "script_list": script_obj_list}
+        print (content)
+        return JsonResponse(content)
+    # 脚本名称 为空时查询分支
+    elif script_name == "":
+        print ("脚本名称 为空时查询分支")
+        # 2017-11-20 11:50:02 转成 2017_11_20_11_50_02
+        create_time = str(create_time).split(' ')[0].replace("-", "_")
+        # create_time支持模糊查询
+        script_obj = Script_Info.objects.filter(script_project_name=project_name, script_module_name=project_module,
+                                                script_status=script_status, create_time__contains=create_time)
+
+        for list in script_obj:
+            script_obj_dict = {"script_name": list.script_name, "script_path": list.script_path,
+                               "script_case_name": list.script_case_name_id,
+                               "create_time": create_time, "script_module_name": list.script_module_name_id,
+                               "script_status": list.script_status, "script_project_name": list.script_project_name_id}
+            script_obj_list.append(script_obj_dict)
+
+        content = {"status": "success", "script_list": script_obj_list}
+        print (content)
+        return JsonResponse(content)
+    else:
+        print ("所有查询条件不为空时查询分支")
+        # 2017-11-20 11:50:02 转成 2017_11_20_11_50_02
+        create_time = str(create_time).split(' ')[0].replace("-", "_")
+
+        script_obj = Script_Info.objects.filter(script_project_name=project_name, script_module_name=project_module,
+                                                script_status=script_status, create_time__contains=create_time,
+                                                script_name__contains=script_name)
+        for list in script_obj:
+            script_obj_dict = {"script_name": list.script_name, "script_path": list.script_path,
+                               "script_case_name": list.script_case_name_id,
+                               "create_time": create_time, "script_module_name": list.script_module_name_id,
+                               "script_status": list.script_status, "script_project_name": list.script_project_name_id}
+            script_obj_list.append(script_obj_dict)
+
+        content = {"status": "success", "script_list": script_obj_list}
+        print (content)
+        return JsonResponse(content)
+
+
 def execute_test_script(request):
-    return render(request,"AutoFW/execute_test_script_page.html")
+    print ("execute_test_script")
+    if request.method == "GET":
+        script_name = request.GET.get("script_name_json")
+
+        script_name_list = str(script_name).split(',')
+        # 移除空列元素
+        script_name_list.remove('')
+        # print (script_name_list)
+        for list in script_name_list:
+
+            script_info_obj = Script_Info.objects.filter(script_name=list)[0]
+            script_path = script_info_obj.script_path
+            print (script_path)
+            r = execute_script_Popen(script_path)
+            print (r)
+
+
+        content = {"status":"execute_script_success"}
+        return JsonResponse(content)

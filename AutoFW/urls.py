@@ -60,5 +60,7 @@ urlpatterns = [
     url(r'^select_load_module/(.*)', views.select_load_module),
     url(r'^search_case/$', views.search_case),
     url(r'^chose_all_genritor_test_script/$', views.chose_all_genritor_test_script),
+    url(r'^execute_test_script_page/(.*)', views.execute_test_script_page),
+    url(r'^search_script/$', views.search_script),
     url(r'^execute_test_script/$', views.execute_test_script),
 ]
