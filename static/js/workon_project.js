@@ -62,6 +62,7 @@ $('#tt').tabs({
                 $("#module_count").html(data.project_module_count)
 
                 $("#project_config_ip").attr("value",data.ip);
+                $("#project_config_protocol").attr("value",data.protocol);
                 $("#project_config_domain").attr("value",data.domain);
                 $("#project_config_port").attr("value",data.port);
             }else{

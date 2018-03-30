@@ -1,7 +1,6 @@
 #coding=utf-8
 import requests
 
-
 class TestAPI:
 
     def testDemo(self,ip,url,param,expected):
@@ -13,7 +12,8 @@ class TestAPI:
         if rs[expected.keys()[0]] == expected.values()[0]:
             print ("AutoFW test reslut:PASS")
         else:
-            print ("AutoFW test reslut:FAILED")
+            print ("AutoFW test reslut:FAILED\n"+str(rs))
+
 
 
 
@@ -21,7 +21,7 @@ if __name__ == "__main__":
 
     ip = "http://www.sojson.com"
     url = "/open/api/weather/json.shtml"
-    param = {"city": "南昌"}
+    param = {"city": "1南昌1"}
     expected = {"message": "Success !"}
 
     t = TestAPI()

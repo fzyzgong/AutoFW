@@ -37,7 +37,7 @@ class Project_Config(models.Model):
     ip = models.CharField(max_length=30, primary_key=True)
     domain = models.CharField(max_length=200)
     port = models.IntegerField()
-    bak_field1 = models.CharField(max_length=100)
+    protocol = models.CharField(max_length=100)
     bak_field2 = models.CharField(max_length=100)
 
     class Meta:
@@ -65,9 +65,11 @@ class Project_Case(models.Model):
     url_path = models.CharField(max_length=150)
     port = models.IntegerField
     method = models.CharField(max_length=20)
-    parameter = models.CharField(max_length=300)
+    parameter_format = models.CharField(max_length=50,null=True)
+    parameter = models.CharField(max_length=1500)
     expected = models.CharField(max_length=300)
     description = models.CharField(max_length=100)
+    headers = models.CharField(max_length=1000)
 
     class Meta:
         db_table = 'project_case'

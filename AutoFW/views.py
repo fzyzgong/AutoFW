@@ -13,7 +13,8 @@ import MySQLdb
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
-
+import logging
+log = logging.getLogger("django")
 
 def login(request):
     return render(request, 'AutoFW/login.html')
@@ -144,7 +145,6 @@ def income_project(request, project_id):
         #获取每个模块的总用例数
         module_case_count = Project_Case.objects.filter(module_name=list.module_name).count()
 
-
         #该模块测试状态统计（PASS/FAILED/NONE）
         #该模块测试用例通过的总个数
         case_pass_count = Project_Case.objects.filter(module_name=list.module_name).filter(description="PASS").count()
@@ -203,11 +203,12 @@ def project_attribute(request):
     project_domain = project_config.domain
     project_port = project_config.port
     project_port_str = str(project_port)
+    project_protocol = project_config.protocol
 
     content = {'create_time':create_times,'creator':creator,
               'department':department,'prioirty':prioirty,'project_name':project_name,
              'project_module_count':project_module_count,'project_case_count':project_case_count,
-               'ip':project_ip,'domain':project_domain,'port':project_port_str}
+               'ip':project_ip,'domain':project_domain,'port':project_port_str,'protocol':project_protocol}
     print (content)
     return JsonResponse(content)
 
@@ -219,23 +220,25 @@ def project_globel_config(request,project_id):
         project_ip = request.POST.get('ip')
         project_domain = request.POST.get('domain')
         project_port = request.POST.get('port')
+        project_protocol = request.POST.get('protocol')
+
         if project_port.strip() != '':
             project_port = int(project_port)
 
-        content = {"ip":project_ip,"domain":project_domain,"port":project_port}
+        content = {"ip":project_ip,"domain":project_domain,"port":project_port,"protocol":project_protocol}
         print (content)
         #判断项目是否存在配置，不存在就新建，存在就修改
         project_config_count = Project_Config.objects.filter(project_id=project_id).count()
         print ("project_config_count:"+str(project_config_count))
 
-        if project_config_count > 0 and str(project_ip).strip() != '' and str(project_domain).strip() != '' and str(project_port).strip() != '':
+        if project_config_count > 0 and str(project_ip).strip() != '' and str(project_domain).strip() != '' and str(project_port).strip() != '' and str(project_protocol).strip() != '':
             print ("project_globel_config 进入[update]分支！")
             Project_Config.objects.filter(project_id=project_id).update(**content)
             return HttpResponse("update success")
         elif project_config_count == 0:
             print ("project_globel_config 进入[create]分支！")
             content = {"ip": project_ip, "domain": project_domain, "port": project_port,
-                       "project_id_id":project_id,"bak_field1":"bak1","bak_field2":"bak2"}
+                       "project_id_id":project_id,"protocol":project_protocol,"bak_field2":"bak2"}
             print (content)
             Project_Config.objects.create(**content)
             return HttpResponse("create success")
@@ -399,7 +402,7 @@ def case_Read_all_SQL(request,project_id):
         # print (list.module_name.module_name)
         caseList.append({"case_id":list.case_id,"module_name":list.module_name.module_name,"project_name":list.project_name.project_name,
                          "case_name":list.case_name,"creator":list.creator,"url_path":list.url_path,
-                         "method":list.method,"parameter":list.parameter,"expected":list.expected,
+                         "method":list.method,"headers":list.headers,"parameter_format":list.parameter_format,"parameter":list.parameter,"expected":list.expected,
                          "description":list.description})
         # i += 1
 
@@ -413,24 +416,26 @@ def case_Read_all_SQL(request,project_id):
 
 def API_start(request,project_id):
     if request.method == "POST":
-        print("POST")
-        case_id = request.POST.get('case_id')
-        module_name = request.POST.get('module_name')
+        print("API_start POST")
+        case_id = request.POST.get('case_id')#接口编号
+        module_name = request.POST.get('module_name')#模块名称
 
         #获取项目名，传递给前端
         project_name = Project.objects.filter(project_code=project_id).values('project_name')[0]['project_name']
 
-        case_name = request.POST.get('case_name')
-        creator = request.POST.get('creator')
+        case_name = request.POST.get('case_name')#接口名称
+        creator = request.POST.get('creator')#创建人
         url_path = request.POST.get('url_path')
         method = request.POST.get('method')
+        headers = request.POST.get('headers')
+        parameter_format = request.POST.get('parameter_format')
         parameter = request.POST.get('parameter')
         expected = request.POST.get('expected')
         description = request.POST.get('description')
         # module_name_id是外键 本应是module_name    project_name_id是外键 本应是project_name
         dic = {'case_id': case_id,'module_name_id': module_name, 'project_name_id':project_name,
-               'case_name': case_name,'creator':creator,'url_path':url_path,'method':method,
-               'parameter':parameter,'expected':expected,'description':description}
+               'case_name': case_name,'creator':creator,'url_path':url_path,'method':method,'headers':headers,
+               'parameter_format':parameter_format,'parameter':parameter,'expected':expected,'description':description}
 
         Project_Case.objects.create(**dic)
 
@@ -447,17 +452,18 @@ def editAPI(request,project_id):
         case_name = request.POST.get('case_name')
         url_path = request.POST.get('url_path')
         method = request.POST.get('method')
+        headers = request.POST.get('headers')
         parameter = request.POST.get('parameter')
         expected = request.POST.get('expected')
         module_name = request.POST.get('module_name')
         description = request.POST.get('description')
         # print (module_name)
         creator = request.POST.get('creator')
-
+        print (headers)
         project_name = Project.objects.filter(project_code=project_id).values('project_name')[0]['project_name']
 
         dic = {'case_id': case_id, 'case_name': case_name,
-               'url_path': url_path, 'method': method,
+               'url_path': url_path, 'method': method,'headers':headers,
                'parameter': parameter, 'expected': expected,
                'module_name': module_name, 'project_name': project_name,
                'description': description};
@@ -769,7 +775,7 @@ def search_case(request):
         case_obj = Project_Case.objects.filter(project_name=project_name,module_name=project_module)
         for list in case_obj:
             case_obj_dict = {"case_name":list.case_name,"project_name":list.project_name_id,"module_name":list.module_name_id,
-                             "url_path":list.url_path,"method":list.method,"ip":prject_config_ip,"parameter":list.parameter,
+                             "url_path":list.url_path,"method":list.method,"headers":list.headers,"ip":prject_config_ip,"parameter":list.parameter,
                              "expected":list.expected,"port":prject_config_port,"creator":list.creator,"case_status":list.description}
             case_obj_list.append(case_obj_dict)
         # print (case_obj_list)
@@ -784,7 +790,7 @@ def search_case(request):
                                                module_name=project_module,case_name__contains=case_name)
         for list in case_obj:
             case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,"module_name": list.module_name_id,
-                             "url_path": list.url_path, "method": list.method, "ip": prject_config_ip,"parameter": list.parameter,
+                             "url_path": list.url_path, "method": list.method,"headers":list.headers, "ip": prject_config_ip,"parameter": list.parameter,
                              "expected": list.expected, "port": prject_config_port,"creator":list.creator,"case_status":list.description}
             case_obj_list.append(case_obj_dict)
         # print (case_obj_list)
@@ -798,7 +804,7 @@ def search_case(request):
                                                module_name=project_module,description=case_status)
         for list in case_obj:
             case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,"module_name": list.module_name_id,
-                             "url_path": list.url_path, "method": list.method, "ip": prject_config_ip,"parameter": list.parameter,
+                             "url_path": list.url_path, "method": list.method,"headers":list.headers, "ip": prject_config_ip,"parameter": list.parameter,
                              "expected": list.expected, "port": prject_config_port,"creator":list.creator,"case_status":list.description}
             case_obj_list.append(case_obj_dict)
         # print (case_obj_list)
@@ -816,7 +822,7 @@ def search_case(request):
         # print (case_obj)
         for list in case_obj:
             case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,"module_name": list.module_name_id,
-                             "url_path": list.url_path, "method": list.method, "ip": prject_config_ip,"parameter": list.parameter,
+                             "url_path": list.url_path, "method": list.method,"headers":list.headers, "ip": prject_config_ip,"parameter": list.parameter,
                              "expected": list.expected, "port": prject_config_port,"creator":list.creator,"case_status":list.description}
             case_obj_list.append(case_obj_dict)
         # print (case_obj_list)
@@ -833,7 +839,7 @@ def search_case(request):
         for list in case_obj:
             case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,
                              "module_name": list.module_name_id,
-                             "url_path": list.url_path, "method": list.method, "ip": prject_config_ip,
+                             "url_path": list.url_path, "method": list.method,"headers":list.headers, "ip": prject_config_ip,
                              "parameter": list.parameter,
                              "expected": list.expected, "port": prject_config_port, "creator": list.creator,
                              "case_status": list.description}
@@ -853,7 +859,7 @@ def search_case(request):
         for list in case_obj:
             case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,
                              "module_name": list.module_name_id,
-                             "url_path": list.url_path, "method": list.method, "ip": prject_config_ip,
+                             "url_path": list.url_path, "method": list.method,"headers":list.headers, "ip": prject_config_ip,
                              "parameter": list.parameter,
                              "expected": list.expected, "port": prject_config_port, "creator": list.creator,
                              "case_status": list.description}
@@ -872,7 +878,7 @@ def search_case(request):
         for list in case_obj:
             case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,
                              "module_name": list.module_name_id,
-                             "url_path": list.url_path, "method": list.method, "ip": prject_config_ip,
+                             "url_path": list.url_path, "method": list.method,"headers":list.headers, "ip": prject_config_ip,
                              "parameter": list.parameter,
                              "expected": list.expected, "port": prject_config_port, "creator": list.creator,
                              "case_status": list.description}
@@ -890,7 +896,7 @@ def search_case(request):
         for list in case_obj:
             case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,
                              "module_name": list.module_name_id,
-                             "url_path": list.url_path, "method": list.method, "ip": prject_config_ip,
+                             "url_path": list.url_path, "method": list.method,"headers":list.headers, "ip": prject_config_ip,
                              "parameter": list.parameter,
                              "expected": list.expected, "port": prject_config_port, "creator": list.creator,
                              "case_status": list.description}
@@ -917,7 +923,8 @@ def chose_all_genritor_test_script(request):
 
     # print (os.getcwd()) #/home/fzyzgong/project/AutoFWOG
 
-    parent_path = os.getcwd() + "/" + targetFile
+    parent_path = os.getcwd() + "/AutoFW/" + targetFile
+    print (parent_path)
 
     for list in case_name_list:
         print (list)
@@ -926,12 +933,26 @@ def chose_all_genritor_test_script(request):
         project_name = project_case_obj.project_name_id
         project_obj = Project.objects.filter(project_name=project_name)[0]
         project_id = project_obj.project_code
+
         project_config_obj = Project_Config.objects.filter(project_id=project_id)[0]
 
         ip = str(project_config_obj.ip)
-        url = str(project_case_obj.url_path)
+        domain = project_config_obj.domain.replace(' ','')  #去除空格
+        protocol = project_config_obj.protocol.replace(' ','')  #去除空格
+        url = str(project_case_obj.url_path).replace(' ','')  #去除空格
+        method = str(project_case_obj.method).replace(' ', '')  # 去除空格
+
+        #headers 和 param 可以为空 GET/POST 不同时分支
+        headers = str(project_case_obj.headers)
         param = str(project_case_obj.parameter)
         expected = str(project_case_obj.expected)
+
+        #字符串转字典
+        # headers = eval(headers_tmp)
+        # param = eval(param_tmp)
+        # expected = eval(expected_tmp)
+        print (headers,param,expected)
+
         fileName = str(project_case_obj.case_name) + "-" + str(datetime.datetime.now().year) + \
             "_" + str(datetime.datetime.now().month) + "_" + str(datetime.datetime.now().day) + \
             "_" + str(datetime.datetime.now().hour) + "_" + str(datetime.datetime.now().minute)+ \
@@ -947,7 +968,7 @@ def chose_all_genritor_test_script(request):
         # expected = '{"message": "Success !"}'
         #
 
-        copyFile(sourceFile, targetFile, fileName, ip, url, param, expected)
+        copyFile(sourceFile, targetFile, fileName,protocol,method, domain, url,headers, param, expected)
         create_time = fileName.split('-')[1].split('.')[0]
         print (create_time)
         dict = {"script_name":fileName,"script_path":parent_path+fileName,"script_case_name_id":project_case_obj.case_name,
@@ -1164,15 +1185,23 @@ def execute_test_script(request):
             script_info_obj = Script_Info.objects.filter(script_name=list)[0]
             script_path = str(script_info_obj.script_path)
             print (script_path)
-            rs = execute_script_Popen(script_path,4) #脚本路径/休眠时间 (当前测试接口需要等待3秒才能再次访问)
-            result =rs.split('AutoFW test reslut:')[1]
-            result = str(result).replace("\n","")
+            rs = execute_script_Popen(script_path,1) #脚本路径/休眠时间 (当前测试接口需要等待3秒才能再次访问)
+            print(rs)
+            result =rs.split('AutoFW test reslut:')[1].split('\'')[0]
+            # result = str(result).replace("\n","")
+            print ("---------")
+            print (script_path+'：执行结果'+result)
+            print ("---------")
             # 修改脚本实例表 脚本状态字段标识
             if result:
+                rs = rs.split('AutoFW test reslut:')[1]
                 if "PASS" == result:
                     dict = {"script_status":"PASS"}
+                    # log.info(list + ":PASS:" + " pass message [" + rs.split('PASS')[1] + "]")#响应信息都打印
+                    log.info(list + ":PASS:{ response  resultCode" + rs.split('resultCode')[1].split(',')[0])#只打印成功关键字段
                 elif "FAILED" == result:
                     dict = {"script_status": "FAILED"}
+                    log.info(list + ":FAILED:" + " error message [" + rs.split('FAILED')[1] + "]")
             else:
                 dict = {"script_status": "NONE"}
             Script_Info.objects.filter(script_name=list).update(**dict)

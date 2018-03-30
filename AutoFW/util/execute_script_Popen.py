@@ -10,6 +10,8 @@ def execute_script_Popen(script_path,sleep_time):
 
     stdout, stderr = p.communicate()
 
+
+
     time.sleep(sleep_time)
 
     r = stdout + stderr

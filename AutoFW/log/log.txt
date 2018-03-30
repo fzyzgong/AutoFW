@@ -1,0 +1,88 @@
+DEBUG 2017-11-22 11:49:27,471 /home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/django/db/backends/utils.py utils.py utils execute 89: (0.005) SET SQL_AUTO_IS_NULL = 0; args=None
+DEBUG 2017-11-22 11:49:27,505 /home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/django/db/backends/utils.py utils.py utils execute 89: (0.003) SET SQL_AUTO_IS_NULL = 0; args=None
+DEBUG 2017-11-22 11:49:27,554 /home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/django/db/backends/utils.py utils.py utils execute 89: (0.048) SHOW FULL TABLES; args=None
+DEBUG 2017-11-22 11:49:27,564 /home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/django/db/backends/utils.py utils.py utils execute 89: (0.009) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+INFO 2017-11-22 11:49:52,157 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1176: 天气接口_上海-2017_11_22_10_47_25.py:PASS
+INFO 2017-11-22 11:51:53,491 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1176: 天气接口_上海-2017_11_22_10_47_25.py:PASS
+INFO 2017-11-22 11:54:34,556 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1176: 天气接口_上海-2017_11_22_11_54_21.py:PASS
+INFO 2017-11-22 11:54:38,921 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1176: 天气接口_北京-2017_11_22_11_54_21.py:PASS
+INFO 2017-11-22 11:54:43,283 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1176: 天气接口_南昌-2017_11_22_11_54_21.py:PASS
+INFO 2017-11-22 11:55:29,276 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1176: 天气接口_上海-2017_11_22_11_54_21.py:PASS
+INFO 2017-11-22 11:55:33,665 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1176: 天气接口_北京-2017_11_22_11_54_21.py:PASS
+INFO 2017-11-22 11:55:38,044 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1179: 天气接口_南昌-2017_11_22_11_54_21.py:FAILED
+INFO 2017-11-22 12:07:18,047 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1182: 天气接口_南昌-2017_11_22_11_54_21.py:FAILED
+INFO 2017-11-22 12:08:37,063 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1182: 天气接口_南昌-2017_11_22_11_54_21.py:FAILED:FAILED{u'message': u'Check the parameters.'}
+INFO 2017-11-22 12:11:06,626 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1182: 天气接口_南昌-2017_11_22_11_54_21.py:FAILED: error message [{u'message': u'Check the parameters.'}]
+INFO 2018-03-05 13:09:06,503 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1179: 天气接口_北京-2018_3_5_13_8_41.py:PASS
+INFO 2018-03-05 13:09:59,579 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1182: 天气接口_北京-2018_3_5_13_8_41.py:FAILED: error message []
+INFO 2018-03-12 14:40:30,224 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1179: 天气接口_北京-2018_3_12_14_39_27.py:PASS
+INFO 2018-03-29 14:18:47,399 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1194: 登录初始化-2018_3_29_14_17_57.py:PASS
+INFO 2018-03-29 14:20:46,718 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1197: 登录初始化-2018_3_29_14_17_57.py:FAILED: error message []
+INFO 2018-03-29 14:34:24,278 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1197: 登录初始化-2018_3_29_14_17_57.py:FAILED: error message []
+INFO 2018-03-29 14:48:41,326 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1199: 登录初始化-2018_3_29_14_17_57.py:FAILED: error message []
+INFO 2018-03-29 14:52:15,888 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1198: 登录初始化-2018_3_29_14_17_57.py:FAILED: error message [', '{u\'resultCode\': 500, u\'errMsg\': u"Missing request header \'appCode\' for method parameter of type String"}')
+]
+INFO 2018-03-29 14:55:03,750 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1195: 登录初始化-2018_3_29_14_17_57.py:PASS
+INFO 2018-03-29 14:57:47,456 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1195: 登录初始化-2018_3_29_14_57_30.py:PASS
+INFO 2018-03-29 15:08:05,296 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1195: 登录初始化-2018_3_29_14_57_30.py:PASS: pass message [', "{u'body': {u'ubt': {u'maxUploadSize': 100, u'sleepTime': 10000, u'minUploadSize': 10, u'basePageTrace': True, u'minUploadTime': 9999, u'maxRetryCount': 1}, u'schema': {u'shareBlackList': [u'http://mobtest.2boss.cn/app_qa/dist/index.html#/index', u'http://mob.2boss.cn/app_qa/dist/index.html#/index', u'http://mobtest.2boss.cn/app_qa/dist/index.html#/hotperson_detail?', u'http://mob.2boss.cn/app_qa/dist/index.html#/hotperson_detail?', u'http://mobtest.2boss.cn/app_qa/dist/index.html#/newpost_one?', u'http://mob.2boss.cn/app_qa/dist/index.html#/newpost_one?', u'http://mobtest.2boss.cn/app_qa/dist/index.html#/newpost?', u'http://mob.2boss.cn/app_qa/dist/index.html#/newpost?'], u'externalLinkBlackList': [u'https://linkm.lianjia.com', u'https://lnk0.com', u'https://itunes.apple.com/cn/app/id405882753', u'https://ios.qfang.com', u'https://itunes.apple.com/cn/app/id1225814601', u'wiwjapp://second/detail', u'https://itunes.apple.com/app/id1004322269', u'http://sh.centanet.com/m/app', u'opryz1wu://openlink.cc', u'http://deecq4.openlink.cc', u'https://itunes.apple.com/cn/app/shang-hai-zhong-yuan/id1173813119', u'http://link.dianping.com/universal-link', u'http://m.dianping.com/download', u'https://m.dianping.com/download']}}, u'resultCode': 0}")
+]
+INFO 2018-03-29 15:13:17,707 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1196: 登录初始化-2018_3_29_14_57_30.py:PASS: response  'resultCode': [': 0}
+('AutoFW test reslut:PASS']
+INFO 2018-03-29 15:16:50,897 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1196: 登录初始化-2018_3_29_14_57_30.py:PASS: response  resultCode': 0}
+INFO 2018-03-29 15:20:45,505 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1196: 登录初始化-2018_3_29_14_57_30.py:PASS: response  resultCode': 0}
+('AutoFW test reslut:PASS'
+INFO 2018-03-29 15:23:08,849 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1197: 登录初始化-2018_3_29_14_57_30.py:PASS:{ response  resultCode': 0}
+INFO 2018-03-29 15:31:57,031 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1197: 登录初始化-2018_3_29_14_57_30.py:PASS:{ response  resultCode': 0}")
+
+INFO 2018-03-29 15:34:34,976 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1200: 登录初始化-2018_3_29_14_57_30.py:FAILED: error message [', '{u\'resultCode\': 500, u\'errMsg\': u"Missing request header \'appCode\' for method parameter of type String"}')
+]
+INFO 2018-03-29 16:39:43,699 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1199: 登录初始化-2018_3_29_14_57_30.py:PASS:{ response  resultCode': 0}")
+
+INFO 2018-03-29 16:41:16,528 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1202: 更新绑定用户信息-2018_3_29_15_47_9.py:FAILED: error message [', "{u'body': u'', u'resultCode': 0, u'errMsg': u''}")
+]
+INFO 2018-03-29 16:47:01,504 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1202: 更新绑定用户信息-2018_3_29_15_47_9.py:FAILED: error message [', "{u'body': u'', u'resultCode': 0, u'errMsg': u''}")
+]
+INFO 2018-03-29 16:48:19,906 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1202: 更新绑定用户信息-2018_3_29_15_47_9.py:FAILED: error message [', "{u'body': u'', u'resultCode': 0, u'errMsg': u''}")
+]
+INFO 2018-03-29 16:49:26,074 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1199: 更新绑定用户信息-2018_3_29_15_47_9.py:PASS:{ response  resultCode': 0
+INFO 2018-03-29 16:54:12,737 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1200: 更新绑定用户信息-2018_3_29_16_53_28.py:PASS:{ response  resultCode': 0
+INFO 2018-03-29 16:56:14,505 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1200: 更新绑定用户信息-2018_3_29_16_53_28.py:PASS:{ response  resultCode': 0
+INFO 2018-03-29 17:39:35,458 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1200: 更新绑定用户信息-2018_3_29_16_53_28.py:PASS:{ response  resultCode': 0
+INFO 2018-03-29 17:39:37,984 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1203: 更新绑定用户信息-2018_3_29_16_55_35.py:FAILED: error message [', '{u\'status\': 400, u\'exception\': u\'org.springframework.web.bind.MissingServletRequestParameterException\', u\'timestamp\': 1522316375994, u\'error\': u\'Bad Request\', u\'path\': u\'/superior/v1/im/imUpdateCustomer\', u\'message\': u"Required Integer parameter \'customer_id\' is not present"}')
+]
+INFO 2018-03-30 10:11:40,005 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1203: 存储用户Session-2018_3_30_10_10_46.py:FAILED: error message [', '{u\'resultCode\': 500, u\'errMsg\': u"Content type \'application/x-www-form-urlencoded;charset=UTF-8\' not supported"}')
+]
+INFO 2018-03-30 10:14:02,706 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1200: 存储用户Session-2018_3_30_10_13_52.py:PASS:{ response  resultCode': 0}")
+
+INFO 2018-03-30 10:16:33,673 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1200: 存储用户Session-2018_3_30_10_13_52.py:PASS:{ response  resultCode': 0}")
+
+INFO 2018-03-30 10:16:36,306 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1200: 更新绑定用户信息-2018_3_29_16_53_28.py:PASS:{ response  resultCode': 0
+INFO 2018-03-30 10:17:11,875 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1200: 存储用户Session-2018_3_30_10_13_52.py:PASS:{ response  resultCode': 0}")
+
+INFO 2018-03-30 10:17:14,289 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1200: 更新绑定用户信息-2018_3_29_16_53_28.py:PASS:{ response  resultCode': 0
+INFO 2018-03-30 10:17:16,566 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1203: 更新绑定用户信息-2018_3_29_16_55_35.py:FAILED: error message [', '{u\'status\': 400, u\'exception\': u\'org.springframework.web.bind.MissingServletRequestParameterException\', u\'timestamp\': 1522376234417, u\'error\': u\'Bad Request\', u\'path\': u\'/superior/v1/im/imUpdateCustomer\', u\'message\': u"Required Integer parameter \'customer_id\' is not present"}')
+]
+INFO 2018-03-30 10:17:21,465 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1200: 登录初始化-2018_3_29_14_57_30.py:PASS:{ response  resultCode': 0}")
+
+INFO 2018-03-30 10:31:54,131 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1200: 存储用户Session-2018_3_30_10_13_52.py:PASS:{ response  resultCode': 0}")
+
+INFO 2018-03-30 10:31:56,472 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1200: 更新绑定用户信息-2018_3_29_16_53_28.py:PASS:{ response  resultCode': 0
+INFO 2018-03-30 10:31:58,905 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1203: 更新绑定用户信息-2018_3_29_16_55_35.py:FAILED: error message [', '{u\'status\': 400, u\'exception\': u\'org.springframework.web.bind.MissingServletRequestParameterException\', u\'timestamp\': 1522377116704, u\'error\': u\'Bad Request\', u\'path\': u\'/superior/v1/im/imUpdateCustomer\', u\'message\': u"Required Integer parameter \'customer_id\' is not present"}')
+]
+INFO 2018-03-30 10:32:03,409 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1200: 登录初始化-2018_3_29_14_57_30.py:PASS:{ response  resultCode': 0}")
+
+INFO 2018-03-30 10:37:28,123 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1200: 登录初始化-2018_3_29_11_1_26.py:PASS:{ response  resultCode': 0}")
+
+INFO 2018-03-30 10:38:58,150 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1200: 登录初始化-2018_3_29_11_1_26.py:PASS:{ response  resultCode': 0}")
+
+INFO 2018-03-30 10:42:32,168 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1200: 存储用户Session-2018_3_30_10_40_54.py:PASS:{ response  resultCode': 0}")
+
+[2018-03-30 11:04:19]>>  data type error
+INFO 2018-03-30 13:43:38,757 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1200: 首页(顶部区域搜索框点击)-2018_3_30_13_43_22.py:PASS:{ response  resultCode': 0
+INFO 2018-03-30 13:45:04,761 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1200: 存储用户Session-2018_3_30_13_44_53.py:PASS:{ response  resultCode': 0}")
+
+INFO 2018-03-30 13:45:06,615 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1200: 平台框架获取事件列表-2018_3_30_13_44_52.py:PASS:{ response  resultCode': 0
+INFO 2018-03-30 13:45:07,910 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1203: 更新绑定用户信息-2018_3_30_13_44_52.py:FAILED: error message [', '{u\'status\': 400, u\'exception\': u\'org.springframework.web.bind.MissingServletRequestParameterException\', u\'timestamp\': 1522388706824, u\'error\': u\'Bad Request\', u\'path\': u\'/superior/v1/im/imUpdateCustomer\', u\'message\': u"Required Integer parameter \'userId\' is not present"}')
+]
+INFO 2018-03-30 13:45:09,173 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1200: 登录初始化-2018_3_30_13_44_53.py:PASS:{ response  resultCode': 0}")
+

@@ -1,7 +1,6 @@
 #coding=utf-8
 import requests
 
-
 class TestAPI:
 
     def testDemo(self,ip,url,param,expected):
@@ -19,10 +18,10 @@ class TestAPI:
 
 if __name__ == "__main__":
 
-    ip = "http://www.og.demo.com"
-    url = "/og/demo"
-    param = {"demo":"demo"}
-    expected = {"demo":"Success !"}
+    ip = "http://www.sojson.com"
+    url = "/open/api/weather/json.shtml"
+    param = {"city": "上海"}
+    expected = {"message": "Success !"}
 
     t = TestAPI()
     t.testDemo(ip,url,param,expected)

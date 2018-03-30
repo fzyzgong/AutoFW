@@ -14,7 +14,7 @@
 </head>
 <body>
     <h2 style="text-align: center">项目{{ project_id }}管理中心</h2>
-    <p style="color: #ff4200">功能说明：<br/><span>&nbsp;&nbsp;① 查看项目总体信息，包括测试信息; </span><br/>
+    <p style="color: #ff4200">功能说明(设置项目全局配置来同步数据)：<br/><span>&nbsp;&nbsp;① 查看项目总体信息，包括测试信息; </span><br/>
         <span>&nbsp;&nbsp;② 针对项目进行模块的管理，模块编号唯一值;</span><br/><span>&nbsp;&nbsp;③ 针对项目所有的API配置，接口编号唯一值;</span></p>
     <!--<a href="/AutoFW/income_project/{{ project_id }}">refrash</a>-->
 
@@ -138,6 +138,7 @@
             <img src="/static/media/jiantou_x.png">
             <span style="font-size: 50px;margin: 0 auto"><a target="mainFrame" href="/AutoFW/workon_tabs_api/{{project_id}}">进入项目[{{project_id}}]接口管理</a></span>
         </div>
+
         <div title="全局配置" style="padding:80px;display:none;">
             <div id="project_globle_config" class="project_config">
                 <span style="font-size: 28px;padding-bottom: 10px">全局配置</span>
@@ -148,6 +149,13 @@
                             <ul class="config-text">
                                 <li><b>IP&nbsp;&nbsp;&nbsp;</b></li>
                                 <li><input name="ip" type="text" disabled="disabled" id="project_config_ip" ></li>
+                            </ul>
+                        </li>
+                        <br />
+                         <li>
+                            <ul class="config-text">
+                                <li><b>协议</b></li>
+                                <li><input name="protocol" type="text" disabled="disabled" id="project_config_protocol" >
                             </ul>
                         </li>
                         <br />

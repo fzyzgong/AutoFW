@@ -39,6 +39,8 @@
                 <th field="case_name" width="100">接口名称</th>
                 <th field="url_path" width="150">url</th>
                 <th field="method" width="30">方法</th>
+                <th field="headers" width="100">头信息</th>
+                <th field="parameter_format" width="100">参数格式</th>
                 <th field="parameter" width="100">参数</th>
                 <th field="expected" width="100">预期值</th>
                 <th field="module_name" width="100">所属模块</th>
@@ -73,13 +75,29 @@
                 <section id="easyui-combobox" class="easyui-combobox" required="true" name="method"  style="width: 200px">
                     <option>GET</option>
                     <option>POST</option>
+                    <option>PUT</option>
+                    <option>DELETE</option>
                 </section>
             </div>
             <div style="margin-bottom:10px">
-                <input name="parameter" class="easyui-textbox" required="true" label="参数(json):" style="width:100%">
+                <input name="headers" class="easyui-textbox" label="头信息(json):" style="width:100%">
             </div>
             <div style="margin-bottom:10px">
-                <input name="expected" class="easyui-textbox" required="true" label="预期值(json):" style="width:100%">
+                <span>method:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <section id="easyui-combobox_pFormat" class="easyui-combobox" required="true" name="parameter_format"  style="width: 200px">
+                    <option>GET方法选该参数格式</option>
+                    <option>application/x-www-form-urlencoded</option>
+                    <option>application/json</option>
+                    <option>multipart/form-data</option>
+                    <option>text/xml</option>
+                    <option>text/plain</option>
+                </section>
+            </div>
+            <div style="margin-bottom:10px">
+                <input name="parameter" class="easyui-textbox" label="参数:" style="width:100%">
+            </div>
+            <div style="margin-bottom:10px">
+                <input name="expected" class="easyui-textbox" label="预期值(json):" style="width:100%">
             </div>
             <div style="margin-bottom:10px">
                 <span>所属模块:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
