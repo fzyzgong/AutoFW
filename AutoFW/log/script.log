@@ -1,0 +1,10 @@
+INFO 2018-04-02 18:13:32,651 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1208: 存储用户Session-2018_4_2_15_57_3.py:PASS:[time_consuming:0.442364]{ response : 'resultCode: 0' }
+INFO 2018-04-02 18:13:37,871 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1208: 实时获取tab标签发现（信息）-2018_4_2_15_57_3.py:PASS:[time_consuming:0.289228]{ response : 'resultCode: 0' }
+ERROR 2018-04-02 18:13:53,973 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1220: 平台框架获取事件列表-2018_4_2_15_57_3.py:FAILED: error message [ IndexError ]('list index out of range',)
+ERROR 2018-04-02 18:14:10,108 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1220: 更新绑定用户信息-2018_4_2_15_57_3.py:FAILED: error message [ IndexError ]('list index out of range',)
+INFO 2018-04-02 18:14:10,993 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1208: 登录初始化-2018_4_2_15_57_3.py:PASS:[time_consuming:0.098901]{ response : 'resultCode: 0' }
+INFO 2018-04-02 18:15:41,054 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1208: 存储用户Session-2018_4_2_15_57_3.py:PASS:[time_consuming:0.256024]{ response : 'resultCode: 0' }
+INFO 2018-04-02 18:15:42,540 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1208: 实时获取tab标签发现（信息）-2018_4_2_15_57_3.py:PASS:[time_consuming:0.792032]{ response : 'resultCode: 0' }
+ERROR 2018-04-02 18:15:58,373 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1220: 平台框架获取事件列表-2018_4_2_15_57_3.py:FAILED: error message [ IndexError ]('list index out of range',)
+ERROR 2018-04-02 18:16:14,424 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1220: 更新绑定用户信息-2018_4_2_15_57_3.py:FAILED: error message [ IndexError ]('list index out of range',)
+INFO 2018-04-02 18:16:15,323 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1208: 登录初始化-2018_4_2_15_57_3.py:PASS:[time_consuming:0.096126]{ response : 'resultCode: 0' }

@@ -64,4 +64,10 @@ urlpatterns = [
     url(r'^search_script/$', views.search_script),
     url(r'^execute_test_script/$', views.execute_test_script),
     url(r'^delete_test_script/$', views.delete_test_script),
+
+    url(r'^script_log_page/(.*)',views.script_log_page),
+    url(r'^delete_script_log/$', views.delete_script_log),
+    url(r'^error_log_page/(.*)', views.error_log_page),
+    url(r'^delete_error_log/$', views.delete_error_log),
+
 ]

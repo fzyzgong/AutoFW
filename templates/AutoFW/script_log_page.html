@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Log 查看</title>
+    <script type="text/javascript">
+        function delete_script_log(){
+            window.location.href="/AutoFW/delete_script_log/"
+        }
+    </script>
+</head>
+<body>
+    <div style="text-align: center">
+        <H4>Script Log Display</H4>
+    </div>
+    <div>
+        <form action="/AutoFW/script_log_page/">
+            <input type="submit" name="referer_s_b" value="刷新">
+            <input type="button" name="delete_s_b" value="清除数据" onclick="delete_script_log()" style="float: right">
+        </form>
+        <!--<form action="/AutoFW/delete_script_log/" style="float: right">-->
+            <!--<input type="submit" name="delete_s_b" value="清除数据">-->
+        <!--</form>-->
+    </div>
+    <hr />
+    <textarea rows="40" cols="220" style="overflow-y: scroll" name="ta_script_log">{{ content }}</textarea>
+</body>
+</html>

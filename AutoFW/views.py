@@ -1,20 +1,22 @@
 #coding=utf-8
 import json
-
 import datetime,time
 import os
 from django.shortcuts import render,redirect
-from django.http import HttpResponse,JsonResponse
-
+from django.http import HttpResponse,JsonResponse,HttpResponseRedirect
 from .util.execute_script_Popen import execute_script_Popen
 from .util.copyFileAndUpdataUtil import copyFile
 from models import *
 import MySQLdb
 import sys
+
 reload(sys)
 sys.setdefaultencoding('utf8')
+from .util.Mylogging import mylogging  #自定义异常捕获日志
+
 import logging
-log = logging.getLogger("django")
+log_sys = logging.getLogger("django")  #系统日志
+log_scripts = logging.getLogger("scripts")  #执行脚本日志
 
 def login(request):
     return render(request, 'AutoFW/login.html')
@@ -453,6 +455,7 @@ def editAPI(request,project_id):
         url_path = request.POST.get('url_path')
         method = request.POST.get('method')
         headers = request.POST.get('headers')
+        parameter_format = request.POST.get('parameter_format')
         parameter = request.POST.get('parameter')
         expected = request.POST.get('expected')
         module_name = request.POST.get('module_name')
@@ -463,7 +466,7 @@ def editAPI(request,project_id):
         project_name = Project.objects.filter(project_code=project_id).values('project_name')[0]['project_name']
 
         dic = {'case_id': case_id, 'case_name': case_name,
-               'url_path': url_path, 'method': method,'headers':headers,
+               'url_path': url_path, 'method': method,'headers':headers,'parameter_format':parameter_format,
                'parameter': parameter, 'expected': expected,
                'module_name': module_name, 'project_name': project_name,
                'description': description};
@@ -775,7 +778,7 @@ def search_case(request):
         case_obj = Project_Case.objects.filter(project_name=project_name,module_name=project_module)
         for list in case_obj:
             case_obj_dict = {"case_name":list.case_name,"project_name":list.project_name_id,"module_name":list.module_name_id,
-                             "url_path":list.url_path,"method":list.method,"headers":list.headers,"ip":prject_config_ip,"parameter":list.parameter,
+                             "url_path":list.url_path,"method":list.method,"headers":list.headers,"ip":prject_config_ip,"parameter_format":list.parameter_format,"parameter":list.parameter,
                              "expected":list.expected,"port":prject_config_port,"creator":list.creator,"case_status":list.description}
             case_obj_list.append(case_obj_dict)
         # print (case_obj_list)
@@ -790,7 +793,7 @@ def search_case(request):
                                                module_name=project_module,case_name__contains=case_name)
         for list in case_obj:
             case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,"module_name": list.module_name_id,
-                             "url_path": list.url_path, "method": list.method,"headers":list.headers, "ip": prject_config_ip,"parameter": list.parameter,
+                             "url_path": list.url_path, "method": list.method,"headers":list.headers, "ip": prject_config_ip,"parameter_format":list.parameter_format,"parameter": list.parameter,
                              "expected": list.expected, "port": prject_config_port,"creator":list.creator,"case_status":list.description}
             case_obj_list.append(case_obj_dict)
         # print (case_obj_list)
@@ -804,7 +807,7 @@ def search_case(request):
                                                module_name=project_module,description=case_status)
         for list in case_obj:
             case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,"module_name": list.module_name_id,
-                             "url_path": list.url_path, "method": list.method,"headers":list.headers, "ip": prject_config_ip,"parameter": list.parameter,
+                             "url_path": list.url_path, "method": list.method,"headers":list.headers, "ip": prject_config_ip,"parameter_format":list.parameter_format,"parameter": list.parameter,
                              "expected": list.expected, "port": prject_config_port,"creator":list.creator,"case_status":list.description}
             case_obj_list.append(case_obj_dict)
         # print (case_obj_list)
@@ -822,7 +825,7 @@ def search_case(request):
         # print (case_obj)
         for list in case_obj:
             case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,"module_name": list.module_name_id,
-                             "url_path": list.url_path, "method": list.method,"headers":list.headers, "ip": prject_config_ip,"parameter": list.parameter,
+                             "url_path": list.url_path, "method": list.method,"headers":list.headers, "ip": prject_config_ip,"parameter_format":list.parameter_format,"parameter": list.parameter,
                              "expected": list.expected, "port": prject_config_port,"creator":list.creator,"case_status":list.description}
             case_obj_list.append(case_obj_dict)
         # print (case_obj_list)
@@ -840,7 +843,7 @@ def search_case(request):
             case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,
                              "module_name": list.module_name_id,
                              "url_path": list.url_path, "method": list.method,"headers":list.headers, "ip": prject_config_ip,
-                             "parameter": list.parameter,
+                             "parameter_format":list.parameter_format,"parameter": list.parameter,
                              "expected": list.expected, "port": prject_config_port, "creator": list.creator,
                              "case_status": list.description}
             case_obj_list.append(case_obj_dict)
@@ -860,7 +863,7 @@ def search_case(request):
             case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,
                              "module_name": list.module_name_id,
                              "url_path": list.url_path, "method": list.method,"headers":list.headers, "ip": prject_config_ip,
-                             "parameter": list.parameter,
+                             "parameter_format":list.parameter_format,"parameter": list.parameter,
                              "expected": list.expected, "port": prject_config_port, "creator": list.creator,
                              "case_status": list.description}
             case_obj_list.append(case_obj_dict)
@@ -879,7 +882,7 @@ def search_case(request):
             case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,
                              "module_name": list.module_name_id,
                              "url_path": list.url_path, "method": list.method,"headers":list.headers, "ip": prject_config_ip,
-                             "parameter": list.parameter,
+                             "parameter_format":list.parameter_format,"parameter": list.parameter,
                              "expected": list.expected, "port": prject_config_port, "creator": list.creator,
                              "case_status": list.description}
             case_obj_list.append(case_obj_dict)
@@ -897,7 +900,7 @@ def search_case(request):
             case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,
                              "module_name": list.module_name_id,
                              "url_path": list.url_path, "method": list.method,"headers":list.headers, "ip": prject_config_ip,
-                             "parameter": list.parameter,
+                             "parameter_format":list.parameter_format,"parameter": list.parameter,
                              "expected": list.expected, "port": prject_config_port, "creator": list.creator,
                              "case_status": list.description}
             case_obj_list.append(case_obj_dict)
@@ -944,6 +947,7 @@ def chose_all_genritor_test_script(request):
 
         #headers 和 param 可以为空 GET/POST 不同时分支
         headers = str(project_case_obj.headers)
+        param_format = str(project_case_obj.parameter_format)
         param = str(project_case_obj.parameter)
         expected = str(project_case_obj.expected)
 
@@ -968,7 +972,7 @@ def chose_all_genritor_test_script(request):
         # expected = '{"message": "Success !"}'
         #
 
-        copyFile(sourceFile, targetFile, fileName,protocol,method, domain, url,headers, param, expected)
+        copyFile(sourceFile, targetFile, fileName,protocol,method, domain, url,headers,param_format, param, expected)
         create_time = fileName.split('-')[1].split('.')[0]
         print (create_time)
         dict = {"script_name":fileName,"script_path":parent_path+fileName,"script_case_name_id":project_case_obj.case_name,
@@ -1170,7 +1174,7 @@ def search_script(request):
         print (content)
         return JsonResponse(content)
 
-
+#执行脚本
 def execute_test_script(request):
     print ("execute_test_script")
     if request.method == "GET":
@@ -1184,32 +1188,48 @@ def execute_test_script(request):
 
             script_info_obj = Script_Info.objects.filter(script_name=list)[0]
             script_path = str(script_info_obj.script_path)
-            print (script_path)
-            rs = execute_script_Popen(script_path,1) #脚本路径/休眠时间 (当前测试接口需要等待3秒才能再次访问)
+            # print (script_path)
+            rs = execute_script_Popen(script_path,0.5) #脚本路径/休眠时间 (当前测试接口需要等待3秒才能再次访问)
             print(rs)
-            result =rs.split('AutoFW test reslut:')[1].split('\'')[0]
-            # result = str(result).replace("\n","")
-            print ("---------")
-            print (script_path+'：执行结果'+result)
-            print ("---------")
-            # 修改脚本实例表 脚本状态字段标识
-            if result:
-                rs = rs.split('AutoFW test reslut:')[1]
-                if "PASS" == result:
-                    dict = {"script_status":"PASS"}
-                    # log.info(list + ":PASS:" + " pass message [" + rs.split('PASS')[1] + "]")#响应信息都打印
-                    log.info(list + ":PASS:{ response  resultCode" + rs.split('resultCode')[1].split(',')[0])#只打印成功关键字段
-                elif "FAILED" == result:
-                    dict = {"script_status": "FAILED"}
-                    log.info(list + ":FAILED:" + " error message [" + rs.split('FAILED')[1] + "]")
-            else:
+            try:
+                result =rs.split('AutoFW test reslut:')[1].split('\'')[0]
+                # result = str(result).replace("\n","")
+                print ("---------")
+                print (script_path+'：执行结果'+result)
+                print ("---------")
+                # 修改脚本实例表 脚本状态字段标识
+                if result:
+                    rs = rs.split('AutoFW test reslut:')[1]
+
+                    if "PASS" == result:
+                        dict = {"script_status":"PASS"}
+                        time_consuming = rs.split('time_consuming:')[1].split(']')[0]
+                        # log_scripts.info(list + ":PASS:" + " pass message [" + rs.split('PASS')[1] + "]")#响应信息都打印
+                        log_scripts.info(list + ":PASS:[time_consuming:"+time_consuming+"]{ response : \'resultCode" + rs.split('resultCode')[1][1:4]+'\''+" }")#只打印成功关键字段
+                        content = {"status": "execute_script_success"}
+                    elif "FAILED" == result:
+                        dict = {"script_status": "FAILED"}
+                        log_scripts.error(list + ":FAILED:" + " error message [" + rs.split('FAILED')[1] + "]")
+                        content = {"status": "execute_script_failed"}
+                else:
+                    dict = {"script_status": "NONE"}
+                    content = {"status": "execute_script_failed"}
+            except IndexError,e:
                 dict = {"script_status": "NONE"}
+                mylogging("["+str(list)+"] :"+"未获取脚本执行状态，脚本执行失败"+str(e.message))
+                log_scripts.error(list + ":FAILED:" + " error message [ IndexError ]"+str(e.args))
+                content = {"status": "execute_script_failed"}
+            # except AttributeError,e:
+            #     dict = {"script_status": "NONE"}
+            #     mylogging("[" + str(list) + "] :" + "index error,未获取脚本执行状态，脚本执行失败"+e.args)
+            #     log_scripts.error(list + ":FAILED:" + " error message [ AttributeError ]"+e.args)
+
             Script_Info.objects.filter(script_name=list).update(**dict)
 
-        content = {"status":"execute_script_success"}
+
         return JsonResponse(content)
 
-
+#删除脚本
 def delete_test_script(request):
     print ("delete_test_script")
     if request.method == "GET":
@@ -1228,3 +1248,48 @@ def delete_test_script(request):
             script_obj.delete()
         content = {"status": "delete_script_success"}
         return JsonResponse(content)
+
+#进入日志模块
+def script_log_page(request,username):
+    print ("script_log_page")
+
+    file = os.path.join(os.path.dirname(__file__),"log/script.log")
+
+    with open(file,'r',buffering=1024) as f:
+        content = f.read()
+
+    return render(request,"AutoFW/script_log_page.html",{"content":content})
+
+#删除脚本日志
+def delete_script_log(request):
+    print ("delete_script_log")
+
+    file = os.path.join(os.path.dirname(__file__), "log/script.log")
+    with open(file, 'r+', buffering=1024) as f:
+        f.truncate()
+        content = f.read()
+
+    return render(request,"AutoFW/script_log_page.html",{"content":content})
+
+
+#进入日志模块
+def error_log_page(request,username):
+    print ("error_log_page")
+
+    file = os.path.join(os.path.dirname(__file__),"log/error.log")
+
+    with open(file,'r',buffering=1024) as f:
+        content = f.read()
+
+    return render(request,"AutoFW/error_log_page.html",{"content":content})
+
+
+def delete_error_log(request):
+    print ("delete_log_page")
+
+    file = os.path.join(os.path.dirname(__file__), "log/error.log")
+    with open(file, 'r+', buffering=1024) as f:
+        f.truncate()
+        content = f.read()
+
+    return render(request,"AutoFW/error_log_page.html",{"content":content})

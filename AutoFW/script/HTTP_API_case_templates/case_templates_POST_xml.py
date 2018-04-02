@@ -4,20 +4,21 @@ import sys
 sys.path.append('/home/fzyzgong/project/AutoFWOG/AutoFW/util')
 from Mylogging import mylogging
 
+#还未实现该功能
 class TestAPI:
 
     def testDemo(self,protocol,domian,url,headers,param,expected):
 
         self.protocol = protocol+'://'
         try:
-            if param=='' and headers=='':
-                r = requests.get(self.protocol + domian + url, timeout=8)
-            elif param=='':
-                r = requests.get(self.protocol + domian  + url, headers=headers, timeout=8)
-            elif headers=='':
-                r = requests.get(self.protocol + domian  + url,params=param, timeout=8)
+            if param == '' and headers == '':
+                r = requests.post(self.protocol + domian + url, timeout=8)
+            elif param == '':
+                r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+            elif headers == '':
+                r = requests.post(self.protocol + domian + url, json=param, timeout=8)
             else:
-                r = requests.get(self.protocol + domian  + url,headers=headers, params=param, timeout=8)
+                r = requests.post(self.protocol + domian + url, headers=headers, json=param, timeout=8)
             time_consuming = str(r.elapsed.total_seconds())  # 计算接口被调用耗时
             rs = r.json()
 

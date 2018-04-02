@@ -1,0 +1,4 @@
+[Exception][2018-04-02 18:15:57]>>  [/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/平台框架获取事件列表-2018_4_2_15_57_3.py][HTTPS://ta1.2boss.cn/rabbit/v1/event/getEventList]:[requests.exceptions.ConnectionError]
+[Exception][2018-04-02 18:15:58]>>  [平台框架获取事件列表-2018_4_2_15_57_3.py] :未获取脚本执行状态，脚本执行失败list index out of range
+[Exception][2018-04-02 18:16:13]>>  [/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/更新绑定用户信息-2018_4_2_15_57_3.py][HTTPS://ta1.2boss.cn/superior/v1/im/imUpdateCustomer]:[requests.exceptions.ConnectionError]
+[Exception][2018-04-02 18:16:14]>>  [更新绑定用户信息-2018_4_2_15_57_3.py] :未获取脚本执行状态，脚本执行失败list index out of range

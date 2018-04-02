@@ -34,12 +34,12 @@ class TestAPI:
             mylogging("["+str(__file__)+"]["+self.protocol + domian + url+"]:[requests.exceptions.ConnectionError]")
 
 if __name__ == "__main__":
-    protocol = "HTTP"
-    domian = "www.og.demo.com"
-    url = "/og/demo"
-    headers = {"demo_headers":"demo_headers"}
-    param = {"demo_param":"demo_param"}
-    expected = {"demo":"Success !"}
+    protocol = "HTTPS"
+    domian = "ta1.2boss.cn"
+    url = "/rabbit/v1/event/getEventList"
+    headers = ''
+    param = 'platformType=2&clientEventVersionNo=110&appType=1'
+    expected = {"resultCode":0}
 
     t = TestAPI()
     t.testDemo(protocol,domian,url,headers,param,expected)

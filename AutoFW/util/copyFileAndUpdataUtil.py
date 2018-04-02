@@ -3,7 +3,7 @@ import os,sys
 import shutil
 import Mylogging
 
-def copyFile(sourceFile, targetFile, fileName, protocol, method, domain, url,headers, param, expected):
+def copyFile(sourceFile, targetFile, fileName, protocol, method, domain, url,headers, param_format,param, expected):
     parent_path = os.getcwd() + "/AutoFW/"
 
     sourceFile_script_path = os.path.join(parent_path,sourceFile)
@@ -15,7 +15,16 @@ def copyFile(sourceFile, targetFile, fileName, protocol, method, domain, url,hea
         '''复制文件 GET请求模板'''
         shutil.copy(sourceFile_script_path+"case_templates_GET.py", targetFile_script_path+fileName)
     elif method=='POST':
-        shutil.copy(sourceFile_script_path + "case_templates_POST.py", targetFile_script_path + fileName)
+        if 'application/x-www-form-urlencoded' == param_format:
+            shutil.copy(sourceFile_script_path + "case_templates_POST_urlencoded.py", targetFile_script_path + fileName)
+        elif 'multipart/format-data' == param_format:
+            shutil.copy(sourceFile_script_path + "case_templates_POST_multipart.py", targetFile_script_path + fileName)
+        elif 'application/json' == param_format:
+            shutil.copy(sourceFile_script_path + "case_templates_POST_json.py", targetFile_script_path + fileName)
+        elif 'text/xml' == param_format:
+            shutil.copy(sourceFile_script_path + "case_templates_POST_xml.py", targetFile_script_path + fileName)
+        else:#text/plain
+            shutil.copy(sourceFile_script_path + "case_templates_POST_plain.py", targetFile_script_path + fileName)
     elif method == 'PUT':
         shutil.copy(sourceFile_script_path + "case_templates_PUT.py", targetFile_script_path + fileName)
     elif method == 'DELETE':

@@ -10,14 +10,14 @@ class TestAPI:
 
         self.protocol = protocol+'://'
         try:
-            if param=='' and headers=='':
-                r = requests.get(self.protocol + domian + url, timeout=8)
-            elif param=='':
-                r = requests.get(self.protocol + domian  + url, headers=headers, timeout=8)
-            elif headers=='':
-                r = requests.get(self.protocol + domian  + url,params=param, timeout=8)
+            if param == '' and headers == '':
+                r = requests.put(self.protocol + domian + url, timeout=8)
+            elif param == '':
+                r = requests.put(self.protocol + domian + url, headers=headers, timeout=8)
+            elif headers == '':
+                r = requests.put(self.protocol + domian + url, json=param, timeout=8)
             else:
-                r = requests.get(self.protocol + domian  + url,headers=headers, params=param, timeout=8)
+                r = requests.put(self.protocol + domian + url, headers=headers, json=param, timeout=8)
             time_consuming = str(r.elapsed.total_seconds())  # 计算接口被调用耗时
             rs = r.json()
 
@@ -34,12 +34,12 @@ class TestAPI:
             mylogging("["+str(__file__)+"]["+self.protocol + domian + url+"]:[requests.exceptions.ConnectionError]")
 
 if __name__ == "__main__":
-    protocol = "HTTP"
-    domian = "www.og.demo.com"
-    url = "/og/demo"
-    headers = {"demo_headers":"demo_headers"}
-    param = {"demo_param":"demo_param"}
-    expected = {"demo":"Success !"}
+    protocol = "HTTPS"
+    domian = "ta.2boss.cn"
+    url = "/ubt/api/session"
+    headers = ''
+    param = {"clientId":"933e801d-a350-4d0a-bae1-8bf06aef4gda","sessionId":"a6373ac4-34ea-4314-abab-29007260c6d1"}
+    expected = {"resultCode":0}
 
     t = TestAPI()
     t.testDemo(protocol,domian,url,headers,param,expected)
