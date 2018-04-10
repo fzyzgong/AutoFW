@@ -35,11 +35,11 @@ class TestAPI:
 
 if __name__ == "__main__":
     protocol = "HTTPS"
-    domian = "ta1.2boss.cn"
+    domian = "ta.2boss.cn"
     url = "/rabbit/v1/event/getEventList"
     headers = ''
     param = 'platformType=2&clientEventVersionNo=110&appType=1'
-    expected = {"resultCode":0}
+    expected = {"resultCode":1}
 
     t = TestAPI()
     t.testDemo(protocol,domian,url,headers,param,expected)

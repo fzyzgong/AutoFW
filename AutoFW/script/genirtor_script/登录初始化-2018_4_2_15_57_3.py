@@ -35,7 +35,7 @@ class TestAPI:
 
 if __name__ == "__main__":
     protocol = "HTTPS"
-    domian = "ta.2boss.cn"
+    domian = "ta1.2boss.cn"
     url = "/resource/api/init"
     headers = { "appId":"1", "appCode":"1", "currentVersion":"8.0.0" }
     param = ''

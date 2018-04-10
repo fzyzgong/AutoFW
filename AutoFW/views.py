@@ -991,7 +991,7 @@ def execute_test_script_page(request,username):
     # 项目名称ValuesQuerySet
     project_qs = Project.objects.values("project_name")
 
-    content = {"project_name_list": project_qs}
+    content = {"project_name_list": project_qs,"username":username}
     return render(request,"AutoFW/execute_test_script_page.html",content)
 
 
@@ -1178,14 +1178,31 @@ def search_script(request):
 def execute_test_script(request):
     print ("execute_test_script")
     if request.method == "GET":
-        script_name = request.GET.get("script_name_json")
+        passCount = 0
+        failCount = 0
+        skipCount = 0
+        script_name = request.GET.get("script_name_json")#获取脚本所在表单索引
+        report_name = request.GET.get("result_name")#执行该批次的测试报告名称
+        execute_man = request.GET.get("username")#获取执行人的姓名
 
         script_name_list = str(script_name).split(',')
         # 移除空列元素
         script_name_list.remove('')
         # print (script_name_list)
-        for list in script_name_list:
+        report_id = datetime.datetime.now().strftime("%Y%m%d%H%M%S")#报告ID 唯一值 根据当前时间生成
+        API_total = len(script_name_list)#本次执行的总API数
+        execute_time = datetime.datetime.now()#执行当前时间
 
+        dict_report_id = {"report_id": report_id, "report_name": report_name, "API_total": str(API_total),
+                        "pass_total": str(passCount), "fail_total": str(failCount), "skip_total": str(skipCount),
+                        "execute_man": str(execute_man),
+                        "execute_time": execute_time, "bak1": "bak", "bak2": "bak"}
+
+        Batch_Report.objects.create(**dict_report_id)
+
+        for list in script_name_list:
+            API_name = str(list.split('/')[-1]) #接口用例名
+            print("API_name:%s"%API_name)
             script_info_obj = Script_Info.objects.filter(script_name=list)[0]
             script_path = str(script_info_obj.script_path)
             # print (script_path)
@@ -1206,26 +1223,71 @@ def execute_test_script(request):
                         time_consuming = rs.split('time_consuming:')[1].split(']')[0]
                         # log_scripts.info(list + ":PASS:" + " pass message [" + rs.split('PASS')[1] + "]")#响应信息都打印
                         log_scripts.info(list + ":PASS:[time_consuming:"+time_consuming+"]{ response : \'resultCode" + rs.split('resultCode')[1][1:4]+'\''+" }")#只打印成功关键字段
+
+                        execute_script_log = str(API_name)+":PASS [time_consuming:"+time_consuming+"]{ response : \'resultCode" + rs.split('resultCode')[1][1:4]+'\''+" }"
+
+                        # 写入Execute_Script_Log表
+                        dic ={"log_report_id_id":report_id,"log_api_name":API_name,"log_execute_script":execute_script_log,"status":"pass","bak1":"bak"}
+                        Execute_Script_Log.objects.create(**dic)
+
                         content = {"status": "execute_script_success"}
+                        passCount += 1
                     elif "FAILED" == result:
                         dict = {"script_status": "FAILED"}
                         log_scripts.error(list + ":FAILED:" + " error message [" + rs.split('FAILED')[1] + "]")
+
+                        execute_script_log = str(API_name)+":FAILED " + " error message [" + rs.split('FAILED')[1][1:1500] + "]" #设这1-1500为了防止存储字段超过长度
+                        # 写入Execute_Script_Log表
+                        dic = {"log_report_id_id": report_id, "log_api_name": API_name,
+                               "log_execute_script": execute_script_log, "status": "fail", "bak1": "bak"}
+                        Execute_Script_Log.objects.create(**dic)
+
                         content = {"status": "execute_script_failed"}
+                        failCount += 1
                 else:
                     dict = {"script_status": "NONE"}
+
+                    execute_script_log = str(API_name) + ":FAILED " + " error message [脚本运行出错]"
+                    # 写入Execute_Script_Log表
+                    dic = {"log_report_id_id": report_id, "log_api_name": API_name,
+                           "log_execute_script": execute_script_log, "status": "none", "bak1": "bak"}
+                    Execute_Script_Log.objects.create(**dic)
+
                     content = {"status": "execute_script_failed"}
+                    skipCount += 1
             except IndexError,e:
                 dict = {"script_status": "NONE"}
                 mylogging("["+str(list)+"] :"+"未获取脚本执行状态，脚本执行失败"+str(e.message))
                 log_scripts.error(list + ":FAILED:" + " error message [ IndexError ]"+str(e.args))
+
+                execute_script_log = str(API_name) + ":FAILED " + " error message [脚本运行异常:"+str(e.args)+"]"
+                # 写入Execute_Script_Log表
+                dic = {"log_report_id_id": report_id, "log_api_name": str(API_name),
+                       "log_execute_script": execute_script_log, "status": "none", "bak1": "bak"}
+                Execute_Script_Log.objects.create(**dic)
+
                 content = {"status": "execute_script_failed"}
+                skipCount += 1
             # except AttributeError,e:
             #     dict = {"script_status": "NONE"}
             #     mylogging("[" + str(list) + "] :" + "index error,未获取脚本执行状态，脚本执行失败"+e.args)
             #     log_scripts.error(list + ":FAILED:" + " error message [ AttributeError ]"+e.args)
 
             Script_Info.objects.filter(script_name=list).update(**dict)
+        # 报告名 执行者 api总数 执行时间 执行报告ID
+        print("result_name=%s execute_name=%s api_total=%s"
+              " execute_time=%s report_id=%s" % (report_name, execute_man, str(API_total), execute_time, report_id))
+        # pass fail skip
+        # print("passCount=%s failCount=%s skipCount=%s"%(passCount,failCount,skipCount))
 
+        dict_execute = {"report_id":report_id,"report_name":report_name,"API_total":str(API_total),"pass_total":str(passCount),"fail_total":str(failCount),"skip_total":str(skipCount),"execute_man":str(execute_man),
+                        "execute_time":execute_time,"bak1":"bak","bak2":"bak"}
+
+        Batch_Report.objects.filter(report_id=report_id).update(**dict_execute)
+
+        # passCount = 0
+        # failCount = 0
+        # skipCount = 0
 
         return JsonResponse(content)
 
@@ -1293,3 +1355,8 @@ def delete_error_log(request):
         content = f.read()
 
     return render(request,"AutoFW/error_log_page.html",{"content":content})
+
+
+def report_page(request,username):
+
+    return render(request,"AutoFW/report_page.html")

@@ -35,10 +35,10 @@ class TestAPI:
 
 if __name__ == "__main__":
     protocol = "HTTPS"
-    domian = "ta1.2boss.cn"
+    domian = "ta.2boss.cn"
     url = "/superior/v1/im/imUpdateCustomer"
     headers = ''
-    param = {"userId":"171631","customer_id":"20150554"}
+    param = {"userId":"17132631","customer_id":"20150554"}
     expected = {"resultCode":0}
 
     t = TestAPI()

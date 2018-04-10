@@ -105,7 +105,7 @@
     <hr />
     <br />
     <div style="padding-left: 300px">
-        <input type="button" value="执行测试脚本" onclick="execute_test_script()">
+        <input type="button" value="执行测试脚本" id="execute_script_id_b" name="{{username}}" onclick="execute_test_script()">
         <span style="padding-left: 100px"></span>
         <input type="button" value="删除测试脚本" onclick="delete_test_script()">
     </div>
@@ -270,48 +270,58 @@
 
         //执行测试脚本
         function execute_test_script() {
-            //判断全选是否勾选
-            var script_name_json = "";
-            if($("#chose_all_c").is(":checked")){
-//                    alert("checked");
-                //获取所有选择中case_name
-//                var script_name_list = document.getElementsByClassName("checkbox_input_script_name");
-//                    alert(case_name_list.length);
+            var result_name = window.prompt("请为你本次测试命名，用于查询测试结果！[命名规范：模块缩写名+测试人员名字缩写+年月日]", "null");
+            var username = document.getElementById("execute_script_id_b").name //获取执行人的姓名
 
-
-                $(".checkbox_input_script_name").each(function () {
-                    script_name_json += $(this).val()+',';
-                })
-//                    alert(script_name_json);
+//            alert("result:"+result_name);
+//            if((NULL==result) || ('null'==result) || (''==result)){
+            if(result_name==null || result_name=='null' || result_name=='')
+            {
+                alert("未正确命名！");
             }else{
-//                    判断没有全选生成测试脚本时
-//                    alert("no checked all");
-                $(".checkbox_input_script_name:checked").each(function () {
-                    script_name_json += $(this).val() + ','
-                })
-            }
-            if(script_name_json){
-                $.ajax({
-                    url: "/AutoFW/execute_test_script",
-                    type: "get",
-                    data: "script_name_json="+script_name_json,
-                    success: function (data) {
-                        if(data.status == "execute_script_success"){
-                            $.messager.show({
-                                title: '脚本执行提示',
-                                msg: "接口测试脚本执行成功，请去测试模块查看测试报告！：",
-                                width: 300,
-                                height: 80,
-                                showType:null,
-                                style:{
+                //判断全选是否勾选
+                var script_name_json = "";
+                if($("#chose_all_c").is(":checked")){
+    //                    alert("checked");
+                    //获取所有选择中case_name
+    //                var script_name_list = document.getElementsByClassName("checkbox_input_script_name");
+    //                    alert(case_name_list.length);
 
-                                }
-                            });
+
+                    $(".checkbox_input_script_name").each(function () {
+                        script_name_json += $(this).val()+',';
+                    })
+    //                    alert(script_name_json);
+                }else{
+    //                    判断没有全选生成测试脚本时
+    //                    alert("no checked all");
+                    $(".checkbox_input_script_name:checked").each(function () {
+                        script_name_json += $(this).val() + ','
+                    })
+                }
+                if(script_name_json){
+                    $.ajax({
+                        url: "/AutoFW/execute_test_script",
+                        type: "get",
+                        data: "script_name_json="+script_name_json+"&result_name="+result_name+"&username="+username,
+                        success: function (data) {
+                            if(data.status == "execute_script_success"){
+                                $.messager.show({
+                                    title: '脚本执行提示',
+                                    msg: "接口测试脚本执行成功，请去测试模块查看测试报告！：",
+                                    width: 300,
+                                    height: 80,
+                                    showType:null,
+                                    style:{
+
+                                    }
+                                });
+                            }
                         }
-                    }
-                });
-            }else {
-                alert("未选择要执行脚本的数据！");
+                    });
+                }else {
+                    alert("未选择要执行脚本的数据！");
+                }
             }
         };
 

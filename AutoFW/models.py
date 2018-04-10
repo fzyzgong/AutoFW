@@ -106,3 +106,36 @@ class Script_Info(models.Model):
 
     class Meta:
         db_table = 'script_info'
+
+
+#批次执行测试脚本生成数据信息表
+class Batch_Report(models.Model):
+    report_id = models.CharField(max_length=50,unique=True)
+    report_name = models.CharField(max_length=100,primary_key=True)
+    API_total = models.IntegerField(null=False)
+    pass_total = models.IntegerField()
+    fail_total = models.IntegerField()
+    skip_total = models.IntegerField()
+    execute_man = models.CharField(max_length=30)
+    # API_name = models.CharField(max_length=100,default=None)
+    # execute_log = models.CharField(max_length=1500)
+    execute_time = models.DateTimeField()
+    bak1 = models.CharField(max_length=50)
+    bak2 = models.CharField(max_length=50)
+
+
+    class Meta:
+        db_table = 'batch_report'
+
+
+class Execute_Script_Log(models.Model):
+    log_report_id = models.ForeignKey(Batch_Report,to_field="report_id")
+    log_api_name = models.CharField(max_length=100,null=False)
+    log_execute_script = models.CharField(max_length=3000)
+    bak1 = models.CharField(max_length=50)
+    # bak2 = models.CharField(max_length=50)
+    # bak3 = models.CharField(max_length=50)
+    status = models.CharField(max_length=50,default=None)
+
+    class Meta:
+        db_table = 'execute_script_log'
