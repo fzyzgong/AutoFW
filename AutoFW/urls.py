@@ -70,5 +70,8 @@ urlpatterns = [
     url(r'^error_log_page/(.*)', views.error_log_page),
     url(r'^delete_error_log/$', views.delete_error_log),
     url(r'^report_page/(.*)', views.report_page),
+    url(r'^search_report_list/', views.search_report_list),
+    url(r'^search_execute_log_list/', views.search_execute_log_list),
+    url(r'^delete_report_by_reportID/', views.delete_report_by_reportID),
 
 ]

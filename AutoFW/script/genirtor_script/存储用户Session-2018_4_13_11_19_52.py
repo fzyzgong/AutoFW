@@ -5,7 +5,6 @@ import traceback
 sys.path.append('/home/fzyzgong/project/AutoFWOG/AutoFW/util')
 from Mylogging import mylogging
 
-#还未实现该功能
 class TestAPI:
 
     def testDemo(self,protocol,domian,url,headers,param,expected):
@@ -13,13 +12,13 @@ class TestAPI:
         self.protocol = protocol+'://'
         try:
             if param == '' and headers == '':
-                r = requests.post(self.protocol + domian + url, timeout=8)
+                r = requests.put(self.protocol + domian + url, timeout=8)
             elif param == '':
-                r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+                r = requests.put(self.protocol + domian + url, headers=headers, timeout=8)
             elif headers == '':
-                r = requests.post(self.protocol + domian + url, json=param, timeout=8)
+                r = requests.put(self.protocol + domian + url, json=param, timeout=8)
             else:
-                r = requests.post(self.protocol + domian + url, headers=headers, json=param, timeout=8)
+                r = requests.put(self.protocol + domian + url, headers=headers, json=param, timeout=8)
             time_consuming = str(r.elapsed.total_seconds())  # 计算接口被调用耗时
             rs = r.json()
 
@@ -41,13 +40,14 @@ class TestAPI:
             mylogging("["+str(__file__).split('/')[-1]+"]  ["+self.protocol + domian + url+"] <EXCEPTION>\r"+traceback.format_exc())
             print (traceback.format_exc())
 
+
 if __name__ == "__main__":
-    protocol = "HTTP"
-    domian = "www.og.demo.com"
-    url = "/og/demo"
-    headers = {"demo_headers":"demo_headers"}
-    param = {"demo_param":"demo_param"}
-    expected = {"demo":"Success !"}
+    protocol = "HTTPS"
+    domian = "ta1.2boss.cn"
+    url = "/ubt/api/session"
+    headers = ''
+    param = {"clientId":"933e801d-a350-4d0a-bae1-8bf06aef4gda","sessionId":"a6373ac4-34ea-4314-abab-29007260c6d1"}
+    expected = {"resultCode":0}
 
     t = TestAPI()
     t.testDemo(protocol,domian,url,headers,param,expected)

@@ -1,6 +1,7 @@
 #coding=utf-8
 import requests
 import sys
+import traceback
 sys.path.append('/home/fzyzgong/project/AutoFWOG/AutoFW/util')
 from Mylogging import mylogging
 
@@ -29,16 +30,23 @@ class TestAPI:
                 print ('AutoFW test reslut:PASS\'' + "[time_consuming:"+ time_consuming + '] ', str(rs))
             else:
                 print ("AutoFW test reslut:FAILED", str(rs))
-
         except requests.exceptions.ConnectionError:
-            mylogging("["+str(__file__)+"]["+self.protocol + domian + url+"]:[requests.exceptions.ConnectionError]")
+            mylogging("[" + str(__file__).split('/')[-1] + "][" + self.protocol + domian + url + "] <EXCEPTION>\r" + traceback.format_exc())
+            print (traceback.format_exc())
+        except requests.exceptions.InvalidHeader:
+            mylogging("[" + str(__file__).split('/')[-1] + "]  [" + self.protocol + domian + url + "] <EXCEPTION>\r" + traceback.format_exc())
+            print (traceback.format_exc())
+        except AttributeError:
+            mylogging("["+str(__file__).split('/')[-1]+"]  ["+self.protocol + domian + url+"] <EXCEPTION>\r"+traceback.format_exc())
+            print (traceback.format_exc())
+
 
 if __name__ == "__main__":
     protocol = "HTTPS"
     domian = "ta.2boss.cn"
-    url = "/superior/v1/im/imUpdateCustomer"
-    headers = ''
-    param = {"userId":"17132631","customer_id":"20150554"}
+    url = "/rabbit/v1/version/checkNewVersion"
+    headers = {"appId":1,"currentVersion":"8.0.0","apiVersion":"1","customerId":"19246276"}
+    param = ''
     expected = {"resultCode":0}
 
     t = TestAPI()

@@ -1,6 +1,7 @@
 #coding=utf-8
 import requests
 import sys
+import traceback
 sys.path.append('/home/fzyzgong/project/AutoFWOG/AutoFW/util')
 from Mylogging import mylogging
 
@@ -30,8 +31,15 @@ class TestAPI:
             else:
                 print ("AutoFW test reslut:FAILED", str(rs))
         except requests.exceptions.ConnectionError:
-            mylogging(
-                "[" + str(__file__) + "][" + self.protocol + domian + url + "]:[requests.exceptions.ConnectionError]")
+            mylogging("[" + str(__file__).split('/')[-1] + "][" + self.protocol + domian + url + "] <EXCEPTION>\r" + traceback.format_exc())
+            print (traceback.format_exc())
+        except requests.exceptions.InvalidHeader:
+            mylogging("[" + str(__file__).split('/')[-1] + "]  [" + self.protocol + domian + url + "] <EXCEPTION>\r" + traceback.format_exc())
+            print (traceback.format_exc())
+        except AttributeError:
+            mylogging("["+str(__file__).split('/')[-1]+"]  ["+self.protocol + domian + url+"] <EXCEPTION>\r"+traceback.format_exc())
+            print (traceback.format_exc())
+
 
 if __name__ == "__main__":
     protocol = "HTTP"

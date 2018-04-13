@@ -1,6 +1,7 @@
 #coding=utf-8
 import requests
 import sys
+import traceback
 sys.path.append('/home/fzyzgong/project/AutoFWOG/AutoFW/util')
 from Mylogging import mylogging
 
@@ -29,17 +30,23 @@ class TestAPI:
                 print ('AutoFW test reslut:PASS\'' + "[time_consuming:"+ time_consuming + '] ', str(rs))
             else:
                 print ("AutoFW test reslut:FAILED", str(rs))
-
         except requests.exceptions.ConnectionError:
-            mylogging("["+str(__file__)+"]["+self.protocol + domian + url+"]:[requests.exceptions.ConnectionError]")
+            mylogging("[" + str(__file__).split('/')[-1] + "][" + self.protocol + domian + url + "] <EXCEPTION>\r" + traceback.format_exc())
+            print (traceback.format_exc())
+        except requests.exceptions.InvalidHeader:
+            mylogging("[" + str(__file__).split('/')[-1] + "]  [" + self.protocol + domian + url + "] <EXCEPTION>\r" + traceback.format_exc())
+            print (traceback.format_exc())
+        except AttributeError:
+            mylogging("["+str(__file__).split('/')[-1]+"]  ["+self.protocol + domian + url+"] <EXCEPTION>\r"+traceback.format_exc())
+            print (traceback.format_exc())
 
 if __name__ == "__main__":
     protocol = "HTTPS"
     domian = "ta.2boss.cn"
-    url = "/rabbit/v1/event/getEventList"
-    headers = ''
-    param = 'platformType=2&clientEventVersionNo=110&appType=1'
-    expected = {"resultCode":1}
+    url = "/rabbit/v1/2bossmoments/count-new"
+    headers = {"TBSAccessToken":"2395a9cc328a4091a0c6d25f35178e34"}
+    param = 'cityId=605&fromMomentId=388446'
+    expected = {"resultCode":0}
 
     t = TestAPI()
     t.testDemo(protocol,domian,url,headers,param,expected)

@@ -3,290 +3,271 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <script type="text/javascript" src="/static/jquery_easyui/jquery.min.js"></script>
+
+    <style type="text/css">
+         /*列表展示*/
+        #report_display_list{
+            width: 1200px;
+        }
+        #report_display_list td{
+            border: solid 1px;
+            text-align: center;
+        }
+
+        #report_list_t{
+            width: 1200px;
+            border: 1px solid #0094ff
+        }
+
+        #report_list_t .report_list_title_name{
+            width: 50px;
+            text-align: center;
+            background: greenyellow;
+        }
+
+        #report_list_t .report_API_title_name{
+            width: 200px;
+            text-align: center;
+            background: greenyellow;
+        }
+
+        #report_list_t .report_log_title_name{
+            width: 850px;
+            text-align: center;
+            background: greenyellow;
+        }
+
+        #report_list_t .report_status_title_name{
+            width: 100px;
+            text-align: center;
+            background: greenyellow;
+        }
+
+        #report_name_top{
+            text-align: center;
+        }
+
+    </style>
 </head>
-    <body class="gray-bg">
-    <div class="row  border-bottom white-bg dashboard-header">
-        <div class="col-sm-12 text-center">
-            <span style="color: #1ab394; font-size: 20px; font-weight: 700">测试报告</span>
-        </div>
+    <body>
+        <h2 id="report_page_top_name" name="{{ username }}">测试报告管理中心</h2>
+    <hr />
+    <div>
+        <table id="rp_search_table">
+                <tr id="rp_search_tr">
+                    <td>查询报告</td>
+                    <td>
+                        <input name="rp_seach_case_b" type="button" class="rp_search_button" value="查询" onclick="rp_search_report()">
+                        <input name="rp_reset_b" type="button" class="rp_reset_button" value="重置">
+                    </td>
+                </tr>
+                <tr style="background: black">
+                    <td colspan="3" style="height: 2px"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="report_name_label">报告名称：</label>
+                        <input id="report_name_input_id" class="report_name_input" type="text">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="report_create_label">创 建 人 ：</label>
+                        <select id="report_create_section" required style="width: 175px">
+                            <option></option>
+                            {% for list in execute_man_list%}
+                            <option>{{list.username}}</option>
+                            {%endfor%}
+                        </select>
+                    </td>
+                </tr>
+        </table>
     </div>
-    <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>报告汇总</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="ibox-content">
-                        <div class="row">
-                            <div class="col-sm-6 b-r" style="height:350px">
-                                <form class="form-horizontal">
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label text-navy">用例名称:</label>
-                                        <div class="col-sm-5">
-                                            <span class="form-control" id="testName"></span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label text-navy">用例总数:</label>
-                                        <div class="col-sm-5">
-                                            <span class="form-control" id="testAll"></span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label text-navy">用例通过:</label>
-                                        <div class="col-sm-5">
-                                            <span class="form-control" id="testPass"></span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label text-danger">用例失败:</label>
-                                        <div class="col-sm-5">
-                                            <span class="form-control text-danger" id="testFail"></span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label text-warning">用例跳过:</label>
-                                        <div class="col-sm-5">
-                                            <span class="form-control text-warning" id="testSkip"></span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label text-navy">开始时间:</label>
-                                        <div class="col-sm-5">
-                                            <span class="form-control" id="beginTime"></span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label text-navy">运行时间:</label>
-                                        <div class="col-sm-5">
-                                            <span class="form-control" id="totalTime"></span>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="col-sm-6">
-                                <div style="height:350px" id="echarts-map-chart"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>详细数据</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="ibox-content">
-                        <div class="input-group panel-heading" style="width: 100%; background-color: #1ab394; margin-bottom: 10px; text-align: left; font-family: Consolas;">
-                            <label style="color: snow">测试类:</label>
-                            <select class="chosen-select form-control" data-placeholder="----------" style="width: 300px;" name="filterClass" id="filterClass">
-                                <option value="">----------</option>
-                            </select>
-                            <label style="color: snow">结果:</label>
-                            <select class="chosen-select form-control" data-placeholder="----------" style="width: 300px;" name="filterResult" id="filterResult">
-                                <option value="">----------</option>
-                            </select>
-                            <div style="float: right">
-                                <label class="form-control">
-                                    <span class="text-navy">用例数: </span><span class="text-navy b-r" id="filterAll">3</span><span> | </span>
-                                    <span style="color: green">成功: </span><span style="color: green" id="filterOk">3</span><span> | </span>
-                                    <span class="text-danger">失败: </span><span class="text-danger" id="filterFail">3</span><span> | </span>
-                                    <span class="text-warning">跳过: </span><span class="text-warning" id="filterSkip">3</span>
-                                </label>
-                            </div>
-                        </div>
-                        <table class="table table-bordered">
-                            <thead>
-                            <tr>
-                                <th>编号</th>
-                                <th>测试类</th>
-                                <th>测试方法</th>
-                                <th>用例描述</th>
-                                <th>运行时长</th>
-                                <th>结果</th>
-                                <th>操作</th>
-                            </tr>
-                            </thead>
-                            <tbody id="detailBody">
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div>
+        <table id="report_display_list" cellspacing="0" border="1">
+            <tr>
+                <td id="report_id">报告ID</td>
+                <td id="report_name">报告名称</td>
+                <td id="report_create_time">报告生成时间</td>
+                <td id="execute_man">执行人</td>
+                <td id="options">操作</td>
+            </tr>
+        </table>
     </div>
-    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="js/content.min.js?v=1.0.0"></script>
-    <script src="https://cdn.bootcss.com/echarts/3.8.5/echarts.min.js"></script>
-    <script src="https://cdn.bootcss.com/chosen/1.8.2/chosen.jquery.js"></script>
+    <br />
+    <hr />
+    <br />
+    <div>
+        <table id="report_list_t" cellspacing="0" cellpadding="0" border="1">
+            <tr id="report_name_top">
+                <td style="background: greenyellow"><span id="execute_report_name_total_left">测试报告名称</span></td>
+                <td colspan="3"><span id="execute_report_name_total"  style="font-size: 25px"></span></td>
+            </tr>
+            <tr>
+                <td class="report_list_title_name"><span>API总数</span></td>
+                <td width="450px" align="center"><span id="execute_report_api_total" style="text-align: center"></span></td>
+                <td class="report_list_title_name"><span>通过</span></td>
+                <td align="center" style="background: greenyellow"><span id="execute_report_pass_total" style="text-align: center"></span></td>
+            </tr>
+            <tr>
+                <td class="report_list_title_name"><span>执行人</span></td>
+                <td width="450px" align="center"><span id="execute_report_execute_man" style="text-align: center"></span></td>
+                <td class="report_list_title_name"><span>失败</span></td>
+                <td align="center" style="background: red"><span id="execute_report_fail_total" style="text-align: center"></span></td>
+            </tr>
+            <tr>
+                <td class="report_list_title_name"><span>执行时间</span></td>
+                <td width="450px" align="center"><span id="execute_report_execute_time" style="text-align: center"></span></td>
+                <td class="report_list_title_name"><span>跳过</span></td>
+                <td align="center" style="background: yellow"><span id="execute_report_skip_total" style="text-align: center"></span></td>
+            </tr>
+            <tr>
+                <td class="report_API_title_name"><span>API_名称</span></td>
+                <td class="report_log_title_name" colspan="2"><span>执行日志</span></td>
+                <td class="report_status_title_name"><span>状态</span></td>
+            </tr>
+        </table>
+    </div>
+
     <script type="text/javascript">
-        var resultData = ${resultData};
-        function details(obj) {
-            if ($(obj).text() == '展开') {
-                var len = $(obj).parent().parent().children().length;
-                var detailLog = "";
-                var logs = resultData["testResult"][parseInt($(obj).attr("buttonIndex"))]["log"];
-                $(obj).text("收缩");
-                $(obj).removeClass("btn-primary");
-                $(obj).addClass("btn-danger");
-                $.each(logs, function (i, n) {
-                    detailLog = detailLog + "<p>" + n + "</p>";
-                });
-                $(obj).parent().parent().after("<tr><td colspan='" + len + "'><div style='font-family: Consolas;font-size:12px'>" + detailLog + "</div></td></tr>");
-            } else if ($(obj).text() == '收缩') {
-                $(obj).parent().parent().next().remove();
-                $(obj).text("展开");
-                $(obj).removeClass("btn-danger");
-                $(obj).addClass("btn-primary");
+
+        function rp_search_report() {
+//            var report_name = document.getElementById("report_name_input_id").value;
+            var report_name = $("#report_name_input_id").val();
+            var execute_man = $("#report_create_section option:selected").text();
+
+            //判断项目名称和模块名称必选
+            if(report_name.length ==0 && execute_man.length == 0){
+                alert("报告名称和创建人必须有一项不为空");
+                return;
             }
+
+            $.ajax({
+                url:"/AutoFW/search_report_list/",
+                type: "get",
+                data: "report_name="+report_name+"&execute_man="+execute_man,//
+                success:function (data) {
+//                    console.log(data.status);
+//                    console.log(data.report_list);
+                    if(data.status == "success"){
+//                        alert(data.report_list.length);
+                        if(data.report_list.length > 0){
+                            $(".report_display_list_td").remove();
+
+                            for(var i = 0; i < data.report_list.length; i++){
+//                                alert(data.script_list[i].script_name);
+//                                alert(data.script_list[i].script_project_name);/////
+//                                alert(data.script_list[i].script_path);
+//                                alert(data.script_list[i].script_module_name);
+//                                alert(data.script_list[i].script_status);/////
+
+                                $("#report_display_list").append(
+                                    '<tr id="report_display_list" class="report_display_list_td">' +
+//                                        '<td class="script_list_td"><input class="checkbox_input_script_name" type="checkbox" value="'+data.script_list[i].script_name+'" onclick="cancel_all()"></td>' +
+                                        '<td class="report_display_list_td">'+data.report_list[i].report_id+'</td>' +
+                                        '<td class="report_display_list_td">'+data.report_list[i].report_name+'</td>' +
+                                        '<td class="report_display_list_td">'+data.report_list[i].execute_time+'</td>' +
+                                        '<td class="report_display_list_td">'+data.report_list[i].execute_man+'</td>' +
+                                        '<td class="report_display_list_td"><input class="report_display_list_td" name="'+ data.report_list[i].report_id +'" type="button" value="查看详情" onclick="return look_report_td(this)">' +
+                                                                            '<input class="report_display_list_td" name="'+ data.report_list[i].report_id +'" type="button" value="删除报告" onclick="return delete_report_td(this)"></td>' +
+                                    '</tr>'
+                                );
+                            }
+                        }else {
+//                                alert("没有匹配到数据");
+                            $(".report_display_list_td").remove();
+                            $("#report_display_list").append('<tr style="text-align: center" class="report_display_list_td"><td colspan="5" class="script_list_td" style="background: orangered">没有匹配到数据(注意字母大小写)</td></tr>');
+                        }
+
+                    }else {
+                        alert("error");
+                    }
+                }
+            });
+        }
+
+        //click button 查看报告
+        function look_report_td(a) {
+            var report_id = $(a).attr("name");//获取report_id
+
+            $.ajax({
+                url:"/AutoFW/search_execute_log_list/",
+                type: "get",
+                data: "report_id="+report_id,
+                success:function (data) {
+//                    console.log(data.status);
+//                    console.log(data.report_list);
+                    if(data.status == "success"){
+//                        alert(data.report_list.length);
+                        //设置报告头信息
+                        $("#execute_report_api_total").html(data.API_total);
+                        $("#execute_report_pass_total").html(data.pass_total)
+                        $("#execute_report_execute_man").html(data.execute_man)
+                        $("#execute_report_fail_total").html(data.fail_total)
+                        $("#execute_report_execute_time").html(data.execute_time)
+                        $("#execute_report_skip_total").html(data.skip_total)
+
+                        $("#execute_report_name_total").html(data.report_name)
+
+
+                        if(data.report_execute_obj_list.length > 0){
+                            $(".execute_api_log_name_list").remove();
+                            for(var i = 0; i < data.report_execute_obj_list.length; i++){
+
+                                $("#report_list_t").append(
+                                    '<tr id="execute_api_log_name_list" class="execute_log_list_tr">' +
+                                        '<td class="execute_api_log_name_list">'+data.report_execute_obj_list[i].log_api_name+'</td>' +
+                                        '<td colspan="2" class="execute_api_log_name_list">'+data.report_execute_obj_list[i].log_execute_script+'</td>' +
+                                        '<td style="text-align: center" class="execute_api_log_name_list">'+data.report_execute_obj_list[i].states+'</td>' +
+                                    '</tr>'
+                                );
+                            }
+                        }else {
+//                                alert("没有匹配到数据");
+                            $(".execute_api_log_name_list").remove();
+                            $("#report_list_t").append('<tr style="text-align: center" class="execute_api_log_name_list"><td colspan="4" class="execute_api_log_name_list" style="background: orangered">报告异常，请联系管理人员检查数据！</td></tr>');
+                        }
+
+                    }else {
+                        alert("error");
+                    }
+                }
+            });
+        }
+
+
+        function delete_report_td(a) {
+
+            //确认删除提示框
+            if(confirm("您确认要删除该条记录码？")){
+                var report_id = $(a).attr("name");//获取report_id
+                var username = $("#report_page_top_name").attr("name");
+                $.ajax({
+                    url:"/AutoFW/delete_report_by_reportID/",
+                    type: "get",
+                    data: "report_id="+report_id+"&username="+username,
+                    success:function (data) {
+                        if(data.status == "success"){
+                            rp_search_report(); //根据当前条件再次查询
+                        }else if(data.status == "permission"){
+                            alert("您的权限不够，请联系管理员！");
+                        }else if(data.status == "error"){
+                            alert("error");
+                        }
+                    }
+                })
+            }else{
+                window.event.returnValue = false;
+            }
+
+
+
 
         }
-        $(function () {
-            $("#testName").text(resultData["testName"]);
-            $("#testPass").text(resultData["testPass"]);
-            $("#testFail").text(resultData["testFail"]);
-            $("#testSkip").text(resultData["testSkip"]);
-            $("#testAll").text(resultData["testAll"]);
-            $("#beginTime").text(resultData["beginTime"]);
-            $("#totalTime").text(resultData["totalTime"]);
-            var classNames = [];
-            var results = [];
-            $.each(resultData["testResult"], function (i, n) {
-                if(classNames.indexOf(n["className"])==-1){
-                    classNames.push(n["className"]);
-                }
-                if(results.indexOf(n["status"])==-1){
-                    results.push(n["status"]);
-                }
-            });
-
-            $.each(classNames, function (i, n) {
-                $("#filterClass").append("<option value='"+n+"' hassubinfo='true'>"+n+"</option>");
-            });
-            $.each(results, function (i, n) {
-                $("#filterResult").append("<option value='"+n+"' hassubinfo='true'>"+n+"</option>");
-            });
-
-            $("#filterClass").chosen({search_contains: true});
-            $("#filterResult").chosen({search_contains: true});
-
-            function generateResult(className, caseResult) {
-                $("#detailBody").children().remove();
-                var filterAll = 0;
-                var filterOk = 0;
-                var filterFail = 0;
-                var filterSkip = 0;
-                $.each(resultData["testResult"], function (i, n) {
-                    if((className=="" || n["className"]==className) && (caseResult=="" || n["status"]==caseResult)){
-                        filterAll += 1;
-                        var status = "";
-                        if (n["status"] == '成功') {
-                            filterOk += 1;
-                            status = "<td><span class='text-navy'>成功</span></td>";
-                        } else if (n["status"] == '失败') {
-                            filterFail += 1;
-                            status = "<td><span class='text-danger'>失败</span></td>";
-                        } else if (n["status"] == '跳过') {
-                            filterSkip += 1;
-                            status = "<td><span class='text-warning'>跳过</span></td>";
-                        } else {
-                            status = "<td><span>" + n["status"] + "</span></td>";
-                        }
-                        var tr = "<tr style='font-family: Consolas'>" +
-                            "<td>" + (i + 1) + "</td>" +
-                            "<td>" + n["className"] + "</td>" +
-                            "<td>" + n["methodName"] + "</td>" +
-                            "<td>"+n["description"] + "</td>" +
-                            "<td>" + n["spendTime"] + "</td>" +
-                            status + "<td><button type='button' onclick='details(this)' buttonIndex='" + i + "' class='btn btn-primary btn-xs' style='margin-bottom: 0px'>展开</button></td></tr>"
-                        $("#detailBody").append(tr);
-                    }
-                });
-                $("#filterAll").text(filterAll);
-                $("#filterOk").text(filterOk);
-                $("#filterFail").text(filterFail);
-                $("#filterSkip").text(filterSkip);
-            }
-
-            generateResult("", "");
-
-            $("#filterClass").on('change', function () {
-                var className = $("#filterClass").val();
-                var caseResult = $("#filterResult").val();
-                generateResult(className, caseResult);
-            });
-
-            $("#filterResult").on('change', function () {
-                var className = $("#filterClass").val();
-                var caseResult = $("#filterResult").val();
-                generateResult(className, caseResult);
-            });
-
-            //$(".chosen-select").trigger("chosen:updated");
-
-            function pie() {
-                var option = {
-                    title: {
-                        text: '测试用例运行结果',
-                        subtext: '',
-                        x: 'center'
-                    },
-                    tooltip: {
-                        trigger: 'item',
-                        formatter: "{a} <br/>{b} : {c} ({d}%)"
-                    },
-                    legend: {
-                        orient: 'vertical',
-                        left: 'left',
-                        data: ['失败', '跳过', '成功']
-                    },
-                    series: [
-                        {
-                            name: '运行结果',
-                            type: 'pie',
-                            radius: '55%',
-                            center: ['50%', '60%'],
-                            data: [
-                                {value: resultData["testFail"], name: '失败'},
-                                {value: resultData["testSkip"], name: '跳过'},
-                                {value: resultData["testPass"], name: '成功'}
-                            ],
-                            itemStyle: {
-                                emphasis: {
-                                    shadowBlur: 10,
-                                    shadowOffsetX: 0,
-                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                                }
-                            }
-                        }
-                    ]
-                };
-                var chart = echarts.init(document.getElementById("echarts-map-chart"));
-                chart.setOption(option);
-            }
-            pie();
-        });
 
     </script>
+
     </body>
 </html>

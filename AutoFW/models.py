@@ -9,7 +9,7 @@ class UserInfo(models.Model):
     password = models.CharField(max_length=100)
     authority = models.CharField(max_length=20)#super/common/guest
     createtime = models.DateTimeField()
-    remark = models.CharField(max_length=100)
+    remark = models.CharField(max_length=100)#已被报告page使用 report_page.html
     position = models.CharField(max_length=20)
     gender = models.BooleanField(default=False)
 

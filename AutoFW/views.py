@@ -1224,7 +1224,7 @@ def execute_test_script(request):
                         # log_scripts.info(list + ":PASS:" + " pass message [" + rs.split('PASS')[1] + "]")#响应信息都打印
                         log_scripts.info(list + ":PASS:[time_consuming:"+time_consuming+"]{ response : \'resultCode" + rs.split('resultCode')[1][1:4]+'\''+" }")#只打印成功关键字段
 
-                        execute_script_log = str(API_name)+":PASS [time_consuming:"+time_consuming+"]{ response : \'resultCode" + rs.split('resultCode')[1][1:4]+'\''+" }"
+                        execute_script_log = str(API_name)+":<PASS> [time_consuming:"+time_consuming+"]{ response : \'resultCode" + rs.split('resultCode')[1][1:4]+'\''+" }"
 
                         # 写入Execute_Script_Log表
                         dic ={"log_report_id_id":report_id,"log_api_name":API_name,"log_execute_script":execute_script_log,"status":"pass","bak1":"bak"}
@@ -1236,7 +1236,7 @@ def execute_test_script(request):
                         dict = {"script_status": "FAILED"}
                         log_scripts.error(list + ":FAILED:" + " error message [" + rs.split('FAILED')[1] + "]")
 
-                        execute_script_log = str(API_name)+":FAILED " + " error message [" + rs.split('FAILED')[1][1:1500] + "]" #设这1-1500为了防止存储字段超过长度
+                        execute_script_log = str(API_name)+":<FAILED> " + " error message 服务器返回错误：[" + rs.split('FAILED')[1][1:1500] + "]" #设这1-1500为了防止存储字段超过长度
                         # 写入Execute_Script_Log表
                         dic = {"log_report_id_id": report_id, "log_api_name": API_name,
                                "log_execute_script": execute_script_log, "status": "fail", "bak1": "bak"}
@@ -1247,23 +1247,23 @@ def execute_test_script(request):
                 else:
                     dict = {"script_status": "NONE"}
 
-                    execute_script_log = str(API_name) + ":FAILED " + " error message [脚本运行出错]"
+                    execute_script_log = str(API_name) + ":<FAILED> " + " error message [脚本运行出错]"
                     # 写入Execute_Script_Log表
                     dic = {"log_report_id_id": report_id, "log_api_name": API_name,
-                           "log_execute_script": execute_script_log, "status": "none", "bak1": "bak"}
+                           "log_execute_script": execute_script_log, "status": "skip", "bak1": "bak"}
                     Execute_Script_Log.objects.create(**dic)
 
                     content = {"status": "execute_script_failed"}
                     skipCount += 1
             except IndexError,e:
                 dict = {"script_status": "NONE"}
-                mylogging("["+str(list)+"] :"+"未获取脚本执行状态，脚本执行失败"+str(e.message))
-                log_scripts.error(list + ":FAILED:" + " error message [ IndexError ]"+str(e.args))
+                mylogging("["+str(list)+"] :"+"未获取脚本执行状态，脚本执行失败")
+                log_scripts.error(list + ":FAILED:" + " error message [ 未获取脚本执行状态，脚本执行失败 ] \r"+rs)
 
-                execute_script_log = str(API_name) + ":FAILED " + " error message [脚本运行异常:"+str(e.args)+"]"
+                execute_script_log = str(API_name) + ":<FAILED> " + " error message [脚本运行异常:请查看error.log] \r"+rs
                 # 写入Execute_Script_Log表
                 dic = {"log_report_id_id": report_id, "log_api_name": str(API_name),
-                       "log_execute_script": execute_script_log, "status": "none", "bak1": "bak"}
+                       "log_execute_script": execute_script_log, "status": "skip", "bak1": "bak"}
                 Execute_Script_Log.objects.create(**dic)
 
                 content = {"status": "execute_script_failed"}
@@ -1358,5 +1358,147 @@ def delete_error_log(request):
 
 
 def report_page(request,username):
+    print ("report_page")
+    execute_man = UserInfo.objects.values("username")
 
-    return render(request,"AutoFW/report_page.html")
+    content = {"execute_man_list": execute_man, "username": username}
+    return render(request, "AutoFW/report_page.html", content)
+
+
+
+def search_report_list(request):
+    print ("search_report_list")
+    if request.method == "GET":
+        report_name = request.GET.get("report_name")
+        execute_man = request.GET.get("execute_man")
+
+        # 存放给前端table用的报告数据
+        report_obj_list = []
+        if(execute_man == "" and report_name == ""):
+            content = {"status": "search_report_list failed ,gei me a condition"}
+            return JsonResponse(content)
+        elif execute_man == "":
+            batch_report_obj = Batch_Report.objects.filter(report_name__contains=report_name)
+
+            for list in batch_report_obj:
+                execute_time_tmp = list.execute_time  # 该批次执行时间点
+                execute_time = execute_time_tmp.strftime('%Y-%m-%d')  # 将datatime转成str
+                data = {
+                    "report_id": list.report_id, "API_total": list.API_total,
+                    "pass_total": list.pass_total, "fail_total": list.fail_total,
+                    "skip_total": list.skip_total, "execute_man": list.execute_man,
+                    "execute_time":execute_time,"report_name":list.report_name
+                }
+                report_obj_list.append(data)
+
+            content = {"status": "success", "report_list": report_obj_list}
+            print (content)
+            return JsonResponse(content)
+            # report_id = batch_report_obj.report_id #报告ID
+            # API_total = batch_report_obj.API_total #该批次测试用例总数
+            # pass_total = batch_report_obj.pass_total #该批次测试通过总数
+            # fail_total = batch_report_obj.fail_total #该批次测试失败总数
+            # skip_total = batch_report_obj.skip_total #该批次测试跳过总数
+            # execute_man = batch_report_obj.execute_man #该批次测试执行人
+            # execute_time = list.execute_time #该批次执行时间点
+            # print (type(execute_time))
+
+        elif report_name == "":
+            batch_report_obj = Batch_Report.objects.filter(execute_man=execute_man)
+
+            for list in batch_report_obj:
+                execute_time_tmp = list.execute_time  # 该批次执行时间点
+                execute_time = execute_time_tmp.strftime('%Y-%m-%d')  # 将datatime转成str
+                data = {
+                    "report_id": list.report_id, "API_total": list.API_total,
+                    "pass_total": list.pass_total, "fail_total": list.fail_total,
+                    "skip_total": list.skip_total, "execute_man": list.execute_man,
+                    "execute_time":execute_time,"report_name":list.report_name
+                }
+                report_obj_list.append(data)
+
+            content = {"status": "success", "report_list": report_obj_list}
+
+            return JsonResponse(content)
+        else:#执行人和报告名都不为空时
+            batch_report_obj = Batch_Report.objects.filter(report_name__contains=report_name,execute_man=execute_man)
+            for list in batch_report_obj:
+                execute_time_tmp = list.execute_time  # 该批次执行时间点
+                execute_time = execute_time_tmp.strftime('%Y-%m-%d')  # 将datatime转成str
+                data = {
+                    "report_id": list.report_id, "API_total": list.API_total,
+                    "pass_total": list.pass_total, "fail_total": list.fail_total,
+                    "skip_total": list.skip_total, "execute_man": list.execute_man,
+                    "execute_time":execute_time,"report_name":list.report_name
+                }
+                report_obj_list.append(data)
+
+            content = {"status": "success", "report_list": report_obj_list}
+
+            return JsonResponse(content)
+
+    return JsonResponse({"status":"failed"})
+
+
+def search_execute_log_list(request):
+    print ("search_execute_log_list")
+
+    if request.method == "GET":
+        report_id = request.GET.get("report_id")
+        execute_script_log_objs = Execute_Script_Log.objects.filter(log_report_id_id=report_id) #外键 batch_report report_id
+
+        report_execute_obj_list = []
+
+        for list in execute_script_log_objs:
+            data_log = {
+                'log_api_name':list.log_api_name,
+                'log_execute_script':list.log_execute_script,
+                'states':list.status
+            }
+            report_execute_obj_list.append(data_log)
+
+        batch_report_obj = Batch_Report.objects.filter(report_id=report_id)[0]  # 只能获取一条数据，因为report_id为主键
+
+        execute_time_tmp = batch_report_obj.execute_time  # 该批次执行时间点
+        execute_time = execute_time_tmp.strftime('%Y-%m-%d')  # 将datatime转成str
+        content = {
+            "status": "success","API_total": batch_report_obj.API_total,"report_name":batch_report_obj.report_name,
+            "pass_total": batch_report_obj.pass_total, "fail_total": batch_report_obj.fail_total,
+            "skip_total": batch_report_obj.skip_total, "execute_man": batch_report_obj.execute_man,
+            "execute_time": execute_time,"report_execute_obj_list":report_execute_obj_list
+        }
+
+        return JsonResponse(content)
+
+
+def delete_report_by_reportID(request):
+    print ("delete_report_by_reportID")
+
+    if request.method == "GET":
+        # TODO 根据权限限制删除
+        username = request.GET.get("username")
+        print (username)
+        authority = UserInfo.objects.filter(username=username)[0].authority #获取该用户的权限等级
+        print ("authority:"+authority)
+        if "superman" == authority or "primary" == authority:
+            report_id = request.GET.get("report_id")
+            Execute_Script_Log.objects.filter(log_report_id_id=report_id).delete() #根据report_id删除报告
+            Batch_Report.objects.filter(report_id=report_id).delete() #根据report_id删除报告
+            content = {"status": "success"}
+
+            return JsonResponse(content)
+        elif "secend" == authority:
+            content = {"status": "permission"}
+            return JsonResponse(content)
+        else:
+            content = {"status": "error"}
+            return JsonResponse(content)
+
+
+
+
+
+
+
+
+

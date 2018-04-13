@@ -1,33 +1,108 @@
-[Exception][2018-04-02 18:15:57]>>  [/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/平台框架获取事件列表-2018_4_2_15_57_3.py][HTTPS://ta1.2boss.cn/rabbit/v1/event/getEventList]:[requests.exceptions.ConnectionError]
-[Exception][2018-04-02 18:15:58]>>  [平台框架获取事件列表-2018_4_2_15_57_3.py] :未获取脚本执行状态，脚本执行失败list index out of range
-[Exception][2018-04-02 18:16:13]>>  [/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/更新绑定用户信息-2018_4_2_15_57_3.py][HTTPS://ta1.2boss.cn/superior/v1/im/imUpdateCustomer]:[requests.exceptions.ConnectionError]
-[Exception][2018-04-02 18:16:14]>>  [更新绑定用户信息-2018_4_2_15_57_3.py] :未获取脚本执行状态，脚本执行失败list index out of range
-[Exception][2018-04-03 13:59:49]>>  [/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/平台框架获取事件列表-2018_4_2_15_57_3.py][HTTPS://ta1.2boss.cn/rabbit/v1/event/getEventList]:[requests.exceptions.ConnectionError]
-[Exception][2018-04-03 13:59:49]>>  [平台框架获取事件列表-2018_4_2_15_57_3.py] :未获取脚本执行状态，脚本执行失败list index out of range
-[Exception][2018-04-03 14:00:06]>>  [/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/更新绑定用户信息-2018_4_2_15_57_3.py][HTTPS://ta1.2boss.cn/superior/v1/im/imUpdateCustomer]:[requests.exceptions.ConnectionError]
-[Exception][2018-04-03 14:00:07]>>  [更新绑定用户信息-2018_4_2_15_57_3.py] :未获取脚本执行状态，脚本执行失败list index out of range
-[Exception][2018-04-10 15:17:31]>>  [/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/存储用户Session-2018_4_2_15_57_3.py][HTTPS://ta1.2boss.cn/ubt/api/session]:[requests.exceptions.ConnectionError]
-[Exception][2018-04-10 15:17:31]>>  [存储用户Session-2018_4_2_15_57_3.py] :未获取脚本执行状态，脚本执行失败list index out of range
-[Exception][2018-04-10 15:17:49]>>  [/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/更新绑定用户信息-2018_4_2_15_57_3.py][HTTPS://1ta.2boss.cn/superior/v1/im/imUpdateCustomer]:[requests.exceptions.ConnectionError]
-[Exception][2018-04-10 15:17:49]>>  [更新绑定用户信息-2018_4_2_15_57_3.py] :未获取脚本执行状态，脚本执行失败list index out of range
-[Exception][2018-04-10 15:20:15]>>  [/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/更新绑定用户信息-2018_4_2_15_57_3.py][HTTPS://1ta.2boss.cn/superior/v1/im/imUpdateCustomer]:[requests.exceptions.ConnectionError]
-[Exception][2018-04-10 16:23:31]>>  [/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/存储用户Session-2018_4_2_15_57_3.py][HTTPS://ta1.2boss.cn/ubt/api/session]:[requests.exceptions.ConnectionError]
-[Exception][2018-04-10 16:23:31]>>  [存储用户Session-2018_4_2_15_57_3.py] :未获取脚本执行状态，脚本执行失败list index out of range
-[Exception][2018-04-10 16:24:40]>>  [/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/存储用户Session-2018_4_2_15_57_3.py][HTTPS://ta1.2boss.cn/ubt/api/session]:[requests.exceptions.ConnectionError]
-[Exception][2018-04-10 16:24:40]>>  [存储用户Session-2018_4_2_15_57_3.py] :未获取脚本执行状态，脚本执行失败list index out of range
-[Exception][2018-04-10 16:38:09]>>  [/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/存储用户Session-2018_4_2_15_57_3.py][HTTPS://ta1.2boss.cn/ubt/api/session]:[requests.exceptions.ConnectionError]
-[Exception][2018-04-10 16:38:10]>>  [存储用户Session-2018_4_2_15_57_3.py] :未获取脚本执行状态，脚本执行失败list index out of range
-[Exception][2018-04-10 16:40:29]>>  [/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/存储用户Session-2018_4_2_15_57_3.py][HTTPS://ta1.2boss.cn/ubt/api/session]:[requests.exceptions.ConnectionError]
-[Exception][2018-04-10 16:40:30]>>  [存储用户Session-2018_4_2_15_57_3.py] :未获取脚本执行状态，脚本执行失败list index out of range
-[Exception][2018-04-10 20:54:03]>>  [/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/存储用户Session-2018_4_2_15_57_3.py][HTTPS://ta1.2boss.cn/ubt/api/session]:[requests.exceptions.ConnectionError]
-[Exception][2018-04-10 20:54:03]>>  [存储用户Session-2018_4_2_15_57_3.py] :未获取脚本执行状态，脚本执行失败list index out of range
-[Exception][2018-04-10 20:55:36]>>  [/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/存储用户Session-2018_4_2_15_57_3.py][HTTPS://ta1.2boss.cn/ubt/api/session]:[requests.exceptions.ConnectionError]
-[Exception][2018-04-10 20:55:37]>>  [存储用户Session-2018_4_2_15_57_3.py] :未获取脚本执行状态，脚本执行失败list index out of range
-[Exception][2018-04-10 21:00:35]>>  [/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/存储用户Session-2018_4_2_15_57_3.py][HTTPS://ta1.2boss.cn/ubt/api/session]:[requests.exceptions.ConnectionError]
-[Exception][2018-04-10 21:00:36]>>  [存储用户Session-2018_4_2_15_57_3.py] :未获取脚本执行状态，脚本执行失败list index out of range
-[Exception][2018-04-10 21:02:30]>>  [/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/存储用户Session-2018_4_2_15_57_3.py][HTTPS://ta1.2boss.cn/ubt/api/session]:[requests.exceptions.ConnectionError]
-[Exception][2018-04-10 21:02:31]>>  [存储用户Session-2018_4_2_15_57_3.py] :未获取脚本执行状态，脚本执行失败list index out of range
-[Exception][2018-04-10 21:08:59]>>  [/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/存储用户Session-2018_4_2_15_57_3.py][HTTPS://ta1.2boss.cn/ubt/api/session]:[requests.exceptions.ConnectionError]
-[Exception][2018-04-10 21:09:00]>>  [存储用户Session-2018_4_2_15_57_3.py] :未获取脚本执行状态，脚本执行失败list index out of range
-[Exception][2018-04-10 21:38:58]>>  [/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/登录初始化-2018_4_2_15_57_3.py][HTTPS://ta1.2boss.cn/resource/api/init]:[requests.exceptions.ConnectionError]
-[Exception][2018-04-10 21:38:59]>>  [登录初始化-2018_4_2_15_57_3.py] :未获取脚本执行状态，脚本执行失败list index out of range
+[Exception][2018-04-13 11:21:41]>>  [存储用户Session-2018_4_13_11_19_52.py][HTTPS://ta1.2boss.cn/ubt/api/session] <EXCEPTION>Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/存储用户Session-2018_4_13_11_19_52.py", line 19, in testDemo
+    r = requests.put(self.protocol + domian + url, json=param, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 126, in put
+    return request('put', url, data=data, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 508, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 618, in send
+    r = adapter.send(request, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/adapters.py", line 508, in send
+    raise ConnectionError(e, request=request)
+ConnectionError: HTTPSConnectionPool(host='ta1.2boss.cn', port=443): Max retries exceeded with url: /ubt/api/session (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f861be6ab50>: Failed to establish a new connection: [Errno -5] No address associated with hostname',))
+
+[Exception][2018-04-13 11:21:41]>>  [存储用户Session-2018_4_13_11_19_52.py] :未获取脚本执行状态，脚本执行失败
+[Exception][2018-04-13 11:21:42]>>  [平台框架获取事件列表-2018_4_13_11_19_52.py]  [HTTPS://ta.2boss.cn/rabbit/v1/event/getEventList] <EXCEPTION>Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/平台框架获取事件列表-2018_4_13_11_19_52.py", line 21, in testDemo
+    r = requests.get(self.protocol + domian  + url,headers=headers, params=param, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 438, in prepare_headers
+    for header in headers.items():
+AttributeError: 'str' object has no attribute 'items'
+
+[Exception][2018-04-13 11:21:43]>>  [平台框架获取事件列表-2018_4_13_11_19_52.py] :未获取脚本执行状态，脚本执行失败
+[Exception][2018-04-13 11:21:44]>>  [检查版本信息-2018_4_13_11_19_52.py]  [HTTPS://ta.2boss.cn/rabbit/v1/version/checkNewVersion] <EXCEPTION>Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_4_13_11_19_52.py", line 17, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+[Exception][2018-04-13 11:21:45]>>  [检查版本信息-2018_4_13_11_19_52.py] :未获取脚本执行状态，脚本执行失败
+[Exception][2018-04-13 11:45:02]>>  [存储用户Session-2018_4_13_11_19_52.py][HTTPS://ta1.2boss.cn/ubt/api/session] <EXCEPTION>Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/存储用户Session-2018_4_13_11_19_52.py", line 19, in testDemo
+    r = requests.put(self.protocol + domian + url, json=param, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 126, in put
+    return request('put', url, data=data, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 508, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 618, in send
+    r = adapter.send(request, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/adapters.py", line 508, in send
+    raise ConnectionError(e, request=request)
+ConnectionError: HTTPSConnectionPool(host='ta1.2boss.cn', port=443): Max retries exceeded with url: /ubt/api/session (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f486443bb50>: Failed to establish a new connection: [Errno -5] No address associated with hostname',))
+
+[Exception][2018-04-13 11:45:03]>>  [存储用户Session-2018_4_13_11_19_52.py] :未获取脚本执行状态，脚本执行失败
+[Exception][2018-04-13 11:45:04]>>  [平台框架获取事件列表-2018_4_13_11_19_52.py]  [HTTPS://ta.2boss.cn/rabbit/v1/event/getEventList] <EXCEPTION>Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/平台框架获取事件列表-2018_4_13_11_19_52.py", line 21, in testDemo
+    r = requests.get(self.protocol + domian  + url,headers=headers, params=param, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 438, in prepare_headers
+    for header in headers.items():
+AttributeError: 'str' object has no attribute 'items'
+
+[Exception][2018-04-13 11:45:05]>>  [平台框架获取事件列表-2018_4_13_11_19_52.py] :未获取脚本执行状态，脚本执行失败
+[Exception][2018-04-13 11:45:06]>>  [检查版本信息-2018_4_13_11_19_52.py]  [HTTPS://ta.2boss.cn/rabbit/v1/version/checkNewVersion] <EXCEPTION>Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_4_13_11_19_52.py", line 17, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+[Exception][2018-04-13 11:45:06]>>  [检查版本信息-2018_4_13_11_19_52.py] :未获取脚本执行状态，脚本执行失败
