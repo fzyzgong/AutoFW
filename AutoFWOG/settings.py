@@ -124,8 +124,10 @@ LOGGING = {
     'formatters': {
         'standard': {
             'format': '%(levelname)s %(asctime)s %(pathname)s %(filename)s %(module)s %(funcName)s %(lineno)d: %(message)s'
-        }, # 对日志信息进行格式化，每个字段对应了日志格式中的一个字段，更多字段参考官网文档，我认为这些字段比较合适，输出类似于下面的内容
-        # INFO 2016-09-03 16:25:20,067 /home/ubuntu/mysite/views.py views.py views get 29: some info...
+        },
+        'simple': {
+            'format': '%(levelname)s %(asctime)s %(filename)s %(module)s %(funcName)s %(lineno)d: %(message)s'
+        },
     },
     'handlers': {
         'mail_admins': {
@@ -153,7 +155,7 @@ LOGGING = {
             'filename': os.path.join(BASE_DIR,'AutoFW/log/info.log'),     #日志输出文件
             'maxBytes': 1024*1024*5,                  #文件大小
             'backupCount': 5,                         #备份份数
-            'formatter':'standard',                   #使用哪种formatters日志格式
+            'formatter':'simple',                   #使用哪种formatters日志格式
         },
         'error': {
             'level':'ERROR',
@@ -179,7 +181,7 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers' :['default', 'console'],
+            'handlers' :['default','console'],#,'console'
             'level':'INFO',
             'propagate': False # 是否继承父类的log信息
         }, # handlers 来自于上面的 handlers 定义的内容

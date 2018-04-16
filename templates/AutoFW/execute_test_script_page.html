@@ -108,6 +108,9 @@
         <input type="button" value="执行测试脚本" id="execute_script_id_b" name="{{username}}" onclick="execute_test_script()">
         <span style="padding-left: 100px"></span>
         <input type="button" value="删除测试脚本" onclick="delete_test_script()">
+        <div style="width: 96px;background: darkgray" id="jindutiaoW" hidden="true">
+	        <div  style="width: 10%;background: darkcyan;line-height: 20px;text-align: center;color: white" id="jindutiaoN" >0%</div>
+	    </div>
     </div>
     <br />
     <div>
@@ -147,6 +150,9 @@
         });
 
         function search_case() {
+            var SjindutiaoW = document.getElementById("jindutiaoW");
+                SjindutiaoW.hidden=true;
+
             $("#chose_all_c").attr("checked",false);
 
             var project_name = $("#project_name_section option:selected").text();
@@ -270,6 +276,12 @@
 
         //执行测试脚本
         function execute_test_script() {
+            //判断是否有勾选脚本执行
+            if($(".checkbox_input_script_name:checked").length<1){
+                alert("请选择要执行的脚本！");
+                return;
+            }
+
             var result_name = window.prompt("请为你本次测试命名，用于查询测试结果！[命名规范：模块缩写名+测试人员名字缩写+年月日]", "null");
             var username = document.getElementById("execute_script_id_b").name //获取执行人的姓名
 
@@ -299,6 +311,27 @@
                         script_name_json += $(this).val() + ','
                     })
                 }
+
+                //------start-------进度条条控制
+                var script_name_count = script_name_json.split(",").length;//需要执行脚本的个数，预计每个脚本执行时间为1s（包括出错/链接等待时间）
+                var jindutiaoW = document.getElementById("jindutiaoW");
+                jindutiaoW.hidden=false;
+                var jindutiaoN = document.getElementById("jindutiaoN");  //返回进度条内元素
+	            var width = 1;
+
+	            var temp = setInterval(go, script_name_count*20);   //每script_name_count秒执行一次go函数 单位时毫秒
+	            function go(){
+	                if(width >= 100)
+	                    clearInterval(temp);     //停止setInterval
+	                else{
+	                    width++;
+	                    jindutiaoN.style.width = width+'%';    //使进度条百分比增长
+	                    jindutiaoN.innerHTML = width+'%';
+	                }
+
+	            }
+                //------end-------进度条条控制
+
                 if(script_name_json){
                     $.ajax({
                         url: "/AutoFW/execute_test_script",
@@ -306,6 +339,11 @@
                         data: "script_name_json="+script_name_json+"&result_name="+result_name+"&username="+username,
                         success: function (data) {
                             if(data.status == "execute_script_success"){
+                                //进度条控制，此处表示真正的完成
+                                clearInterval(temp);
+                                jindutiaoN.style.width = '100%';
+                                jindutiaoN.innerHTML = '100%';
+
                                 $.messager.show({
                                     title: '脚本执行提示',
                                     msg: "接口测试脚本执行成功，请去测试模块查看测试报告！：",

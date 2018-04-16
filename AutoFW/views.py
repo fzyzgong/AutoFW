@@ -43,41 +43,47 @@ def login_handle(request):
     user = post.get('username')
     passwd = post.get('password')
 
-    # users = UserInfo.objects.filter(username=user)
+    username_obj = UserInfo.objects.filter(username=user)  #querySet
 
-    conn = MySQLdb.connect(host='localhost',port=3306,db='autofw',user='root',passwd='123456',charset='utf8')
-
-    handle = conn.cursor()
-
-    username = handle.execute("select username from userinfo where username='%s'" % user)
-    username = handle.fetchone()
-
-    password = handle.execute("select password from userinfo where username='%s'" % user)
-    password = handle.fetchone()
-
-    print ("username:"+str(username)+"  password:"+str(password))
-
-    #判断元组是否为空，空为false
-    if(username and password):
-        # print ("user:"+user+"  passwd:"+passwd)
-        if(username[0]==user and password[0]==passwd):
-            username = username[0]
-            position = UserInfo.objects.filter(username=username)
-            # print (str(position[0].position))
-            position = position[0].position
-
-            context = {'username':username,'position':position}
-
-            return render(request,'AutoFW/easyui_workbench.html',context)
-        else:
-            # return HttpResponse("username or passwd1 error")
-            return render(request, 'AutoFW/login.html')
+    if(len(username_obj)>0 and passwd == username_obj[0].password):
+        username = username_obj[0].username
+        position = username_obj[0].position
+        context = {'username': username, 'position': position}
+        log_sys.info("["+username+"] 登录成功")
+        return render(request, 'AutoFW/easyui_workbench.html', context)
     else:
-        # return HttpResponse("username or passwd error")
+        log_sys.info("请输入正确的用户名和密码！")
+        print ("login_handle:请输入正确的用户名和密码！")
         return render(request, 'AutoFW/login.html')
 
 
+    # conn = MySQLdb.connect(host='localhost',port=3306,db='autofw',user='root',passwd='*****',charset='utf8')
+    # handle = conn.cursor()
+    # username = handle.execute("select username from userinfo where username='%s'" % user)
+    # username = handle.fetchone()
+    # password = handle.execute("select password from userinfo where username='%s'" % user)
+    # password = handle.fetchone()
+    # print ("username:"+str(username)+"  password:"+str(password))
+    # #判断元组是否为空，空为false
+    # if(username and password):
+    #     # print ("user:"+user+"  passwd:"+passwd)
+    #     if(username[0]==user and password[0]==passwd):
+    #         username = username[0]
+    #         position = UserInfo.objects.filter(username=username)
+    #         # print (str(position[0].position))
+    #         position = position[0].position
+    #         context = {'username':username,'position':position}
+    #         return render(request,'AutoFW/easyui_workbench.html',context)
+    #     else:
+    #         # return HttpResponse("username or passwd1 error")
+    #         return render(request, 'AutoFW/login.html')
+    # else:
+    #     # return HttpResponse("username or passwd error")
+    #     return render(request, 'AutoFW/login.html')
+
+
 def project_manage(request):
+    log_sys.info("进入项目中心-->项目管理页面")
     return render(request,'AutoFW/easyui_project_manage.html')
 
 class CJsonEncoder(json.JSONEncoder):
@@ -94,29 +100,27 @@ class CJsonEncoder(json.JSONEncoder):
         except Exception,e:
             print e
 #显示所有项目信息在前端展示
-def Read_all_SQL(request):
+def Read_all_project(request):
+    log_sys.info("查询所有项目")
     obj_all = Project.objects.all()
     eaList = []
     for li in obj_all:
         #序列化
         datetimeformat = json.dumps(str(li.create_time))
         create_time = datetimeformat.split('"')[1].split('+')[0]
-        # print create_time
+        # log_sys.info("datatime类型序列化："+create_time)
         eaList.append(
             {"project_id": li.project_code, "project_name": li.project_name, "creator": li.creator, "create_time": create_time,
              "prioirty": li.PRI,"department": li.department,"id": li.id})
     eaList_len = json.dumps(len(eaList),cls=CJsonEncoder)
-    # print (str(eaList))
     json_data_list = {'rows': eaList, 'total': eaList_len}
-
     easyList = json.dumps(json_data_list,cls=CJsonEncoder)
-    # print (easyList)
+    #log_sys.info("项目列表加载：" + str(easyList))
     return HttpResponse(easyList)
 
 # Edit_UserName
-def Edit_UserNmae(request, id):
-    print(id)
-    print(request.method)
+def Edit_project(request, id):
+    log_sys.info("编辑更改项目属性")
     if request.method == 'POST':
         project_id = request.POST.get('project_id')
         project_name = request.POST.get('project_name')
@@ -126,13 +130,13 @@ def Edit_UserNmae(request, id):
         department = request.POST.get('department')
         dic = {'project_code': project_id, 'project_name': project_name,
                'creator': creator, 'create_time': create_time,'PRI':prioirty,'department':department};
-        print(str(dic))
+        log_sys.info("更新项目属性："+str(dic))
         Project.objects.filter(id=id).update(**dic)
         return HttpResponse("Edit_OK")
 
 
 def income_project(request, project_id):
-    print ("income_project:" + str(project_id))
+    log_sys.info("进入项目["+str(project_id)+"]")
     #获取该项目所有模块对象list
     module = Project_Module.objects.filter(project=project_id)
     #用来装模块名字
@@ -1205,8 +1209,10 @@ def execute_test_script(request):
             print("API_name:%s"%API_name)
             script_info_obj = Script_Info.objects.filter(script_name=list)[0]
             script_path = str(script_info_obj.script_path)
+
+            project_case_name = script_info_obj.script_case_name_id
             # print (script_path)
-            rs = execute_script_Popen(script_path,0.5) #脚本路径/休眠时间 (当前测试接口需要等待3秒才能再次访问)
+            rs = execute_script_Popen(script_path,0.1) #脚本路径/休眠时间 (当前测试接口需要等待3秒才能再次访问)
             print(rs)
             try:
                 result =rs.split('AutoFW test reslut:')[1].split('\'')[0]
@@ -1219,7 +1225,8 @@ def execute_test_script(request):
                     rs = rs.split('AutoFW test reslut:')[1]
 
                     if "PASS" == result:
-                        dict = {"script_status":"PASS"}
+                        # dict = {"script_status":"PASS"}
+                        dict = "PASS"
                         time_consuming = rs.split('time_consuming:')[1].split(']')[0]
                         # log_scripts.info(list + ":PASS:" + " pass message [" + rs.split('PASS')[1] + "]")#响应信息都打印
                         log_scripts.info(list + ":PASS:[time_consuming:"+time_consuming+"]{ response : \'resultCode" + rs.split('resultCode')[1][1:4]+'\''+" }")#只打印成功关键字段
@@ -1233,10 +1240,11 @@ def execute_test_script(request):
                         content = {"status": "execute_script_success"}
                         passCount += 1
                     elif "FAILED" == result:
-                        dict = {"script_status": "FAILED"}
+                        # dict = {"script_status": "FAILED"}
+                        dict = "FAILED"
                         log_scripts.error(list + ":FAILED:" + " error message [" + rs.split('FAILED')[1] + "]")
 
-                        execute_script_log = str(API_name)+":<FAILED> " + " error message 服务器返回错误：[" + rs.split('FAILED')[1][1:1500] + "]" #设这1-1500为了防止存储字段超过长度
+                        execute_script_log = str(API_name)+":<FAIL> " + " error message 服务器返回错误：[" + rs.split('FAILED')[1][1:1500] + "]" #设这1-1500为了防止存储字段超过长度
                         # 写入Execute_Script_Log表
                         dic = {"log_report_id_id": report_id, "log_api_name": API_name,
                                "log_execute_script": execute_script_log, "status": "fail", "bak1": "bak"}
@@ -1245,8 +1253,8 @@ def execute_test_script(request):
                         content = {"status": "execute_script_failed"}
                         failCount += 1
                 else:
-                    dict = {"script_status": "NONE"}
-
+                    # dict = {"script_status": "NONE"}
+                    dict = "NONE"
                     execute_script_log = str(API_name) + ":<FAILED> " + " error message [脚本运行出错]"
                     # 写入Execute_Script_Log表
                     dic = {"log_report_id_id": report_id, "log_api_name": API_name,
@@ -1256,7 +1264,8 @@ def execute_test_script(request):
                     content = {"status": "execute_script_failed"}
                     skipCount += 1
             except IndexError,e:
-                dict = {"script_status": "NONE"}
+                # dict = {"script_status": "NONE"}
+                dict = "NONE"
                 mylogging("["+str(list)+"] :"+"未获取脚本执行状态，脚本执行失败")
                 log_scripts.error(list + ":FAILED:" + " error message [ 未获取脚本执行状态，脚本执行失败 ] \r"+rs)
 
@@ -1273,7 +1282,8 @@ def execute_test_script(request):
             #     mylogging("[" + str(list) + "] :" + "index error,未获取脚本执行状态，脚本执行失败"+e.args)
             #     log_scripts.error(list + ":FAILED:" + " error message [ AttributeError ]"+e.args)
 
-            Script_Info.objects.filter(script_name=list).update(**dict)
+            Script_Info.objects.filter(script_name=list).update(script_status=dict)
+            Project_Case.objects.filter(case_name=project_case_name).update(description=dict) #description 为用例执行状态
         # 报告名 执行者 api总数 执行时间 执行报告ID
         print("result_name=%s execute_name=%s api_total=%s"
               " execute_time=%s report_id=%s" % (report_name, execute_man, str(API_total), execute_time, report_id))
