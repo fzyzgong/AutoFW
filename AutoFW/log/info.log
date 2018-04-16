@@ -611,3 +611,164 @@ InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <ty
 
 
 INFO 2018-04-16 14:34:07,448 views.py views execute_test_script 1232: 登录初始化-2018_4_13_11_19_52.py:PASS:[time_consuming:0.079837]{ response : 'resultCode: 0' }
+INFO 2018-04-16 18:02:47,224 views.py views login_handle 53: [gonglp] 登录成功
+ERROR 2018-04-16 18:03:21,701 views.py views execute_test_script 1246: 更新绑定用户信息-2018_4_13_11_19_52.py:FAILED: error message [', "{u'status': 404, u'timestamp': 1523873002368, u'message': u'No message available', u'path': u'/superior/v1/im/imUpdateCustomer12', u'error': u'Not Found'}")
+]
+ERROR 2018-04-16 18:03:22,086 views.py views execute_test_script 1271: 检查版本信息-2018_4_13_11_19_52.py:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_4_13_11_19_52.py", line 17, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+
+INFO 2018-04-16 18:03:22,493 views.py views execute_test_script 1233: 登录初始化-2018_4_13_11_19_52.py:PASS:[time_consuming:0.058952]{ response : 'resultCode: 0' }
+ERROR 2018-04-16 18:04:21,484 views.py views execute_test_script 1246: 更新绑定用户信息-2018_4_13_11_19_52.py:FAILED: error message [', "{u'status': 404, u'timestamp': 1523873062164, u'message': u'No message available', u'path': u'/superior/v1/im/imUpdateCustomer12', u'error': u'Not Found'}")
+]
+ERROR 2018-04-16 18:04:21,732 views.py views execute_test_script 1271: 检查版本信息-2018_4_13_11_19_52.py:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_4_13_11_19_52.py", line 17, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+
+INFO 2018-04-16 18:04:22,049 views.py views execute_test_script 1233: 登录初始化-2018_4_13_11_19_52.py:PASS:[time_consuming:0.061301]{ response : 'resultCode: 0' }
+INFO 2018-04-16 18:06:50,966 views.py views login_handle 53: [gonglp] 登录成功
+ERROR 2018-04-16 18:07:32,430 views.py views execute_test_script 1246: 更新绑定用户信息-2018_4_13_11_19_52.py:FAILED: error message [', "{u'status': 404, u'timestamp': 1523873253098, u'message': u'No message available', u'path': u'/superior/v1/im/imUpdateCustomer12', u'error': u'Not Found'}")
+]
+ERROR 2018-04-16 18:07:32,698 views.py views execute_test_script 1271: 检查版本信息-2018_4_13_11_19_52.py:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_4_13_11_19_52.py", line 17, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+
+INFO 2018-04-16 18:07:33,066 views.py views execute_test_script 1233: 登录初始化-2018_4_13_11_19_52.py:PASS:[time_consuming:0.065425]{ response : 'resultCode: 0' }
+ERROR 2018-04-16 18:08:03,102 views.py views execute_test_script 1246: 更新绑定用户信息-2018_4_13_11_19_52.py:FAILED: error message [', "{u'status': 404, u'timestamp': 1523873283786, u'message': u'No message available', u'path': u'/superior/v1/im/imUpdateCustomer12', u'error': u'Not Found'}")
+]
+ERROR 2018-04-16 18:08:03,366 views.py views execute_test_script 1271: 检查版本信息-2018_4_13_11_19_52.py:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_4_13_11_19_52.py", line 17, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+
+INFO 2018-04-16 18:08:03,701 views.py views execute_test_script 1233: 登录初始化-2018_4_13_11_19_52.py:PASS:[time_consuming:0.06878]{ response : 'resultCode: 0' }
+INFO 2018-04-16 18:11:33,557 views.py views login_handle 53: [gonglp] 登录成功
+ERROR 2018-04-16 18:12:02,753 views.py views execute_test_script 1271: 检查版本信息-2018_4_13_11_19_52.py:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_4_13_11_19_52.py", line 17, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+
+INFO 2018-04-16 18:12:03,096 views.py views execute_test_script 1233: 登录初始化-2018_4_13_11_19_52.py:PASS:[time_consuming:0.067386]{ response : 'resultCode: 0' }
+ERROR 2018-04-16 18:12:37,526 views.py views execute_test_script 1271: 检查版本信息-2018_4_13_11_19_52.py:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_4_13_11_19_52.py", line 17, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+
+INFO 2018-04-16 18:12:37,825 views.py views execute_test_script 1233: 登录初始化-2018_4_13_11_19_52.py:PASS:[time_consuming:0.059794]{ response : 'resultCode: 0' }
+INFO 2018-04-16 18:13:33,636 views.py views login_handle 53: [gonglp] 登录成功
+ERROR 2018-04-16 18:14:05,965 views.py views execute_test_script 1246: 更新绑定用户信息-2018_4_13_11_19_52.py:FAILED: error message [', "{u'status': 404, u'timestamp': 1523873646649, u'message': u'No message available', u'path': u'/superior/v1/im/imUpdateCustomer12', u'error': u'Not Found'}")
+]
+ERROR 2018-04-16 18:14:06,229 views.py views execute_test_script 1271: 检查版本信息-2018_4_13_11_19_52.py:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_4_13_11_19_52.py", line 17, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+
+INFO 2018-04-16 18:14:06,559 views.py views execute_test_script 1233: 登录初始化-2018_4_13_11_19_52.py:PASS:[time_consuming:0.065759]{ response : 'resultCode: 0' }

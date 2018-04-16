@@ -6,6 +6,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse,JsonResponse,HttpResponseRedirect
 from .util.execute_script_Popen import execute_script_Popen
 from .util.copyFileAndUpdataUtil import copyFile
+from .util.send_mail_batch_report import send_mail
 from models import *
 import MySQLdb
 import sys
@@ -1295,6 +1296,11 @@ def execute_test_script(request):
 
         Batch_Report.objects.filter(report_id=report_id).update(**dict_execute)
 
+        #-------start-------发送测试报告邮件---------------------
+        execute_time = execute_time.strftime("%Y%m%d%H%M%S")
+        send_mail(report_name,execute_man,execute_time,str(API_total),str(passCount),str(failCount),str(skipCount))
+
+        # -------end-------发送测试报告邮件---------------------
         # passCount = 0
         # failCount = 0
         # skipCount = 0
