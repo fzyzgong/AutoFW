@@ -104,10 +104,16 @@
     <br />
     <hr />
     <br />
-    <div style="padding-left: 300px">
+    <div style="padding-left: 200px">
         <input type="button" value="执行测试脚本" id="execute_script_id_b" name="{{username}}" onclick="execute_test_script()">
+        <span style="padding-left: 20px"></span>
+        <input type="checkbox" id="execute_end_send_email">[执行完发送邮件]
         <span style="padding-left: 100px"></span>
         <input type="button" value="删除测试脚本" onclick="delete_test_script()">
+        <span style="padding-left: 100px"></span>
+        <input type="button" value="执行冒烟用例" onclick="execute_maoyan_script()">
+        <span style="padding-left: 100px"></span>
+        <input type="button" value="执行项目所有用例" onclick="execute_all_script()">
         <div style="width: 96px;background: darkgray" id="jindutiaoW" hidden="true">
 	        <div  style="width: 10%;background: darkcyan;line-height: 20px;text-align: center;color: white" id="jindutiaoN" >0%</div>
 	    </div>

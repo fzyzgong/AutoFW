@@ -12,10 +12,10 @@ function newProjectAPI(){
 
 
 // 创建——API 并 SAVE  保存
-function saveProjectAPI(){
-           // alert('saveUser:'+url);
+function saveProjectAPI(username){
+            // alert('saveUser:'+url+username);
    $('#fm').form('submit',{
-        url: url,
+        url: url+'/'+username,
         onSubmit: function(){
             return $(this).form('validate');
         },
@@ -41,8 +41,11 @@ function saveProjectAPI(){
 
 //修改接口
 function editProjectAPI(){
+    // $('#fm_case_id').attr("disabled","disabled"); //???未生效
+
     var project_id = document.getElementById("project_id_flag").value;
     var row = $('#dg_case').datagrid('getSelected');
+
     if(row){
         $('#dlg').dialog('open').dialog('center').dialog('setTitle','Edit Project API');
         $('#fm').form('load',row);

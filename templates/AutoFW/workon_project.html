@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>自动化测试平台</title>
+
     <link rel="stylesheet" type="text/css" href="/static/jquery_easyui/themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="/static/jquery_easyui/themes/icon.css">
     <link rel="stylesheet" type="text/css" href="/static/css/workbench_module.css">
@@ -88,7 +90,7 @@
         </div>
         <div title="项目模块配置" style="overflow:auto;padding:80px;display:none;">
             <h2>项目模块管理</h2>
-            <p>OG （增 删  改 查）</p>
+            <!--<p>OG （增 删  改 查）</p>-->
             <table id="dg" title="Project Module Manage" class="easyui-datagrid" style="width:1000px;height:350px"
                     url="/AutoFW/module_read/{{ project_id }}" idField="itemid"
                     toolbar="#toolbar" pagination="true"
@@ -136,7 +138,7 @@
 
         <div title="项目API配置" style="padding:80px;display:none;">
             <img src="/static/media/jiantou_x.png">
-            <span style="font-size: 50px;margin: 0 auto"><a target="mainFrame" href="/AutoFW/workon_tabs_api/{{project_id}}">进入项目[{{project_id}}]接口管理</a></span>
+            <span style="font-size: 50px;margin: 0 auto"><a target="mainFrame" href="/AutoFW/workon_tabs_api/{{project_id}}/{{username}}">进入项目[{{project_id}}]接口管理</a></span>
         </div>
 
         <div title="全局配置" style="padding:80px;display:none;">

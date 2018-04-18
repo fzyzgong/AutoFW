@@ -83,9 +83,10 @@ def login_handle(request):
     #     return render(request, 'AutoFW/login.html')
 
 
-def project_manage(request):
+def project_manage(request,username):
     log_sys.info("进入项目中心-->项目管理页面")
-    return render(request,'AutoFW/easyui_project_manage.html')
+    content = {"username":username}
+    return render(request,'AutoFW/easyui_project_manage.html',content)
 
 class CJsonEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -120,12 +121,13 @@ def Read_all_project(request):
     return HttpResponse(easyList)
 
 # Edit_UserName
-def Edit_project(request, id):
+def Edit_project(request, id,username):
+    print ("username_glp:"+ str(username))
     log_sys.info("编辑更改项目属性")
     if request.method == 'POST':
         project_id = request.POST.get('project_id')
         project_name = request.POST.get('project_name')
-        creator = request.POST.get('creator')
+        creator = username
         create_time = request.POST.get('create_time')
         prioirty = request.POST.get('prioirty')
         department = request.POST.get('department')
@@ -136,8 +138,8 @@ def Edit_project(request, id):
         return HttpResponse("Edit_OK")
 
 
-def income_project(request, project_id):
-    log_sys.info("进入项目["+str(project_id)+"]")
+def income_project(request, project_id,username):
+    log_sys.info(str(username)+"进入项目["+str(project_id)+"]")
     #获取该项目所有模块对象list
     module = Project_Module.objects.filter(project=project_id)
     #用来装模块名字
@@ -175,7 +177,7 @@ def income_project(request, project_id):
 
     print ("module_case_count_list-----"+str(module_case_count_dir))
 
-    context = {"project_id":project_id,'list':module_case_count_dir}
+    context = {"project_id":project_id,'list':module_case_count_dir,"username":username}
 
     return render(request,'AutoFW/workon_project.html',context)
 
@@ -268,14 +270,13 @@ def module_append(request):
 
 
 # add User_Name  + start_app
-def app_start(request):
+def app_start(request,username):
     # add_save_user
     if request.method == "POST":
         print("POST")
-        print(request.POST)
         project_id = request.POST.get('project_id')
         project_name = request.POST.get('project_name')
-        creator = request.POST.get('creator')
+        creator = username
         create_time = request.POST.get('create_time')
         prioirty = request.POST.get('prioirty')
         department = request.POST.get('department')
@@ -381,11 +382,13 @@ def Remove_Module(request):
 
 
 #接口管理进入入口
-def workon_tabs_api(request,project_id):
+def workon_tabs_api(request,project_id,username):
+    log_sys.info(str(username)+"进入接口管理页面 ["+project_id+"]")
     # 获取项目模块list，传递给前端提供给form表单用
     module_name_list = Project_Module.objects.filter(project=project_id).values('module_name')
     # print (module_name_list)
-    return render(request,'AutoFW/workon_tabs_api_curd.html',{"project_id":project_id,"module_name_list":module_name_list})
+    content = {"project_id":project_id,"module_name_list":module_name_list,"username":username}
+    return render(request,'AutoFW/workon_tabs_api_curd.html',content)
 
 
 def case_Read_all_SQL(request,project_id):
@@ -410,7 +413,7 @@ def case_Read_all_SQL(request,project_id):
         caseList.append({"case_id":list.case_id,"module_name":list.module_name.module_name,"project_name":list.project_name.project_name,
                          "case_name":list.case_name,"creator":list.creator,"url_path":list.url_path,
                          "method":list.method,"headers":list.headers,"parameter_format":list.parameter_format,"parameter":list.parameter,"expected":list.expected,
-                         "description":list.description})
+                         "description":list.description,"case_type":list.case_type})
         # i += 1
 
     caseList_len = len(caseList)
@@ -421,9 +424,8 @@ def case_Read_all_SQL(request,project_id):
     return HttpResponse(case_list)
 
 
-def API_start(request,project_id):
+def API_start(request,project_id,username):
     if request.method == "POST":
-        print("API_start POST")
         case_id = request.POST.get('case_id')#接口编号
         module_name = request.POST.get('module_name')#模块名称
 
@@ -431,7 +433,7 @@ def API_start(request,project_id):
         project_name = Project.objects.filter(project_code=project_id).values('project_name')[0]['project_name']
 
         case_name = request.POST.get('case_name')#接口名称
-        creator = request.POST.get('creator')#创建人
+        creator = username#创建人
         url_path = request.POST.get('url_path')
         method = request.POST.get('method')
         headers = request.POST.get('headers')
@@ -439,12 +441,17 @@ def API_start(request,project_id):
         parameter = request.POST.get('parameter')
         expected = request.POST.get('expected')
         description = request.POST.get('description')
+        case_type = request.POST.get('case_type')
+
         # module_name_id是外键 本应是module_name    project_name_id是外键 本应是project_name
         dic = {'case_id': case_id,'module_name_id': module_name, 'project_name_id':project_name,
                'case_name': case_name,'creator':creator,'url_path':url_path,'method':method,'headers':headers,
-               'parameter_format':parameter_format,'parameter':parameter,'expected':expected,'description':description}
+               'parameter_format':parameter_format,'parameter':parameter,'expected':expected,'description':description,
+               'case_type':case_type}
 
         Project_Case.objects.create(**dic)
+
+        log_sys.info(str(username) + "添加API用例 ["+str(case_name)+"] 属于项目：[" + project_id + "]")
 
         return HttpResponse("save")
     else:
@@ -452,7 +459,7 @@ def API_start(request,project_id):
     return render(request, 'AutoFW/workon_project.html')
 
 
-def editAPI(request,project_id):
+def editAPI(request,project_id,username):
     if request.method == "POST":
         print ("editAPI submit")
         case_id = request.POST.get('case_id')
@@ -465,8 +472,9 @@ def editAPI(request,project_id):
         expected = request.POST.get('expected')
         module_name = request.POST.get('module_name')
         description = request.POST.get('description')
+        case_type = request.POST.get('case_type')
         # print (module_name)
-        creator = request.POST.get('creator')
+        creator = username
         print (headers)
         project_name = Project.objects.filter(project_code=project_id).values('project_name')[0]['project_name']
 
@@ -474,11 +482,14 @@ def editAPI(request,project_id):
                'url_path': url_path, 'method': method,'headers':headers,'parameter_format':parameter_format,
                'parameter': parameter, 'expected': expected,
                'module_name': module_name, 'project_name': project_name,
-               'description': description};
+               'description': description,"case_type":case_type};
         print(str(dic))
-        Project_Case.objects.filter(case_id=case_id).update(**dic)
-
-    return HttpResponse("save")
+        project_case_obj = Project_Case.objects.filter(case_id=case_id)
+        if len(project_case_obj)==1:
+            Project_Case.objects.filter(case_id=case_id).update(**dic)#case_id 不让更改
+            return HttpResponse("save")
+        else:
+            return HttpResponse("case_id can't change.")
 
 
 def removeAPI(request):

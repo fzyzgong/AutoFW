@@ -31,11 +31,11 @@
         </thead>
     </table>
     <div id="toolbar">
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newProject()">Add Project</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editProject()">Edit Project</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newProject('{{ username }}')">Add Project</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editProject('{{ username }}')">Edit Project</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyProject()">Remove Project</a>
         <span style="float: right;">[勾选一个]</span>
-        <a href="#" id="income_project" class="easyui-linkbutton" iconCls="icon-edit" onclick="incomeProject()" style="float: right;font-size: 18px;">进入项目</a>
+        <a href="#" id="income_project" class="easyui-linkbutton" iconCls="icon-edit" onclick="incomeProject('{{ username }}')" style="float: right;font-size: 18px;">进入项目</a>
         <!--<a href="javascript:incomeProject()" class="easyui-linkbutton" iconCls="icon-edit" plain="true" style="float: right;font-size: 18px;">进入项目</a>-->
     </div>
 
@@ -50,13 +50,19 @@
                 <input name="project_name" class="easyui-textbox" required="true" label="项目名称:" style="width:100%">
             </div>
             <div style="margin-bottom:10px">
-                <input name="creator" class="easyui-textbox" required="true" label="创建者:" style="width:100%">
+                <input name="creator" class="easyui-textbox" required="true" label="创建者:" value="{{username}}" disabled="disabled" style="width:100%">
             </div>
             <div style="margin-bottom:10px">
                 <input name="create_time" class="easyui-datetimebox" required="true" label="创建日期:" style="width:100%">
             </div>
             <div style="margin-bottom:10px">
-                <input name="prioirty" class="easyui-textbox" value="[选项：低/中/高]" required="true"  label="优先权:" style="width:100%">
+                <!--<input name="prioirty" class="easyui-textbox" value="[选项：低/中/高]" required="true"  label="优先权:" style="width:100%">-->
+                <span>优先级:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <section id="easyui-combobox" class="easyui-combobox" required="true" name="prioirty"  style="width: 200px">
+                    <option>高</option>
+                    <option>中</option>
+                    <option>低</option>
+                </section>
             </div>
             <div style="margin-bottom:10px">
                 <input name="department" class="easyui-textbox" required="true"  label="所属部门:" style="width:100%">

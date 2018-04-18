@@ -70,6 +70,7 @@ class Project_Case(models.Model):
     expected = models.CharField(max_length=300)
     description = models.CharField(max_length=100)
     headers = models.CharField(max_length=1000)
+    case_type = models.CharField(max_length=20)
 
     class Meta:
         db_table = 'project_case'

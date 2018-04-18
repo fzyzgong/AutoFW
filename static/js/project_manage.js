@@ -19,9 +19,9 @@ $(function (){
 
 var url;
 // 显示 编辑框
-function newProject(){
-           // alert('newUser1:'+url);
-    url = '/AutoFW/start/';
+function newProject(username){
+
+    url = '/AutoFW/start/'+username;
 //            alert('newUser:'+url);
     $('#dlg').dialog('open').dialog('center').dialog('创建','New Project');
     $('#fm').form('clear');
@@ -29,13 +29,13 @@ function newProject(){
 }
 
 //编辑 USER
-function editProject(){
+function editProject(username){
     var row = $('#dg').datagrid('getSelected');
     if (row){
         $('#dlg').dialog('open').dialog('center').dialog('setTitle','Edit Project');
         $('#fm').form('load',row);
         //  ajax 编辑USER 并且 通过ajax 保存到后端 SQL
-        url = '/AutoFW/edit/'+row.id;
+        url = '/AutoFW/edit/'+row.id+'/'+username;
 //                alert('editUser:'+url)
     }
 }
@@ -126,14 +126,14 @@ function destroyProject(){
 
 }
 
-function incomeProject() {
+function incomeProject(username) {
     var row = $('#dg').datagrid('getSelected');
     if(row == null){
         alert("请选择一个项目在点击进入项目");
     }else{
 //                alert(row.project_id);
 //                url = '/AutoFW/project_'+row.project_id+'/';
-        url = '/AutoFW/income_project/'+row.project_id;
+        url = '/AutoFW/income_project/'+row.project_id+'/'+username;
         //a标签herf动态地址
         $("#income_project").attr("href",url);
     }

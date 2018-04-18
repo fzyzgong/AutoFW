@@ -28,7 +28,7 @@
     <!--<a href="#">{{ list.module_name }}</a>-->
     <!--{% endfor %}-->
     <input type="hidden" id="project_id_flag" value="{{project_id}}">
-    <table id="dg_case" title="Project Case Manage" class="easyui-datagrid" style="width:1200px;height:350px"
+    <table id="dg_case" title="Project Case Manage" class="easyui-datagrid" style="width:1400px;height:350px"
             url="/AutoFW/case_read/{{ project_id }}" idField="itemid"
             toolbar="#toolbar_case" pagination="true"
             rownumbers="true" fitColumns="true" singleSelect="true" >
@@ -47,6 +47,7 @@
                 <th field="project_name" width="100">所属项目</th>
                 <th field="creator" width="50">创建者</th>
                 <th field="description" width="50">测试状态</th>
+                <th field="case_type" width="50">用例类型</th>
             </tr>
         </thead>
     </table>
@@ -111,7 +112,7 @@
                 <input name="project_id" class="easyui-textbox" value="{{project_id}}" disabled="disabled" required="true" label="项目编号:" style="width:100%">
             </div>
             <div style="margin-bottom:10px">
-                <input name="creator" class="easyui-textbox" required="true" label="创建者:" style="width:100%">
+                <input name="creator" class="easyui-textbox" required="true" label="创建者:" value="{{ username }}" disabled="disabled" style="width:100%">
             </div>
             <div style="margin-bottom:10px">
                 <!--<input name="discription" class="easyui-textbox" required="true" label="测试状态:" value="P[通过]/F[失败]/N[未测]" style="width:100%">-->
@@ -122,10 +123,18 @@
                     <option>NONE</option>
                 </section>
             </div>
+            <div style="margin-bottom:10px">
+                <span>用例类型:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <section name="case_type" id="case_type_easyui" class="easyui-combobox" required="true" style="width: 198px" >
+                    <option>回归测试</option>
+                    <option>冒烟测试</option>
+                    <option>其他</option>
+                </section>
+            </div>
         </form>
         <div class="dlg-buttons">
             <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="float:right;width:90px">Cancel</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveProjectAPI()" style="float:right;width:90px">Save</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveProjectAPI('{{ username }}')" style="float:right;width:90px">Save</a>
         </div>
     </div>
 
