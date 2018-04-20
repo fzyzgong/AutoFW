@@ -793,7 +793,7 @@ def search_case(request):
         print ("创建者/用例状态/用例名 为空时查询分支")
         case_obj = Project_Case.objects.filter(project_name=project_name,module_name=project_module)
         for list in case_obj:
-            case_obj_dict = {"case_name":list.case_name,"project_name":list.project_name_id,"module_name":list.module_name_id,
+            case_obj_dict = {"case_id":list.case_id,"case_name":list.case_name,"project_name":list.project_name_id,"module_name":list.module_name_id,
                              "url_path":list.url_path,"method":list.method,"headers":list.headers,"ip":prject_config_ip,"parameter_format":list.parameter_format,"parameter":list.parameter,
                              "expected":list.expected,"port":prject_config_port,"creator":list.creator,"case_status":list.description}
             case_obj_list.append(case_obj_dict)
@@ -808,7 +808,7 @@ def search_case(request):
         case_obj = Project_Case.objects.filter(project_name=project_name,
                                                module_name=project_module,case_name__contains=case_name)
         for list in case_obj:
-            case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,"module_name": list.module_name_id,
+            case_obj_dict = {"case_id":list.case_id,"case_name": list.case_name, "project_name": list.project_name_id,"module_name": list.module_name_id,
                              "url_path": list.url_path, "method": list.method,"headers":list.headers, "ip": prject_config_ip,"parameter_format":list.parameter_format,"parameter": list.parameter,
                              "expected": list.expected, "port": prject_config_port,"creator":list.creator,"case_status":list.description}
             case_obj_list.append(case_obj_dict)
@@ -822,7 +822,7 @@ def search_case(request):
         case_obj = Project_Case.objects.filter(project_name=project_name,
                                                module_name=project_module,description=case_status)
         for list in case_obj:
-            case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,"module_name": list.module_name_id,
+            case_obj_dict = {"case_id":list.case_id,"case_name": list.case_name, "project_name": list.project_name_id,"module_name": list.module_name_id,
                              "url_path": list.url_path, "method": list.method,"headers":list.headers, "ip": prject_config_ip,"parameter_format":list.parameter_format,"parameter": list.parameter,
                              "expected": list.expected, "port": prject_config_port,"creator":list.creator,"case_status":list.description}
             case_obj_list.append(case_obj_dict)
@@ -840,7 +840,7 @@ def search_case(request):
                                                module_name=project_module,creator=creator_n)
         # print (case_obj)
         for list in case_obj:
-            case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,"module_name": list.module_name_id,
+            case_obj_dict = {"case_id":list.case_id,"case_name": list.case_name, "project_name": list.project_name_id,"module_name": list.module_name_id,
                              "url_path": list.url_path, "method": list.method,"headers":list.headers, "ip": prject_config_ip,"parameter_format":list.parameter_format,"parameter": list.parameter,
                              "expected": list.expected, "port": prject_config_port,"creator":list.creator,"case_status":list.description}
             case_obj_list.append(case_obj_dict)
@@ -856,7 +856,7 @@ def search_case(request):
                                                case_name__contains=case_name,description=case_status)
         # print (case_obj)
         for list in case_obj:
-            case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,
+            case_obj_dict = {"case_id":list.case_id,"case_name": list.case_name, "project_name": list.project_name_id,
                              "module_name": list.module_name_id,
                              "url_path": list.url_path, "method": list.method,"headers":list.headers, "ip": prject_config_ip,
                              "parameter_format":list.parameter_format,"parameter": list.parameter,
@@ -876,7 +876,7 @@ def search_case(request):
         case_obj = Project_Case.objects.filter(project_name=project_name,module_name=project_module,
                                                case_name__contains=case_name,creator=creator_n)
         for list in case_obj:
-            case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,
+            case_obj_dict = {"case_id":list.case_id,"case_name": list.case_name, "project_name": list.project_name_id,
                              "module_name": list.module_name_id,
                              "url_path": list.url_path, "method": list.method,"headers":list.headers, "ip": prject_config_ip,
                              "parameter_format":list.parameter_format,"parameter": list.parameter,
@@ -895,7 +895,7 @@ def search_case(request):
         case_obj = Project_Case.objects.filter(project_name=project_name,module_name=project_module,
                                                description=case_status,creator=creator_n)
         for list in case_obj:
-            case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,
+            case_obj_dict = {"case_id":list.case_id,"case_name": list.case_name, "project_name": list.project_name_id,
                              "module_name": list.module_name_id,
                              "url_path": list.url_path, "method": list.method,"headers":list.headers, "ip": prject_config_ip,
                              "parameter_format":list.parameter_format,"parameter": list.parameter,
@@ -913,7 +913,7 @@ def search_case(request):
         case_obj = Project_Case.objects.filter(project_name=project_name, module_name=project_module,
                                                description=case_status, creator=creator_n,case_name__contains=case_name)
         for list in case_obj:
-            case_obj_dict = {"case_name": list.case_name, "project_name": list.project_name_id,
+            case_obj_dict = {"case_id":list.case_id,"case_name": list.case_name, "project_name": list.project_name_id,
                              "module_name": list.module_name_id,
                              "url_path": list.url_path, "method": list.method,"headers":list.headers, "ip": prject_config_ip,
                              "parameter_format":list.parameter_format,"parameter": list.parameter,
@@ -929,12 +929,12 @@ def search_case(request):
 #生成测试脚本（全选模式/单选）
 def chose_all_genritor_test_script(request):
     print ("chose_all_genritor_test_script")
-    case_name = request.GET.get("case_name_json")
+    case_id = request.GET.get("case_id_json")
     # case_name = case_name.encode("utf-8")
-    case_name_list = str(case_name).split(',')
+    case_id_list = str(case_id).split(',')
 
     #移除空列元素
-    case_name_list.remove('')
+    case_id_list.remove('')
 
     '''sourceFile/targetFile相对路径'''
     sourceFile = "script/HTTP_API_case_templates/"
@@ -945,9 +945,9 @@ def chose_all_genritor_test_script(request):
     parent_path = os.getcwd() + "/AutoFW/" + targetFile
     print (parent_path)
 
-    for list in case_name_list:
+    for list in case_id_list:
         print (list)
-        project_case_obj = Project_Case.objects.filter(case_name=list)[0]
+        project_case_obj = Project_Case.objects.filter(case_id=list)[0]
         #project_name ForigenKye
         project_name = project_case_obj.project_name_id
         project_obj = Project.objects.filter(project_name=project_name)[0]
@@ -991,9 +991,9 @@ def chose_all_genritor_test_script(request):
         copyFile(sourceFile, targetFile, fileName,protocol,method, domain, url,headers,param_format, param, expected)
         create_time = fileName.split('-')[1].split('.')[0]
         print (create_time)
-        dict = {"script_name":fileName,"script_path":parent_path+fileName,"script_case_name_id":project_case_obj.case_name,
+        dict = {"script_name":fileName,"script_path":parent_path+fileName,"script_case_name":project_case_obj.case_name,
                 "create_time":create_time,"script_module_name_id":project_case_obj.module_name_id,
-                "script_status":"NONE","script_project_name_id":project_name,"remark":"remark"}
+                "script_status":"NONE","script_project_name_id":project_name,"remark":"remark","script_case_id_id":list}
         print (dict)
         Script_Info.objects.create(**dict)
 
@@ -1049,7 +1049,7 @@ def search_script(request):
             create_time_h = str(create_times).rsplit('_',3)[0].replace("_","-")
 
             script_obj_dict = {"script_name": list.script_name, "script_path": list.script_path,
-                             "script_case_name": list.script_case_name_id,
+                             "script_case_name": list.script_case_name,
                              "create_time": create_time_h, "script_module_name": list.script_module_name_id,
                                "script_status":list.script_status,"script_project_name":list.script_project_name_id}
             script_obj_list.append(script_obj_dict)
@@ -1068,7 +1068,7 @@ def search_script(request):
             # 转换格式 2017_11_20
             create_time_h = str(create_times).rsplit('_', 3)[0].replace("_", "-")
             script_obj_dict = {"script_name": list.script_name, "script_path": list.script_path,
-                             "script_case_name": list.script_case_name_id,
+                             "script_case_name": list.script_case_name,
                              "create_time": create_time_h, "script_module_name": list.script_module_name_id,
                                "script_status":list.script_status,"script_project_name":list.script_project_name_id}
             script_obj_list.append(script_obj_dict)
@@ -1086,7 +1086,7 @@ def search_script(request):
             # 转换格式 2017_11_20
             create_time_h = str(create_times).rsplit('_', 3)[0].replace("_", "-")
             script_obj_dict = {"script_name": list.script_name, "script_path": list.script_path,
-                               "script_case_name": list.script_case_name_id,
+                               "script_case_name": list.script_case_name,
                                "create_time": create_time_h, "script_module_name": list.script_module_name_id,
                                "script_status": list.script_status, "script_project_name": list.script_project_name_id}
             script_obj_list.append(script_obj_dict)
@@ -1105,7 +1105,7 @@ def search_script(request):
 
         for list in script_obj:
             script_obj_dict = {"script_name": list.script_name, "script_path": list.script_path,
-                               "script_case_name": list.script_case_name_id,
+                               "script_case_name": list.script_case_name,
                                "create_time": create_time, "script_module_name": list.script_module_name_id,
                                "script_status": list.script_status, "script_project_name": list.script_project_name_id}
             script_obj_list.append(script_obj_dict)
@@ -1125,7 +1125,7 @@ def search_script(request):
             # 转换格式 2017_11_20
             create_time_h = str(create_times).rsplit('_', 3)[0].replace("_", "-")
             script_obj_dict = {"script_name": list.script_name, "script_path": list.script_path,
-                               "script_case_name": list.script_case_name_id,
+                               "script_case_name": list.script_case_name,
                                "create_time": create_time_h, "script_module_name": list.script_module_name_id,
                                "script_status": list.script_status, "script_project_name": list.script_project_name_id}
             script_obj_list.append(script_obj_dict)
@@ -1144,7 +1144,7 @@ def search_script(request):
 
         for list in script_obj:
             script_obj_dict = {"script_name": list.script_name, "script_path": list.script_path,
-                               "script_case_name": list.script_case_name_id,
+                               "script_case_name": list.script_case_name,
                                "create_time": create_time, "script_module_name": list.script_module_name_id,
                                "script_status": list.script_status, "script_project_name": list.script_project_name_id}
             script_obj_list.append(script_obj_dict)
@@ -1163,7 +1163,7 @@ def search_script(request):
 
         for list in script_obj:
             script_obj_dict = {"script_name": list.script_name, "script_path": list.script_path,
-                               "script_case_name": list.script_case_name_id,
+                               "script_case_name": list.script_case_name,
                                "create_time": create_time, "script_module_name": list.script_module_name_id,
                                "script_status": list.script_status, "script_project_name": list.script_project_name_id}
             script_obj_list.append(script_obj_dict)
@@ -1181,7 +1181,7 @@ def search_script(request):
                                                 script_name__contains=script_name)
         for list in script_obj:
             script_obj_dict = {"script_name": list.script_name, "script_path": list.script_path,
-                               "script_case_name": list.script_case_name_id,
+                               "script_case_name": list.script_case_name,
                                "create_time": create_time, "script_module_name": list.script_module_name_id,
                                "script_status": list.script_status, "script_project_name": list.script_project_name_id}
             script_obj_list.append(script_obj_dict)
@@ -1223,7 +1223,7 @@ def execute_test_script(request):
             script_info_obj = Script_Info.objects.filter(script_name=list)[0]
             script_path = str(script_info_obj.script_path)
 
-            project_case_name = script_info_obj.script_case_name_id
+            project_case_name = script_info_obj.script_case_name
             # print (script_path)
             rs = execute_script_Popen(script_path,0.1) #脚本路径/休眠时间 (当前测试接口需要等待3秒才能再次访问)
             print(rs)
@@ -1585,9 +1585,30 @@ def execute_maoyan_script(request):
         project_name_maoyan = request.GET.get("project_name_maoyan")
         print (project_name_maoyan)
 
-        # project_case_obj_list = Project_Case.objects.filter(case_type="冒烟测试",project_name_id=project_name_maoyan)
-        #
-        # print (project_case_obj_list)
+        script_info_obj_list = Script_Info.objects.filter(script_project_name=project_name_maoyan)
+
+        script_info_obj_lists = []
+        for list in script_info_obj_list:
+
+            script_case_name_id = list.script_case_id_id
+            # name = str(script_case_name_id)
+            # print (name)
+            # print (type(name))
+            script_info_obj_lists.append(script_case_name_id)
+
+            # 处理list中文乱码
+
+            # print str(script_info_obj_lists).decode("string_escape")
+
+        print (script_info_obj_lists)
+
+        #problem
+        project_case_obj_list = Project_Case.objects.filter(case_type = "冒烟测试",case_name__in = script_info_obj_lists)
+
+        # for list in project_case_obj_list:
+        #     pass
+
+        print (project_case_obj_list)
         #用例表和脚本表匹配是否有没生成脚本的冒烟用例
 
         content = {"status": "fail"}

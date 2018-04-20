@@ -1104,3 +1104,28 @@ AttributeError: 'str' object has no attribute 'items'
 
 
 INFO 2018-04-20 14:32:57,624 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1245: 登录初始化-2018_4_13_11_19_52.py:PASS:[time_consuming:0.096532]{ response : 'resultCode: 0' }
+INFO 2018-04-20 18:35:27,850 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1245: 存储用户Session-2018_4_20_18_23_32.py:PASS:[time_consuming:0.139682]{ response : 'resultCode: 0' }
+INFO 2018-04-20 18:35:28,540 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1245: 实时获取tab标签发现（信息）-2018_4_20_18_23_32.py:PASS:[time_consuming:0.20159]{ response : 'resultCode: 0' }
+INFO 2018-04-20 18:35:28,885 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1245: 平台框架获取事件列表-2018_4_20_18_23_32.py:PASS:[time_consuming:0.059206]{ response : 'resultCode: 0' }
+INFO 2018-04-20 18:35:29,198 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1245: 更新绑定用户信息-2018_4_20_18_23_32.py:PASS:[time_consuming:0.073159]{ response : 'resultCode: 0' }
+ERROR 2018-04-20 18:35:29,474 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1277: 检查版本信息-2018_4_20_18_23_31.py:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_4_20_18_23_31.py", line 17, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+
+INFO 2018-04-20 18:35:29,769 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_test_script 1245: 登录初始化-2018_4_20_18_23_32.py:PASS:[time_consuming:0.053972]{ response : 'resultCode: 0' }

@@ -429,7 +429,6 @@
 
                     var project_name_maoyan = $("#project_name_section_maoyan option:selected").text(); //获取需要执行冒烟测试的项目
 
-                    alert(project_name_maoyan);
                     var username = document.getElementById("execute_script_id_b").name //获取执行人的姓名
                     $.ajax({
                         url: "/AutoFW/execute_maoyan_script",

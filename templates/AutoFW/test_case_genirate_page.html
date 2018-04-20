@@ -134,6 +134,7 @@
                 <td><span>预期结果</span></td>
                 <td><span>创建者</span></td>
                 <td><span>用例状态</span></td>
+                <td><span>用例ID</span></td>
             </tr>
             <tr id="case_list_tr_f" style="background: black">
                 <td colspan="12" style="height: 1px"></td>
@@ -195,11 +196,12 @@
 
                                     $("#case_list_t").append(
                                         '<tr id="case_list_tr" class="case_list_td">' +
-                                            '<td class="case_list_td"><input class="checkbox_input_case_name" type="checkbox" value="'+data.case_list[i].case_name+'" onclick="cancel_all()"></td><td class="case_list_td">'+data.case_list[i].case_name+'</td><td class="case_list_td">'+data.case_list[i].project_name+'</td>'+
+                                            '<td class="case_list_td"><input class="checkbox_input_case_id" type="checkbox" value="'+data.case_list[i].case_id+'" onclick="cancel_all()"></td><td class="case_list_td">'+data.case_list[i].case_name+'</td><td class="case_list_td">'+data.case_list[i].project_name+'</td>'+
                                             '<td class="case_list_td">'+data.case_list[i].module_name+'</td><td class="case_list_td">'+data.case_list[i].url_path+'</td>' +
                                             '<td class="case_list_td">'+data.case_list[i].method+'</td><td class="case_list_td">'+data.case_list[i].ip+'</td>' +
                                             '<td class="case_list_td">'+data.case_list[i].port+'</td><td class="case_list_td">'+data.case_list[i].headers+'</td><td class="case_list_td">'+data.case_list[i].parameter_format+'</td><td class="case_list_td">'+data.case_list[i].parameter+'</td><td class="case_list_td">'+data.case_list[i].expected+'</td>' +
                                             '<td class="case_list_td">'+data.case_list[i].creator+'</td><td class="case_list_td">'+data.case_list[i].case_status+'</td>' +
+                                            '<td class="case_list_td">'+data.case_list[i].case_id+'</td>' +
                                         '</tr>'
                                     );
                                 }
@@ -236,30 +238,30 @@
 
             function genritor_test_script() {
                 //判断全选是否勾选
-                var case_name_json = "";
+                var case_id_json = "";
                 if($("#chose_all_c").is(":checked")){
 //                    alert("checked");
-                    //获取所有选择中case_name
-                    var case_name_list = document.getElementsByClassName("checkbox_input_case_name");
-//                    alert(case_name_list.length);
+                    //获取所有选择中case_id
+                    var case_name_list = document.getElementsByClassName("checkbox_input_case_id");
+//                    alert(case_id_list.length);
 
 
-                    $(".checkbox_input_case_name").each(function () {
-                        case_name_json += $(this).val()+',';
+                    $(".checkbox_input_case_id").each(function () {
+                        case_id_json += $(this).val()+',';
                     })
-//                    alert(case_name_json);
+//                    alert(case_id_json);
                 }else{
 //                    判断没有全选生成测试脚本时
 //                    alert("no checked all");
-                    $(".checkbox_input_case_name:checked").each(function () {
-                        case_name_json += $(this).val() + ','
+                    $(".checkbox_input_case_id:checked").each(function () {
+                        case_id_json += $(this).val() + ','
                     })
                 }
-                if(case_name_json){
+                if(case_id_json){
                     $.ajax({
                         url: "/AutoFW/chose_all_genritor_test_script",
                         type: "get",
-                        data: "case_name_json="+case_name_json,
+                        data: "case_id_json="+case_id_json,
                         success: function (data) {
                             if(data.status == "genirtor_script_success"){
                                 $.messager.show({

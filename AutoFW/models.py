@@ -98,12 +98,15 @@ class Emp_Info(models.Model):
 class Script_Info(models.Model):
     script_name = models.CharField(max_length=100,primary_key=True)
     script_path = models.CharField(max_length=200)
-    script_case_name = models.ForeignKey(Project_Case,to_field="case_name")
+    # script_case_name = models.ForeignKey(Project_Case,to_field="case_name")
+    script_case_name = models.CharField(max_length=100)
     create_time = models.CharField(max_length=30)
     script_module_name = models.ForeignKey(Project_Module,to_field="module_name")
     script_status = models.CharField(max_length=30)
     script_project_name = models.ForeignKey(Project,to_field="project_name")
     remark = models.CharField(max_length=40)
+    script_case_id = models.ForeignKey(Project_Case,to_field="case_id")
+
 
     class Meta:
         db_table = 'script_info'
