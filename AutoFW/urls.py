@@ -77,4 +77,8 @@ urlpatterns = [
     url(r'^search_execute_log_list/', views.search_execute_log_list),
     url(r'^delete_report_by_reportID/', views.delete_report_by_reportID),
 
+    url(r'^send_email_by_report_list/', views.send_email_by_report_list),
+    url(r'^execute_maoyan_script/', views.execute_maoyan_script),
+
+
 ]

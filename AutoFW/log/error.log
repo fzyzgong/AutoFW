@@ -800,3 +800,225 @@ InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <ty
 InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
 
 [Exception][2018-04-16 18:14:06]>>  [检查版本信息-2018_4_13_11_19_52.py] :未获取脚本执行状态，脚本执行失败
+[Exception][2018-04-20 09:45:56]>>  [存储用户Session-2018_4_13_11_19_52.py][HTTPS://ta1.2boss.cn/ubt/api/session] <EXCEPTION>Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/存储用户Session-2018_4_13_11_19_52.py", line 19, in testDemo
+    r = requests.put(self.protocol + domian + url, json=param, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 126, in put
+    return request('put', url, data=data, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 508, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 618, in send
+    r = adapter.send(request, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/adapters.py", line 508, in send
+    raise ConnectionError(e, request=request)
+ConnectionError: HTTPSConnectionPool(host='ta1.2boss.cn', port=443): Max retries exceeded with url: /ubt/api/session (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f36e461bb50>: Failed to establish a new connection: [Errno -5] No address associated with hostname',))
+
+[Exception][2018-04-20 09:45:56]>>  [存储用户Session-2018_4_13_11_19_52.py] :未获取脚本执行状态，脚本执行失败
+[Exception][2018-04-20 09:45:57]>>  [平台框架获取事件列表-2018_4_13_11_19_52.py]  [HTTPS://ta.2boss.cn/rabbit/v1/event/getEventList] <EXCEPTION>Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/平台框架获取事件列表-2018_4_13_11_19_52.py", line 21, in testDemo
+    r = requests.get(self.protocol + domian  + url,headers=headers, params=param, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 438, in prepare_headers
+    for header in headers.items():
+AttributeError: 'str' object has no attribute 'items'
+
+[Exception][2018-04-20 09:45:57]>>  [平台框架获取事件列表-2018_4_13_11_19_52.py] :未获取脚本执行状态，脚本执行失败
+[Exception][2018-04-20 10:18:34]>>  [存储用户Session-2018_4_13_11_19_52.py][HTTPS://ta1.2boss.cn/ubt/api/session] <EXCEPTION>Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/存储用户Session-2018_4_13_11_19_52.py", line 19, in testDemo
+    r = requests.put(self.protocol + domian + url, json=param, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 126, in put
+    return request('put', url, data=data, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 508, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 618, in send
+    r = adapter.send(request, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/adapters.py", line 508, in send
+    raise ConnectionError(e, request=request)
+ConnectionError: HTTPSConnectionPool(host='ta1.2boss.cn', port=443): Max retries exceeded with url: /ubt/api/session (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7fcfcf1ddb50>: Failed to establish a new connection: [Errno -5] No address associated with hostname',))
+
+[Exception][2018-04-20 10:18:34]>>  [存储用户Session-2018_4_13_11_19_52.py] :未获取脚本执行状态，脚本执行失败
+[Exception][2018-04-20 10:18:36]>>  [平台框架获取事件列表-2018_4_13_11_19_52.py]  [HTTPS://ta.2boss.cn/rabbit/v1/event/getEventList] <EXCEPTION>Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/平台框架获取事件列表-2018_4_13_11_19_52.py", line 21, in testDemo
+    r = requests.get(self.protocol + domian  + url,headers=headers, params=param, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 438, in prepare_headers
+    for header in headers.items():
+AttributeError: 'str' object has no attribute 'items'
+
+[Exception][2018-04-20 10:18:36]>>  [平台框架获取事件列表-2018_4_13_11_19_52.py] :未获取脚本执行状态，脚本执行失败
+[Exception][2018-04-20 10:33:47]>>  [检查版本信息-2018_4_13_11_19_52.py]  [HTTPS://ta.2boss.cn/rabbit/v1/version/checkNewVersion] <EXCEPTION>Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_4_13_11_19_52.py", line 17, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+[Exception][2018-04-20 10:33:47]>>  [检查版本信息-2018_4_13_11_19_52.py] :未获取脚本执行状态，脚本执行失败
+[Exception][2018-04-20 11:30:04]>>  [检查版本信息-2018_4_13_11_19_52.py]  [HTTPS://ta.2boss.cn/rabbit/v1/version/checkNewVersion] <EXCEPTION>Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_4_13_11_19_52.py", line 17, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+[Exception][2018-04-20 11:30:04]>>  [检查版本信息-2018_4_13_11_19_52.py] :未获取脚本执行状态，脚本执行失败
+[Exception][2018-04-20 11:40:18]>>  [检查版本信息-2018_4_13_11_19_52.py]  [HTTPS://ta.2boss.cn/rabbit/v1/version/checkNewVersion] <EXCEPTION>Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_4_13_11_19_52.py", line 17, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+[Exception][2018-04-20 11:40:19]>>  [检查版本信息-2018_4_13_11_19_52.py] :未获取脚本执行状态，脚本执行失败
+[Exception][2018-04-20 11:41:22]>>  [检查版本信息-2018_4_13_11_19_52.py]  [HTTPS://ta.2boss.cn/rabbit/v1/version/checkNewVersion] <EXCEPTION>Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_4_13_11_19_52.py", line 17, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+[Exception][2018-04-20 11:41:22]>>  [检查版本信息-2018_4_13_11_19_52.py] :未获取脚本执行状态，脚本执行失败
+[Exception][2018-04-20 14:01:37]>>  [检查版本信息-2018_4_13_11_19_52.py]  [HTTPS://ta.2boss.cn/rabbit/v1/version/checkNewVersion] <EXCEPTION>Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_4_13_11_19_52.py", line 17, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+[Exception][2018-04-20 14:01:37]>>  [检查版本信息-2018_4_13_11_19_52.py] :未获取脚本执行状态，脚本执行失败
+[Exception][2018-04-20 14:21:23]>>  [平台框架获取事件列表-2018_4_13_11_19_52.py]  [HTTPS://ta.2boss.cn/rabbit/v1/event/getEventList] <EXCEPTION>Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/平台框架获取事件列表-2018_4_13_11_19_52.py", line 21, in testDemo
+    r = requests.get(self.protocol + domian  + url,headers=headers, params=param, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 438, in prepare_headers
+    for header in headers.items():
+AttributeError: 'str' object has no attribute 'items'
+
+[Exception][2018-04-20 14:21:23]>>  [平台框架获取事件列表-2018_4_13_11_19_52.py] :未获取脚本执行状态，脚本执行失败
+[Exception][2018-04-20 14:24:37]>>  [平台框架获取事件列表-2018_4_13_11_19_52.py]  [HTTPS://ta.2boss.cn/rabbit/v1/event/getEventList] <EXCEPTION>Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/平台框架获取事件列表-2018_4_13_11_19_52.py", line 21, in testDemo
+    r = requests.get(self.protocol + domian  + url,headers=headers, params=param, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 438, in prepare_headers
+    for header in headers.items():
+AttributeError: 'str' object has no attribute 'items'
+
+[Exception][2018-04-20 14:24:37]>>  [平台框架获取事件列表-2018_4_13_11_19_52.py] :未获取脚本执行状态，脚本执行失败
+[Exception][2018-04-20 14:26:42]>>  [平台框架获取事件列表-2018_4_13_11_19_52.py]  [HTTPS://ta.2boss.cn/rabbit/v1/event/getEventList] <EXCEPTION>Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/平台框架获取事件列表-2018_4_13_11_19_52.py", line 21, in testDemo
+    r = requests.get(self.protocol + domian  + url,headers=headers, params=param, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 438, in prepare_headers
+    for header in headers.items():
+AttributeError: 'str' object has no attribute 'items'
+
+[Exception][2018-04-20 14:26:42]>>  [平台框架获取事件列表-2018_4_13_11_19_52.py] :未获取脚本执行状态，脚本执行失败

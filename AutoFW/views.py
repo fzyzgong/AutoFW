@@ -1003,7 +1003,7 @@ def chose_all_genritor_test_script(request):
 
 #进入执行脚本页面
 def execute_test_script_page(request,username):
-    print ("execute_test_script")
+    print ("execute_test_script_page")
     # 项目名称ValuesQuerySet
     project_qs = Project.objects.values("project_name")
 
@@ -1200,6 +1200,7 @@ def execute_test_script(request):
         script_name = request.GET.get("script_name_json")#获取脚本所在表单索引
         report_name = request.GET.get("result_name")#执行该批次的测试报告名称
         execute_man = request.GET.get("username")#获取执行人的姓名
+        send_email_flag = request.GET.get("send_email_flag")#获取是否发送邮件标识[只发送给执行用例人]
 
         script_name_list = str(script_name).split(',')
         # 移除空列元素
@@ -1248,8 +1249,6 @@ def execute_test_script(request):
                         # 写入Execute_Script_Log表
                         dic ={"log_report_id_id":report_id,"log_api_name":API_name,"log_execute_script":execute_script_log,"status":"pass","bak1":"bak"}
                         Execute_Script_Log.objects.create(**dic)
-
-                        content = {"status": "execute_script_success"}
                         passCount += 1
                     elif "FAILED" == result:
                         # dict = {"script_status": "FAILED"}
@@ -1261,8 +1260,6 @@ def execute_test_script(request):
                         dic = {"log_report_id_id": report_id, "log_api_name": API_name,
                                "log_execute_script": execute_script_log, "status": "fail", "bak1": "bak"}
                         Execute_Script_Log.objects.create(**dic)
-
-                        content = {"status": "execute_script_failed"}
                         failCount += 1
                 else:
                     # dict = {"script_status": "NONE"}
@@ -1272,8 +1269,6 @@ def execute_test_script(request):
                     dic = {"log_report_id_id": report_id, "log_api_name": API_name,
                            "log_execute_script": execute_script_log, "status": "skip", "bak1": "bak"}
                     Execute_Script_Log.objects.create(**dic)
-
-                    content = {"status": "execute_script_failed"}
                     skipCount += 1
             except IndexError,e:
                 # dict = {"script_status": "NONE"}
@@ -1286,16 +1281,14 @@ def execute_test_script(request):
                 dic = {"log_report_id_id": report_id, "log_api_name": str(API_name),
                        "log_execute_script": execute_script_log, "status": "skip", "bak1": "bak"}
                 Execute_Script_Log.objects.create(**dic)
-
-                content = {"status": "execute_script_failed"}
                 skipCount += 1
             # except AttributeError,e:
             #     dict = {"script_status": "NONE"}
             #     mylogging("[" + str(list) + "] :" + "index error,未获取脚本执行状态，脚本执行失败"+e.args)
             #     log_scripts.error(list + ":FAILED:" + " error message [ AttributeError ]"+e.args)
-
             Script_Info.objects.filter(script_name=list).update(script_status=dict)
             Project_Case.objects.filter(case_name=project_case_name).update(description=dict) #description 为用例执行状态
+        content = {"status": "execute_script_success"}
         # 报告名 执行者 api总数 执行时间 执行报告ID
         print("result_name=%s execute_name=%s api_total=%s"
               " execute_time=%s report_id=%s" % (report_name, execute_man, str(API_total), execute_time, report_id))
@@ -1309,13 +1302,18 @@ def execute_test_script(request):
 
         #-------start-------发送测试报告邮件---------------------
         execute_time = execute_time.strftime("%Y%m%d%H%M%S")
-        send_mail(report_name,execute_man,execute_time,str(API_total),str(passCount),str(failCount),str(skipCount))
-
+        emp_obj_list = Emp_Info.objects.filter(user_id_id=execute_man) #主键，只有一条数据
+        if send_email_flag == "yes":
+            if emp_obj_list.exists():
+                email_adr_list = []
+                for list in emp_obj_list:
+                    emails = list.email
+                    email_adr_list.append(emails)
+                send_mail(report_name,execute_man,execute_time,str(API_total),str(passCount),str(failCount),str(skipCount),email_adr_list)
+            else:
+                print ("该用户没有邮箱信息！")
+                content = {"status": "email_send_fail"}
         # -------end-------发送测试报告邮件---------------------
-        # passCount = 0
-        # failCount = 0
-        # skipCount = 0
-
         return JsonResponse(content)
 
 #删除脚本
@@ -1522,9 +1520,79 @@ def delete_report_by_reportID(request):
             return JsonResponse(content)
 
 
+def send_email_by_report_list(request):
+    if request.method == "GET":
+        report_id = request.GET.get("report_id")
+        batch_report_obj = Batch_Report.objects.filter(report_id=report_id)[0]  # 只能获取一条数据，因为report_id为主键
+        execute_time_tmp = batch_report_obj.execute_time  # 该批次执行时间点
+        execute_time = execute_time_tmp.strftime('%Y-%m-%d')  # 将datatime转成str
+        API_total = batch_report_obj.API_total
+        report_name = batch_report_obj.report_name
+        pass_total = batch_report_obj.pass_total
+        fail_total = batch_report_obj.fail_total
+        skip_total = batch_report_obj.skip_total
+        execute_man = batch_report_obj.execute_man
+
+        print (report_id)
+
+        user_list = request.GET.get("user_list")
+        user_list =str(user_list).split(',')
+        # print (len(user_list))
+        # print (user_list)
+
+        if len(user_list) >0:
+            if(user_list[0] == ''):
+                content = {"status": "fail"}
+                return JsonResponse(content)
+            if user_list[-1] == '':
+                # 移除空列元素
+                user_list.remove('')
+            email_list = []
+            for list in user_list:
+                email_obj_list = Emp_Info.objects.filter(user_id_id=list);
+
+                if len(email_obj_list)>0:
+                    email = email_obj_list[0].email
+                    email_list.append(email)
+                else:
+                    content = {"status":"fail"}
+                    return JsonResponse(content)
+            print (email_list)
+            print (type(email_list))
+            result = send_mail(report_name=str(report_name),execute_man=str(execute_man),execute_time=str(execute_time),case_total=str(API_total),
+                      pass_total=(pass_total),fail_total=str(fail_total),skip_total=str(skip_total),email_list=email_list)
+
+            if(result == "send success"):
+                content = {"status": "success"}
+            elif result == "send fail":
+                content = {"status": "fail"}
+
+            # log_sys.info("[" + str(report_id) + "]测试报告发送邮件 user_list[" + str(user_list) + "]" + str(email_list))
+            print ("[" + str(report_id) + "]测试报告发送邮件 user_list[" + str(user_list) + "]" + str(email_list))
+        else:
+            content = {"status":"fail"}
+            return JsonResponse(content)
+
+        # content = {"status": "success"}
+        return JsonResponse(content)
 
 
+def execute_maoyan_script(request):
+    if request.method == "GET":
+        print ("execute_maoyan_script")
+        username = request.GET.get("username")
+        send_email_flag = request.GET.get("send_email_flag")
+        project_name_maoyan = request.GET.get("project_name_maoyan")
+        print (project_name_maoyan)
 
+        # project_case_obj_list = Project_Case.objects.filter(case_type="冒烟测试",project_name_id=project_name_maoyan)
+        #
+        # print (project_case_obj_list)
+        #用例表和脚本表匹配是否有没生成脚本的冒烟用例
+
+        content = {"status": "fail"}
+
+        return JsonResponse(content)
 
 
 

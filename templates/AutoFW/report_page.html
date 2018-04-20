@@ -170,8 +170,11 @@
                                         '<td class="report_display_list_td">'+data.report_list[i].report_name+'</td>' +
                                         '<td class="report_display_list_td">'+data.report_list[i].execute_time+'</td>' +
                                         '<td class="report_display_list_td">'+data.report_list[i].execute_man+'</td>' +
-                                        '<td class="report_display_list_td"><input class="report_display_list_td" name="'+ data.report_list[i].report_id +'" type="button" value="查看详情" onclick="return look_report_td(this)">' +
-                                                                            '<input class="report_display_list_td" name="'+ data.report_list[i].report_id +'" type="button" value="删除报告" onclick="return delete_report_td(this)"></td>' +
+                                        '<td class="report_display_list_td">' +
+                                        '<input class="report_display_list_td" name="'+ data.report_list[i].report_id +'" type="button" value="查看详情" onclick="return look_report_td(this)">' +
+                                        '<input class="report_display_list_td" name="'+ data.report_list[i].report_id +'" type="button" value="删除报告" onclick="return delete_report_td(this)">' +
+                                        '<input class="report_display_list_td" name="'+ data.report_list[i].report_id +'" type="button" value="发送邮件" onclick="return send_email_td(this)">' +
+                                        '</td>' +
                                     '</tr>'
                                 );
                             }
@@ -237,9 +240,40 @@
             });
         }
 
+        function send_email_td(a){
+            var report_id = $(a).attr("name");//获取report_id
+            var user_list = prompt("请输入要发送邮件的用户帐号，多个以英文‘,’分割");
+            if(user_list)
+            {
+                alert("您刚输入的是："+ user_list);
+            }else if(user_list==''){//文字为空点击了确认按钮
+                alert("帐号为空");
+                return ;
+            }else{//点击取消按钮
+                return ;
+            }
+
+
+
+            $.ajax({
+                url:"/AutoFW/send_email_by_report_list/",
+                type:"get",
+                data:"report_id="+report_id+"&user_list="+user_list,
+                success:function (data) {
+                    if(data.status == "success"){
+                        alert("邮件发送成功！");
+                    }else if(data.status == "fail"){
+                        alert("输入账户格式有误或者账户不存在！");
+                    }
+                }
+
+
+            });
+
+        }
+
 
         function delete_report_td(a) {
-
             //确认删除提示框
             if(confirm("您确认要删除该条记录码？")){
                 var report_id = $(a).attr("name");//获取report_id
@@ -261,10 +295,6 @@
             }else{
                 window.event.returnValue = false;
             }
-
-
-
-
         }
 
     </script>

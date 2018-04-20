@@ -1,188 +1,339 @@
-INFO 2018-04-18 11:11:23,857 views.py views login_handle 53: [gonglp] 登录成功
-INFO 2018-04-18 11:11:27,900 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 11:11:27,911 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 11:11:28,100 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 11:11:37,079 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
-INFO 2018-04-18 11:12:57,042 views.py views login_handle 53: [gonglp] 登录成功
-INFO 2018-04-18 11:12:57,805 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 11:12:57,814 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 11:12:57,966 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 11:13:01,879 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
-INFO 2018-04-18 11:13:03,979 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
-INFO 2018-04-18 11:22:43,703 views.py views login_handle 53: [gonglp] 登录成功
-INFO 2018-04-18 11:22:44,767 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 11:22:44,778 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 11:22:45,068 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 11:22:49,104 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
-INFO 2018-04-18 11:22:51,840 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
-INFO 2018-04-18 11:27:14,561 views.py views login_handle 53: [gonglp] 登录成功
-INFO 2018-04-18 11:27:17,047 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 11:27:17,057 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 11:27:17,329 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 11:27:19,224 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
-INFO 2018-04-18 11:27:22,144 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
-INFO 2018-04-18 11:28:31,980 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 11:28:32,181 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 11:28:37,185 views.py views login_handle 53: [gonglp] 登录成功
-INFO 2018-04-18 11:28:38,190 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 11:28:38,200 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 11:28:38,333 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 11:28:40,264 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
-INFO 2018-04-18 11:28:42,927 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
-INFO 2018-04-18 11:29:10,262 views.py views API_start 455: gonglp添加API用例 [test] 属于项目：[TBS_USER_20180328]
-INFO 2018-04-18 11:38:25,214 views.py views login_handle 53: [gonglp] 登录成功
-INFO 2018-04-18 11:38:26,519 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 11:38:26,527 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 11:38:26,768 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 11:38:28,831 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
-INFO 2018-04-18 11:38:31,954 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
-INFO 2018-04-18 12:23:59,727 views.py views income_project 142: 进入项目[TBS_USER_20180328]
-INFO 2018-04-18 12:24:02,462 views.py views workon_tabs_api 386: 进入接口管理页面 [TBS_USER_20180328]
-INFO 2018-04-18 12:31:26,086 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 12:31:26,350 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 12:31:28,240 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
-INFO 2018-04-18 12:31:30,738 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
-INFO 2018-04-18 12:35:10,265 views.py views login_handle 53: [gonglp] 登录成功
-INFO 2018-04-18 12:35:12,468 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 12:35:12,481 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 12:35:12,614 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 12:35:15,202 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
-INFO 2018-04-18 12:35:17,754 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
-INFO 2018-04-18 12:44:33,754 views.py views login_handle 53: [gonglp] 登录成功
-INFO 2018-04-18 12:44:36,356 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 12:44:36,366 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 12:44:36,631 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 12:44:38,353 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
-INFO 2018-04-18 12:44:40,903 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
-INFO 2018-04-18 12:45:22,453 views.py views login_handle 53: [gonglp] 登录成功
-INFO 2018-04-18 12:45:22,998 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 12:45:23,008 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 12:45:23,146 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 12:45:25,362 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
-INFO 2018-04-18 12:45:27,186 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
-INFO 2018-04-18 12:45:47,084 views.py views login_handle 53: [gonglp] 登录成功
-INFO 2018-04-18 12:45:49,479 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 12:45:49,489 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 12:45:49,753 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 12:45:51,790 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
-INFO 2018-04-18 12:45:54,405 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
-INFO 2018-04-18 12:50:44,328 views.py views login_handle 53: [gonglp] 登录成功
-INFO 2018-04-18 12:50:45,987 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 12:50:45,997 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 12:50:46,257 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 12:50:51,218 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
-INFO 2018-04-18 12:50:54,048 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
-INFO 2018-04-18 12:51:29,560 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 12:51:29,713 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 12:51:31,702 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
-INFO 2018-04-18 12:51:33,568 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
-INFO 2018-04-18 12:51:59,021 views.py views login_handle 53: [gonglp] 登录成功
-INFO 2018-04-18 12:52:00,358 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 12:52:00,368 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 12:52:00,643 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 12:52:02,474 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
-INFO 2018-04-18 12:52:04,592 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
-INFO 2018-04-18 12:55:05,368 views.py views login_handle 53: [gonglp] 登录成功
-INFO 2018-04-18 12:55:06,636 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 12:55:06,651 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 12:55:06,821 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 12:55:08,616 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
-INFO 2018-04-18 12:55:10,339 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
-INFO 2018-04-18 12:56:44,779 views.py views login_handle 53: [gonglp] 登录成功
-INFO 2018-04-18 12:56:45,850 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 12:56:45,862 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 12:56:45,996 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 12:56:48,671 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
-INFO 2018-04-18 12:56:50,361 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
-INFO 2018-04-18 12:57:25,221 views.py views login_handle 53: [gonglp] 登录成功
-INFO 2018-04-18 12:57:26,481 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 12:57:26,491 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 12:57:26,765 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 12:57:28,739 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
-INFO 2018-04-18 12:57:30,221 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
-INFO 2018-04-18 13:02:46,870 views.py views login_handle 53: [gonglp] 登录成功
-INFO 2018-04-18 13:02:48,204 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 13:02:48,213 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 13:02:48,413 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 13:02:50,098 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
-INFO 2018-04-18 13:02:51,600 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
-INFO 2018-04-18 13:15:30,158 views.py views login_handle 53: [gonglp] 登录成功
-INFO 2018-04-18 13:15:31,153 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 13:15:31,160 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 13:15:31,412 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 13:15:33,072 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
-INFO 2018-04-18 13:15:34,628 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
-INFO 2018-04-18 13:16:27,675 views.py views login_handle 53: [gonglp] 登录成功
-INFO 2018-04-18 13:16:28,489 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 13:16:28,498 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 13:16:28,643 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 13:16:32,050 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
-INFO 2018-04-18 13:16:33,621 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
-INFO 2018-04-18 13:17:52,843 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 13:17:52,996 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 13:17:55,005 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
-INFO 2018-04-18 13:17:56,528 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
-INFO 2018-04-18 13:20:16,956 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 13:20:17,074 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 13:20:18,606 views.py views login_handle 53: [gonglp] 登录成功
-INFO 2018-04-18 13:20:19,340 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 13:20:19,350 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 13:20:19,484 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 13:20:21,470 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
-INFO 2018-04-18 13:20:22,971 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
-INFO 2018-04-18 13:24:59,736 views.py views login_handle 53: [gonglp] 登录成功
-INFO 2018-04-18 13:25:00,874 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 13:25:00,884 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 13:25:01,044 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 13:25:03,011 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
-INFO 2018-04-18 13:25:04,578 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
-INFO 2018-04-18 13:27:38,584 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 13:27:38,825 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 13:27:40,720 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
-INFO 2018-04-18 13:27:42,257 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
-INFO 2018-04-18 13:32:30,258 views.py views income_project 142: 进入项目[TBS_USER_20180328]
-INFO 2018-04-18 13:32:33,465 views.py views workon_tabs_api 386: 进入接口管理页面 [TBS_USER_20180328]
-INFO 2018-04-18 13:37:03,437 views.py views login_handle 53: [gonglp] 登录成功
-INFO 2018-04-18 13:37:04,425 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 13:37:04,434 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 13:37:04,637 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 13:37:07,177 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
-INFO 2018-04-18 13:37:08,716 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
-INFO 2018-04-18 13:38:29,526 views.py views income_project 142: 进入项目[TBS_USER_20180328]
-INFO 2018-04-18 13:38:31,326 views.py views workon_tabs_api 386: 进入接口管理页面 [TBS_USER_20180328]
-INFO 2018-04-18 13:39:18,778 views.py views income_project 142: 进入项目[TBS_USER_20180328]
-INFO 2018-04-18 13:39:24,300 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 13:39:24,419 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 13:42:53,280 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 13:42:53,398 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 13:43:49,948 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 13:43:50,052 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 13:44:28,320 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 13:44:28,437 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 13:44:35,833 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 13:44:35,951 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 13:44:46,812 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 13:44:46,927 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 13:45:18,112 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 13:45:41,776 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 13:49:28,814 views.py views login_handle 53: [gonglp] 登录成功
-INFO 2018-04-18 13:49:29,958 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 13:49:29,969 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 13:49:30,216 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 13:49:55,900 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 13:50:22,873 views.py views Edit_project 126: 编辑更改项目属性
-INFO 2018-04-18 13:50:22,873 views.py views Edit_project 136: 更新项目属性：{'project_name': u'test', 'creator': u'gonglp', 'PRI': u'\u9ad8', 'create_time': u'2018-04-18 13:49:40', 'department': u'test', 'project_code': u'test'}
-INFO 2018-04-18 13:50:23,241 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 13:50:31,998 views.py views Edit_project 126: 编辑更改项目属性
-INFO 2018-04-18 13:50:31,998 views.py views Edit_project 136: 更新项目属性：{'project_name': u'test1', 'creator': u'gonglp', 'PRI': u'\u4f4e', 'create_time': u'2018-04-18 13:49:40', 'department': u'test1', 'project_code': u'test1'}
-INFO 2018-04-18 13:50:32,153 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 13:50:43,889 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 13:51:30,999 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
-INFO 2018-04-18 13:53:00,038 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 13:53:00,170 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 13:53:02,685 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 13:53:02,800 views.py views Read_all_project 106: 查询所有项目
-INFO 2018-04-18 13:53:05,470 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
-INFO 2018-04-18 13:53:56,704 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 13:53:56,714 views.py views project_manage 87: 进入项目中心-->项目管理页面
-INFO 2018-04-18 13:53:56,842 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-19 14:18:40,841 views.py views login_handle 56: 请输入正确的用户名和密码！
+INFO 2018-04-19 14:18:50,140 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-19 14:22:43,932 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-19 14:27:10,751 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-19 14:35:18,838 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-19 14:46:02,971 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-19 15:06:35,567 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-19 15:09:25,360 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-19 15:13:22,409 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-19 15:16:06,003 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-19 15:32:17,463 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-19 16:01:23,965 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-19 16:05:31,894 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-19 16:08:50,010 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-19 16:20:58,137 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-19 16:29:08,737 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-19 17:54:31,945 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-19 17:55:12,977 views.py views login_handle 53: [liud] 登录成功
+INFO 2018-04-19 17:58:26,764 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-19 17:58:26,816 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-19 17:58:27,005 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-19 17:58:27,138 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-19 18:01:16,411 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-19 18:15:59,389 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-20 09:09:30,302 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-20 09:10:09,232 views.py views login_handle 53: [luoyh] 登录成功
+INFO 2018-04-20 09:10:29,918 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-20 09:33:46,847 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-20 09:36:11,053 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-20 09:36:51,717 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-20 09:37:29,230 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-20 09:38:33,675 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-20 09:39:14,085 views.py views login_handle 53: [gonglp] 登录成功
+ERROR 2018-04-20 09:45:56,384 views.py views execute_test_script 1282: 存储用户Session-2018_4_13_11_19_52.py:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/存储用户Session-2018_4_13_11_19_52.py", line 19, in testDemo
+    r = requests.put(self.protocol + domian + url, json=param, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 126, in put
+    return request('put', url, data=data, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 508, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 618, in send
+    r = adapter.send(request, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/adapters.py", line 508, in send
+    raise ConnectionError(e, request=request)
+ConnectionError: HTTPSConnectionPool(host='ta1.2boss.cn', port=443): Max retries exceeded with url: /ubt/api/session (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f36e461bb50>: Failed to establish a new connection: [Errno -5] No address associated with hostname',))
+
+
+INFO 2018-04-20 09:45:57,441 views.py views execute_test_script 1244: 实时获取tab标签发现（信息）-2018_4_13_11_19_52.py:PASS:[time_consuming:0.346089]{ response : 'resultCode: 0' }
+ERROR 2018-04-20 09:45:57,835 views.py views execute_test_script 1282: 平台框架获取事件列表-2018_4_13_11_19_52.py:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/平台框架获取事件列表-2018_4_13_11_19_52.py", line 21, in testDemo
+    r = requests.get(self.protocol + domian  + url,headers=headers, params=param, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 438, in prepare_headers
+    for header in headers.items():
+AttributeError: 'str' object has no attribute 'items'
+
+
+INFO 2018-04-20 09:53:30,821 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-20 09:54:50,174 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-20 09:56:40,178 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-20 10:17:38,867 views.py views login_handle 53: [gonglp] 登录成功
+ERROR 2018-04-20 10:18:34,839 views.py views execute_test_script 1283: 存储用户Session-2018_4_13_11_19_52.py:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/存储用户Session-2018_4_13_11_19_52.py", line 19, in testDemo
+    r = requests.put(self.protocol + domian + url, json=param, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 126, in put
+    return request('put', url, data=data, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 508, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 618, in send
+    r = adapter.send(request, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/adapters.py", line 508, in send
+    raise ConnectionError(e, request=request)
+ConnectionError: HTTPSConnectionPool(host='ta1.2boss.cn', port=443): Max retries exceeded with url: /ubt/api/session (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7fcfcf1ddb50>: Failed to establish a new connection: [Errno -5] No address associated with hostname',))
+
+
+INFO 2018-04-20 10:18:36,082 views.py views execute_test_script 1245: 实时获取tab标签发现（信息）-2018_4_13_11_19_52.py:PASS:[time_consuming:0.43436]{ response : 'resultCode: 0' }
+ERROR 2018-04-20 10:18:36,506 views.py views execute_test_script 1283: 平台框架获取事件列表-2018_4_13_11_19_52.py:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/平台框架获取事件列表-2018_4_13_11_19_52.py", line 21, in testDemo
+    r = requests.get(self.protocol + domian  + url,headers=headers, params=param, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 438, in prepare_headers
+    for header in headers.items():
+AttributeError: 'str' object has no attribute 'items'
+
+
+INFO 2018-04-20 10:20:24,978 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-20 10:33:09,031 views.py views login_handle 53: [lerj] 登录成功
+ERROR 2018-04-20 10:33:46,593 views.py views execute_test_script 1258: 更新绑定用户信息-2018_4_13_11_19_52.py:FAILED: error message [', "{u'status': 404, u'timestamp': 1524191626469, u'message': u'No message available', u'path': u'/superior/v1/im/imUpdateCustomer12', u'error': u'Not Found'}")
+]
+ERROR 2018-04-20 10:33:47,159 views.py views execute_test_script 1283: 检查版本信息-2018_4_13_11_19_52.py:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_4_13_11_19_52.py", line 17, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+
+INFO 2018-04-20 10:33:47,822 views.py views execute_test_script 1245: 登录初始化-2018_4_13_11_19_52.py:PASS:[time_consuming:0.205222]{ response : 'resultCode: 0' }
+ERROR 2018-04-20 10:44:12,706 views.py views execute_test_script 1258: 更新绑定用户信息-2018_4_13_11_19_52.py:FAILED: error message [', "{u'status': 404, u'timestamp': 1524192252606, u'message': u'No message available', u'path': u'/superior/v1/im/imUpdateCustomer12', u'error': u'Not Found'}")
+]
+ERROR 2018-04-20 10:44:52,120 views.py views execute_test_script 1258: 更新绑定用户信息-2018_4_13_11_19_52.py:FAILED: error message [', "{u'status': 404, u'timestamp': 1524192292021, u'message': u'No message available', u'path': u'/superior/v1/im/imUpdateCustomer12', u'error': u'Not Found'}")
+]
+INFO 2018-04-20 10:45:34,020 views.py views login_handle 53: [lerj] 登录成功
+INFO 2018-04-20 10:45:50,057 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-20 10:46:02,268 views.py views login_handle 53: [lerj] 登录成功
+ERROR 2018-04-20 10:46:33,593 views.py views execute_test_script 1258: 更新绑定用户信息-2018_4_13_11_19_52.py:FAILED: error message [', "{u'status': 404, u'timestamp': 1524192393496, u'message': u'No message available', u'path': u'/superior/v1/im/imUpdateCustomer12', u'error': u'Not Found'}")
+]
+ERROR 2018-04-20 10:48:13,842 views.py views execute_test_script 1258: 更新绑定用户信息-2018_4_13_11_19_52.py:FAILED: error message [', "{u'status': 404, u'timestamp': 1524192493743, u'message': u'No message available', u'path': u'/superior/v1/im/imUpdateCustomer12', u'error': u'Not Found'}")
+]
+INFO 2018-04-20 11:21:21,644 views.py views login_handle 53: [lerj] 登录成功
+ERROR 2018-04-20 11:21:57,605 views.py views execute_test_script 1258: 更新绑定用户信息-2018_4_13_11_19_52.py:FAILED: error message [', "{u'status': 404, u'timestamp': 1524194517404, u'message': u'No message available', u'path': u'/superior/v1/im/imUpdateCustomer12', u'error': u'Not Found'}")
+]
+ERROR 2018-04-20 11:26:50,255 views.py views execute_test_script 1258: 更新绑定用户信息-2018_4_13_11_19_52.py:FAILED: error message [', "{u'status': 404, u'timestamp': 1524194809923, u'message': u'No message available', u'path': u'/superior/v1/im/imUpdateCustomer12', u'error': u'Not Found'}")
+]
+INFO 2018-04-20 11:29:29,360 views.py views login_handle 53: [lerj] 登录成功
+ERROR 2018-04-20 11:30:04,652 views.py views execute_test_script 1283: 检查版本信息-2018_4_13_11_19_52.py:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_4_13_11_19_52.py", line 17, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+
+INFO 2018-04-20 11:39:45,802 views.py views login_handle 53: [lerj] 登录成功
+ERROR 2018-04-20 11:40:19,102 views.py views execute_test_script 1277: 检查版本信息-2018_4_13_11_19_52.py:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_4_13_11_19_52.py", line 17, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+
+ERROR 2018-04-20 11:41:22,545 views.py views execute_test_script 1277: 检查版本信息-2018_4_13_11_19_52.py:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_4_13_11_19_52.py", line 17, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+
+INFO 2018-04-20 13:28:36,509 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-20 13:28:36,560 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-20 13:28:36,757 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-20 13:28:36,867 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-20 13:28:39,030 views.py views income_project 142: lerj进入项目[20171021]
+INFO 2018-04-20 13:29:05,277 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-20 13:29:05,375 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-20 13:29:16,922 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-20 13:29:16,935 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-20 13:29:17,043 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-20 13:29:17,198 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-20 13:29:36,989 views.py views income_project 142: lerj进入项目[20171022]
+INFO 2018-04-20 13:29:41,876 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-20 13:29:41,970 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-20 13:29:58,359 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-20 13:29:58,368 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-20 13:29:58,483 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-20 13:29:58,635 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-20 13:30:04,523 views.py views income_project 142: lerj进入项目[TBS_USER_20180328]
+INFO 2018-04-20 13:30:13,250 views.py views workon_tabs_api 386: lerj进入接口管理页面 [TBS_USER_20180328]
+INFO 2018-04-20 13:30:15,196 views.py views income_project 142: 进入项目[TBS_USER_20180328]
+INFO 2018-04-20 13:30:25,686 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-20 13:30:25,694 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-20 13:30:25,826 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-20 13:30:32,645 views.py views income_project 142: lerj进入项目[TBS_USER_20180328]
+INFO 2018-04-20 13:30:36,570 views.py views workon_tabs_api 386: lerj进入接口管理页面 [TBS_USER_20180328]
+INFO 2018-04-20 13:42:41,774 views.py views login_handle 53: [lerj] 登录成功
+INFO 2018-04-20 13:43:00,290 views.py views login_handle 53: [lerj] 登录成功
+INFO 2018-04-20 13:43:14,259 views.py views login_handle 53: [lerj] 登录成功
+INFO 2018-04-20 13:43:36,524 views.py views login_handle 53: [lerj] 登录成功
+INFO 2018-04-20 13:46:40,482 views.py views login_handle 53: [lerj] 登录成功
+INFO 2018-04-20 13:48:52,551 views.py views login_handle 53: [lerj] 登录成功
+INFO 2018-04-20 13:54:12,573 views.py views login_handle 53: [lerj] 登录成功
+INFO 2018-04-20 13:54:23,983 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-20 13:54:23,991 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-20 13:54:24,520 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-20 13:57:06,146 views.py views login_handle 53: [lerj] 登录成功
+INFO 2018-04-20 14:00:03,851 views.py views login_handle 53: [lerj] 登录成功
+ERROR 2018-04-20 14:01:37,615 views.py views execute_test_script 1277: 检查版本信息-2018_4_13_11_19_52.py:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_4_13_11_19_52.py", line 17, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+
+INFO 2018-04-20 14:04:50,019 views.py views execute_test_script 1245: 登录初始化-2018_4_13_11_19_52.py:PASS:[time_consuming:0.20471]{ response : 'resultCode: 0' }
+INFO 2018-04-20 14:10:38,304 views.py views execute_test_script 1245: 登录初始化-2018_4_13_11_19_52.py:PASS:[time_consuming:0.163238]{ response : 'resultCode: 0' }
+INFO 2018-04-20 14:13:31,457 views.py views login_handle 53: [lerj] 登录成功
+INFO 2018-04-20 14:13:51,406 views.py views execute_test_script 1245: 登录初始化-2018_4_13_11_19_52.py:PASS:[time_consuming:0.123816]{ response : 'resultCode: 0' }
+INFO 2018-04-20 14:16:50,559 views.py views login_handle 53: [lerj] 登录成功
+INFO 2018-04-20 14:17:18,112 views.py views execute_test_script 1245: 登录初始化-2018_4_13_11_19_52.py:PASS:[time_consuming:0.0686]{ response : 'resultCode: 0' }
+INFO 2018-04-20 14:21:22,558 views.py views execute_test_script 1245: 实时获取tab标签发现（信息）-2018_4_13_11_19_52.py:PASS:[time_consuming:0.414741]{ response : 'resultCode: 0' }
+ERROR 2018-04-20 14:21:23,576 views.py views execute_test_script 1277: 平台框架获取事件列表-2018_4_13_11_19_52.py:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/平台框架获取事件列表-2018_4_13_11_19_52.py", line 21, in testDemo
+    r = requests.get(self.protocol + domian  + url,headers=headers, params=param, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 438, in prepare_headers
+    for header in headers.items():
+AttributeError: 'str' object has no attribute 'items'
+
+
+INFO 2018-04-20 14:24:18,554 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-20 14:24:36,218 views.py views execute_test_script 1245: 实时获取tab标签发现（信息）-2018_4_13_11_19_52.py:PASS:[time_consuming:0.377444]{ response : 'resultCode: 0' }
+ERROR 2018-04-20 14:24:37,725 views.py views execute_test_script 1277: 平台框架获取事件列表-2018_4_13_11_19_52.py:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/平台框架获取事件列表-2018_4_13_11_19_52.py", line 21, in testDemo
+    r = requests.get(self.protocol + domian  + url,headers=headers, params=param, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 438, in prepare_headers
+    for header in headers.items():
+AttributeError: 'str' object has no attribute 'items'
+
+
+INFO 2018-04-20 14:26:42,260 views.py views execute_test_script 1245: 实时获取tab标签发现（信息）-2018_4_13_11_19_52.py:PASS:[time_consuming:0.346707]{ response : 'resultCode: 0' }
+ERROR 2018-04-20 14:26:42,847 views.py views execute_test_script 1277: 平台框架获取事件列表-2018_4_13_11_19_52.py:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/平台框架获取事件列表-2018_4_13_11_19_52.py", line 21, in testDemo
+    r = requests.get(self.protocol + domian  + url,headers=headers, params=param, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 438, in prepare_headers
+    for header in headers.items():
+AttributeError: 'str' object has no attribute 'items'
+
+
+INFO 2018-04-20 14:32:42,621 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-20 14:32:57,624 views.py views execute_test_script 1245: 登录初始化-2018_4_13_11_19_52.py:PASS:[time_consuming:0.096532]{ response : 'resultCode: 0' }
+INFO 2018-04-20 15:06:29,852 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-20 15:08:13,981 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-20 15:09:35,826 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-20 15:11:45,081 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-20 15:15:55,036 views.py views login_handle 53: [gonglp] 登录成功

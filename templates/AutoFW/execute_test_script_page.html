@@ -107,14 +107,20 @@
     <div style="padding-left: 200px">
         <input type="button" value="执行测试脚本" id="execute_script_id_b" name="{{username}}" onclick="execute_test_script()">
         <span style="padding-left: 20px"></span>
-        <input type="checkbox" id="execute_end_send_email">[执行完发送邮件]
+        <input type="checkbox" id="execute_end_send_email">[执行完发送邮件给执行人]
         <span style="padding-left: 100px"></span>
         <input type="button" value="删除测试脚本" onclick="delete_test_script()">
         <span style="padding-left: 100px"></span>
         <input type="button" value="执行冒烟用例" onclick="execute_maoyan_script()">
+        <select name="project_name_section_maoyan" id="project_name_section_maoyan" style="width: 100px">
+            <option>请选择冒烟项目</option>
+            {% for list in project_name_list%}
+            <option>{{list.project_name}}</option>
+            {%endfor%}
+        </select>
         <span style="padding-left: 100px"></span>
         <input type="button" value="执行项目所有用例" onclick="execute_all_script()">
-        <div style="width: 96px;background: darkgray" id="jindutiaoW" hidden="true">
+        <div style="width: 296px;background: darkgray;margin-top: 10px;margin-left: 300px" id="jindutiaoW" hidden="true">
 	        <div  style="width: 10%;background: darkcyan;line-height: 20px;text-align: center;color: white" id="jindutiaoN" >0%</div>
 	    </div>
     </div>
@@ -280,6 +286,26 @@
             });
         }
 
+        //------start-------进度条条控制
+        function jindutiao(case_count){
+            var jindutiaoW = document.getElementById("jindutiaoW");
+            jindutiaoW.hidden=false;
+            var jindutiaoN = document.getElementById("jindutiaoN");  //返回进度条内元素
+            var width = 1;
+            var temp = setInterval(go, case_count*20);   //每script_name_count秒执行一次go函数 单位时毫秒
+            function go(){
+                if(width >= 100)
+                    clearInterval(temp);     //停止setInterval
+                else{
+                    width++;
+                    jindutiaoN.style.width = width+'%';    //使进度条百分比增长
+                    jindutiaoN.innerHTML = width+'%';
+                }
+
+            }
+        }
+        //------end-------进度条条控制
+
         //执行测试脚本
         function execute_test_script() {
             //判断是否有勾选脚本执行
@@ -318,38 +344,24 @@
                     })
                 }
 
-                //------start-------进度条条控制
-                var script_name_count = script_name_json.split(",").length;//需要执行脚本的个数，预计每个脚本执行时间为1s（包括出错/链接等待时间）
-                var jindutiaoW = document.getElementById("jindutiaoW");
-                jindutiaoW.hidden=false;
-                var jindutiaoN = document.getElementById("jindutiaoN");  //返回进度条内元素
-	            var width = 1;
-
-	            var temp = setInterval(go, script_name_count*20);   //每script_name_count秒执行一次go函数 单位时毫秒
-	            function go(){
-	                if(width >= 100)
-	                    clearInterval(temp);     //停止setInterval
-	                else{
-	                    width++;
-	                    jindutiaoN.style.width = width+'%';    //使进度条百分比增长
-	                    jindutiaoN.innerHTML = width+'%';
-	                }
-
-	            }
-                //------end-------进度条条控制
-
                 if(script_name_json){
-                    $.ajax({
+	                //判断是否有勾选发送邮件
+                    if($("#execute_end_send_email").is(":checked")){
+                        var send_email_flag = "yes";
+                    }else{
+                        var send_email_flag = "no";
+                    }
+
+	                $.ajax({
                         url: "/AutoFW/execute_test_script",
                         type: "get",
-                        data: "script_name_json="+script_name_json+"&result_name="+result_name+"&username="+username,
+                        data: "script_name_json="+script_name_json+"&result_name="+result_name+"&username="+username+"&send_email_flag="+send_email_flag,
                         success: function (data) {
                             if(data.status == "execute_script_success"){
                                 //进度条控制，此处表示真正的完成
                                 clearInterval(temp);
                                 jindutiaoN.style.width = '100%';
                                 jindutiaoN.innerHTML = '100%';
-
                                 $.messager.show({
                                     title: '脚本执行提示',
                                     msg: "接口测试脚本执行成功，请去测试模块查看测试报告！：",
@@ -360,14 +372,81 @@
 
                                     }
                                 });
+                            }else if(data.status == "email_send_fail"){
+                                //进度条控制，此处表示真正的完成
+                                clearInterval(temp);
+                                jindutiaoN.style.width = '100%';
+                                jindutiaoN.innerHTML = '100%';
+
+                                $.messager.show({
+                                    title: '脚本执行提示',
+                                    msg: "接口测试脚本执行成功，邮箱发送失败，该用户未填写邮箱信息，可前往[用户中心]补填邮箱信息！：",
+                                    width: 300,
+                                    height: 180,
+                                    showType:null,
+                                    style:{
+
+                                    }
+                                });
                             }
                         }
                     });
+                     //------start-------进度条条控制
+                    var script_name_count = script_name_json.split(",").length;//需要执行脚本的个数，预计每个脚本执行时间为1s（包括出错/链接等待时间）
+                    var jindutiaoW = document.getElementById("jindutiaoW");
+                    jindutiaoW.hidden=false;
+                    var jindutiaoN = document.getElementById("jindutiaoN");  //返回进度条内元素
+                    var width = 1;
+                    var temp = setInterval(go, script_name_count*20);   //每script_name_count秒执行一次go函数 单位时毫秒
+                    function go(){
+                        if(width >= 100)
+                            clearInterval(temp);     //停止setInterval
+                        else{
+                            width++;
+                            jindutiaoN.style.width = width+'%';    //使进度条百分比增长
+                            jindutiaoN.innerHTML = width+'%';
+                        }
+
+                    }
+
+    //                jindutiao(script_name_count); 抽出封装执行不弹出messager.show
+                    //------end-------进度条条控制
                 }else {
                     alert("未选择要执行脚本的数据！");
                 }
             }
         };
+
+
+        function execute_maoyan_script() {
+            $.messager.confirm('Confirm','确认开始执行冒烟用例?',function(r){
+                if(r) {
+                    var jindutiaoW = document.getElementById("jindutiaoW");
+                    jindutiaoW.hidden = false;
+                    var jindutiaoN = document.getElementById("jindutiaoN");  //返回进度条内元素
+                    jindutiaoN.style.width = '1%';    //使进度条百分比增长
+                    jindutiaoN.innerHTML = '1%';
+
+                    var project_name_maoyan = $("#project_name_section_maoyan option:selected").text(); //获取需要执行冒烟测试的项目
+
+                    alert(project_name_maoyan);
+                    var username = document.getElementById("execute_script_id_b").name //获取执行人的姓名
+                    $.ajax({
+                        url: "/AutoFW/execute_maoyan_script",
+                        type: "get",
+                        data: "send_email_flag=yes&username="+username+"&project_name_maoyan="+project_name_maoyan,
+                        success: function (data) {
+                            if (data.status == "success") {
+                                alert("执行成功");
+                            }else if(data.status == "fail"){
+                                alert("执行失败");
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
 
     </script>
 </body>
