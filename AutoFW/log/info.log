@@ -650,3 +650,111 @@ InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <ty
 INFO 2018-04-23 17:02:15,039 views.py views execute_script_result_analysis_fun 1607: 实时获取tab标签发现（信息）:PASS:[time_consuming:0.187188]{ response : 'resultCode: 0' }
 INFO 2018-04-23 17:02:15,532 views.py views execute_script_result_analysis_fun 1607: 平台框架获取事件列表:PASS:[time_consuming:0.079084]{ response : 'resultCode: 0' }
 INFO 2018-04-23 17:02:15,826 views.py views execute_script_result_analysis_fun 1607: 更新绑定用户信息:PASS:[time_consuming:0.058083]{ response : 'resultCode: 0' }
+INFO 2018-04-23 17:26:31,142 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-23 17:27:25,459 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-23 17:27:25,482 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-23 17:27:25,624 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-23 17:27:25,812 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-23 17:27:27,419 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
+INFO 2018-04-23 17:27:29,223 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
+ERROR 2018-04-23 17:28:06,588 views.py views execute_huigui_script 1787: 回归测试执行失败 [Caused by :兔博士用户端 还有冒烟用例未生成测试脚本，请补充测试脚本！] 请检查以下case_id [u'TBS_DL_GetEventList']
+ERROR 2018-04-23 17:30:17,313 views.py views execute_script_result_analysis_fun 1643: 检查版本信息:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_4_23_16_14_40.py", line 17, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+
+INFO 2018-04-23 17:30:17,901 views.py views execute_script_result_analysis_fun 1607: 实时获取tab标签发现（信息）:PASS:[time_consuming:0.256209]{ response : 'resultCode: 0' }
+INFO 2018-04-23 17:30:18,407 views.py views execute_script_result_analysis_fun 1607: 平台框架获取事件列表:PASS:[time_consuming:0.065034]{ response : 'resultCode: 0' }
+INFO 2018-04-23 17:30:18,712 views.py views execute_script_result_analysis_fun 1607: 更新绑定用户信息:PASS:[time_consuming:0.060251]{ response : 'resultCode: 0' }
+INFO 2018-04-23 17:31:03,232 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-23 17:31:03,367 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-23 17:33:20,047 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-23 17:33:20,201 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-23 17:33:21,937 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-23 17:33:22,047 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-23 17:33:22,499 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-23 17:33:22,612 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-23 17:33:22,865 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-23 17:33:22,977 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-23 17:38:30,829 views.py views API_start 463: gonglp添加API用例 [测试] 属于项目：[TBS_USER_20180328]
+INFO 2018-04-23 17:41:11,685 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-23 17:41:11,884 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-23 17:41:13,002 views.py views income_project 142: 进入项目[TBS_USER_20180328]
+INFO 2018-04-23 17:41:14,236 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-23 17:41:14,354 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-23 17:41:15,695 views.py views workon_tabs_api 386: 进入接口管理页面 [TBS_USER_20180328]
+INFO 2018-04-23 17:41:37,339 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-23 17:41:37,564 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-23 17:41:40,889 views.py views income_project 142: 进入项目[TBS_USER_20180328]
+INFO 2018-04-23 17:41:48,571 views.py views workon_tabs_api 386: 进入接口管理页面 [TBS_USER_20180328]
+INFO 2018-04-23 17:42:46,680 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-23 17:42:46,850 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-23 17:42:47,551 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-23 17:42:47,673 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-23 17:42:48,054 views.py views income_project 142: 进入项目[TBS_USER_20180328]
+INFO 2018-04-23 17:42:48,809 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-23 17:42:48,930 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-23 17:42:50,181 views.py views workon_tabs_api 386: 进入接口管理页面 [TBS_USER_20180328]
+INFO 2018-04-23 17:42:57,423 views.py views income_project 142: 进入项目[TBS_USER_20180328]
+INFO 2018-04-23 17:42:59,239 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-23 17:42:59,478 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-23 17:43:03,982 views.py views workon_tabs_api 386: 进入接口管理页面 [TBS_USER_20180328]
+INFO 2018-04-23 17:45:47,538 views.py views income_project 142: 进入项目[TBS_USER_20180328]
+INFO 2018-04-23 17:45:48,441 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-23 17:45:48,677 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-23 17:45:49,876 views.py views workon_tabs_api 386: 进入接口管理页面 [TBS_USER_20180328]
+INFO 2018-04-23 17:49:16,779 views.py views income_project 142: 进入项目[TBS_USER_20180328]
+INFO 2018-04-23 17:49:22,032 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-23 17:49:22,148 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-23 17:49:26,210 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-23 17:49:26,219 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-23 17:49:26,357 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-23 17:49:28,348 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
+INFO 2018-04-23 17:49:31,348 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
+INFO 2018-04-23 17:50:34,043 views.py views API_start 474: gonglp添加API用例 [测试] 属于项目：[TBS_USER_20180328]
+INFO 2018-04-23 17:51:38,980 views.py views income_project 142: 进入项目[TBS_USER_20180328]
+INFO 2018-04-23 17:51:39,650 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-23 17:51:39,777 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-23 17:51:45,177 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
+INFO 2018-04-23 17:51:57,165 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
+INFO 2018-04-23 17:54:13,907 views.py views execute_script_result_analysis_fun 1638: 登录初始化:PASS:[time_consuming:0.130529]{ response : 'resultCode: 0' }
+INFO 2018-04-23 17:54:14,342 views.py views execute_script_result_analysis_fun 1638: 首页(顶部区域搜索框点击):PASS:[time_consuming:0.06934]{ response : 'resultCode: 0' }
+INFO 2018-04-23 17:54:14,640 views.py views execute_script_result_analysis_fun 1638: 存储用户Session:PASS:[time_consuming:0.059427]{ response : 'resultCode: 0' }
+ERROR 2018-04-23 17:55:04,798 views.py views execute_script_result_analysis_fun 1674: 检查版本信息:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_4_23_16_14_40.py", line 17, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+
+INFO 2018-04-23 17:55:05,510 views.py views execute_script_result_analysis_fun 1638: 实时获取tab标签发现（信息）:PASS:[time_consuming:0.34476]{ response : 'resultCode: 0' }
+INFO 2018-04-23 17:55:05,908 views.py views execute_script_result_analysis_fun 1638: 平台框架获取事件列表:PASS:[time_consuming:0.067194]{ response : 'resultCode: 0' }
+INFO 2018-04-23 17:55:06,363 views.py views execute_script_result_analysis_fun 1638: 更新绑定用户信息:PASS:[time_consuming:0.065386]{ response : 'resultCode: 0' }

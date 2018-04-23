@@ -405,15 +405,26 @@ def case_Read_all_SQL(request,project_id):
     for list in project_case_all:
 
         #project_name module_name为外键，单独获取 方法一
-        i = 0
+        # i = 0
         # project_name = project_case_all.values('project_name')[i]['project_name']
         # module_name = project_case_all.values('module_name')[i]['module_name']
         #获取外键指定值 module_name project_name 方法二
         # print (list.module_name.module_name)
+
+        '''case_type 枚举 1:回归测试  2：冒烟测试   3：其他 '''
+        if "1" == str(list.case_type):
+            case_type = "回归测试"
+        elif "2" == str(list.case_type):
+            case_type = "冒烟测试"
+        elif "3" == str(list.case_type):
+            case_type = "其他"
+        else:
+            print ("case_type 类型错误" + str(list.case_type))
+
         caseList.append({"case_id":list.case_id,"module_name":list.module_name.module_name,"project_name":list.project_name.project_name,
                          "case_name":list.case_name,"creator":list.creator,"url_path":list.url_path,
                          "method":list.method,"headers":list.headers,"parameter_format":list.parameter_format,"parameter":list.parameter,"expected":list.expected,
-                         "description":list.description,"case_type":list.case_type})
+                         "description":list.description,"case_type":case_type})
         # i += 1
 
     caseList_len = len(caseList)
@@ -442,6 +453,15 @@ def API_start(request,project_id,username):
         expected = request.POST.get('expected')
         description = request.POST.get('description')
         case_type = request.POST.get('case_type')
+        '''case_type 枚举 1:回归测试  2：冒烟测试   3：其他 '''
+        if "回归测试" == str(case_type):
+            case_type = 1
+        elif "冒烟测试" == str(case_type):
+            case_type = 2
+        elif "其他" == str(case_type):
+            case_type = 3
+        else:
+            print ("case_type 类型错误"+str(case_type))
 
         # module_name_id是外键 本应是module_name    project_name_id是外键 本应是project_name
         dic = {'case_id': case_id,'module_name_id': module_name, 'project_name_id':project_name,
@@ -473,6 +493,17 @@ def editAPI(request,project_id,username):
         module_name = request.POST.get('module_name')
         description = request.POST.get('description')
         case_type = request.POST.get('case_type')
+
+        '''case_type 枚举 1:回归测试  2：冒烟测试   3：其他 '''
+        if "回归测试" == str(case_type):
+            case_type = 1
+        elif "冒烟测试" == str(case_type):
+            case_type = 2
+        elif "其他" == str(case_type):
+            case_type = 3
+        else:
+            print ("case_type 类型错误" + str(case_type))
+
         # print (module_name)
         creator = username
         print (headers)
@@ -1670,7 +1701,7 @@ def execute_maoyan_script(request):
         #找出该项目中project_case表中的冒烟测试是否在script_info表中不存在;[未生成相应的测试脚本]
         #select * from project_case a,script_info b where a.project_name_id='project_name_maoyan' and a.case_type='冒烟测试' and a.case_id not in (b.script_case_id_id);
         project_case_obj = Project_Case.objects.extra(
-            where=["project_case.project_name_id = %s and project_case.case_type='冒烟测试' "
+            where=["project_case.project_name_id = %s and project_case.case_type='2' "
                    "and project_case.case_id NOT IN (SELECT script_info.script_case_id_id FROM script_info)"],
             params=[project_name_maoyan]
         )
@@ -1683,15 +1714,15 @@ def execute_maoyan_script(request):
 
             for list in project_case_obj:
                 maoyan_list.append(list.case_id)
-            log_sys.info("冒烟测试执行失败 [Caused by :"+project_name_maoyan+" 还有冒烟用例未生成测试脚本，请补充测试脚本！] 请检查以下case_id "+str(maoyan_list))
+            log_scripts.error("冒烟测试执行失败 [Caused by :"+project_name_maoyan+" 还有冒烟用例未生成测试脚本，请补充测试脚本！] 请检查以下case_id "+str(maoyan_list))
             # print (maoyan_list)
             #用例表和脚本表匹配是否有没生成脚本的冒烟用例
-            content = {"status": "fail","msg":"还有冒烟用例未生成测试脚本，查看系统日志，请补充测试脚本！"}
+            content = {"status": "fail","msg":"还有冒烟用例未生成测试脚本，查看脚本日志，请补充测试脚本！"}
             return JsonResponse(content)
         else:
             print ("execute_maoyan_case")
             project_case_maoyan_obj = Project_Case.objects.extra(
-                where=["project_case.project_name_id = %s and project_case.case_type='冒烟测试' "
+                where=["project_case.project_name_id = %s and project_case.case_type='2' "
                        "and project_case.case_id in (select script_info.script_case_id_id from script_info)"],
                 params=[project_name_maoyan]
             )
@@ -1776,7 +1807,7 @@ def execute_huigui_script(request):
         # 找出该项目中project_case表中的回归测试是否在script_info表中不存在;[未生成相应的测试脚本]
         # select * from project_case a,script_info b where a.project_name_id='project_name_huigui' and a.case_type='回归测试' and a.case_id not in (b.script_case_id_id);
         project_case_obj = Project_Case.objects.extra(
-            where=["project_case.project_name_id = %s and project_case.case_type='回归测试' "
+            where=["project_case.project_name_id = %s and project_case.case_type='1' "
                    "and project_case.case_id NOT IN (SELECT script_info.script_case_id_id FROM script_info)"],
             params=[project_name_huigui]
         )
@@ -1784,15 +1815,15 @@ def execute_huigui_script(request):
         if len(project_case_obj)>0:#还有回归测试用例未生成测试脚本
             for list in project_case_obj:
                 huigui_list.append(list.case_id)
-            log_sys.info("回归测试执行失败 [Caused by :"+project_name_huigui+" 还有冒烟用例未生成测试脚本，请补充测试脚本！] 请检查以下case_id "+str(huigui_list))
+            log_scripts.error("回归测试执行失败 [Caused by :"+project_name_huigui+" 还有冒烟用例未生成测试脚本，请补充测试脚本！] 请检查以下case_id "+str(huigui_list))
             # print (maoyan_list)
             #用例表和脚本表匹配是否有没生成脚本的冒烟用例
-            content = {"status": "fail","msg":"还有冒烟用例未生成测试脚本，查看系统日志，请补充测试脚本！"}
+            content = {"status": "fail","msg":"还有冒烟用例未生成测试脚本，查看脚本日志，请补充测试脚本！"}
             return JsonResponse(content)
         else:
             print ("execute_huigui_case")
             project_case_huigui_obj = Project_Case.objects.extra(
-                where=["project_case.project_name_id = %s and project_case.case_type='回归测试' "
+                where=["project_case.project_name_id = %s and project_case.case_type='1' "
                        "and project_case.case_id in (select script_info.script_case_id_id from script_info)"],
                 params=[project_name_huigui]
             )

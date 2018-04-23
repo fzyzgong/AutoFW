@@ -1369,3 +1369,53 @@ InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <ty
 INFO 2018-04-23 17:02:15,039 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_script_result_analysis_fun 1607: 实时获取tab标签发现（信息）:PASS:[time_consuming:0.187188]{ response : 'resultCode: 0' }
 INFO 2018-04-23 17:02:15,532 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_script_result_analysis_fun 1607: 平台框架获取事件列表:PASS:[time_consuming:0.079084]{ response : 'resultCode: 0' }
 INFO 2018-04-23 17:02:15,826 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_script_result_analysis_fun 1607: 更新绑定用户信息:PASS:[time_consuming:0.058083]{ response : 'resultCode: 0' }
+ERROR 2018-04-23 17:28:06,588 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_huigui_script 1787: 回归测试执行失败 [Caused by :兔博士用户端 还有冒烟用例未生成测试脚本，请补充测试脚本！] 请检查以下case_id [u'TBS_DL_GetEventList']
+ERROR 2018-04-23 17:30:17,313 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_script_result_analysis_fun 1643: 检查版本信息:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_4_23_16_14_40.py", line 17, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+
+INFO 2018-04-23 17:30:17,901 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_script_result_analysis_fun 1607: 实时获取tab标签发现（信息）:PASS:[time_consuming:0.256209]{ response : 'resultCode: 0' }
+INFO 2018-04-23 17:30:18,407 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_script_result_analysis_fun 1607: 平台框架获取事件列表:PASS:[time_consuming:0.065034]{ response : 'resultCode: 0' }
+INFO 2018-04-23 17:30:18,712 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_script_result_analysis_fun 1607: 更新绑定用户信息:PASS:[time_consuming:0.060251]{ response : 'resultCode: 0' }
+INFO 2018-04-23 17:54:13,907 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_script_result_analysis_fun 1638: 登录初始化:PASS:[time_consuming:0.130529]{ response : 'resultCode: 0' }
+INFO 2018-04-23 17:54:14,342 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_script_result_analysis_fun 1638: 首页(顶部区域搜索框点击):PASS:[time_consuming:0.06934]{ response : 'resultCode: 0' }
+INFO 2018-04-23 17:54:14,640 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_script_result_analysis_fun 1638: 存储用户Session:PASS:[time_consuming:0.059427]{ response : 'resultCode: 0' }
+ERROR 2018-04-23 17:55:04,798 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_script_result_analysis_fun 1674: 检查版本信息:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_4_23_16_14_40.py", line 17, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+
+INFO 2018-04-23 17:55:05,510 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_script_result_analysis_fun 1638: 实时获取tab标签发现（信息）:PASS:[time_consuming:0.34476]{ response : 'resultCode: 0' }
+INFO 2018-04-23 17:55:05,908 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_script_result_analysis_fun 1638: 平台框架获取事件列表:PASS:[time_consuming:0.067194]{ response : 'resultCode: 0' }
+INFO 2018-04-23 17:55:06,363 /home/fzyzgong/project/AutoFWOG/AutoFW/views.py views.py views execute_script_result_analysis_fun 1638: 更新绑定用户信息:PASS:[time_consuming:0.065386]{ response : 'resultCode: 0' }
