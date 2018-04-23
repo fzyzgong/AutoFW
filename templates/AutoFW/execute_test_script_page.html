@@ -120,6 +120,12 @@
         </select>
         <span style="padding-left: 100px"></span>
         <input type="button" value="执行项目所有用例" onclick="execute_all_script()">
+        <select name="project_name_section_maoyan" id="project_name_section_huigui" style="width: 100px">
+            <option>请选择回归项目</option>
+            {% for list in project_name_list%}
+            <option>{{list.project_name}}</option>
+            {%endfor%}
+        </select>
         <div style="width: 296px;background: darkgray;margin-top: 10px;margin-left: 300px" id="jindutiaoW" hidden="true">
 	        <div  style="width: 10%;background: darkcyan;line-height: 20px;text-align: center;color: white" id="jindutiaoN" >0%</div>
 	    </div>
@@ -314,7 +320,7 @@
                 return;
             }
 
-            var result_name = window.prompt("请为你本次测试命名，用于查询测试结果！[命名规范：模块缩写名+测试人员名字缩写+年月日]", "null");
+            var result_name = window.prompt("请为你本次测试命名，用于查询测试结果！[命名规范：模块缩写名+测试人员名字缩写+年月日时分]", "null");
             var username = document.getElementById("execute_script_id_b").name //获取执行人的姓名
 
 //            alert("result:"+result_name);
@@ -417,28 +423,32 @@
             }
         };
 
-
+        // 冒烟测试
         function execute_maoyan_script() {
-            $.messager.confirm('Confirm','确认开始执行冒烟用例?',function(r){
+            $.messager.confirm('Confirm','确认开始执行冒烟用例?[结束会弹窗提示]',function(r){
                 if(r) {
-                    var jindutiaoW = document.getElementById("jindutiaoW");
-                    jindutiaoW.hidden = false;
-                    var jindutiaoN = document.getElementById("jindutiaoN");  //返回进度条内元素
-                    jindutiaoN.style.width = '1%';    //使进度条百分比增长
-                    jindutiaoN.innerHTML = '1%';
 
                     var project_name_maoyan = $("#project_name_section_maoyan option:selected").text(); //获取需要执行冒烟测试的项目
 
                     var username = document.getElementById("execute_script_id_b").name //获取执行人的姓名
+
+                    var result_name = window.prompt("请为你本次冒烟测试命名，用于查询测试结果！[命名规范：MY_项目缩写名+测试人员名字缩写+年月日时分]", "null");
+                    if(result_name==null || result_name=='null' || result_name=='')
+                    {
+                        alert("未正确命名！");
+                        return;
+                    }
                     $.ajax({
                         url: "/AutoFW/execute_maoyan_script",
                         type: "get",
-                        data: "send_email_flag=yes&username="+username+"&project_name_maoyan="+project_name_maoyan,
+                        data: "send_email_flag=yes&username="+username+"&project_name_maoyan="+project_name_maoyan+"&result_name="+result_name,
                         success: function (data) {
-                            if (data.status == "success") {
-                                alert("执行成功");
+                            if (data.status == "execute_script_success") {
+                                alert("冒烟测试执行成功，查询报告或者查看邮件！");
                             }else if(data.status == "fail"){
-                                alert("执行失败");
+                                alert("执行失败 ["+data.msg+"]");
+                            }else if(data.status == "email_send_fail"){
+                                alert("邮件发送失败 ["+data.msg+"]");
                             }
                         }
                     });
@@ -446,6 +456,38 @@
             });
         }
 
+        //执行回归测试
+        function execute_all_script() {
+            $.messager.confirm('Confirm','确认开始执行回归用例?[结束会弹窗提示]',function(r){
+                if(r) {
+
+                    var project_name_huigui = $("#project_name_section_huigui option:selected").text(); //获取需要执行冒烟测试的项目
+
+                    var username = document.getElementById("execute_script_id_b").name //获取执行人的姓名
+
+                    var result_name = window.prompt("请为你本次冒烟测试命名，用于查询测试结果！[命名规范：HG_项目缩写名+测试人员名字缩写+年月日时分]", "null");
+                    if(result_name==null || result_name=='null' || result_name=='')
+                    {
+                        alert("未正确命名！");
+                        return;
+                    }
+                    $.ajax({
+                        url: "/AutoFW/execute_huigui_script",
+                        type: "get",
+                        data: "send_email_flag=yes&username="+username+"&project_name_huigui="+project_name_huigui+"&result_name="+result_name,
+                        success: function (data) {
+                            if (data.status == "execute_script_success") {
+                                alert("回归测试执行成功，查询报告或者查看邮件！");
+                            }else if(data.status == "fail"){
+                                alert("执行失败 ["+data.msg+"]");
+                            }else if(data.status == "email_send_fail"){
+                                alert("邮件发送失败 ["+data.msg+"]");
+                            }
+                        }
+                    });
+                }
+            });
+        }
 
     </script>
 </body>

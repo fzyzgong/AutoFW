@@ -1217,77 +1217,84 @@ def execute_test_script(request):
 
         Batch_Report.objects.create(**dict_report_id)
 
+
         for list in script_name_list:
             API_name = str(list.split('/')[-1]) #接口用例名
             print("API_name:%s"%API_name)
             script_info_obj = Script_Info.objects.filter(script_name=list)[0]
             script_path = str(script_info_obj.script_path)
 
-            project_case_name = script_info_obj.script_case_name
+            # project_case_name = script_info_obj.script_case_name
+            script_case_id = script_info_obj.script_case_id
+
             # print (script_path)
             rs = execute_script_Popen(script_path,0.1) #脚本路径/休眠时间 (当前测试接口需要等待3秒才能再次访问)
             print(rs)
-            try:
-                result =rs.split('AutoFW test reslut:')[1].split('\'')[0]
-                # result = str(result).replace("\n","")
-                print ("---------")
-                print (script_path+'：执行结果'+result)
-                print ("---------")
-                # 修改脚本实例表 脚本状态字段标识
-                if result:
-                    rs = rs.split('AutoFW test reslut:')[1]
 
-                    if "PASS" == result:
-                        # dict = {"script_status":"PASS"}
-                        dict = "PASS"
-                        time_consuming = rs.split('time_consuming:')[1].split(']')[0]
-                        # log_scripts.info(list + ":PASS:" + " pass message [" + rs.split('PASS')[1] + "]")#响应信息都打印
-                        log_scripts.info(list + ":PASS:[time_consuming:"+time_consuming+"]{ response : \'resultCode" + rs.split('resultCode')[1][1:4]+'\''+" }")#只打印成功关键字段
+            passCount,failCount,skipCount = execute_script_result_analysis_fun(rs, script_path, report_id, script_case_id, API_name,passCount,failCount,skipCount)
 
-                        execute_script_log = str(API_name)+":<PASS> [time_consuming:"+time_consuming+"]{ response : \'resultCode" + rs.split('resultCode')[1][1:4]+'\''+" }"
 
-                        # 写入Execute_Script_Log表
-                        dic ={"log_report_id_id":report_id,"log_api_name":API_name,"log_execute_script":execute_script_log,"status":"pass","bak1":"bak"}
-                        Execute_Script_Log.objects.create(**dic)
-                        passCount += 1
-                    elif "FAILED" == result:
-                        # dict = {"script_status": "FAILED"}
-                        dict = "FAILED"
-                        log_scripts.error(list + ":FAILED:" + " error message [" + rs.split('FAILED')[1] + "]")
-
-                        execute_script_log = str(API_name)+":<FAIL> " + " error message 服务器返回错误：[" + rs.split('FAILED')[1][1:1500] + "]" #设这1-1500为了防止存储字段超过长度
-                        # 写入Execute_Script_Log表
-                        dic = {"log_report_id_id": report_id, "log_api_name": API_name,
-                               "log_execute_script": execute_script_log, "status": "fail", "bak1": "bak"}
-                        Execute_Script_Log.objects.create(**dic)
-                        failCount += 1
-                else:
-                    # dict = {"script_status": "NONE"}
-                    dict = "NONE"
-                    execute_script_log = str(API_name) + ":<FAILED> " + " error message [脚本运行出错]"
-                    # 写入Execute_Script_Log表
-                    dic = {"log_report_id_id": report_id, "log_api_name": API_name,
-                           "log_execute_script": execute_script_log, "status": "skip", "bak1": "bak"}
-                    Execute_Script_Log.objects.create(**dic)
-                    skipCount += 1
-            except IndexError,e:
-                # dict = {"script_status": "NONE"}
-                dict = "NONE"
-                mylogging("["+str(list)+"] :"+"未获取脚本执行状态，脚本执行失败")
-                log_scripts.error(list + ":FAILED:" + " error message [ 未获取脚本执行状态，脚本执行失败 ] \r"+rs)
-
-                execute_script_log = str(API_name) + ":<FAILED> " + " error message [脚本运行异常:请查看error.log] \r"+rs
-                # 写入Execute_Script_Log表
-                dic = {"log_report_id_id": report_id, "log_api_name": str(API_name),
-                       "log_execute_script": execute_script_log, "status": "skip", "bak1": "bak"}
-                Execute_Script_Log.objects.create(**dic)
-                skipCount += 1
-            # except AttributeError,e:
-            #     dict = {"script_status": "NONE"}
-            #     mylogging("[" + str(list) + "] :" + "index error,未获取脚本执行状态，脚本执行失败"+e.args)
-            #     log_scripts.error(list + ":FAILED:" + " error message [ AttributeError ]"+e.args)
-            Script_Info.objects.filter(script_name=list).update(script_status=dict)
-            Project_Case.objects.filter(case_name=project_case_name).update(description=dict) #description 为用例执行状态
+        #     try:
+        #         result =rs.split('AutoFW test reslut:')[1].split('\'')[0]
+        #         # result = str(result).replace("\n","")
+        #         print ("---------")
+        #         print (script_path+'：执行结果'+result)
+        #         print ("---------")
+        #         # 修改脚本实例表 脚本状态字段标识
+        #         if result:
+        #             rs = rs.split('AutoFW test reslut:')[1]
+        #
+        #             if "PASS" == result:
+        #                 # dict = {"script_status":"PASS"}
+        #                 dict = "PASS"
+        #                 time_consuming = rs.split('time_consuming:')[1].split(']')[0]
+        #                 # log_scripts.info(list + ":PASS:" + " pass message [" + rs.split('PASS')[1] + "]")#响应信息都打印
+        #                 log_scripts.info(list + ":PASS:[time_consuming:"+time_consuming+"]{ response : \'resultCode" + rs.split('resultCode')[1][1:4]+'\''+" }")#只打印成功关键字段
+        #
+        #                 execute_script_log = str(API_name)+":<PASS> [time_consuming:"+time_consuming+"]{ response : \'resultCode" + rs.split('resultCode')[1][1:4]+'\''+" }"
+        #
+        #                 # 写入Execute_Script_Log表
+        #                 dic ={"log_report_id_id":report_id,"log_api_name":API_name,"log_execute_script":execute_script_log,"status":"pass","bak1":"bak"}
+        #                 Execute_Script_Log.objects.create(**dic)
+        #                 passCount += 1
+        #             elif "FAILED" == result:
+        #                 # dict = {"script_status": "FAILED"}
+        #                 dict = "FAILED"
+        #                 log_scripts.error(list + ":FAILED:" + " error message [" + rs.split('FAILED')[1] + "]")
+        #
+        #                 execute_script_log = str(API_name)+":<FAIL> " + " error message 服务器返回错误：[" + rs.split('FAILED')[1][1:1500] + "]" #设这1-1500为了防止存储字段超过长度
+        #                 # 写入Execute_Script_Log表
+        #                 dic = {"log_report_id_id": report_id, "log_api_name": API_name,
+        #                        "log_execute_script": execute_script_log, "status": "fail", "bak1": "bak"}
+        #                 Execute_Script_Log.objects.create(**dic)
+        #                 failCount += 1
+        #         else:
+        #             # dict = {"script_status": "NONE"}
+        #             dict = "NONE"
+        #             execute_script_log = str(API_name) + ":<FAILED> " + " error message [脚本运行出错]"
+        #             # 写入Execute_Script_Log表
+        #             dic = {"log_report_id_id": report_id, "log_api_name": API_name,
+        #                    "log_execute_script": execute_script_log, "status": "skip", "bak1": "bak"}
+        #             Execute_Script_Log.objects.create(**dic)
+        #             skipCount += 1
+        #     except IndexError,e:
+        #         # dict = {"script_status": "NONE"}
+        #         dict = "NONE"
+        #         mylogging("["+str(list)+"] :"+"未获取脚本执行状态，脚本执行失败")
+        #         log_scripts.error(list + ":FAILED:" + " error message [ 未获取脚本执行状态，脚本执行失败 ] \r"+rs)
+        #
+        #         execute_script_log = str(API_name) + ":<FAILED> " + " error message [脚本运行异常:请查看error.log] \r"+rs
+        #         # 写入Execute_Script_Log表
+        #         dic = {"log_report_id_id": report_id, "log_api_name": str(API_name),
+        #                "log_execute_script": execute_script_log, "status": "skip", "bak1": "bak"}
+        #         Execute_Script_Log.objects.create(**dic)
+        #         skipCount += 1
+        #     # except AttributeError,e:
+        #     #     dict = {"script_status": "NONE"}
+        #     #     mylogging("[" + str(list) + "] :" + "index error,未获取脚本执行状态，脚本执行失败"+e.args)
+        #     #     log_scripts.error(list + ":FAILED:" + " error message [ AttributeError ]"+e.args)
+        #     Script_Info.objects.filter(script_name=list).update(script_status=dict)
+        #     Project_Case.objects.filter(case_name=project_case_name).update(description=dict) #description 为用例执行状态
         content = {"status": "execute_script_success"}
         # 报告名 执行者 api总数 执行时间 执行报告ID
         print("result_name=%s execute_name=%s api_total=%s"
@@ -1577,44 +1584,281 @@ def send_email_by_report_list(request):
         return JsonResponse(content)
 
 
+def execute_script_result_analysis_fun(rs,script_path,report_id,case_id,API_name
+                                       ,passCount,failCount,skipCount):
+
+    try:
+        result = rs.split('AutoFW test reslut:')[1].split('\'')[0]
+        # result = str(result).replace("\n","")
+        print ("---------")
+        print (script_path + '：执行结果' + result)
+        print ("---------")
+        # 修改脚本实例表 脚本状态字段标识
+        print(rs)
+        if result:
+            rs = rs.split('AutoFW test reslut:')[1]
+            if "PASS" == result:
+                # dict = {"script_status":"PASS"}
+                dict = "PASS"
+                time_consuming = rs.split('time_consuming:')[1].split(']')[0]
+                # log_scripts.info(list + ":PASS:" + " pass message [" + rs.split('PASS')[1] + "]")#响应信息都打印
+                log_scripts.info(
+                    API_name + ":PASS:[time_consuming:" + time_consuming + "]{ response : \'resultCode" +
+                    rs.split('resultCode')[1][1:4] + '\'' + " }")  # 只打印成功关键字段
+
+                execute_script_log = str(
+                    API_name) + ":<PASS> [time_consuming:" + time_consuming + "]{ response : \'resultCode" + \
+                                     rs.split('resultCode')[1][1:4] + '\'' + " }"
+
+                # 写入Execute_Script_Log表
+                dic = {"log_report_id_id": report_id, "log_api_name": API_name,
+                       "log_execute_script": execute_script_log, "status": "pass", "bak1": "bak"}
+                Execute_Script_Log.objects.create(**dic)
+                passCount += 1
+            elif "FAILED" == result:
+                # dict = {"script_status": "FAILED"}
+                dict = "FAILED"
+                log_scripts.error(API_name + ":FAILED:" + " error message [" + rs.split('FAILED')[1] + "]")
+
+                execute_script_log = str(API_name) + ":<FAIL> " + " error message 服务器返回错误：[" + \
+                                     rs.split('FAILED')[1][1:1500] + "]"  # 设这1-1500为了防止存储字段超过长度
+                # 写入Execute_Script_Log表
+                dic = {"log_report_id_id": report_id, "log_api_name": API_name,
+                       "log_execute_script": execute_script_log, "status": "fail", "bak1": "bak"}
+                Execute_Script_Log.objects.create(**dic)
+                failCount += 1
+        else:
+            # dict = {"script_status": "NONE"}
+            dict = "NONE"
+            execute_script_log = str(API_name) + ":<FAILED> " + " error message [脚本运行出错]"
+            # 写入Execute_Script_Log表
+            dic = {"log_report_id_id": report_id, "log_api_name": API_name,
+                   "log_execute_script": execute_script_log, "status": "skip", "bak1": "bak"}
+            Execute_Script_Log.objects.create(**dic)
+            skipCount += 1
+    except IndexError, e:
+        # dict = {"script_status": "NONE"}
+        dict = "NONE"
+        mylogging("[" + str(API_name) + "] :" + "未获取脚本执行状态，脚本执行失败")
+        log_scripts.error(API_name + ":FAILED:" + " error message [ 未获取脚本执行状态，脚本执行失败 ] \r" + rs)
+
+        execute_script_log = str(API_name) + ":<FAILED> " + " error message [脚本运行异常:请查看error.log] \r" + rs
+        # 写入Execute_Script_Log表
+        dic = {"log_report_id_id": report_id, "log_api_name": str(API_name),
+               "log_execute_script": execute_script_log, "status": "skip", "bak1": "bak"}
+        Execute_Script_Log.objects.create(**dic)
+        skipCount += 1
+        # except AttributeError,e:
+        #     dict = {"script_status": "NONE"}
+        #     mylogging("[" + str(list) + "] :" + "index error,未获取脚本执行状态，脚本执行失败"+e.args)
+        #     log_scripts.error(list + ":FAILED:" + " error message [ AttributeError ]"+e.args)
+    Script_Info.objects.filter(script_name=API_name).update(script_status=dict)
+    Project_Case.objects.filter(case_id=case_id).update(description=dict)  # description 为用例执行状态
+
+    return passCount,failCount,skipCount
+
+
 def execute_maoyan_script(request):
     if request.method == "GET":
         print ("execute_maoyan_script")
         username = request.GET.get("username")
         send_email_flag = request.GET.get("send_email_flag")
         project_name_maoyan = request.GET.get("project_name_maoyan")
-        print (project_name_maoyan)
+        report_name = request.GET.get("result_name")  # 执行该冒烟测试报告名称
+        report_id = datetime.datetime.now().strftime("%Y%m%d%H%M%S")#报告ID 唯一值 根据当前时间生成
+        maoyan_list = []
+        #找出该项目中project_case表中的冒烟测试是否在script_info表中不存在;[未生成相应的测试脚本]
+        #select * from project_case a,script_info b where a.project_name_id='project_name_maoyan' and a.case_type='冒烟测试' and a.case_id not in (b.script_case_id_id);
+        project_case_obj = Project_Case.objects.extra(
+            where=["project_case.project_name_id = %s and project_case.case_type='冒烟测试' "
+                   "and project_case.case_id NOT IN (SELECT script_info.script_case_id_id FROM script_info)"],
+            params=[project_name_maoyan]
+        )
 
-        script_info_obj_list = Script_Info.objects.filter(script_project_name=project_name_maoyan)
+        #method secand
+        # project_case_obj_list = Project_Case.objects.exclude(case_id__in =
+        # Script_Info.objects.filter(script_project_name=project_name_maoyan).values_list('script_case_id_id',flat=True))
 
-        script_info_obj_lists = []
-        for list in script_info_obj_list:
+        if len(project_case_obj)>0:#还有用例未生成测试脚本
 
-            script_case_name_id = list.script_case_id_id
-            # name = str(script_case_name_id)
-            # print (name)
-            # print (type(name))
-            script_info_obj_lists.append(script_case_name_id)
+            for list in project_case_obj:
+                maoyan_list.append(list.case_id)
+            log_sys.info("冒烟测试执行失败 [Caused by :"+project_name_maoyan+" 还有冒烟用例未生成测试脚本，请补充测试脚本！] 请检查以下case_id "+str(maoyan_list))
+            # print (maoyan_list)
+            #用例表和脚本表匹配是否有没生成脚本的冒烟用例
+            content = {"status": "fail","msg":"还有冒烟用例未生成测试脚本，查看系统日志，请补充测试脚本！"}
+            return JsonResponse(content)
+        else:
+            print ("execute_maoyan_case")
+            project_case_maoyan_obj = Project_Case.objects.extra(
+                where=["project_case.project_name_id = %s and project_case.case_type='冒烟测试' "
+                       "and project_case.case_id in (select script_info.script_case_id_id from script_info)"],
+                params=[project_name_maoyan]
+            )
+            print (project_case_maoyan_obj)
 
-            # 处理list中文乱码
+            passCount = 0
+            failCount = 0
+            skipCount = 0
+            #
+            MY_report_name = report_name
+            execute_man = username  # 执行人的姓名
+            send_email_flag = "yes"  # 否发送邮件标识[只发送给执行用例人]
 
-            # print str(script_info_obj_lists).decode("string_escape")
+            # report_id = datetime.datetime.now().strftime("%Y%m%d%H%M%S")  # 报告ID 唯一值 根据当前时间生成
+            API_total = len(project_case_maoyan_obj)  # 本次冒烟测试执行的总API数
+            execute_time = datetime.datetime.now()  # 执行当前时间
 
-        print (script_info_obj_lists)
+            dict_report_id = {"report_id": report_id, "report_name": MY_report_name, "API_total": str(API_total),
+                              "pass_total": str(passCount), "fail_total": str(failCount),
+                              "skip_total": str(skipCount),
+                              "execute_man": str(execute_man),
+                              "execute_time": execute_time, "bak1": "bak", "bak2": "bak"}
 
-        #problem
-        project_case_obj_list = Project_Case.objects.filter(case_type = "冒烟测试",case_name__in = script_info_obj_lists)
+            Batch_Report.objects.create(**dict_report_id)
 
-        # for list in project_case_obj_list:
-        #     pass
+            for list in project_case_maoyan_obj:
+                # maoyan_list.append(list.case_id)
+                script_info_obj = Script_Info.objects.filter(script_case_id=list.case_id)[0]
+                script_path = script_info_obj.script_path
+                API_name = script_info_obj.script_case_name
+                case_id = script_info_obj.script_case_id
 
-        print (project_case_obj_list)
-        #用例表和脚本表匹配是否有没生成脚本的冒烟用例
+                rs = execute_script_Popen(script_path,0.1)
 
-        content = {"status": "fail"}
-
-        return JsonResponse(content)
-
-
+                passCount,failCount,skipCount = execute_script_result_analysis_fun(rs,script_path,report_id,case_id,API_name,passCount,failCount,skipCount)
 
 
+            content = {"status": "execute_script_success"}
+
+            # 报告名 执行者 api总数 执行时间 执行报告ID
+            print("result_name=%s execute_name=%s api_total=%s"
+                  " execute_time=%s report_id=%s" % (report_name, execute_man, str(API_total), execute_time, report_id))
+            # pass fail skip
+            # print("passCount=%s failCount=%s skipCount=%s"%(passCount,failCount,skipCount))
+
+            dict_execute = {"report_id": report_id, "report_name": report_name, "API_total": str(API_total),
+                            "pass_total": str(passCount), "fail_total": str(failCount), "skip_total": str(skipCount),
+                            "execute_man": str(execute_man),
+                            "execute_time": execute_time, "bak1": "bak", "bak2": "bak"}
+
+            Batch_Report.objects.filter(report_id=report_id).update(**dict_execute)
+
+            # -------start-------发送测试报告邮件---------------------
+            execute_time = execute_time.strftime("%Y%m%d%H%M%S")
+            emp_obj_list = Emp_Info.objects.filter(user_id_id=execute_man)  # 主键，只有一条数据
+            if send_email_flag == "yes":
+                if emp_obj_list.exists():
+                    email_adr_list = []
+                    for list in emp_obj_list:
+                        emails = list.email
+                        email_adr_list.append(emails)
+                    send_mail(report_name, execute_man, execute_time, str(API_total), str(passCount),
+                              str(failCount),
+                              str(skipCount), email_adr_list)
+                else:
+                    print ("该用户没有邮箱信息！")
+                    content = {"status": "email_send_fail","msg":"该用户为填写邮箱信息，请去用户中心补填邮箱信息！"}
+            # -------end-------发送测试报告邮件---------------------
+            return JsonResponse(content)
+
+
+def execute_huigui_script(request):
+    if request.method == 'GET':
+        print ("execute_maoyan_script")
+        username = request.GET.get("username")
+        send_email_flag = request.GET.get("send_email_flag")
+        project_name_huigui = request.GET.get("project_name_huigui")
+        report_name = request.GET.get("result_name")  # 执行该冒烟测试报告名称
+        report_id = datetime.datetime.now().strftime("%Y%m%d%H%M%S")  # 报告ID 唯一值 根据当前时间生成
+
+        huigui_list = []
+        # 找出该项目中project_case表中的回归测试是否在script_info表中不存在;[未生成相应的测试脚本]
+        # select * from project_case a,script_info b where a.project_name_id='project_name_huigui' and a.case_type='回归测试' and a.case_id not in (b.script_case_id_id);
+        project_case_obj = Project_Case.objects.extra(
+            where=["project_case.project_name_id = %s and project_case.case_type='回归测试' "
+                   "and project_case.case_id NOT IN (SELECT script_info.script_case_id_id FROM script_info)"],
+            params=[project_name_huigui]
+        )
+
+        if len(project_case_obj)>0:#还有回归测试用例未生成测试脚本
+            for list in project_case_obj:
+                huigui_list.append(list.case_id)
+            log_sys.info("回归测试执行失败 [Caused by :"+project_name_huigui+" 还有冒烟用例未生成测试脚本，请补充测试脚本！] 请检查以下case_id "+str(huigui_list))
+            # print (maoyan_list)
+            #用例表和脚本表匹配是否有没生成脚本的冒烟用例
+            content = {"status": "fail","msg":"还有冒烟用例未生成测试脚本，查看系统日志，请补充测试脚本！"}
+            return JsonResponse(content)
+        else:
+            print ("execute_huigui_case")
+            project_case_huigui_obj = Project_Case.objects.extra(
+                where=["project_case.project_name_id = %s and project_case.case_type='回归测试' "
+                       "and project_case.case_id in (select script_info.script_case_id_id from script_info)"],
+                params=[project_name_huigui]
+            )
+            print (project_case_huigui_obj)
+
+            passCount = 0
+            failCount = 0
+            skipCount = 0
+            #
+            HG_report_name = report_name
+            execute_man = username  # 执行人的姓名
+            send_email_flag = "yes"  # 否发送邮件标识[只发送给执行用例人]
+
+            # report_id = datetime.datetime.now().strftime("%Y%m%d%H%M%S")  # 报告ID 唯一值 根据当前时间生成
+            API_total = len(project_case_huigui_obj)  # 本次冒烟测试执行的总API数
+            execute_time = datetime.datetime.now()  # 执行当前时间
+
+            dict_report_id = {"report_id": report_id, "report_name": HG_report_name, "API_total": str(API_total),
+                              "pass_total": str(passCount), "fail_total": str(failCount),
+                              "skip_total": str(skipCount),
+                              "execute_man": str(execute_man),
+                              "execute_time": execute_time, "bak1": "bak", "bak2": "bak"}
+
+            Batch_Report.objects.create(**dict_report_id)
+
+            for list in project_case_huigui_obj:
+                # maoyan_list.append(list.case_id)
+                script_info_obj = Script_Info.objects.filter(script_case_id=list.case_id)[0]
+                script_path = script_info_obj.script_path
+                API_name = script_info_obj.script_case_name
+                case_id = script_info_obj.script_case_id
+
+                rs = execute_script_Popen(script_path,0.1)
+
+                passCount,failCount,skipCount = execute_script_result_analysis_fun(rs,script_path,report_id,case_id,API_name,passCount,failCount,skipCount)
+
+
+            content = {"status": "execute_script_success"}
+
+            # 报告名 执行者 api总数 执行时间 执行报告ID
+            print("result_name=%s execute_name=%s api_total=%s"
+                  " execute_time=%s report_id=%s" % (report_name, execute_man, str(API_total), execute_time, report_id))
+            # pass fail skip
+            # print("passCount=%s failCount=%s skipCount=%s"%(passCount,failCount,skipCount))
+
+            dict_execute = {"report_id": report_id, "report_name": report_name, "API_total": str(API_total),
+                            "pass_total": str(passCount), "fail_total": str(failCount), "skip_total": str(skipCount),
+                            "execute_man": str(execute_man),
+                            "execute_time": execute_time, "bak1": "bak", "bak2": "bak"}
+
+            Batch_Report.objects.filter(report_id=report_id).update(**dict_execute)
+
+            # -------start-------发送测试报告邮件---------------------
+            execute_time = execute_time.strftime("%Y%m%d%H%M%S")
+            emp_obj_list = Emp_Info.objects.filter(user_id_id=execute_man)  # 主键，只有一条数据
+            if send_email_flag == "yes":
+                if emp_obj_list.exists():
+                    email_adr_list = []
+                    for list in emp_obj_list:
+                        emails = list.email
+                        email_adr_list.append(emails)
+                    send_mail(report_name, execute_man, execute_time, str(API_total), str(passCount),
+                              str(failCount),
+                              str(skipCount), email_adr_list)
+                else:
+                    print ("该用户没有邮箱信息！")
+                    content = {"status": "email_send_fail","msg":"该用户为填写邮箱信息，请去用户中心补填邮箱信息！"}
+            # -------end-------发送测试报告邮件---------------------
+            return JsonResponse(content)

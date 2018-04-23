@@ -16,9 +16,9 @@ class TestAPI:
             elif param == '':
                 r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
             elif headers == '':
-                r = requests.post(self.protocol + domian + url, data=param, timeout=8)
+                r = requests.post(self.protocol + domian + url, json=param, timeout=8)
             else:
-                r = requests.post(self.protocol + domian + url, headers=headers, data=param, timeout=8)
+                r = requests.post(self.protocol + domian + url, headers=headers, json=param, timeout=8)
             time_consuming = str(r.elapsed.total_seconds())  # 计算接口被调用耗时
             rs = r.json()
 
@@ -44,9 +44,9 @@ class TestAPI:
 if __name__ == "__main__":
     protocol = "HTTPS"
     domian = "ta.2boss.cn"
-    url = "/superior/v1/im/imUpdateCustomer"
-    headers = ''
-    param = {"userId":"171631","customer_id":"20150554"}
+    url = "/estimate/customer/event/recordUserAccessInfo"
+    headers = { "TBSAccessToken":"2395a9cc328a4091a0c6d25f35178e34"}
+    param = {"eventId":503,"userId":155054,"attrtxtStr":"{\"cityId\":605,\"userId\":155054,\"chanelName\":\"oppo应用商店\",\"appVersion\":\"8.0.2\",\"appName\":\"兔博士用户版\",\"appId\":\"1\",\"machinetype\":\"ONEPLUS A5000_7.1.1\"}"}
     expected = {"resultCode":0}
 
     t = TestAPI()

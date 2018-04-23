@@ -79,6 +79,6 @@ urlpatterns = [
 
     url(r'^send_email_by_report_list/', views.send_email_by_report_list),
     url(r'^execute_maoyan_script/', views.execute_maoyan_script),
-
+    url(r'^execute_huigui_script/', views.execute_huigui_script),
 
 ]
