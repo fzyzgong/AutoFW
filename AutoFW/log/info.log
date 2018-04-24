@@ -758,3 +758,28 @@ InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <ty
 INFO 2018-04-23 17:55:05,510 views.py views execute_script_result_analysis_fun 1638: 实时获取tab标签发现（信息）:PASS:[time_consuming:0.34476]{ response : 'resultCode: 0' }
 INFO 2018-04-23 17:55:05,908 views.py views execute_script_result_analysis_fun 1638: 平台框架获取事件列表:PASS:[time_consuming:0.067194]{ response : 'resultCode: 0' }
 INFO 2018-04-23 17:55:06,363 views.py views execute_script_result_analysis_fun 1638: 更新绑定用户信息:PASS:[time_consuming:0.065386]{ response : 'resultCode: 0' }
+INFO 2018-04-24 11:10:41,676 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-24 11:10:44,572 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-24 11:10:44,581 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-24 11:10:44,763 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-24 11:10:48,652 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
+INFO 2018-04-24 11:10:52,341 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
+INFO 2018-04-24 11:11:08,996 views.py views income_project 142: 进入项目[TBS_USER_20180328]
+INFO 2018-04-24 11:11:10,263 views.py views workon_tabs_api 386: 进入接口管理页面 [TBS_USER_20180328]
+INFO 2018-04-24 11:11:23,583 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-24 11:11:24,977 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-24 11:11:24,985 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-24 11:11:25,137 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-24 11:11:25,305 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-24 11:11:27,394 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
+INFO 2018-04-24 11:11:30,869 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
+INFO 2018-04-24 11:19:25,325 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-24 11:19:25,509 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-24 11:19:27,376 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
+INFO 2018-04-24 11:19:52,533 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
+INFO 2018-04-24 11:29:21,289 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-24 11:29:23,873 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-24 11:29:23,883 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-24 11:29:24,069 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-24 11:29:26,956 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
+INFO 2018-04-24 11:29:39,240 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
