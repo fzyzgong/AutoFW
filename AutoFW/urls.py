@@ -57,13 +57,21 @@ urlpatterns = [
     url(r'^personal_manage/(.*)', views.personal_manage),
     url(r'^update_emp_info/(.*)', views.update_emp_info),
     url(r'^change_pw/(.*)', views.change_pw),
-
     url(r'^test_case_genirate_page/(.*)', views.test_case_genirate_page),
-
     url(r'^select_load_module/(.*)', views.select_load_module),
     url(r'^search_case/$', views.search_case),
+    # url(r'^chose_all_genritor_test_script/(.*)$', views.chose_all_genritor_test_script),
     url(r'^chose_all_genritor_test_script/$', views.chose_all_genritor_test_script),
+
     url(r'^execute_test_script_page/(.*)', views.execute_test_script_page),
+
+
+    url(r'^yongli_genirate_page/(.*)',views.yongli_genirate_page),
+    url(r'^execute_yongli_page/(.*)',views.execute_yongli_page),
+    url(r'^search_interface/$', views.search_interface),
+    url(r'^add_script_case/$', views.add_script_case),
+    url(r'^search_exe_case/$', views.search_exe_case),
+
     url(r'^search_script/$', views.search_script),
     url(r'^execute_test_script/$', views.execute_test_script),
     url(r'^delete_test_script/$', views.delete_test_script),

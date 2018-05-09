@@ -2,6 +2,8 @@
 import os,sys
 import shutil
 import Mylogging
+import json
+from get_TBS_token import get_TBS_token
 
 def copyFile(sourceFile, targetFile, fileName, protocol, method, domain, url,headers, param_format,param, expected):
     parent_path = os.getcwd() + "/AutoFW/"
@@ -51,6 +53,12 @@ def copyFile(sourceFile, targetFile, fileName, protocol, method, domain, url,hea
                 if headers=='':
                     print ("headers null")
                     line = line.replace('{"demo_headers":"demo_headers"}', "''")
+                elif "TBSAccessToken" in headers:#传入动态TBS值
+                    token = get_TBS_token(171631,1)[1][0]
+                    headers_dic = json.loads(headers)
+                    headers_dic.update({"TBSAccessToken":token})
+                    line = line.replace('{"demo_headers":"demo_headers"}', json.dumps(headers_dic))
+                    # line = line.replace('{"demo_headers":"demo_headers"}', '{"TBSAccessToken":sys.argv[1]}')
                 else:
                     print ("headers not null")
                     line = line.replace('{"demo_headers":"demo_headers"}', headers)

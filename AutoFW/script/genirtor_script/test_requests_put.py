@@ -1,71 +1,91 @@
 #coding=utf-8
-import requests,parser
+import requests
+import sys
+import traceback
+import os
 import json
+util_path = os.path.join(os.path.abspath(os.path.dirname(__file__)+ os.path.sep + "../.."),"util")
+sys.path.append(util_path)
+from Mylogging import mylogging
+from json_d import GetDictParam
 
-class Test_request_PUT:
+class TestAPI:
 
     def testDemo(self,protocol,domian,url,headers,param,expected):
-
         self.protocol = protocol+'://'
+        try:
+            if param == '' and headers=='':
+                r = requests.get(self.protocol + domian + url, timeout=8)
+            elif param == '':
+                r = requests.get(self.protocol + domian  + url, headers=headers, timeout=8)
+            elif headers == '':
+                r = requests.get(self.protocol + domian  + url,params=param, timeout=8)
+            else:
+                r = requests.get(self.protocol + domian  + url,headers=headers, params=param, timeout=8)
+            time_consuming = str(r.elapsed.total_seconds())  # 计算接口被调用耗时
+            # rs = r.json()
 
-        # if param == '' and headers == '':
-        #     r = requests.put(self.protocol + domian + url)
-        # elif param == '':
-        #     r = requests.put(self.protocol + domian + url, headers=headers)
-        # elif headers == '':
-        #     r = requests.put(self.protocol + domian + url, data=param)
-        # else:
-        #     r = requests.put(self.protocol + domian + url,  data=param)
-        # data = {"clientId":"1","sessionId":"2"}
-        # url = 'https://ta.2boss.cn/ubt/api/session'
-        # s = requests.Session()
-        # header = {
-        #     "Content-Type": "application/vnd.ptc.sc+json;version=1",
-        #     "Referer":"https://ta.2boss.cn/rabbit/v1/event/getEventList?platformType=2&clientEventVersionNo=110&appType=1",
-        #     "User-Agent": "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT)",
-        #     "Accept-Encoding": "gzip, deflate",
-        #     "Accept": "*/*",
-        #     "Host": "ta.2boss.cn",
-        #     "Content-Length": "102",
-        #     "Connection": "Keep-Alive",
-        #     "Cache-Control": "no-cache",
-        # }
-        # s.headers.update(header)
-        # r = s.put(url,data)
-        r = requests.put(self.protocol + domian + url,json = param)
-        print (r.text)
-        print (r.headers["Content-Type"])
+            rs_str = r.content
+            rs_dic = json.loads(rs_str)#此处null的key或者value会被转成None  中文也会被转成unicode
 
-        rs = r.json()
+            if isinstance(expected, dict):
+                dict_count = len(expected)
+                if dict_count == 1:  # 匹配单参数
+                    actual_value = GetDictParam.get_value(rs_dic, expected.keys()[0])
+                    if actual_value == expected.get(expected.keys()[0]):
+                        print ('AutoFW test reslut:PASS\'' + "[time_consuming:" + time_consuming + '] ',
+                               "response_expected_actual_value:<" + str(
+                                   expected) + ">: expected_value:%s, actual_values:%s ]" % (
+                               expected.values()[0], actual_value))
+                    else:
+                        print ("AutoFW test reslut:FAILED",
+                               "[By casuse <" + expected.keys()[0] + ">: expected_value:%s, actual_values:%s ]" % (
+                               expected.values()[0], actual_value),
+                               str(rs_dic))
 
-        print (rs)
-        # 断言 判断接口返回数据是否正常
-        if 'resultCode' not in rs.keys():
-            print ("AutoFW test reslut:FAILED", str(rs))
-        elif rs[expected.keys()[0]] == expected.values()[0]:
-            print ("AutoFW test reslut:PASS", str(rs))
-        else:
-            print ("AutoFW test reslut:FAILED", str(rs))
+                elif dict_count > 1:  # 匹配多参数
+                    dic_key_str = []
+                    for i in range(dict_count):
+                        dic_key_str.append(expected.keys()[i])  # 存放字典所有的key
+                    actual_value = GetDictParam.list_for_key_to_dict(rs_dic, dic_key_str)  # 返回一个字典
 
+                    if cmp(expected, actual_value) == 0:  # 返回0，说明两个字典相同，返回其他，说明字典不一样
+                        print ('AutoFW test reslut:PASS\'' + "[time_consuming:" + time_consuming + '] ',
+                               "response_expected_actual_value:<" + str(
+                                   expected) + ">: expected_value:%s, actual_values:%s ]" % (expected, actual_value))
+                    else:
+                        print ("AutoFW test reslut:FAILED",
+                               "[By casuse <" + str(expected) + ">: expected_value:%s, actual_values:%s ]" % (
+                               expected, actual_value),
+                               str(rs_dic))
+                else:
+                    print ("expected is NULL")
+            else:
+                if str(expected) in rs_str:
+                    print ('AutoFW test reslut:PASS\'' + "[time_consuming:" + time_consuming + '] ',
+                           "response_expected_actual_value:<" + str(
+                               expected) + ">: expected_value:%s, actual_values:%s ]" % (str(expected), str(expected)))
+                else:
+                    print ("AutoFW test reslut:FAILED",
+                           "[By casuse <" + str(expected) + ">: expected_value:%s, response:%s ]" % (
+                               str(expected), str(rs_dic)))
+        except requests.exceptions.ConnectionError:
+            mylogging("[" + str(__file__).split('/')[-1] + "][" + self.protocol + domian + url + "] <EXCEPTION>\r" + traceback.format_exc())
+            print (traceback.format_exc())
+        except requests.exceptions.InvalidHeader:
+            mylogging("[" + str(__file__).split('/')[-1] + "]  [" + self.protocol + domian + url + "] <EXCEPTION>\r" + traceback.format_exc())
+            print (traceback.format_exc())
+        except AttributeError:
+            mylogging("["+str(__file__).split('/')[-1]+"]  ["+self.protocol + domian + url+"] <EXCEPTION>\r"+traceback.format_exc())
+            print (traceback.format_exc())
 
 if __name__ == "__main__":
-    protocol = "https"
-    domian = "ta.2boss.cn"
-    url = "/ubt/api/session"
-    # "Content-Type": "application/vnd.ptc.sc+json;version=1",
-    headers = {
+    protocol = "HTTPS"
+    domian = "test02.2boss.cn"
+    url = "/rabbit/v1/customer/home/getCityInfo"
+    headers = ''
+    param = 'stationId=0&lat=31.212055&cityId=0&lng=121.607539&plateId=0'
+    expected = {"title":"附近小区"}
 
-        # "User-Agent": "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT)",
-        # "Accept-Encoding": "gzip, deflate",
-        # "Accept": "*/*",
-        # "Host": "ta.2boss.cn",
-        # "Content-Length": "102",
-        # "Connection": "Keep-Alive",
-        # "Cache-Control": "no-cache",
-    }
-
-    param = {"clientId":"933e801d-a350-4d0a-bae1-8bf063434da","sessionId":"a6373ac4-34ea-4314-abab-29007260c6d1"}
-    expected = {"resultCode":0}
-
-    t = Test_request_PUT()
+    t = TestAPI()
     t.testDemo(protocol,domian,url,headers,param,expected)

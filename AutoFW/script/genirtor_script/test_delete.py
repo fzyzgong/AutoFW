@@ -9,24 +9,24 @@ sys.path.append(util_path)
 from Mylogging import mylogging
 from json_d import GetDictParam
 
-#还未实现该功能
 class TestAPI:
 
     def testDemo(self,protocol,domian,url,headers,param,expected):
         self.protocol = protocol+'://'
         try:
             if param == '' and headers == '':
-                r = requests.post(self.protocol + domian + url, timeout=8)
+                r = requests.delete(self.protocol + domian + url, timeout=8)
             elif param == '':
-                r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+                r = requests.delete(self.protocol + domian + url, headers=headers , timeout=8)
             elif headers == '':
-                r = requests.post(self.protocol + domian + url, json=param, timeout=8)
+                r = requests.delete(self.protocol + domian + url, timeout=8)
             else:
-                r = requests.post(self.protocol + domian + url, headers=headers, json=param, timeout=8)
+                r = requests.delete(self.protocol + domian + url, headers=headers, timeout=8)
             time_consuming = str(r.elapsed.total_seconds())  # 计算接口被调用耗时
             # rs = r.json()
 
             rs_str = r.content
+            print ("rs_str=%s"%rs_str)
             rs_dic = json.loads(rs_str)
 
             if isinstance(expected, dict):
@@ -63,14 +63,13 @@ class TestAPI:
                     print ("expected is NULL")
             else:
                 if str(expected) in rs_str:
-                    # print ("expected=%s  rs_str=%s" %(expected,rs_str))
                     print ('AutoFW test reslut:PASS\'' + "[time_consuming:" + time_consuming + '] ',
                            "response_expected_actual_value:<" + str(
-                               expected) + ">: expected_value:%s, actual_values:%s ]" % (str(expected), str(expected)))
+                               expected) + ">: expected_value:%s, actual_values:%s ]" % (expected, rs_str))
                 else:
                     print ("AutoFW test reslut:FAILED",
-                           "[By casuse <" + str(expected) + ">: expected_value:%s, response:%s ]" % (
-                               str(expected), str(rs_dic)))
+                           "[By casuse <" + str(expected) + ">: expected_value:%s, actual_values:%s ]" % (
+                               expected, str(rs_dic)))
         except requests.exceptions.ConnectionError:
             mylogging("[" + str(__file__).split('/')[-1] + "][" + self.protocol + domian + url + "] <EXCEPTION>\r" + traceback.format_exc())
             print (traceback.format_exc())
@@ -83,12 +82,12 @@ class TestAPI:
 
 
 if __name__ == "__main__":
-    protocol = "HTTP"
-    domian = "www.og.demo.com"
-    url = "/og/demo"
-    headers = {"demo_headers":"demo_headers"}
-    param = {"demo_param":"demo_param"}
-    expected = {"demo":"Success !"}
+    protocol = "HTTPS"
+    domian = "test02.2boss.cn"
+    url = "/api/v1/favorites/5235"
+    headers = {"TBSAccessToken": "c930a4cb6983490ca70b5f341263f6ae"}
+    param = ''
+    expected = ''
 
     t = TestAPI()
     t.testDemo(protocol,domian,url,headers,param,expected)

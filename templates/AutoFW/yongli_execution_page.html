@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+
+    <style type="text/css">
+        h2{
+            text-align: center;
+        }
+
+        #case_info_list{
+            border: solid 1px;
+            border-collapse: collapse;
+            width: 1200px;
+        }
+        #case_info_list_title{
+            background: lawngreen;
+        }
+        #case_info_list td{
+            border: solid 1px;
+            width: 200px;
+            text-align: center;
+        }
+        #execute_case_button{
+            margin-left: 50px;
+        }
+        #div_2{
+            margin-top: 5px;
+        }
+    </style>
+
+</head>
+<body>
+    <h2>测试用例执行中心</h2>
+    <hr />
+    <div id="div_1">
+
+        <label>项目名称</label>
+        <select id="project_name_s" style="margin-right: 30px;width: 100px">
+            <option></option>
+            {% for list in project_name_list %}
+            <option>{{list.project_name}}</option>
+            {%endfor%}
+        </select>
+
+        <label>项目模块</label>
+        <select id="project_module_s" style="margin-right: 30px;width: 100px">
+            <option></option>
+        </select>
+
+        <label>用例名(模糊查询):</label><input id="project_case_name_i" type="text" />
+        <input type="button" value="查询" onclick="search_exe_case()" style="width: 100px;margin-left: 30px;"/>
+    </div>
+    <div id="div_2">
+        <input type="button" id="execute_case_button" value="执行所选用例" style="width: 100px;"/>
+        <input type="checkbox" id="checkbox_chose" />[执行完发送邮件给执行人]
+
+        <input type="button" id="execute_MY_case_b" value="执行冒烟用例" style="margin-left: 100px;"/>
+        <select>
+            <option>选择冒烟项目</option>
+        </select>
+
+        <input type="button" id="execute_HG_case_b" value="执行回归用例" style="margin-left: 50px;" />
+        <select>
+            <option>选择回归项目</option>
+        </select>
+
+        <input type="button" id="delete_case_b" value="删除测试用例" style="margin-left: 150px;" />
+    </div>
+
+    <hr />
+    <table id="case_info_list">
+        <tr id="case_info_list_title">
+            <td  style="width: 60px;">全选<input type="checkbox" id="complete_selection" /></td>
+            <td>用例ID</td>
+            <td>用例名称</td>
+            <td>接口执行顺序</td>
+            <td>动态变量</td>
+            <td>用例状态</td>
+            <td>用例类型</td>
+        </tr>
+        <tr class="case_list_tr">
+            <td colspan="7">暂无数据</td>
+        </tr>
+    </table>
+
+
+    <script type="text/javascript">
+        $("#project_name_s").change(function () {
+            var project_name = $("#project_name_s option:selected").text();
+            $(".project_module_option").remove();
+            $.ajax({
+               url: "/AutoFW/select_load_module/"+project_name,
+                type: "get",
+                success:function (data) {
+                    if(data.status == "success"){
+                        for(var i = 0; i < data.module_name.length;i++){
+                            $('#project_module_s').append('<option class="project_module_option">' + data.module_name[i] + '</option>');
+                        }
+                    }
+                }
+            });
+        })
+
+        function search_exe_case() {
+            var project_name = $("#project_name_s option:selected").text()
+            var project_module = $("#project_module_s option:selected").text()
+            var project_case_name = $("#project_case_name_i").val()
+
+            $.ajax({
+                url:"/AutoFW/search_exe_case/",
+                type:"get",
+                data:"project_name="+project_name+"&project_module="+project_module+"&project_case_name="+project_case_name,
+                success:function (data) {
+                    if(data.status == "success"){
+                        $(".case_list_tr").remove();
+                            for(var i = 0; i < data.case_list.length; i++){
+
+                                $("#case_info_list").append('<tr class="case_list_tr"><td class="case_list_tr" style="width: 60px;"><input type="checkbox" id="complete_selection" /></td><td class="case_list_tr">'+data.case_list[i].script_case_id+'</td>' +
+                                    '<td class="case_list_tr">'+data.case_list[i].script_case_name+'</td><td class="case_list_tr">'+data.case_list[i].execution_order+'</td>' +
+                                    '<td class="case_list_tr">'+data.case_list[i].config+'</td><td class="case_list_tr">'+data.case_list[i].status+'</td>' +
+                                    '<td class="case_list_tr">'+data.case_list[i].script_case_type+'</td></tr>')
+                            }
+
+                    }else if(data.status == "no_date"){
+                        $(".case_list_tr").remove();
+                        $("#case_info_list").append('<tr class="case_list_tr"><td colspan="7">暂无数据</td></tr>')
+                        alert(data.msg);
+                    }else if(data.status == "project_name_null"){
+                        $(".case_list_tr").remove();
+                        $("#case_info_list").append('<tr class="case_list_tr"><td colspan="7">暂无数据</td></tr>')
+                        alert(data.msg);
+                    }
+                }
+            })
+        }
+
+    </script>
+</body>
+</html>

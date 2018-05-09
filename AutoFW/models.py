@@ -131,7 +131,7 @@ class Batch_Report(models.Model):
     class Meta:
         db_table = 'batch_report'
 
-
+#执行脚本生成日志
 class Execute_Script_Log(models.Model):
     log_report_id = models.ForeignKey(Batch_Report,to_field="report_id")
     log_api_name = models.CharField(max_length=100,null=False)
@@ -143,3 +143,20 @@ class Execute_Script_Log(models.Model):
 
     class Meta:
         db_table = 'execute_script_log'
+
+
+#接口组合成用例
+class Script_Case_Info(models.Model):
+    script_case_id = models.CharField(max_length=50,primary_key=True)
+    script_case_name = models.CharField(max_length=100,null=False)
+    script_case_project_name = models.ForeignKey(Project, to_field="project_name")
+    script_case_module_name = models.ForeignKey(Project_Module, to_field="module_name")
+    execution_order = models.CharField(max_length=1000,null=False)
+    config = models.CharField(max_length=500)
+    creator = models.CharField(max_length=30)
+    status = models.CharField(max_length=50,default=None)
+    script_case_type = models.CharField(max_length=10)
+    remark = models.CharField(max_length=100)
+
+    class Meta:
+        db_table = 'script_case_info'

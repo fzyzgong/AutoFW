@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+
+    <style type="text/css">
+        h2{
+            text-align: center;
+        }
+        #add_case_f{
+            width: 1200px;
+            border: solid 1px;padding: 5px;
+        }
+        #div_1 input,select{
+            margin-right: 70px;
+        }
+        #div_2{
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        #div_2 textarea{
+            margin-right: 50px;
+            vertical-align: middle;
+            resize: none;
+        }
+        #div_4{
+            padding-bottom: 5px;
+        }
+        #interface_info_list{
+            border-collapse: collapse;
+            width: 1200px;
+        }
+        #interface_info_list td{
+            border: solid 1px;
+            width: 300px;
+            text-align: center;
+        }
+        #interface_info_list_title{
+            background: lawngreen;
+        }
+    </style>
+
+</head>
+<body>
+    <h2>测试用例构造中心</h2>
+    <hr />
+    <div id="add_case_f"> <!--method="post" action="/AutoFW/add_script_case/-->
+        <div id="div_1">
+            <label>用例编号:</label><input type="text" name="case_id" id="case_id" />
+            <label>用例名称:</label><input type="text" name="case_name" id="case_name" />
+            <label>所属项目:</label>
+            <select name="project_name" id="project_name_select" style="width: 120px;">
+                <option></option>
+                {% for list in project_name_list %}
+                <option>{{list.project_name}}</option>
+                {%endfor%}
+            </select>
+            <label>所属模块:</label>
+            <select name="project_module" id="project_module_select" style="width: 120px;">
+                <option></option>
+            </select>
+        </div>
+        <div id="div_2">
+            <label>执行顺序:</label><textarea cols="65" rows="5" name="execution_order" id="s_execution_order" form="add_case_f" placeholder="case1->case2"></textarea>
+            <label>提取变量:</label><textarea cols="65" rows="5" name="catch_var" id="s_catch_var" form="add_case_f" placeholder='{var:{"case1":["case2","case3"]}}'></textarea>
+        </div>
+        <div id="div_3">
+            <label>创建者:</label>
+            <input name="creator" id="creator_i" type="text" value="{{ username }}" readonly = "readonly" ><!--disabled="disabled"  后台获取不到-->
+            <label>用例类型:</label>
+            <select name="case_type" id="case_type_o" style="width: 120px;">
+                <option></option>
+                <option>回归用例</option>
+                <option>冒烟用例</option>
+                <option>其他</option>
+            </select>
+            <!--<input type="button" value="取消" style="width: 100px; float: right;" />-->
+            <input type="submit" value="提交" onclick="add_script_case()" style="width: 100px; float: right;" />
+        </div>
+    </div>
+
+
+    <hr />
+    <h2>接口查询</h2>
+    <div id="div_4">
+        <label>项目名称</label>
+        <select id="project_name_s">
+            <option></option>
+            {% for list in project_name_list %}
+            <option>{{list.project_name}}</option>
+            {%endfor%}
+        </select>
+        <label>接口名(模糊查询):</label>
+        <input id="search_interface_l" class="search_interface_l" type="text" />
+        <input type="button" value="查询" style="width: 100px;" onclick="search_interface()"/>
+    </div>
+    <table id="interface_info_list">
+        <tr id="interface_info_list_title">
+            <td>接口名称</td>
+            <td>url</td>
+            <td>头信息</td>
+            <td>参数</td>
+            <td>方法</td>
+        </tr>
+        <tr class="interface_list_tr">
+            <td colspan="5">暂无数据</td>
+        </tr>
+    </table>
+
+
+    <script type="text/javascript">
+
+        /////////////手动触发selectd的change事件////////////////
+        $("#project_name_select").change(function () {
+            var project_name = $("#project_name_select option:selected").text();
+            $(".project_module_option").remove();
+            $.ajax({
+               url: "/AutoFW/select_load_module/"+project_name,
+                type: "get",
+                success:function (data) {
+                    if(data.status == "success"){
+                        for(var i = 0; i < data.module_name.length;i++){
+                            $('#project_module_select').append('<option class="project_module_option">' + data.module_name[i] + '</option>');
+                        }
+                    }
+                }
+            });
+
+        });
+
+        function search_interface() {
+            var interface_name = $("#search_interface_l").val();
+            var project_name = $("#project_name_s option:selected").text()
+            $.ajax({
+                url:"/AutoFW/search_interface/",
+                type:"get",
+                data:"interface_name="+interface_name+"&project_name="+project_name,
+                success: function (data) {
+                    if(data.status == "success"){
+//                        alert("success");
+                        if(data.interface_list.length>0){
+                            $(".interface_list_tr").remove();
+                            for(var i = 0; i < data.interface_list.length; i++){
+
+                                $("#interface_info_list").append('<tr class="interface_list_tr"><td class="interface_list_tr">'+data.interface_list[i].case_id+'</td>' +
+                                    '<td class="interface_list_tr">'+data.interface_list[i].url_path+'</td><td class="interface_list_tr">'+data.interface_list[i].headers+'</td>' +
+                                    '<td class="interface_list_tr">'+data.interface_list[i].parameter+'</td><td class="interface_list_tr">'+data.interface_list[i].method+'</td></tr>')
+
+                            }
+                        }
+
+                    }else if(data.status == "failed"){
+                        $(".interface_list_tr").remove();
+                        $("#interface_info_list").append('<tr class="interface_list_tr" style="background: red"><td colspan="5">暂无数据</td></tr>')
+//                        alert(data.msg);
+                    }else if(data.status == "error"){
+                        $(".interface_list_tr").remove();
+                        $("#interface_info_list").append('<tr class="interface_list_tr" style="background: red"><td colspan="5">暂无数据</td></tr>')
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+
+        function add_script_case() {
+
+            var case_id = $("#case_id").val()
+            var case_name = $("#case_name").val()
+            var project_name = $("#project_name_select option:selected").text()
+            var project_module_select = $("#project_module_select option:selected").text()
+            var s_execution_order = $("#s_execution_order").val()
+            var s_catch_var = $("#s_catch_var").val()
+            var creator_i = $("#creator_i").val()
+            var case_type_o = $("#case_type_o option:selected").text()
+
+            $.ajax({
+                url: "/AutoFW/add_script_case/",
+                type: "get",
+                data: "case_id="+case_id+"&creator="+creator_i+"&case_name="+case_name+"&project_name="+project_name
+                +"&project_module="+project_module_select+"&execution_order="+s_execution_order+"&catch_var="+s_catch_var+"&case_type="+case_type_o,
+                success: function (data) {
+                    if(data.status == "success"){
+                        alert(data.msg);
+
+                    }else if(data.status == "failed"){
+                        alert(data.msg);
+                    }else if(data.status == "null_error"){
+                        alert(data.msg);
+                    }else if(data.status == "unique_error"){
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+
+
+    </script>
+
+</body>
+</html>

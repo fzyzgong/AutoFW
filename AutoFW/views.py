@@ -8,8 +8,10 @@ from .util.execute_script_Popen import execute_script_Popen
 from .util.copyFileAndUpdataUtil import copyFile
 from .util.send_mail_batch_report import send_mail
 from models import *
+from django.db.models import Q
 import MySQLdb
 import sys
+
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -1254,13 +1256,21 @@ def execute_test_script(request):
             print("API_name:%s"%API_name)
             script_info_obj = Script_Info.objects.filter(script_name=list)[0]
             script_path = str(script_info_obj.script_path)
-
+            print (script_path)
             # project_case_name = script_info_obj.script_case_name
-            script_case_id = script_info_obj.script_case_id
+            script_case_id = script_info_obj.script_case_id_id
+            print (script_case_id)
+            rs = execute_script_Popen(script_path, 0.1)
+            #------------动态传参------------start-------------------------------
+            # project_case_obj = Project_Case.objects.filter(case_id=script_case_id)[0]
+            # if "TBSAccessToken" in project_case_obj.headers:
+            #     # print (script_path)
+            #     rs = execute_script_Popen(script_path,0.1,TBS_token=True) #脚本路径/休眠时间/ 是否需要动态传参数
+            # else:
+            #     rs = execute_script_Popen(script_path, 0.1, TBS_token=False)
+            # print(rs)
+            # ------------动态传参------------end-------------------------------
 
-            # print (script_path)
-            rs = execute_script_Popen(script_path,0.1) #脚本路径/休眠时间 (当前测试接口需要等待3秒才能再次访问)
-            print(rs)
 
             passCount,failCount,skipCount = execute_script_result_analysis_fun(rs, script_path, report_id, script_case_id, API_name,passCount,failCount,skipCount)
 
@@ -1373,6 +1383,173 @@ def delete_test_script(request):
             script_obj.delete()
         content = {"status": "delete_script_success"}
         return JsonResponse(content)
+
+#生成用例页面跳转
+def yongli_genirate_page(request,username):
+    print ("yongli_genirate_page")
+    #项目名称ValuesQuerySet
+    project_qs = Project.objects.values("project_name")
+    #获取成员姓名
+    creator = Emp_Info.objects.values("name")
+
+    # print (creator)
+    content = {"project_name_list":project_qs,"username":username}
+
+    return render(request,"AutoFW/yongli_genirate_page.html",content)
+
+
+#执行用例页面跳转
+def execute_yongli_page(request,username):
+    print ("yongli_genirate_page")
+    # 项目名称ValuesQuerySet
+    project_qs = Project.objects.values("project_name")
+    content = {"project_name_list":project_qs,"username":username}
+    return render(request,"AutoFW/yongli_execution_page.html",content)
+
+
+#查询接口
+def search_interface(request):
+    print ("search_interface")
+    if request.method == "GET":
+        interface_name = request.GET.get("interface_name")
+        project_name = request.GET.get("project_name")
+        if project_name != "":
+            project_case_obj = Project_Case.objects.filter(case_id__contains=interface_name,project_name=project_name)
+            if len(project_case_obj)>0:
+                interface_list = []
+                for list in project_case_obj:
+                    interface_dic = {
+                        "case_id":list.case_id,
+                        "headers":list.headers,
+                        "parameter":list.parameter,
+                        "method":list.method,
+                        "url_path":list.url_path
+                    }
+                    interface_list.append(interface_dic)
+                print (interface_list)
+                return JsonResponse({"status":"success","interface_list":interface_list})
+            else:
+                return JsonResponse({"status": "failed", "msg": "未查询到相关接口"})
+        else:
+            return JsonResponse({"status":"error","msg":"项目名称不能为空"})
+
+
+def add_script_case(request):
+    print ("add_script_case")
+    creator = request.GET.get("creator")
+    if request.method == "GET":
+        case_id = request.GET.get("case_id")
+        case_name = request.GET.get("case_name")
+        project_name = request.GET.get("project_name")
+        project_module = request.GET.get("project_module")
+        execution_order = request.GET.get("execution_order")
+        catch_var = request.GET.get("catch_var")
+        case_type = request.GET.get("case_type")
+
+        print ("case_id=%s,case_name=%s,project_name=%s,project_module=%s,execution_order=%s,catch_var=%s,creator=%s,case_type=%s"
+               %(case_id,case_name,project_name,project_module,execution_order,catch_var,creator,case_type))
+
+        dict = {
+            "script_case_id":case_id,
+            "script_case_name":case_name,
+            "script_case_project_name_id":project_name.replace(' ', ''),
+            "script_case_module_name_id":project_module.replace(' ', ''),
+            "execution_order":execution_order,
+            "config":catch_var,
+            "creator":creator,
+            "status":"None",
+            "script_case_type":case_type,
+            "remark":"remark"
+        }
+
+        sci_obj = Script_Case_Info.objects.filter(Q(script_case_id=case_id) | Q(script_case_name=case_name))
+
+        if len(sci_obj)>0:
+            return JsonResponse({"status": "unique_error", "msg": "用例编号或用例名称主键冲突"})
+
+        if '' == case_id or '' == case_name or '' == project_name or '' == project_module or '' == execution_order or '' == catch_var or '' == creator or '' == case_type:
+            return JsonResponse({"status": "null_error", "msg": "提交数据存在空值"})
+
+        Script_Case_Info.objects.create(**dict)
+        return JsonResponse({"status": "success", "msg": "新增用例成功"})
+    else:
+        return JsonResponse({"status": "failed", "msg": "新增用例失败"})
+
+
+def search_exe_case(request):
+    print ("search_exe_case")
+    if request.method == "GET":
+        project_name = request.GET.get("project_name")
+        project_module = request.GET.get("project_module")
+        project_case_name = request.GET.get("project_case_name")
+
+        print ("project_name=%s,project_module=%s,project_case_name=%s"%(project_name,project_module,project_case_name))
+
+        if '' == project_name:
+            return JsonResponse({"status": "project_name_null", "msg": "项目不能为空"})
+
+        elif '' == project_module and '' == project_case_name:
+            sci_obj = Script_Case_Info.objects.filter(script_case_project_name_id=project_name)
+            print (len(sci_obj))
+            if len(sci_obj) > 0:
+                sci_list = []
+                for list in sci_obj:
+                    case_dict = {
+                        "script_case_id":list.script_case_id,
+                        "script_case_name":list.script_case_name,
+                        "script_case_project_name_id":list.script_case_project_name.project_name,#外键
+                        "script_case_module_name_id": list.script_case_module_name.module_name,#外键
+                        "execution_order":list.execution_order,
+                        "config":list.config,
+                        "creator":list.creator,
+                        "status":list.status,
+                        "script_case_type":list.script_case_type
+                    }
+                    sci_list.append(case_dict)
+            else:
+                return JsonResponse({"status":"no_date","msg":"该项目没有用例"})
+
+        elif '' == project_module and '' != project_case_name:
+            sci_obj = Script_Case_Info.objects.filter(script_case_project_name_id=project_name,script_case_name__contains=project_case_name)
+            if len(sci_obj) > 0:
+                sci_list = []
+                for list in sci_obj:
+                    case_dict = {
+                        "script_case_id": list.script_case_id,
+                        "script_case_name": list.script_case_name,
+                        "script_case_project_name_id": list.script_case_project_name.project_name,#外键
+                        "script_case_module_name_id": list.script_case_module_name.module_name,#外键
+                        "execution_order": list.execution_order,
+                        "config": list.config,
+                        "creator": list.creator,
+                        "status": list.status,
+                        "script_case_type": list.script_case_type
+                    }
+                    sci_list.append(case_dict)
+            else:
+                return JsonResponse({"status": "no_date", "msg": "没有匹配到用例"})
+        elif '' == project_case_name and '' != project_module:
+            sci_obj = Script_Case_Info.objects.filter(script_case_project_name_id=project_name,script_case_module_name_id=project_module)
+            if len(sci_obj) > 0:
+                sci_list = []
+                for list in sci_obj:
+                    case_dict = {
+                        "script_case_id": list.script_case_id,
+                        "script_case_name": list.script_case_name,
+                        "script_case_project_name_id": list.script_case_project_name.project_name,#外键
+                        "script_case_module_name_id": list.script_case_module_name.module_name,#外键
+                        "execution_order": list.execution_order,
+                        "config": list.config,
+                        "creator": list.creator,
+                        "status": list.status,
+                        "script_case_type": list.script_case_type
+                    }
+                    sci_list.append(case_dict)
+            else:
+                return JsonResponse({"status": "no_date", "msg": "该模块没有用例"})
+
+        return JsonResponse({"status": "success", "case_list":sci_list})
+
 
 #进入日志模块
 def script_log_page(request,username):
@@ -1632,14 +1809,13 @@ def execute_script_result_analysis_fun(rs,script_path,report_id,case_id,API_name
                 # dict = {"script_status":"PASS"}
                 dict = "PASS"
                 time_consuming = rs.split('time_consuming:')[1].split(']')[0]
+                response_expected_actual_value = rs.split('response_expected_actual_value')[1][1:1500]
                 # log_scripts.info(list + ":PASS:" + " pass message [" + rs.split('PASS')[1] + "]")#响应信息都打印
                 log_scripts.info(
-                    API_name + ":PASS:[time_consuming:" + time_consuming + "]{ response : \'resultCode" +
-                    rs.split('resultCode')[1][1:4] + '\'' + " }")  # 只打印成功关键字段
+                    API_name + ":PASS:[time_consuming:" + time_consuming + "]{ response :  "+response_expected_actual_value)  # 只打印成功关键字段
 
                 execute_script_log = str(
-                    API_name) + ":<PASS> [time_consuming:" + time_consuming + "]{ response : \'resultCode" + \
-                                     rs.split('resultCode')[1][1:4] + '\'' + " }"
+                    API_name) + ":<PASS> [time_consuming:" + time_consuming + "]{ response : "+response_expected_actual_value
 
                 # 写入Execute_Script_Log表
                 dic = {"log_report_id_id": report_id, "log_api_name": API_name,
@@ -1670,10 +1846,10 @@ def execute_script_result_analysis_fun(rs,script_path,report_id,case_id,API_name
     except IndexError, e:
         # dict = {"script_status": "NONE"}
         dict = "NONE"
-        mylogging("[" + str(API_name) + "] :" + "未获取脚本执行状态，脚本执行失败")
+        mylogging("[" + str(API_name) + "] :" + "未获取脚本执行状态，脚本执行失败\r" + rs)
         log_scripts.error(API_name + ":FAILED:" + " error message [ 未获取脚本执行状态，脚本执行失败 ] \r" + rs)
 
-        execute_script_log = str(API_name) + ":<FAILED> " + " error message [脚本运行异常:请查看error.log] \r" + rs
+        execute_script_log = str(API_name) + ":<FAILED> " + " error message [脚本运行异常:请查看error.log] \r" + rs[1:1500]
         # 写入Execute_Script_Log表
         dic = {"log_report_id_id": report_id, "log_api_name": str(API_name),
                "log_execute_script": execute_script_log, "status": "skip", "bak1": "bak"}

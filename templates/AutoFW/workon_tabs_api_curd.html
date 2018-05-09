@@ -13,7 +13,7 @@
 <body>
     <a href="/AutoFW/workon_tabs_api/{{ project_id }}" hidden="hidden">refrash</a>
 
-    <form action="/AutoFW/income_project/{{ project_id }}">
+    <form action="/AutoFW/income_project/{{ project_id }}/{{ username }}">
         <div style="width: 150px;padding-bottom: 10px">
             <input type="submit" value=" 返回 [项目首页]" >
         </div>
@@ -28,9 +28,9 @@
     <!--<a href="#">{{ list.module_name }}</a>-->
     <!--{% endfor %}-->
     <input type="hidden" id="project_id_flag" value="{{project_id}}">
-    <table id="dg_case" title="Project Case Manage" class="easyui-datagrid" style="width:1400px;height:350px"
+    <table id="dg_case" title="Project Case Manage" class="easyui-datagrid" style="width:1400px;height:400px"
             url="/AutoFW/case_read/{{ project_id }}" idField="itemid"
-            toolbar="#toolbar_case" pagination="true"
+            toolbar="#toolbar_case" pagination="false"
             rownumbers="true" fitColumns="true" singleSelect="true" >
         <thead>
             <tr>

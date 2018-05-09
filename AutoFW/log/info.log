@@ -783,3 +783,354 @@ INFO 2018-04-24 11:29:23,883 views.py views project_manage 87: 进入项目中�
 INFO 2018-04-24 11:29:24,069 views.py views Read_all_project 106: 查询所有项目
 INFO 2018-04-24 11:29:26,956 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
 INFO 2018-04-24 11:29:39,240 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
+INFO 2018-04-24 12:48:36,205 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-24 12:48:39,544 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-24 12:48:39,556 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-24 12:48:39,763 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-24 12:48:52,859 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
+INFO 2018-04-27 14:32:28,868 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-27 14:32:32,775 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-27 14:32:32,784 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-27 14:32:33,351 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-27 14:32:37,078 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
+INFO 2018-04-27 14:32:40,603 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
+INFO 2018-04-27 14:34:38,960 views.py views API_start 474: gonglp添加API用例 [登录初始化2] 属于项目：[TBS_USER_20180328]
+INFO 2018-04-27 14:42:42,799 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-27 14:43:41,507 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-27 14:45:24,758 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-27 14:48:48,132 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-27 15:03:35,302 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-27 15:09:58,014 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-27 15:10:47,877 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-27 15:17:38,544 views.py views execute_script_result_analysis_fun 1638: 登录初始化2-2018_4_27_15_14_14.py:PASS:[time_consuming:0.273585]{ response : 'resultCode: 0' }
+ERROR 2018-04-27 15:19:44,200 views.py views execute_script_result_analysis_fun 1652: 登录初始化2-2018_4_27_15_14_14.py:FAILED: error message [', "[By casuse: expected_value:{'resultCode': 0, 'maxRetryCount': 5}, server_response_values:{'resultCode': 0, 'maxRetryCount': 1} ]", "{u'body': {u'ubt': {u'maxUploadSize': 100, u'sleepTime': 10000, u'minUploadSize': 10, u'basePageTrace': True, u'minUploadTime': 9999, u'maxRetryCount': 1}, u'schema': {u'shareBlackList': [u'http://mobtest.2boss.cn/app_qa/dist/index.html#/index', u'http://mob.2boss.cn/app_qa/dist/index.html#/index', u'http://mobtest.2boss.cn/app_qa/dist/index.html#/hotperson_detail?', u'http://mob.2boss.cn/app_qa/dist/index.html#/hotperson_detail?', u'http://mobtest.2boss.cn/app_qa/dist/index.html#/newpost_one?', u'http://mob.2boss.cn/app_qa/dist/index.html#/newpost_one?', u'http://mobtest.2boss.cn/app_qa/dist/index.html#/newpost?', u'http://mob.2boss.cn/app_qa/dist/index.html#/newpost?'], u'externalLinkBlackList': [u'https://linkm.lianjia.com', u'https://lnk0.com', u'https://itunes.apple.com/cn/app/id405882753', u'https://ios.qfang.com', u'https://itunes.apple.com/cn/app/id1225814601', u'wiwjapp://second/detail', u'https://itunes.apple.com/app/id1004322269', u'http://sh.centanet.com/m/app', u'opryz1wu://openlink.cc', u'http://deecq4.openlink.cc', u'https://itunes.apple.com/cn/app/shang-hai-zhong-yuan/id1173813119', u'http://link.dianping.com/universal-link', u'http://m.dianping.com/download', u'https://m.dianping.com/download']}}, u'resultCode': 0}")
+]
+ERROR 2018-04-27 15:46:24,235 views.py views execute_script_result_analysis_fun 1651: 登录初始化2-2018_4_27_15_14_14.py:FAILED: error message [', '[By casuse <maxRetryCount>: expected_value:5, actual_values:1 ]', "{u'body': {u'ubt': {u'maxUploadSize': 100, u'sleepTime': 10000, u'minUploadSize': 10, u'basePageTrace': True, u'minUploadTime': 9999, u'maxRetryCount': 1}, u'schema': {u'shareBlackList': [u'http://mobtest.2boss.cn/app_qa/dist/index.html#/index', u'http://mob.2boss.cn/app_qa/dist/index.html#/index', u'http://mobtest.2boss.cn/app_qa/dist/index.html#/hotperson_detail?', u'http://mob.2boss.cn/app_qa/dist/index.html#/hotperson_detail?', u'http://mobtest.2boss.cn/app_qa/dist/index.html#/newpost_one?', u'http://mob.2boss.cn/app_qa/dist/index.html#/newpost_one?', u'http://mobtest.2boss.cn/app_qa/dist/index.html#/newpost?', u'http://mob.2boss.cn/app_qa/dist/index.html#/newpost?'], u'externalLinkBlackList': [u'https://linkm.lianjia.com', u'https://lnk0.com', u'https://itunes.apple.com/cn/app/id405882753', u'https://ios.qfang.com', u'https://itunes.apple.com/cn/app/id1225814601', u'wiwjapp://second/detail', u'https://itunes.apple.com/app/id1004322269', u'http://sh.centanet.com/m/app', u'opryz1wu://openlink.cc', u'http://deecq4.openlink.cc', u'https://itunes.apple.com/cn/app/shang-hai-zhong-yuan/id1173813119', u'http://link.dianping.com/universal-link', u'http://m.dianping.com/download', u'https://m.dianping.com/download']}}, u'resultCode': 0}")
+]
+INFO 2018-04-27 15:47:36,799 views.py views execute_script_result_analysis_fun 1638: 登录初始化2-2018_4_27_15_14_14.py:PASS:[time_consuming:0.316727]{ response :  :<maxRetryCount>: expected_value:1, actual_values:1 ]')
+
+INFO 2018-04-27 15:48:19,651 views.py views execute_script_result_analysis_fun 1638: 登录初始化2-2018_4_27_15_14_14.py:PASS:[time_consuming:0.078056]{ response :  :<resultCode>: expected_value:0, actual_values:{'resultCode': 0, 'maxRetryCount': 1} ]")
+
+INFO 2018-04-27 15:56:30,414 views.py views execute_script_result_analysis_fun 1638: 登录初始化2-2018_4_27_15_14_14.py:PASS:[time_consuming:0.079299]{ response :  :<{'resultCode': 0, 'maxRetryCount': 1}>: expected_value:{'resultCode': 0, 'maxRetryCount': 1}, actual_values:{'resultCode': 0, 'maxRetryCount': 1} ]")
+
+ERROR 2018-04-27 15:57:42,475 views.py views execute_script_result_analysis_fun 1651: 登录初始化2-2018_4_27_15_14_14.py:FAILED: error message [', "[By casuse <resultCode>: expected_value:{'resultCode': 1, 'maxRetryCount': 1}, actual_values:{'resultCode': 0, 'maxRetryCount': 1} ]", "{u'body': {u'ubt': {u'maxUploadSize': 100, u'sleepTime': 10000, u'minUploadSize': 10, u'basePageTrace': True, u'minUploadTime': 9999, u'maxRetryCount': 1}, u'schema': {u'shareBlackList': [u'http://mobtest.2boss.cn/app_qa/dist/index.html#/index', u'http://mob.2boss.cn/app_qa/dist/index.html#/index', u'http://mobtest.2boss.cn/app_qa/dist/index.html#/hotperson_detail?', u'http://mob.2boss.cn/app_qa/dist/index.html#/hotperson_detail?', u'http://mobtest.2boss.cn/app_qa/dist/index.html#/newpost_one?', u'http://mob.2boss.cn/app_qa/dist/index.html#/newpost_one?', u'http://mobtest.2boss.cn/app_qa/dist/index.html#/newpost?', u'http://mob.2boss.cn/app_qa/dist/index.html#/newpost?'], u'externalLinkBlackList': [u'https://linkm.lianjia.com', u'https://lnk0.com', u'https://itunes.apple.com/cn/app/id405882753', u'https://ios.qfang.com', u'https://itunes.apple.com/cn/app/id1225814601', u'wiwjapp://second/detail', u'https://itunes.apple.com/app/id1004322269', u'http://sh.centanet.com/m/app', u'opryz1wu://openlink.cc', u'http://deecq4.openlink.cc', u'https://itunes.apple.com/cn/app/shang-hai-zhong-yuan/id1173813119', u'http://link.dianping.com/universal-link', u'http://m.dianping.com/download', u'https://m.dianping.com/download']}}, u'resultCode': 0}")
+]
+INFO 2018-04-27 16:08:38,647 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-27 16:08:38,697 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-27 16:08:38,897 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-27 16:08:39,023 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-27 16:08:41,076 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
+INFO 2018-04-27 16:08:42,500 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
+ERROR 2018-04-27 16:09:37,959 views.py views execute_script_result_analysis_fun 1673: 检查版本信息-2018_4_27_16_9_7.py:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_4_27_16_9_7.py", line 21, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+
+INFO 2018-04-27 16:10:48,214 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-27 16:10:48,346 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-27 16:11:23,409 views.py views execute_script_result_analysis_fun 1638: 更新绑定用户信息-2018_4_27_16_11_10.py:PASS:[time_consuming:0.073728]{ response :  :<{'resultCode': 0}>: expected_value:0, actual_values:0 ]")
+
+INFO 2018-04-27 16:14:43,586 views.py views execute_script_result_analysis_fun 1638: 更新绑定用户信息-2018_4_27_16_11_10.py:PASS:[time_consuming:0.09494]{ response :  :<{'resultCode': 0, 'errMsg': ''}>: expected_value:{'resultCode': 0, 'errMsg': ''}, actual_values:{'resultCode': 0, 'errMsg': u''} ]")
+
+INFO 2018-04-27 17:03:30,520 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-27 17:03:30,718 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-27 17:04:26,598 views.py views API_start 474: gonglp添加API用例 [小区找房] 属于项目：[TBS_USER_20180328]
+INFO 2018-04-28 11:20:38,322 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-04-28 11:20:43,188 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-28 11:20:43,197 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-04-28 11:20:43,723 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-04-28 11:20:46,162 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
+INFO 2018-04-28 11:20:49,541 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
+INFO 2018-05-02 11:12:22,470 views.py views login_handle 53: [gonglp] 登录成功
+ERROR 2018-05-02 11:33:03,942 views.py views execute_script_result_analysis_fun 1673: 实时获取tab标签发现（信息）-2018_5_2_11_25_46.py:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/实时获取tab标签发现（信息）-2018_5_2_11_25_46.py", line 76, in <module>
+    headers = {"TBSAccessToken":sys.argv(0)}
+TypeError: 'list' object is not callable
+
+INFO 2018-05-02 13:18:20,379 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-02 13:30:12,455 views.py views execute_script_result_analysis_fun 1645: 实时获取tab标签发现（信息）-2018_5_2_11_25_46.py:PASS:[time_consuming:0.246613]{ response :  :<{'resultCode': 0}>: expected_value:0, actual_values:0 ]")
+
+INFO 2018-05-02 13:35:19,389 views.py views execute_script_result_analysis_fun 1645: 实时获取tab标签发现（信息）-2018_5_2_13_34_18.py:PASS:[time_consuming:0.232561]{ response :  :<{'resultCode': 0}>: expected_value:0, actual_values:0 ]")
+
+ERROR 2018-05-02 13:35:19,780 views.py views execute_script_result_analysis_fun 1680: 检查版本信息-2018_5_2_13_34_18.py:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_5_2_13_34_18.py", line 21, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+
+INFO 2018-05-02 13:36:15,981 views.py views execute_script_result_analysis_fun 1645: 实时获取tab标签发现（信息）-2018_5_2_13_34_18.py:PASS:[time_consuming:0.221865]{ response :  :<{'resultCode': 0}>: expected_value:0, actual_values:0 ]")
+
+ERROR 2018-05-02 13:36:16,263 views.py views execute_script_result_analysis_fun 1680: 检查版本信息-2018_5_2_13_34_18.py:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_5_2_13_34_18.py", line 21, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+
+INFO 2018-05-02 13:38:37,369 views.py views execute_script_result_analysis_fun 1645: 实时获取tab标签发现（信息）-2018_5_2_13_34_18.py:PASS:[time_consuming:0.232]{ response :  :<{'resultCode': 0}>: expected_value:0, actual_values:0 ]")
+
+ERROR 2018-05-02 13:38:37,641 views.py views execute_script_result_analysis_fun 1680: 检查版本信息-2018_5_2_13_34_18.py:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_5_2_13_34_18.py", line 21, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+
+INFO 2018-05-03 09:19:45,221 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-03 09:19:59,906 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-03 09:20:13,670 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-03 09:25:23,882 views.py views login_handle 56: 请输入正确的用户名和密码！
+INFO 2018-05-03 09:25:28,716 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-03 10:59:13,903 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-05-03 10:59:13,905 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-05-03 10:59:14,168 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-05-03 11:14:02,518 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-03 11:14:04,293 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-05-03 11:14:04,303 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-05-03 11:14:04,484 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-05-03 11:14:06,481 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
+INFO 2018-05-03 11:14:08,865 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
+INFO 2018-05-03 11:14:57,517 views.py views API_start 474: gonglp添加API用例 [test1] 属于项目：[TBS_USER_20180328]
+INFO 2018-05-03 11:15:15,129 views.py views API_start 474: gonglp添加API用例 [test2] 属于项目：[TBS_USER_20180328]
+INFO 2018-05-03 11:22:36,875 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-03 11:22:38,336 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-05-03 11:22:38,347 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-05-03 11:22:38,542 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-05-03 11:22:43,599 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
+INFO 2018-05-03 11:22:45,056 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
+INFO 2018-05-03 11:23:45,227 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-03 11:23:46,662 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-05-03 11:23:46,671 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-05-03 11:23:46,828 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-05-03 11:23:48,866 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
+INFO 2018-05-03 11:23:50,325 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
+INFO 2018-05-03 14:53:07,948 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-03 15:12:27,407 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-05-03 15:12:27,418 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-05-03 15:12:27,585 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-05-03 15:12:27,756 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-05-03 15:12:31,255 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
+INFO 2018-05-03 15:12:33,526 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
+ERROR 2018-05-03 15:24:18,786 views.py views execute_script_result_analysis_fun 1681: 实时获取tab标签发现（信息）-2018_5_3_15_23_36.py:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/实时获取tab标签发现（信息）-2018_5_3_15_23_36.py", line 24, in testDemo
+    r = requests.get(self.protocol + domian  + url,headers=headers, params=param, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {a: 123} must be of type str or bytes, not <type 'int'>
+
+
+INFO 2018-05-03 15:24:19,365 views.py views execute_script_result_analysis_fun 1646: 平台框架获取事件列表-2018_5_3_15_23_36.py:PASS:[time_consuming:0.133327]{ response :  :<{'resultCode': 0}>: expected_value:0, actual_values:0 ]")
+
+ERROR 2018-05-03 15:24:19,662 views.py views execute_script_result_analysis_fun 1681: 检查版本信息-2018_5_3_15_23_36.py:FAILED: error message [ 未获取脚本执行状态，脚本执行失败 ] Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/script/genirtor_script/检查版本信息-2018_5_3_15_23_36.py", line 21, in testDemo
+    r = requests.post(self.protocol + domian + url, headers=headers, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 440, in prepare_headers
+    check_header_validity(header)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/utils.py", line 872, in check_header_validity
+    "bytes, not %s" % (name, value, type(value)))
+InvalidHeader: Value for header {appId: 1} must be of type str or bytes, not <type 'int'>
+
+
+INFO 2018-05-03 15:27:17,542 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-05-03 15:27:17,676 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-05-03 17:42:20,667 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-03 17:42:22,007 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-05-03 17:42:22,016 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-05-03 17:42:22,202 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-05-03 17:42:24,396 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
+INFO 2018-05-03 17:42:26,184 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
+INFO 2018-05-03 17:47:16,609 views.py views API_start 474: gonglp添加API用例 [更新绑定用户信息1] 属于项目：[TBS_USER_20180328]
+INFO 2018-05-04 14:44:49,475 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-04 14:44:53,393 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-05-04 14:44:53,402 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-05-04 14:44:53,677 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-05-04 14:44:55,504 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
+INFO 2018-05-04 14:44:57,311 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
+INFO 2018-05-04 15:39:03,293 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-04 15:39:04,155 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-05-04 15:39:04,164 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-05-04 15:39:04,355 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-05-04 15:39:06,183 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
+INFO 2018-05-04 15:39:07,797 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
+INFO 2018-05-04 15:39:12,269 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
+INFO 2018-05-04 15:39:16,887 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
+INFO 2018-05-07 16:22:29,530 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-07 16:22:32,460 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-05-07 16:22:32,470 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-05-07 16:22:32,667 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-05-07 16:22:34,442 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
+INFO 2018-05-08 10:57:28,401 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-08 13:23:41,111 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-08 14:09:13,828 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-08 14:10:39,669 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-08 14:11:23,839 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-08 14:12:37,651 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-08 14:13:59,745 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-08 16:11:44,371 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-08 16:16:14,893 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-08 16:17:17,306 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-08 16:59:14,283 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-08 17:00:18,730 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-08 17:02:40,933 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-08 17:03:03,044 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-05-08 17:03:03,328 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-05-08 17:03:03,582 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-05-08 17:03:03,774 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-05-08 17:03:05,594 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
+INFO 2018-05-08 17:03:07,416 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
+INFO 2018-05-08 17:07:23,165 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-08 17:07:26,193 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-05-08 17:07:26,204 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-05-08 17:07:26,382 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-05-08 17:07:29,919 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
+INFO 2018-05-08 17:07:32,129 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
+INFO 2018-05-08 17:12:34,222 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-08 17:15:16,420 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-08 17:17:56,978 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-08 17:19:09,593 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-08 17:20:13,810 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-08 17:20:38,635 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-08 17:29:49,303 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-08 17:31:42,945 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-08 17:34:43,297 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-08 17:42:36,638 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-08 18:03:20,168 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-08 18:04:28,428 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-08 18:07:28,145 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-09 08:58:42,836 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-09 08:59:35,258 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-05-09 08:59:35,282 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-05-09 08:59:35,724 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-05-09 08:59:39,611 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
+INFO 2018-05-09 08:59:43,355 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
+INFO 2018-05-09 09:06:53,121 views.py views API_start 474: gonglp添加API用例 [DL_login] 属于项目：[TBS_USER_20180328]
+INFO 2018-05-09 09:08:01,050 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
+INFO 2018-05-09 09:08:20,979 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-05-09 09:08:20,987 views.py views project_manage 87: 进入项目中心-->项目管理页面
+INFO 2018-05-09 09:08:21,170 views.py views Read_all_project 106: 查询所有项目
+INFO 2018-05-09 09:08:23,417 views.py views income_project 142: gonglp进入项目[TBS_USER_20180328]
+INFO 2018-05-09 09:08:28,633 views.py views workon_tabs_api 386: gonglp进入接口管理页面 [TBS_USER_20180328]
+INFO 2018-05-09 09:31:43,514 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-09 09:51:22,248 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-09 09:55:49,618 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-09 11:10:52,808 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-09 11:12:31,369 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-09 11:14:15,699 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-09 11:18:10,800 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-09 11:18:48,366 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-09 11:20:12,756 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-09 11:20:44,830 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-09 11:25:32,010 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-09 11:25:54,677 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-09 11:26:16,356 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-09 11:26:37,621 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-09 11:27:17,373 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-09 11:27:26,711 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-09 11:27:55,901 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-09 11:28:09,284 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-09 11:31:48,859 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-09 11:33:47,374 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-09 11:39:25,736 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-09 11:40:29,494 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-09 11:44:57,664 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-09 11:47:37,455 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-09 13:22:01,359 views.py views login_handle 53: [gonglp] 登录成功
+INFO 2018-05-09 13:39:18,086 views.py views login_handle 55: [gonglp] 登录成功
+INFO 2018-05-09 13:40:46,414 views.py views login_handle 55: [gonglp] 登录成功
+INFO 2018-05-09 14:48:28,236 views.py views login_handle 55: [gonglp] 登录成功
+INFO 2018-05-09 14:49:16,318 views.py views login_handle 55: [gonglp] 登录成功
+INFO 2018-05-09 14:50:40,943 views.py views login_handle 55: [gonglp] 登录成功
+INFO 2018-05-09 14:54:36,170 views.py views login_handle 55: [gonglp] 登录成功
+INFO 2018-05-09 14:55:45,716 views.py views login_handle 55: [gonglp] 登录成功
+INFO 2018-05-09 14:57:00,178 views.py views login_handle 55: [gonglp] 登录成功
+INFO 2018-05-09 14:57:46,273 views.py views login_handle 55: [gonglp] 登录成功
+INFO 2018-05-09 15:47:42,450 views.py views login_handle 55: [gonglp] 登录成功
+INFO 2018-05-09 15:51:57,503 views.py views login_handle 55: [gonglp] 登录成功
+INFO 2018-05-09 15:53:00,874 views.py views login_handle 55: [gonglp] 登录成功
+INFO 2018-05-09 15:55:19,439 views.py views login_handle 55: [gonglp] 登录成功
+INFO 2018-05-09 16:14:08,282 views.py views login_handle 55: [gonglp] 登录成功
+INFO 2018-05-09 16:15:30,277 views.py views login_handle 55: [gonglp] 登录成功
+INFO 2018-05-09 16:17:49,932 views.py views login_handle 55: [gonglp] 登录成功
+INFO 2018-05-09 16:20:28,761 views.py views login_handle 55: [gonglp] 登录成功
+INFO 2018-05-09 16:29:02,470 views.py views login_handle 55: [gonglp] 登录成功
+INFO 2018-05-09 16:31:02,830 views.py views login_handle 55: [gonglp] 登录成功
+INFO 2018-05-09 16:31:30,234 views.py views login_handle 55: [gonglp] 登录成功
+INFO 2018-05-09 16:33:03,876 views.py views login_handle 55: [gonglp] 登录成功
+INFO 2018-05-09 16:38:04,336 views.py views login_handle 55: [gonglp] 登录成功

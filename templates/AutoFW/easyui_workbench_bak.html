@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AutoFW-OG</title>
+    <title>Title</title>
     <link rel="stylesheet" type="text/css" href="/static/jquery_easyui/themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="/static/jquery_easyui/themes/icon.css">
     <link rel="stylesheet" type="text/css" href="/static/css/easyui_workbench.css" />
@@ -80,13 +80,6 @@
                     }
                 });
             })
-
-
-	    //$('#editpass').click(function() {
-             //           location.href = '/AutoFW/personal_manage/${username}';
-                 
-           // })
-
         });
 
 
@@ -213,7 +206,7 @@
     <div id="easyui" class="easyui-layout"  split="true" fit="true">
         <div region="north" class="e_north">
             <span class="head">
-                欢迎 {{username}}({{position}}) <!-- <a href="#" id="editpass">[修改密码]</a>--> <a href="#" id="loginOut">[安全退出]</a></span>
+                欢迎 {{username}}({{position}}) <a href="#" id="editpass">[修改密码]</a> <a href="#" id="loginOut">[安全退出]</a></span>
             <div>
                 <img src="/static/media/head_tips.gif" style="float: left" />
             </div>
@@ -247,19 +240,13 @@
                     </ul>
                 </div>
 
-                <div title="测试接口与用例" iconcls="icon-reload">
+                <div title="测试用例" iconcls="icon-reload">
                     <ul class="easyui-tree">
                         <li>
-                            <span><a target="mainFrame" href="/AutoFW/test_case_genirate_page/{{username}}">接口生成</a></span>
+                            <span><a target="mainFrame" href="/AutoFW/test_case_genirate_page/{{username}}">测试用例生成</a></span>
                         </li>
                         <li>
-                            <span><a target="mainFrame" href="/AutoFW/execute_test_script_page/{{username}}">接口执行中心</a></span>
-                        </li>
-                        <li>
-                            <span><a target="mainFrame" href="/AutoFW/yongli_genirate_page/{{username}}">用例生成</a></span>
-                        </li>
-                        <li>
-                            <span><a target="mainFrame" href="/AutoFW/execute_yongli_page/{{username}}">用例执行中心</a></span>
+                            <span><a target="mainFrame" href="/AutoFW/execute_test_script_page/{{username}}">测试用例执行中心</a></span>
                         </li>
                     </ul>
                 </div>
@@ -286,37 +273,36 @@
 
         <div id="mainPanle" region="center" title="work station">
             <div id="tabs" class="easyui-tabs" fit="true" border="false">
-                <div title="欢迎使用" style="padding: 20px;" id="home">
+                <div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
                     <div id='content' class="wizard">
                         <p class="p_head">操作指南</p>
                         <ul id="content_ul" class="content_ul">
                             <li>
                                 <span>操作流程</span>
-                                <p>&nbsp;&nbsp;&nbsp;&nbsp;①:在[项目中心]-->[项目管理]-->新增项目-->点击进入项目-->设置项目的全局配置-->新增项目模块-->新增项目API(用例)</p>
-                                <p>&nbsp;&nbsp;&nbsp;&nbsp;②:在[用户中心]-->[用户信息管理]可增删改系统人员(需要超级管理权限方可进入)，[个人信息管理]-->修改个人登录密码-->填写个人信息(发送邮件必须项)；</p>
-                                <p>&nbsp;&nbsp;&nbsp;&nbsp;③:在[测试用例]-->[测试用例生成]-->生产测试用例；[测试用例执行中心]-->执行测试用例</p>
-                                <p>&nbsp;&nbsp;&nbsp;&nbsp;④:在[日志管理]-->[脚本日志]-->查看执行测试用例实时日志；[错误日志]-->查看执行测试用例异常实时日志</p>
-                            	<p>&nbsp;&nbsp;&nbsp;&nbsp;⑤:在[测试报告]-->[测试报告]-->查看执行用例报告-->发送邮件；</p>
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;①:在[执行任务]中选择测试类型(接口、UI自动化等)；</p>
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;②:在[执行任务]中选择测试用例，测试用例分为模组用例和单选用例；</p>
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;③:在[执行任务]中确定执行用例任务，待执行条完成后可看报告；</p>
                             </li>
                             <li>
-                                <span>项目中心功能介绍：</span>
-                                <p>&nbsp;&nbsp;&nbsp;&nbsp;该模块[项目管理],可对项目进行增删改查.项目-->模块-->用例,一对多关系.进入项目后展示项目基本信息(在配置了全局配置的情况下),测试用例在该模块下生成.</p>
+                                <span>执行任务功能介绍：</span>
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;该模块是完成选择测试类型、测试用例类型、执行测试的功能；测试类型分接口和UI自动化等（待扩展），测试用例分为
+                                模组用例和单选用例，根据模组用例和单选用例id作为过滤条件，最后执行用例完成测试。</p>
                             </li>
                             <li>
-                                <span>用户中心介绍：</span>
-                                <p>&nbsp;&nbsp;&nbsp;&nbsp;该模块下两个分支,[用户信息管理]是维护系统的相关人员,只有超级管理员才可操作增删改查人员信息,其他权限人员只可管理[个人用户中心],修改个人信息以及密码.个人信息用于发送邮件使用,未填写则不能使用发送邮件功能.</p>
-                            </li>
-                            <li>
-                                <span>测试用例介绍：</span>
-                                <p>&nbsp;&nbsp;&nbsp;&nbsp;该模块下两个分支,[测试用例生成]是维护生成用例脚本(物理存储);[测试用例执行中心]是执行测试脚本中心,可对物理存储的测试脚本删除,可执行自定义查询的用例,可执行项目为单位的冒烟用例或回归用例.(冒烟和回归测试默认发送邮件给执行人，自定义执行用例可选是否发送邮件)</p>
+                                <span>测试用例管理介绍：</span>
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;该模块是用于查询、新增、删除、修改用例的功能，可根据测试用例类型、测试用例标识（成功与失败）、测试用例创建时间等过滤查询以及变更操作。</p>
                             </li>
                             <li>
                                 <span>日志管理介绍：</span>
-                                <p>&nbsp;&nbsp;&nbsp;&nbsp;该模块下两个分支,[脚本日志]点击刷新,查看实时脚本执行日志;[错误日志]点击刷新查实时脚本执行异常日志;</p>
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;该模块是用于调试用例、查看执行失败用例的功能，可根据用例id作为过滤条件查看执行日志。</p>
                             </li>
                             <li>
-                                <span>测试报告介绍：</span>
-                                <p>&nbsp;&nbsp;&nbsp;&nbsp;该模块[测试报告],可查看执行不同的批次报告详情,可根据权限设定来删除测试报告,可选择指定的报告发送邮件.</p>
+                                <span>报告查看介绍：</span>
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;该模块适用于生成测试报告、查看测试报告的功能，可根据执行场景来生成测试报告。</p>
+                            </li>
+                            <li>
+                                <span>发送邮件介绍：</span>
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;该模块适用于发送测试报告邮件，可根据执行场景选择生成测试报告，发送测试邮件。</p>
                                 <br>
                                 <br>
                                 <br>

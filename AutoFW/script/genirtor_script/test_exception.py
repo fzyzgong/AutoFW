@@ -9,7 +9,6 @@ sys.path.append(util_path)
 from Mylogging import mylogging
 from json_d import GetDictParam
 
-#还未实现该功能
 class TestAPI:
 
     def testDemo(self,protocol,domian,url,headers,param,expected):
@@ -27,10 +26,12 @@ class TestAPI:
             # rs = r.json()
 
             rs_str = r.content
+            print rs_str
             rs_dic = json.loads(rs_str)
 
             if isinstance(expected, dict):
                 dict_count = len(expected)
+                print dict_count
                 if dict_count == 1:  # 匹配单参数
                     actual_value = GetDictParam.get_value(rs_dic, expected.keys()[0])
                     if actual_value == expected.get(expected.keys()[0]):
@@ -66,11 +67,11 @@ class TestAPI:
                     # print ("expected=%s  rs_str=%s" %(expected,rs_str))
                     print ('AutoFW test reslut:PASS\'' + "[time_consuming:" + time_consuming + '] ',
                            "response_expected_actual_value:<" + str(
-                               expected) + ">: expected_value:%s, actual_values:%s ]" % (str(expected), str(expected)))
+                               expected) + ">: expected_value:%s, actual_values:%s ]" % (expected, rs_str))
                 else:
                     print ("AutoFW test reslut:FAILED",
-                           "[By casuse <" + str(expected) + ">: expected_value:%s, response:%s ]" % (
-                               str(expected), str(rs_dic)))
+                           "[By casuse <" + str(expected) + ">: expected_value:%s, actual_values:%s ]" % (
+                               expected, str(rs_dic)))
         except requests.exceptions.ConnectionError:
             mylogging("[" + str(__file__).split('/')[-1] + "][" + self.protocol + domian + url + "] <EXCEPTION>\r" + traceback.format_exc())
             print (traceback.format_exc())
@@ -83,12 +84,12 @@ class TestAPI:
 
 
 if __name__ == "__main__":
-    protocol = "HTTP"
-    domian = "www.og.demo.com"
-    url = "/og/demo"
-    headers = {"demo_headers":"demo_headers"}
-    param = {"demo_param":"demo_param"}
-    expected = {"demo":"Success !"}
+    protocol = "HTTPS"
+    domian = "test02.2boss.cn"
+    url = "/rabbit/v1/favorite/oversea?estateId=2550%2075th%20Ave,%20Oakland%20CA%2094605"
+    headers = {"TBSAccessToken": "c930a4cb6983490ca70b5f341263f6ae"}
+    param = {"estateName":"2550 75th Ave, Oakland CA 94605","stateName":None,"zipCode":None,"totalPriceType":1,"totalPriceWanDollar":"$48.0万","totalPriceDollar":"$340,000","totalPrice":"¥303.4万","bedroom":"4","bathroom":"2","area":136.7,"areaUnit":"㎡","cityId":"103","picUrl":"https://photos.zillowstatic.com/p_h/ISy7ghx83s0b8a0000000000.jpg","totalPriceRMBWanYuan":"约¥303.4万"}
+    expected = {"resultCode":0,"status":False}
 
     t = TestAPI()
     t.testDemo(protocol,domian,url,headers,param,expected)
