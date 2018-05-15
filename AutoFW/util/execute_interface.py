@@ -12,9 +12,6 @@ from Mylogging import mylogging
 from json_d import GetDictParam
 
 class Execute_Interface:
-    #(method = method, parameter_format = parameter_format,
-    #                                    url_path=url_path,parameter=parameter,expected=expected,
-    #                                    headers=headers,dynamic_values_from=dynamic_values_from)
     @staticmethod
     def execute_interface(protocol,method,parameter_format,domain,url_path,headers,parameter,expected,flag,dynamic):
 

@@ -1851,8 +1851,47 @@ def execution_test_case(request):
 
                     Execute_Case_Log.objects.create(**execute_case_log_dict)
 
+        total_case = Execute_Case_Log.objects.filter(log_report_id_id=report_id).count()#总用例个数
+        fail_count = 0
+        skip_count = 0
+        for case_l in script_case_name_list:
+            count_f = Execute_Case_Log.objects.filter(log_report_id_id=report_id,log_case_id_id=case_l,status="FAILED").count()#用例是否failed
+            count_s = Execute_Case_Log.objects.filter(log_report_id_id=report_id,log_case_id_id=case_l,status="SKIP").count()#用例是否failed
+
+            if count_f > 0:
+                fail_count += 1
+            if count_s > 0:
+                skip_count += 1
+        pass_count = len(script_case_name_list) - fail_count - skip_count
+        # pass_total = Execute_Case_Log.objects.filter(log_report_id_id=report_id,status="PASS").count()
+        # fail_total = Execute_Case_Log.objects.filter(log_report_id_id=report_id, status="FAILED").count()
+        # skip_total = total_case - pass_total - fail_total
+
+        Case_Execution_Report.objects.filter(report_id=report_id).update(pass_total=pass_count,fail_total=fail_count
+                                                                         ,skip_total=skip_count)
 
         return JsonResponse({"status":"success"})
+
+
+#删除测试用例
+def delete_test_case(request):
+    print ("delete_test_case")
+    if request.method == "GET":
+        script_case_name_json = request.GET.get("script_case_name_json")
+        username = request.GET.get("username")
+
+        script_case_name_list = str(script_case_name_json).split(',')
+        script_case_name_list.remove('')  # 移除最后一个空元素
+
+        for list in script_case_name_list:
+            log_case_id_count = Execute_Case_Log.objects.filter(log_case_id_id=list).count()
+            if log_case_id_count > 0:
+                return JsonResponse({"status":"failed","msg":str(list)+"用例已经执行过并生成测试日志和报告，暂不能删除[本次删除失败]"})
+
+        for list in script_case_name_list:
+            Script_Case_Info.objects.filter(script_case_id=list).delete()#删除用例
+        msg = "删除成功，一共删除了%s"%str(len(script_case_name_list))+"个用例"
+        return JsonResponse({"status": "success", "msg": msg})
 
 #进入日志模块
 def script_log_page(request,username):
@@ -1899,7 +1938,7 @@ def delete_error_log(request):
 
     return render(request,"AutoFW/error_log_page.html",{"content":content})
 
-
+#接口报告页面
 def report_page(request,username):
     print ("report_page")
     execute_man = UserInfo.objects.values("username")
@@ -1907,8 +1946,16 @@ def report_page(request,username):
     content = {"execute_man_list": execute_man, "username": username}
     return render(request, "AutoFW/report_page.html", content)
 
+#用例报告页面
+def case_report_page(request,username):
+    print ("case_report_page")
+    execute_man = UserInfo.objects.values("username")
+
+    content = {"execute_man_list": execute_man, "username": username}
+    return render(request, "AutoFW/case_report_page.html", content)
 
 
+#查询接口列表
 def search_report_list(request):
     print ("search_report_list")
     if request.method == "GET":
@@ -1977,6 +2024,80 @@ def search_report_list(request):
                 report_obj_list.append(data)
 
             content = {"status": "success", "report_list": report_obj_list}
+
+            return JsonResponse(content)
+
+    return JsonResponse({"status":"failed"})
+
+#查询用例列表
+def case_search_report_list(request):
+    print ("search_report_list")
+    if request.method == "GET":
+        report_name = request.GET.get("report_name")
+        execute_man = request.GET.get("execute_man")
+
+        # 存放给前端table用的报告数据
+        case_report_obj_list = []
+        if(execute_man == "" and report_name == ""):
+            content = {"status": "case_search_report_list failed ,gei me a condition"}
+            return JsonResponse(content)
+        elif execute_man == "":
+            case_execute_report_obj = Case_Execution_Report.objects.filter(report_name__contains=report_name)
+
+            for list in case_execute_report_obj:
+                execute_time_tmp = list.execute_time  # 该批次执行时间点
+                execute_time = execute_time_tmp.strftime('%Y-%m-%d')  # 将datatime转成str
+                data = {
+                    "report_id": list.report_id, "case_total": list.case_total,
+                    "pass_total": list.pass_total, "fail_total": list.fail_total,
+                    "skip_total": list.skip_total, "execute_man": list.execute_man,
+                    "execute_time":execute_time,"report_name":list.report_name
+                }
+                case_report_obj_list.append(data)
+
+            content = {"status": "success", "case_report_list": case_report_obj_list}
+            print (content)
+            return JsonResponse(content)
+            # report_id = batch_report_obj.report_id #报告ID
+            # API_total = batch_report_obj.API_total #该批次测试用例总数
+            # pass_total = batch_report_obj.pass_total #该批次测试通过总数
+            # fail_total = batch_report_obj.fail_total #该批次测试失败总数
+            # skip_total = batch_report_obj.skip_total #该批次测试跳过总数
+            # execute_man = batch_report_obj.execute_man #该批次测试执行人
+            # execute_time = list.execute_time #该批次执行时间点
+            # print (type(execute_time))
+
+        elif report_name == "":
+            case_execute_report_obj = Case_Execution_Report.objects.filter(execute_man=execute_man)
+
+            for list in case_execute_report_obj:
+                execute_time_tmp = list.execute_time  # 该批次执行时间点
+                execute_time = execute_time_tmp.strftime('%Y-%m-%d')  # 将datatime转成str
+                data = {
+                    "report_id": list.report_id, "case_total": list.case_total,
+                    "pass_total": list.pass_total, "fail_total": list.fail_total,
+                    "skip_total": list.skip_total, "execute_man": list.execute_man,
+                    "execute_time":execute_time,"report_name":list.report_name
+                }
+                case_report_obj_list.append(data)
+
+            content = {"status": "success", "case_report_list": case_report_obj_list}
+
+            return JsonResponse(content)
+        else:#执行人和报告名都不为空时
+            case_execute_report_obj = Case_Execution_Report.objects.filter(report_name__contains=report_name,execute_man=execute_man)
+            for list in case_execute_report_obj:
+                execute_time_tmp = list.execute_time  # 该批次执行时间点
+                execute_time = execute_time_tmp.strftime('%Y-%m-%d')  # 将datatime转成str
+                data = {
+                    "report_id": list.report_id, "case_total": list.case_total,
+                    "pass_total": list.pass_total, "fail_total": list.fail_total,
+                    "skip_total": list.skip_total, "execute_man": list.execute_man,
+                    "execute_time":execute_time,"report_name":list.report_name
+                }
+                case_report_obj_list.append(data)
+
+            content = {"status": "success", "case_report_list": case_report_obj_list}
 
             return JsonResponse(content)
 

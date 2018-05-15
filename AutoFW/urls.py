@@ -72,6 +72,7 @@ urlpatterns = [
     url(r'^add_script_case/$', views.add_script_case),
     url(r'^search_exe_case/$', views.search_exe_case),
     url(r'^execution_test_case/$', views.execution_test_case),
+    url(r'^delete_test_case/$', views.delete_test_case),
 
 
     url(r'^search_script/$', views.search_script),
@@ -86,6 +87,8 @@ urlpatterns = [
     url(r'^search_report_list/', views.search_report_list),
     url(r'^search_execute_log_list/', views.search_execute_log_list),
     url(r'^delete_report_by_reportID/', views.delete_report_by_reportID),
+    url(r'^case_report_page/(.*)', views.case_report_page),
+    url(r'^case_search_report_list/', views.case_search_report_list),
 
     url(r'^send_email_by_report_list/', views.send_email_by_report_list),
     url(r'^execute_maoyan_script/', views.execute_maoyan_script),

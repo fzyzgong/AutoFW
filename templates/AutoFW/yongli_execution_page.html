@@ -67,7 +67,7 @@
             <option>选择回归项目</option>
         </select>
 
-        <input type="button" id="delete_case_b" value="删除测试用例" style="margin-left: 150px;" />
+        <input type="button" id="delete_case_b" value="删除测试用例" onclick="delete_script_case()" style="margin-left: 150px;" />
     </div>
 
     <hr />
@@ -268,6 +268,43 @@
                     alert("未选择要执行脚本的数据！");
                 }
             }
+        }
+
+        function delete_script_case() {
+            //判断是否有勾选用例执行
+            if($(".checkbox_case_selection:checked").length<1){
+                alert("请选择要删除的脚本！");
+                return;
+            }
+            //判断全选是否勾选
+            var script_case_name_json = "";
+            if($("#complete_selection").is(":checked")){
+                $(".checkbox_case_selection").each(function () {
+                    script_case_name_json += $(this).val()+',';
+                })
+//                        alert(script_case_name_json);
+            }else{
+//                    判断没有全选生成测试脚本时
+                $(".checkbox_case_selection:checked").each(function () {
+                    script_case_name_json += $(this).val() + ','
+                })
+            }
+            username = document.getElementById("execute_case_button").name //获取执行人的姓名
+
+            $.ajax({
+                url: "/AutoFW/delete_test_case",
+                type: "get",
+                data: "script_case_name_json=" + script_case_name_json + "&username=" + username,
+                success: function (data) {
+                    if (data.status == "success") {
+                        search_exe_case()
+                        alert(data.msg);
+                    }else if(data.status == "failed"){
+                        alert(data.msg);
+                    }
+                }
+            });
+
         }
 
     </script>
