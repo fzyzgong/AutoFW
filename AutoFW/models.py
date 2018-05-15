@@ -131,6 +131,22 @@ class Batch_Report(models.Model):
     class Meta:
         db_table = 'batch_report'
 
+# 批次执行测试用例生成数据信息表
+class Case_Execution_Report(models.Model):
+    report_id = models.CharField(max_length=50, unique=True)
+    report_name = models.CharField(max_length=100, primary_key=True)
+    case_total = models.IntegerField(null=False)
+    pass_total = models.IntegerField()
+    fail_total = models.IntegerField()
+    skip_total = models.IntegerField()
+    execute_man = models.CharField(max_length=30)
+    execute_time = models.DateTimeField()
+    bak1 = models.CharField(max_length=50)
+    bak2 = models.CharField(max_length=50)
+
+    class Meta:
+        db_table = 'case_execution_report'
+
 #执行脚本生成日志
 class Execute_Script_Log(models.Model):
     log_report_id = models.ForeignKey(Batch_Report,to_field="report_id")
@@ -160,3 +176,16 @@ class Script_Case_Info(models.Model):
 
     class Meta:
         db_table = 'script_case_info'
+
+
+# 执行用例生成日志
+class Execute_Case_Log(models.Model):
+    log_report_id = models.ForeignKey(Case_Execution_Report, to_field="report_id")
+    log_API_id = models.ForeignKey(Project_Case,to_field="case_id")
+    log_execute_case = models.CharField(max_length=3000)
+    status = models.CharField(max_length=50, default=None)
+    log_case_id = models.ForeignKey(Script_Case_Info, to_field="script_case_id")
+    bak1 = models.CharField(max_length=50)
+
+    class Meta:
+        db_table = 'execute_case_log'

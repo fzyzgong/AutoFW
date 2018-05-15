@@ -71,6 +71,8 @@ urlpatterns = [
     url(r'^search_interface/$', views.search_interface),
     url(r'^add_script_case/$', views.add_script_case),
     url(r'^search_exe_case/$', views.search_exe_case),
+    url(r'^execution_test_case/$', views.execution_test_case),
+
 
     url(r'^search_script/$', views.search_script),
     url(r'^execute_test_script/$', views.execute_test_script),

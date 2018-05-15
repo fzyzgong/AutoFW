@@ -54,8 +54,8 @@
         <input type="button" value="查询" onclick="search_exe_case()" style="width: 100px;margin-left: 30px;"/>
     </div>
     <div id="div_2">
-        <input type="button" id="execute_case_button" value="执行所选用例" style="width: 100px;"/>
-        <input type="checkbox" id="checkbox_chose" />[执行完发送邮件给执行人]
+        <input type="button" id="execute_case_button" value="执行所选用例" name="{{ username }}" onclick="execution_script_case()" style="width: 100px;"/>
+        <input type="checkbox" id="execute_end_send_email" />[执行完发送邮件给执行人]
 
         <input type="button" id="execute_MY_case_b" value="执行冒烟用例" style="margin-left: 100px;"/>
         <select>
@@ -73,7 +73,7 @@
     <hr />
     <table id="case_info_list">
         <tr id="case_info_list_title">
-            <td  style="width: 60px;">全选<input type="checkbox" id="complete_selection" /></td>
+            <td  style="width: 60px;">全选<input type="checkbox" id="complete_selection" onclick="complete_selection()" /></td>
             <td>用例ID</td>
             <td>用例名称</td>
             <td>接口执行顺序</td>
@@ -118,10 +118,17 @@
                         $(".case_list_tr").remove();
                             for(var i = 0; i < data.case_list.length; i++){
 
-                                $("#case_info_list").append('<tr class="case_list_tr"><td class="case_list_tr" style="width: 60px;"><input type="checkbox" id="complete_selection" /></td><td class="case_list_tr">'+data.case_list[i].script_case_id+'</td>' +
-                                    '<td class="case_list_tr">'+data.case_list[i].script_case_name+'</td><td class="case_list_tr">'+data.case_list[i].execution_order+'</td>' +
-                                    '<td class="case_list_tr">'+data.case_list[i].config+'</td><td class="case_list_tr">'+data.case_list[i].status+'</td>' +
-                                    '<td class="case_list_tr">'+data.case_list[i].script_case_type+'</td></tr>')
+                                $("#case_info_list").append('<tr class="case_list_tr">' +
+                                    '<td class="case_list_tr" style="width: 60px;">' +
+                                    '<input type="checkbox" class="checkbox_case_selection" value="'+data.case_list[i].script_case_id+'" onclick="cancel_complete_selection()" />' +
+                                    '</td>' +
+                                    '<td class="case_list_tr">'+data.case_list[i].script_case_id+'</td>' +
+                                    '<td class="case_list_tr">'+data.case_list[i].script_case_name+'</td>' +
+                                    '<td class="case_list_tr">'+data.case_list[i].execution_order+'</td>' +
+                                    '<td class="case_list_tr">'+data.case_list[i].config+'</td>' +
+                                    '<td class="case_list_tr">'+data.case_list[i].status+'</td>' +
+                                    '<td class="case_list_tr">'+data.case_list[i].script_case_type+'</td>' +
+                                    '</tr>')
                             }
 
                     }else if(data.status == "no_date"){
@@ -135,6 +142,132 @@
                     }
                 }
             })
+        }
+
+        //点击取消单条选择，取消全选状态
+        function cancel_complete_selection() {
+            if($(".checkbox_case_selection").is(':checked')){
+                $("#complete_selection").attr("checked", false);
+            }
+        }
+
+
+        var isCheckAll = false;
+        function complete_selection() {
+            //checkbox 全选/取消全选
+            if (isCheckAll) {
+                $("input[type='checkbox']").each(function() {
+                    this.checked = false;
+                });
+                isCheckAll = false;
+            } else {
+                $("input[type='checkbox']").each(function() {
+                    this.checked = true;
+                });
+                isCheckAll = true;
+            }
+        }
+
+
+        function execution_script_case() {
+            //判断是否有勾选用例执行
+            if($(".checkbox_case_selection:checked").length<1){
+                alert("请选择要执行的脚本！");
+                return;
+            }
+
+            var result_name = window.prompt("请为你本次测试命名，用于查询测试结果！[命名规范：模块缩写名+测试人员名字缩写+年月日时分]", "null");
+            var username = document.getElementById("execute_case_button").name //获取执行人的姓名
+
+            if(result_name==null || result_name=='null' || result_name=='')
+            {
+                alert("未正确命名！");
+            }else{
+                //判断全选是否勾选
+                var script_case_name_json = "";
+                if($("#complete_selection").is(":checked")){
+                    $(".checkbox_case_selection").each(function () {
+                        script_case_name_json += $(this).val()+',';
+                    })
+//                        alert(script_case_name_json);
+                }else{
+    //                    判断没有全选生成测试脚本时
+                    $(".checkbox_case_selection:checked").each(function () {
+                        script_case_name_json += $(this).val() + ','
+                    })
+                }
+
+                if(script_case_name_json){
+	                //判断是否有勾选发送邮件
+                    if($("#execute_end_send_email").is(":checked")){
+                        var send_email_flag = "yes";
+                    }else{
+                        var send_email_flag = "no";
+                    }
+
+	                $.ajax({
+                        url: "/AutoFW/execution_test_case",
+                        type: "get",
+                        data: "script_case_name_json="+script_case_name_json+"&result_name="+result_name+"&username="+username+"&send_email_flag="+send_email_flag,
+                        success: function (data) {
+                            if(data.status == "success"){
+                                //进度条控制，此处表示真正的完成
+//                                clearInterval(temp);
+//                                jindutiaoN.style.width = '100%';
+//                                jindutiaoN.innerHTML = '100%';
+                                $.messager.show({
+                                    title: '用例执行提示',
+                                    msg: "测试用例执行成功，请去测试模块查看测试报告！：",
+                                    width: 300,
+                                    height: 80,
+                                    showType:null,
+                                    style:{
+
+                                    }
+                                });
+                            }else if(data.status == "email_send_fail"){
+                                //进度条控制，此处表示真正的完成
+                                clearInterval(temp);
+                                jindutiaoN.style.width = '100%';
+                                jindutiaoN.innerHTML = '100%';
+
+                                $.messager.show({
+                                    title: '脚本执行提示',
+                                    msg: "接口测试脚本执行成功，邮箱发送失败，该用户未填写邮箱信息，可前往[用户中心]补填邮箱信息！：",
+                                    width: 300,
+                                    height: 180,
+                                    showType:null,
+                                    style:{
+
+                                    }
+                                });
+                            }
+                        }
+                    });
+//                     //------start-------进度条条控制
+//                    var script_name_count = script_name_json.split(",").length;//需要执行脚本的个数，预计每个脚本执行时间为1s（包括出错/链接等待时间）
+//                    var jindutiaoW = document.getElementById("jindutiaoW");
+//                    jindutiaoW.hidden=false;
+//                    var jindutiaoN = document.getElementById("jindutiaoN");  //返回进度条内元素
+//                    var width = 1;
+//                    var temp = setInterval(go, script_name_count*20);   //每script_name_count秒执行一次go函数 单位时毫秒
+//                    function go(){
+//                        if(width >= 100)
+//                            clearInterval(temp);     //停止setInterval
+//                        else{
+//                            width++;
+//                            jindutiaoN.style.width = width+'%';    //使进度条百分比增长
+//                            jindutiaoN.innerHTML = width+'%';
+//                        }
+//
+//                    }
+//
+//    //                jindutiao(script_name_count); 抽出封装执行不弹出messager.show
+                    //------end-------进度条条控制
+                }else {
+                    alert("未选择要执行脚本的数据！");
+                }
+            }
         }
 
     </script>

@@ -197,3 +197,8 @@ AttributeError: 'str' object has no attribute 'urlparse'
     print urllib.parse(param)
 AttributeError: 'module' object has no attribute 'parse'
 
+[Exception][2018-05-14 14:45:26]>>  [execute_interface.py]  [HTTPS://test02.2boss.cn/api/v1/user/login] <EXCEPTION>Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/util/execute_interface.py", line 133, in execute_interface
+    dic_key_str.append(expected.keys()[i])  # 存放字典所有的key
+AttributeError: 'unicode' object has no attribute 'keys'
+
