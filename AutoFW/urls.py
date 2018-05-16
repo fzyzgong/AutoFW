@@ -89,6 +89,9 @@ urlpatterns = [
     url(r'^delete_report_by_reportID/', views.delete_report_by_reportID),
     url(r'^case_report_page/(.*)', views.case_report_page),
     url(r'^case_search_report_list/', views.case_search_report_list),
+    url(r'^search_case_execute_log_list/', views.search_case_execute_log_list),
+    url(r'^search_case_report_detail_list/', views.search_case_report_detail_list),
+    url(r'^delete_case_report_from_list/', views.delete_case_report_from_list),
 
     url(r'^send_email_by_report_list/', views.send_email_by_report_list),
     url(r'^execute_maoyan_script/', views.execute_maoyan_script),

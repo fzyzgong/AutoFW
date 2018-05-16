@@ -2104,6 +2104,132 @@ def case_search_report_list(request):
     return JsonResponse({"status":"failed"})
 
 
+#查看测试用例报告
+def search_case_execute_log_list(request):
+    print (search_case_execute_log_list)
+
+    if request.method == "GET":
+        report_id = request.GET.get("report_id")
+        case_list = []
+        execute_case_Log_objs = Execute_Case_Log.objects.filter(log_report_id_id=report_id)
+        for list in execute_case_Log_objs:
+            if list.log_case_id_id not in case_list:
+                case_list.append(list.log_case_id_id)
+        print ("******************")
+        print (case_list)
+
+        report_case_execute_obj_list = []
+
+        for case_l in case_list:
+            execute_case_objs = Execute_Case_Log.objects.filter(log_case_id_id=case_l,log_report_id_id=report_id)
+            print (case_l)
+            for l in execute_case_objs:
+
+                flags = 2  # 2表用例接口中有失败的
+
+                if l.status == "FAILED":
+                    # flags = 2  # 1表用例接口存在失败的
+                    data_log = {
+                        'log_case_id': l.log_case_id_id,
+                        'log_report_id':l.log_report_id_id,
+                        'states': "FAILED"
+                    }
+                    report_case_execute_obj_list.append(data_log)
+                    # print ("failed break ***********")
+                    break
+                elif l.status == "SKIP":
+                    # flags = 2  # 1表用例接口存在失败的
+                    data_log = {
+                        'log_case_id': l.log_case_id_id,
+                        'log_report_id': l.log_report_id_id,
+                        'states': "SKIP"
+                    }
+                    report_case_execute_obj_list.append(data_log)
+                    # print ("skip break ***********")
+                    break
+                flags = 1    # 1表用例所有接口都是成功的
+                # print ("---------------%d"%l.id)
+                qs_count = len(execute_case_objs) - 1
+                # print (execute_case_objs[qs_count].id)
+
+                if flags == 1 and l.id == execute_case_objs[qs_count].id:#遍历到最后一个元素且都没有失败和跳过的接口
+                    print ("执行pass×××××××××××")
+                    data_log = {
+                        'log_case_id': l.log_case_id_id,
+                        'log_report_id': l.log_report_id_id,
+                        'states': "PASS"
+                    }
+                    report_case_execute_obj_list.append(data_log)
+
+
+        case_execution_report_objs = Case_Execution_Report.objects.filter(report_id=report_id)[0]
+        execute_time_tmp = case_execution_report_objs.execute_time  # 该批次执行时间点
+        execute_time = execute_time_tmp.strftime('%Y-%m-%d')  # 将datatime转成str
+        content = {
+            "status": "success", "case_total": case_execution_report_objs.case_total, "report_name": case_execution_report_objs.report_name,
+            "pass_total": case_execution_report_objs.pass_total, "fail_total": case_execution_report_objs.fail_total,
+            "skip_total": case_execution_report_objs.skip_total, "execute_man": case_execution_report_objs.execute_man,
+            "execute_time": execute_time, "report_case_execute_obj_list": report_case_execute_obj_list
+        }
+        print (report_case_execute_obj_list)
+
+        return JsonResponse(content)
+
+
+#report 点击查看用例详细报告
+def search_case_report_detail_list(request):
+    print ("search_case_report_detail_list")
+    if request.method == "GET":
+        log_case_id_report_id = request.GET.get("log_case_id_report_id")
+        log_case_id_report_id_list = str(log_case_id_report_id).split(',')
+        log_case_id = log_case_id_report_id_list[0] #用例ID
+        log_report_id = log_case_id_report_id_list[1]#报告ID
+
+        execute_case_log_objs = Execute_Case_Log.objects.filter(log_report_id_id=log_report_id,log_case_id_id=log_case_id)
+        case_execute_log = []
+        for qs in execute_case_log_objs:
+            api_id = qs.log_API_id_id
+            api_log = qs.log_execute_case
+            api_status = qs.status
+
+            data = {
+                "api_id":api_id,
+                "api_log":api_log,
+                "api_status":api_status
+            }
+            case_execute_log.append(data)
+
+        print (case_execute_log)
+
+        content = {
+            "case_detail":case_execute_log
+        }
+        return JsonResponse(content)
+
+
+#删除报告
+def delete_case_report_from_list(request):
+    print ("delete_case_report_from_list")
+
+    if request.method == "GET":
+        report_id = request.GET.get("report_id")
+        username = request.GET.get("username")
+        # TODO 根据权限限制删除
+        authority = UserInfo.objects.filter(username=username)[0].authority  # 获取该用户的权限等级
+        if "superman" == authority or "primary" == authority:
+            Execute_Case_Log.objects.filter(log_report_id_id=report_id).delete()
+            Case_Execution_Report.objects.filter(report_id=report_id).delete()
+            content = {"status":"success","msg":"删除报告成功"}
+            return JsonResponse(content)
+        elif "secend" == authority:
+            content = {"status": "permission"}
+            return JsonResponse(content)
+        else:
+            content = {"status": "error"}
+            return JsonResponse(content)
+
+
+
 def search_execute_log_list(request):
     print ("search_execute_log_list")
 

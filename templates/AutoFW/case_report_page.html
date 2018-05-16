@@ -13,6 +13,7 @@
         }
         #c_report_display_list td{
             border: solid 1px;
+            /*width: 1200px;*/
             text-align: center;
         }
 
@@ -20,6 +21,9 @@
             width: 1200px;
             border: 1px solid #0094ff
         }
+        /*#c_report_list_t tr{*/
+            /*width: 800px;*/
+        /*}*/
 
         #c_report_list_t .case_report_list_title_name{
             width: 50px;
@@ -27,7 +31,7 @@
             background: greenyellow;
         }
 
-        #c_report_list_t .case_report_API_title_name{
+        #c_report_list_t .case_report_case_title_name{
             width: 200px;
             text-align: center;
             background: greenyellow;
@@ -49,6 +53,11 @@
             text-align: center;
         }
 
+        /*.case_detail_info_tr{*/
+            /*!*text-align: center;*!*/
+            /*width: 200px;*/
+        /*}*/
+
     </style>
 </head>
 <body>
@@ -59,8 +68,8 @@
                 <tr id="c_rp_search_tr">
                     <td>查询报告</td>
                     <td>
-                        <input name="c_rp_seach_case_b" type="button" class="case_rp_search_button" value="查询" onclick="case_rp_search_report()">
-                        <input name="c_rp_reset_b" type="button" class="case_rp_reset_button" value="重置">
+                        <input name="c_rp_seach_case_b" type="button" class="case_rp_search_button" value="查 询" onclick="case_rp_search_report()">
+                        <input name="c_rp_reset_b" type="button" class="case_rp_reset_button" value="重 置">
                     </td>
                 </tr>
                 <tr style="background: black">
@@ -107,7 +116,7 @@
             </tr>
             <tr>
                 <td class="case_report_list_title_name"><span>用例总数</span></td>
-                <td width="450px" align="center"><span id="c_execute_report_api_total" style="text-align: center"></span></td>
+                <td width="450px" align="center"><span id="c_execute_report_case_total" style="text-align: center"></span></td>
                 <td class="case_report_list_title_name"><span>通过</span></td>
                 <td align="center" style="background: greenyellow"><span id="c_execute_report_pass_total" style="text-align: center"></span></td>
             </tr>
@@ -124,7 +133,7 @@
                 <td align="center" style="background: yellow"><span id="c_execute_report_skip_total" style="text-align: center"></span></td>
             </tr>
             <tr>
-                <td class="case_report_API_title_name"><span>用例_名称</span></td>
+                <td class="case_report_case_title_name"><span>用例_名称</span></td>
                 <td class="case_report_log_title_name" colspan="2"><span>过程日志</span></td>
                 <td class="case_report_status_title_name"><span>状态</span></td>
             </tr>
@@ -185,6 +194,101 @@
                     }
                 }
             });
+        }
+
+        //查看报告
+        function case_look_report_td(a) {
+            var report_id = $(a).attr("name")
+            $.ajax({
+                url:"/AutoFW/search_case_execute_log_list/",
+                type: "get",
+                data: "report_id="+report_id,
+                success:function (data) {
+                    if (data.status == "success") {
+                        //设置报告头信息
+                        $("#c_execute_report_case_total").html(data.case_total);
+                        $("#c_execute_report_pass_total").html(data.pass_total)
+                        $("#c_execute_report_execute_man").html(data.execute_man)
+                        $("#c_execute_report_fail_total").html(data.fail_total)
+                        $("#c_execute_report_execute_time").html(data.execute_time)
+                        $("#c_execute_report_skip_total").html(data.skip_total)
+
+                        $("#c_execute_report_name_total").html(data.report_name)
+
+
+                        if (data.report_case_execute_obj_list.length > 0) {
+                            $(".c_execute_case_log_name_list").remove();
+                            for (var i = 0; i < data.report_case_execute_obj_list.length; i++) {
+//                                alert(data.report_case_execute_obj_list[i].log_case_id);
+                                var primary_key_id = data.report_case_execute_obj_list[i].log_case_id + data.report_case_execute_obj_list[i].log_report_id
+
+                                $("#c_report_list_t").append(
+                                    '<tr id="c_execute_case_log_name_list" class="execute_log_list_tr" >' +
+                                    '<td style="width: 150px" class="c_execute_case_log_name_list">' + data.report_case_execute_obj_list[i].log_case_id + '</td>' +
+                                    '<td colspan="2" id="'+primary_key_id+'" class="c_execute_case_log_name_list" style="width: 500px"><input type="button" class="c_execute_case_log_name_list" value="详情" name="'+data.report_case_execute_obj_list[i].log_case_id +','+ data.report_case_execute_obj_list[i].log_report_id+'" onclick="return case_look_detail(this)" ></td>' +
+                                    '<td style="width: 50px" class="c_execute_case_log_name_list">' + data.report_case_execute_obj_list[i].states + '</td>' +
+                                    '</tr>'
+                                );
+                            }
+
+                        }
+                    }
+                }
+
+            });
+        }
+
+
+        function case_look_detail(a) {
+            var log_case_id_report_id = $(a).attr("name");
+            var primary_key_id = $(a).parent().attr("id");//获取父类的id
+            $.ajax({
+                url: "/AutoFW/search_case_report_detail_list/",
+                type: "get",
+                data: "log_case_id_report_id=" + log_case_id_report_id,
+                success: function (data) {
+                    $("#"+primary_key_id).append(
+                        '<tr  class="case_detail_info_tr"><td>用例编号</td><td>日志信息</td><td>结果</td></tr>'
+                    );
+                    if(data.case_detail.length > 0){
+                        //todo remove
+                        $(".case_detail_info_tr").remove();
+                        for (var i = 0; i < data.case_detail.length; i++){
+                           $("#"+primary_key_id).append(
+                                '<tr class="case_detail_info_tr" style="width: 50%"><td class="case_detail_info_tr">'+data.case_detail[i].api_id+'</td><td class="case_detail_info_tr">'+data.case_detail[i].api_log+'</td><td class="case_detail_info_tr">'+data.case_detail[i].api_status+'</td></tr>'
+                            );
+                        }
+                    }
+
+                }
+            });
+        }
+
+
+        function case_delete_report_td(a) {
+
+            //确认删除提示框
+            if(confirm("您确认要删除该条记录码？")) {
+                var report_id = $(a).attr("name")//获取report_id
+                var username = $("#c_report_page_top_name").attr("name");
+                $.ajax({
+                    url: "/AutoFW/delete_case_report_from_list/",
+                    type: "get",
+                    data: "report_id=" + report_id +"&username=" + username,
+                    success: function (data) {
+                        if (data.status == "success") {
+                            case_rp_search_report();//根据当前条件再次查询
+                            alert(data.msg);
+                        }else if(data.status == "permission"){
+                            alert("您的权限不够，请联系管理员！");
+                        }else if(data.status == "error"){
+                            alert("error");
+                        }
+                    }
+                });
+            }else{
+                window.event.returnValue = false;
+            }
         }
     </script>
 
