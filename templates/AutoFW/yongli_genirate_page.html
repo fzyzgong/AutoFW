@@ -76,6 +76,7 @@
                 <option>冒烟用例</option>
                 <option>其他</option>
             </select>
+            <label>注释:</label><input type="text" name="remark" id="remark" />
             <!--<input type="button" value="取消" style="width: 100px; float: right;" />-->
             <input type="submit" value="提交" onclick="add_script_case()" style="width: 100px; float: right;" />
         </div>
@@ -174,12 +175,13 @@
             var s_catch_var = $("#s_catch_var").val()
             var creator_i = $("#creator_i").val()
             var case_type_o = $("#case_type_o option:selected").text()
+            var remark = $("#remark").val()
 
             $.ajax({
                 url: "/AutoFW/add_script_case/",
                 type: "get",
                 data: "case_id="+case_id+"&creator="+creator_i+"&case_name="+case_name+"&project_name="+project_name
-                +"&project_module="+project_module_select+"&execution_order="+s_execution_order+"&catch_var="+s_catch_var+"&case_type="+case_type_o,
+                +"&project_module="+project_module_select+"&execution_order="+s_execution_order+"&catch_var="+s_catch_var+"&case_type="+case_type_o+"&remark="+remark,
                 success: function (data) {
                     if(data.status == "success"){
                         alert(data.msg);

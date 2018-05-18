@@ -202,3 +202,54 @@ AttributeError: 'module' object has no attribute 'parse'
     dic_key_str.append(expected.keys()[i])  # 存放字典所有的key
 AttributeError: 'unicode' object has no attribute 'keys'
 
+[Exception][2018-05-17 13:44:16]>>  [execute_interface.py]  [HTTPS://test02.2boss.cn/subscribe/setSubsCancel] <EXCEPTION>Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/util/execute_interface.py", line 78, in execute_interface
+    r = requests.post(protocol + domain + url_path, headers=headers, data=parameter, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 438, in prepare_headers
+    for header in headers.items():
+AttributeError: 'str' object has no attribute 'items'
+
+[Exception][2018-05-17 14:03:07]>>  [execute_interface.py]  [HTTPS://test02.2boss.cn/rabbit/v1/user/collect] <EXCEPTION>Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/util/execute_interface.py", line 88, in execute_interface
+    r = requests.post(protocol + domain + url_path, headers=headers, json=parameter, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 438, in prepare_headers
+    for header in headers.items():
+AttributeError: 'unicode' object has no attribute 'items'
+
+[Exception][2018-05-17 14:09:12]>>  [execute_interface.py]  [HTTPS://test02.2boss.cn/rabbit/v1/user/collect] <EXCEPTION>Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/util/execute_interface.py", line 90, in execute_interface
+    r = requests.post(protocol + domain + url_path, headers=headers, json=parameter, timeout=8)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 112, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 306, in prepare
+    self.prepare_headers(headers)
+  File "/home/fzyzgong/.virtualenvs/AutoFW/local/lib/python2.7/site-packages/requests/models.py", line 438, in prepare_headers
+    for header in headers.items():
+AttributeError: 'unicode' object has no attribute 'items'
+

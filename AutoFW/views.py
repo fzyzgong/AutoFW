@@ -1446,9 +1446,10 @@ def add_script_case(request):
         execution_order = request.GET.get("execution_order")
         catch_var = request.GET.get("catch_var")
         case_type = request.GET.get("case_type")
+        remark = request.GET.get("remark")
 
-        print ("case_id=%s,case_name=%s,project_name=%s,project_module=%s,execution_order=%s,catch_var=%s,creator=%s,case_type=%s"
-               %(case_id,case_name,project_name,project_module,execution_order,catch_var,creator,case_type))
+        print ("case_id=%s,case_name=%s,project_name=%s,project_module=%s,execution_order=%s,catch_var=%s,creator=%s,case_type=%s,remark=%s"
+               %(case_id,case_name,project_name,project_module,execution_order,catch_var,creator,case_type,remark))
 
         dict = {
             "script_case_id":case_id,
@@ -1460,7 +1461,7 @@ def add_script_case(request):
             "creator":creator,
             "status":"None",
             "script_case_type":case_type,
-            "remark":"remark"
+            "remark":remark
         }
 
         sci_obj = Script_Case_Info.objects.filter(Q(script_case_id=case_id) | Q(script_case_name=case_name))
@@ -1468,7 +1469,7 @@ def add_script_case(request):
         if len(sci_obj)>0:
             return JsonResponse({"status": "unique_error", "msg": "用例编号或用例名称主键冲突"})
 
-        if '' == case_id or '' == case_name or '' == project_name or '' == project_module or '' == execution_order or '' == catch_var or '' == creator or '' == case_type:
+        if '' == case_id or '' == case_name or '' == project_name or '' == project_module or '' == execution_order or '' == creator or '' == case_type:
             return JsonResponse({"status": "null_error", "msg": "提交数据存在空值"})
 
         Script_Case_Info.objects.create(**dict)
@@ -1504,7 +1505,8 @@ def search_exe_case(request):
                         "config":list.config,
                         "creator":list.creator,
                         "status":list.status,
-                        "script_case_type":list.script_case_type
+                        "script_case_type":list.script_case_type,
+                        "remark":list.remark
                     }
                     sci_list.append(case_dict)
             else:
@@ -1524,7 +1526,8 @@ def search_exe_case(request):
                         "config": list.config,
                         "creator": list.creator,
                         "status": list.status,
-                        "script_case_type": list.script_case_type
+                        "script_case_type": list.script_case_type,
+                        "remark": list.remark
                     }
                     sci_list.append(case_dict)
             else:
@@ -1543,7 +1546,8 @@ def search_exe_case(request):
                         "config": list.config,
                         "creator": list.creator,
                         "status": list.status,
-                        "script_case_type": list.script_case_type
+                        "script_case_type": list.script_case_type,
+                        "remark": list.remark
                     }
                     sci_list.append(case_dict)
             else:
@@ -1582,6 +1586,7 @@ def execution_test_case(request):
 
         #获取每一个用例的接口执行顺序和需要抓取的动态变量
         for case_list in script_case_name_list:#判断处理用例
+            print ("##################  执行用例开始  ################## [ %s ]"%str(case_list))
             execution_case = Script_Case_Info.objects.filter(script_case_id=case_list)[0]#获取用例表对象
             config = execution_case.config#获取动态变量值
             execution_case_oder_list = str(execution_case.execution_order).split('->')#获取单个用例下面的所有接口
@@ -1591,19 +1596,8 @@ def execution_test_case(request):
                 循环顺序执行接口并返回状态码
                 '''
                 for list_i_oder in execution_case_oder_list:  # list = Project_Case.case_id 调用接口
-                    print ("execute_interface_order:  " + str(list_i_oder))
+                    print ('*********  执行用例['+ str(case_list) +']下的接口 :  ' + str(list_i_oder) + '**********')
 
-                    '''
-                    1:获取list的mothod/parameter_format 判断接口执行分支
-                    2:判断动态变量是否需要抓取
-                        2.1：是 抓取 判断动态变量抓取的接口是否时当前list接口
-                            2.1.1：是 抓取并传出值
-                            2.1.2：否 跳过抓取过程
-                        2.2：否 不抓取
-                    3：执行接口，收集接口执行过程日志
-                    4：返回接口执行状态
-
-                    '''
                     project_case_obj = Project_Case.objects.filter(case_id=list_i_oder)[0]
                     method = project_case_obj.method
                     parameter_format = project_case_obj.parameter_format
@@ -1618,13 +1612,13 @@ def execution_test_case(request):
                     url_path = project_case_obj.url_path
                     parameter = project_case_obj.parameter
 
-                    if parameter_format == "application/json":
+                    if parameter_format == "application/json" and '' != parameter:
                         parameter = json.loads(parameter)  # unicode转字典
 
                     expected = project_case_obj.expected
                     headers = project_case_obj.headers
 
-                    Execute_Interface.execute_interface(protocol=protocol, method=method,
+                    api_log = Execute_Interface.execute_interface(protocol=protocol, method=method,
                                                                         parameter_format=parameter_format,
                                                                         url_path=url_path, parameter=parameter,
                                                                         expected=expected,
@@ -1634,15 +1628,11 @@ def execution_test_case(request):
                     print ("config为空下收集api执行日志和状态*****************************")
                     print (api_log)
                     status = api_log.split('AutoFW test reslut:')[1].split('\'')[0]  # 执行结果
-                    print (status)   #状态
-                    print (report_id)  # report_id
-                    print (list_i_oder)  # 接口id
-                    print (case_list)  #用例名
                     print ("config为空下收集api执行日志和状态***************end**************")
                     log_report_id = report_id
                     log_API_id = list_i_oder
                     log_case_id = case_list
-                    log_execute_case = api_log[1:1500]
+                    log_execute_case = api_log[0:1500]
                     status = status
                     execute_case_log_dict = {
                         "log_report_id_id": log_report_id, "log_API_id_id": log_API_id, "log_case_id_id": log_case_id,
@@ -1662,38 +1652,39 @@ def execution_test_case(request):
                     1.6 {需要传入接口:变量值} null
           
                 '''
-                config_dict = json.loads(str(config))#把unicode转字典
+                config_dict = json.loads(str(config))#把unicode转字典  (暂未校验前端传递config是否为字典 todo)
 
                 Dynamic_value_list = dict(config_dict).keys()#获取该用例的所有需要抓取的动态变量名 1.1
-
-                dynamic_from_interface_dict = {} #1.3
                 from_interface_list = []#存储所有需要抓取动态值的接口id 1.2
+                dynamic_from_interface_dict = {} #1.3
                 to_interface_list = []#存储所有需要传入动态值的接口id 1.4
                 dynamic_to_interface_dict = {}#存储需要传入变量接口名与动态变量名 1.5
                 to_interface_dynamic_value = {} #存储需要传入接口和变量值  1.6
 
-
+                print ("--------------------解析config-------start----------------")
                 for list_d in Dynamic_value_list:
                     from_case_to_dict = config_dict[list_d] #获取config的values 即动态值时从那个接口抓取，用到那些接口去
-                    interface_id = dict(from_case_to_dict).keys()[0]
-                    from_interface_list.append(interface_id) # 1.2
-                    to_interface_l = from_case_to_dict[interface_id]
-                    to_interface_l = str(to_interface_l[0]).split(',')
-                    to_interface_list += to_interface_l #1.4
-                    for list_i in to_interface_l:
+                    interface_id = dict(from_case_to_dict).keys()[0] #需要抓取的接口
+                    from_interface_list.append(interface_id) # 1.2 #存储需要抓取的接口
+                    to_interface_l = from_case_to_dict[interface_id] #获取需要传入动态变量的接口list
+
+                    # to_interface_l = str(to_interface_l[0]).split(',')
+                    to_interface_list = to_interface_l #1.4 存储所有需要传入动态值的接口 list
+                    for list_i in to_interface_list:
                         dynamic_to_interface_dict[list_i] = list_d #1.5
                     dynamic_from_interface_dict[interface_id] = list_d #1.3
 
-                print ("存储所有需[要抓取]动态值的接口名:"+str(from_interface_list))
-                print ("存储所有需[要传入]动态值的接口名:"+str(to_interface_list))
+                print ("存储所有需[要抓取]动态值的接口名 list:"+str(from_interface_list))
+                print ("存储所有需[要传入]动态值的接口名 list:"+str(to_interface_list))
                 print ("-------------------------")
-                print ("{需[要抓取]变量接口名:动态变量名} "+str(dynamic_from_interface_dict))
-                print ("{需[要传入]变量接口名:动态变量名} "+str(dynamic_to_interface_dict))
+                print ("{需[要抓取]变量接口名:动态变量名}  dict"+str(dynamic_from_interface_dict))
+                print ("{需[要传入]变量接口名:动态变量名}  dict"+str(dynamic_to_interface_dict))
                 print (str(case_list)+" 用例下面的所有接口:"+str(execution_case_oder_list))
+                print ("--------------------解析config-------end----------------")
 
                 for list_i_oder in execution_case_oder_list:#list = Project_Case.case_id 调用接口
                     print ("execute_interface_order:  "+str(list_i_oder))
-
+                    print ('*********  执行接口组[' + str(execution_case_oder_list) + ']下的接口 :  ' + str(list_i_oder) + '**********')
                     '''
                     1:获取list的mothod/parameter_format 判断接口执行分支
                     2:判断动态变量是否需要抓取
@@ -1703,7 +1694,6 @@ def execution_test_case(request):
                         2.2：否 不抓取
                     3：执行接口，收集接口执行过程日志
                     4：返回接口执行状态
-                        
                     '''
                     project_case_obj = Project_Case.objects.filter(case_id=list_i_oder)[0]
                     method = project_case_obj.method
@@ -1719,88 +1709,101 @@ def execution_test_case(request):
                     url_path = project_case_obj.url_path
                     parameter = project_case_obj.parameter
 
-                    if parameter_format == "application/json":
+                    if parameter_format == "application/json" and '' != parameter:
                         parameter = json.loads(parameter)#unicode转字典
 
                     expected = project_case_obj.expected
                     headers = project_case_obj.headers
 
                     if list_i_oder in from_interface_list and list_i_oder not in to_interface_list:#接口在需要提取动态变量名list中
+                        print ("执行接口分支 只需要抓取动态变量的接口%s" % str(list_i_oder))
                         dynamic_name = dynamic_from_interface_dict[list_i_oder]#获取动态变量名
-
                         to_interfaces = []#通过value获取key值 存储需要传入动态变量的接口
                         for k,v in dynamic_to_interface_dict.items():
                             if v == dynamic_name:
                                 to_interfaces.append(k)
 
                         dynamic_values_from_dict = {list_i_oder:dynamic_name}
-                        print ("需要抓取动态变量的接口：抓取的动态变量名--------------%s"%dynamic_values_from_dict)
-                        print ("需要传入该动态变量名的接口列表--------------%s"%str(to_interfaces))
+                        # print ("需要抓取动态变量的接口：抓取的动态变量名--------------%s"%dynamic_values_from_dict)
+                        # print ("需要传入该动态变量名的接口列表--------------%s"%str(to_interfaces))
 
-                        '''
-                        伪代码
-                        返回值：动态变量值
-                        '''
-                        print (str(protocol)+"*****"+str(type(protocol)))
-                        print (str(method) + "*****" + str(type(method)))
-                        print (str(parameter_format) + "*****" + str(type(parameter_format)))
-                        print (str(url_path) + "*****" + str(type(url_path)))
-                        print (str(parameter) + "*****" + str(type(parameter)))
-                        print (str(expected) + "*****" + str(type(expected)))
-                        print (str(headers) + "*****" + str(type(headers)))
-                        print (str(domain) + "*****" + str(type(domain)))
-                        print (str(dynamic_values_from_dict) + "*****" + str(type(dynamic_values_from_dict)))
+                        print ("×××××start×××××××开始调用接口执行引擎××××××××××××××××参数如下：")
+                        print ("protocol：[ "+str(protocol)+" ]*************数据类型：[ "+str(type(protocol))+" ]")
+                        print ("method：[ "+str(method) + " ]***************数据类型：[ " + str(type(method))+" ]")
+                        print ("parameter_format：[ "+str(parameter_format) + " ]***************数据类型：[ " + str(type(parameter_format))+" ]")
+                        print ("url_path：[ "+str(url_path) + " ]***************数据类型：[ " + str(type(url_path))+" ]")
+                        print ("parameter：[ "+str(parameter) + " ]***************数据类型：[ " + str(type(parameter))+" ]")
+                        print ("expected：[ "+str(expected) + " ]***************数据类型：[ " + str(type(expected))+" ]")
+                        print ("headers：[ "+str(headers) + " ]***************数据类型：[ " + str(type(headers))+" ]")
+                        print ("domain：[ "+str(domain) + " ]***************数据类型：[ " + str(type(domain))+" ]")
+                        print ("{需抓变量的接口：变量名 的字典}：[ "+str(dynamic_values_from_dict) + " ]***************数据类型：[ " + str(type(dynamic_values_from_dict))+" ]")
 
 
                         dynamic_value,api_log = Execute_Interface.execute_interface(protocol=protocol,method=method,parameter_format=parameter_format,
                                                            url_path=url_path,parameter=parameter,expected=expected,
                                                            headers=headers,domain=domain,flag=1,dynamic=dynamic_values_from_dict)#执行接口 返回执行结果
-                        print ("执行接口后返回需要抓取动态变量值：%s"%dynamic_value)
+                        print ("执行接口后返回需要抓取动态变量值：%s"%str(dynamic_value))
+                        print ("执行接口后返回执行结果集：%s"%str(api_log))
+                        print ("×××××end×××××××开始调用接口执行引擎××××××××××××××××")
                         for list_to_i in to_interfaces:
                             to_interface_dynamic_value[list_to_i] = dynamic_value#{需要传入动态变量的接口：动态变量值} 1.6
 
 
                     elif list_i_oder in to_interface_list and list_i_oder not in from_interface_list:#接口在需要传入动态变量名list中
-
-                        print (str(protocol) + "*****" + str(type(protocol)))
-                        print (str(method) + "*****" + str(type(method)))
-                        print (str(parameter_format) + "*****" + str(type(parameter_format)))
-                        print (str(url_path) + "*****" + str(type(url_path)))
-                        print (str(parameter) + "*****" + str(type(parameter)))
-                        print (str(expected) + "*****" + str(type(expected)))
-                        print (str(headers) + "*****" + str(type(headers)))
-                        print (str(domain) + "*****" + str(type(domain)))
-                        print (str(dynamic_values_from_dict) + "*****" + str(type(dynamic_values_from_dict)))
-
-
+                        print ("执行接口分支 只需要传入动态变量的接口%s" % str(list_i_oder))
                         dynamic_value = to_interface_dynamic_value[list_i_oder]
-
                         dynameic_name = dynamic_to_interface_dict[list_i_oder]
-
                         dynamic_dict = {dynameic_name:dynamic_value}
+
+                        print ("×××××start×××××××开始调用接口执行引擎××××××××××××××××参数如下：")
+                        print ("protocol：[ " + str(protocol) + " ]*************数据类型：[ " + str(type(protocol)) + " ]")
+                        print ("method：[ " + str(method) + " ]***************数据类型：[ " + str(type(method)) + " ]")
+                        print ("parameter_format：[ " + str(parameter_format) + " ]***************数据类型：[ " + str(type(parameter_format)) + " ]")
+                        print ("url_path：[ " + str(url_path) + " ]***************数据类型：[ " + str(type(url_path)) + " ]")
+                        print ("parameter：[ " + str(parameter) + " ]***************数据类型：[ " + str(type(parameter)) + " ]")
+                        print ("expected：[ " + str(expected) + " ]***************数据类型：[ " + str(type(expected)) + " ]")
+                        print ("headers：[ " + str(headers) + " ]***************数据类型：[ " + str(type(headers)) + " ]")
+                        print ("domain：[ " + str(domain) + " ]***************数据类型：[ " + str(type(domain)) + " ]")
+                        print ("{需传入变量的接口：变量值 的字典}：[ " + str(dynamic_dict) + " ]***************数据类型：[ " + str(type(dynamic_dict)) + " ]")
 
                         api_log = Execute_Interface.execute_interface(protocol=protocol,method=method,parameter_format=parameter_format,
                                                            url_path=url_path,parameter=parameter,expected=expected,
                                                            headers=headers,domain=domain,flag=2,
                                                           dynamic=dynamic_dict)  # 执行接口
 
-                        print ("执行接口--传入需要动态变量值的返回值：None")
+                        print ("执行接口后返回执行结果集：%s" % str(api_log))
+                        print ("×××××end×××××××开始调用接口执行引擎××××××××××××××××")
+
                     elif list_i_oder in from_interface_list and list_i_oder in to_interface_list:
+                        print ("执行接口分支 需要传入动态变量值又需要抓取动态变量的接口%s"%str(list_i_oder))
                         #先传入在抓取
-                        #input
                         dynamic_value = to_interface_dynamic_value[list_i_oder]
-
                         dynameic_name = dynamic_to_interface_dict[list_i_oder]
-
                         dynamic_dict = {dynameic_name: dynamic_value}
 
+                        print ("×××××start×××××××开始调用接口执行引擎××××××××××××××××参数如下：")
+                        print ("protocol：[ " + str(protocol) + " ]*************数据类型：[ " + str(type(protocol)) + " ]")
+                        print ("method：[ " + str(method) + " ]***************数据类型：[ " + str(type(method)) + " ]")
+                        print ("parameter_format：[ " + str(parameter_format) + " ]***************数据类型：[ " + str(type(parameter_format)) + " ]")
+                        print ("url_path：[ " + str(url_path) + " ]***************数据类型：[ " + str(type(url_path)) + " ]")
+                        print ("parameter：[ " + str(parameter) + " ]***************数据类型：[ " + str(type(parameter)) + " ]")
+                        print ("expected：[ " + str(expected) + " ]***************数据类型：[ " + str(type(expected)) + " ]")
+                        print ("headers：[ " + str(headers) + " ]***************数据类型：[ " + str(type(headers)) + " ]")
+                        print ("domain：[ " + str(domain) + " ]***************数据类型：[ " + str(type(domain)) + " ]")
+                        print ("{需传入变量的接口：变量值 的字典}：[ " + str(dynamic_dict) + " ]***************数据类型：[ " + str(type(dynamic_dict)) + " ]")
+
+                        print ("先传入变量:"+str(dynamic_dict))
                         api_log = Execute_Interface.execute_interface(protocol=protocol, method=method,
                                                                         parameter_format=parameter_format,
                                                                         url_path=url_path, parameter=parameter,
                                                                         expected=expected,
                                                                         headers=headers, domain=domain, flag=2,
                                                                         dynamic=dynamic_dict)  # 执行接口
-                        #catch
+
+                        print ("执行接口后返回执行结果集：%s" % str(api_log))
+                        print ("×××××end×××××××开始调用接口执行引擎××××××××××××××××")
+
+                        #再抓取
                         dynamic_name = dynamic_from_interface_dict[list_i_oder]  # 获取动态变量名
 
                         to_interfaces = []  # 通过value获取key值 存储需要传入动态变量的接口
@@ -1810,6 +1813,7 @@ def execution_test_case(request):
 
                         dynamic_values_from_dict = {list_i_oder: dynamic_name}
 
+                        print ("后抓取变量:"+str(dynamic_values_from_dict))
                         dynamic_value,api_log = Execute_Interface.execute_interface(protocol=protocol, method=method,
                                                                             parameter_format=parameter_format,
                                                                             url_path=url_path, parameter=parameter,
@@ -1817,32 +1821,46 @@ def execution_test_case(request):
                                                                             headers=headers, domain=domain, flag=1,
                                                                             dynamic=dynamic_values_from_dict)  # 执行接口 返回执行结果
                         print ("执行接口后返回需要抓取动态变量值：%s" % dynamic_value)
+                        print ("执行接口后返回执行结果集：%s" % str(api_log))
+                        print ("×××××end×××××××开始调用接口执行引擎××××××××××××××××")
+
                         for list_to_i in to_interfaces:
                             to_interface_dynamic_value[list_to_i] = dynamic_value  # {需要传入动态变量的接口：动态变量值} 1.6
 
 
                     else:#接口不需要提取或者传入动态变量
-                        api_log = Execute_Interface.execute_interface(method=method, parameter_format=parameter_format,
+                        print ("执行接口分支 不需要抓取和传入动态变量的接口%s" % str(list_i_oder))
+
+                        print ("×××××start×××××××开始调用接口执行引擎××××××××××××××××参数如下：")
+                        print ("protocol：[ " + str(protocol) + " ]*************数据类型：[ " + str(type(protocol)) + " ]")
+                        print ("method：[ " + str(method) + " ]***************数据类型：[ " + str(type(method)) + " ]")
+                        print ("parameter_format：[ " + str(parameter_format) + " ]***************数据类型：[ " + str(type(parameter_format)) + " ]")
+                        print ("url_path：[ " + str(url_path) + " ]***************数据类型：[ " + str(type(url_path)) + " ]")
+                        print ("parameter：[ " + str(parameter) + " ]***************数据类型：[ " + str(type(parameter)) + " ]")
+                        print ("expected：[ " + str(expected) + " ]***************数据类型：[ " + str(type(expected)) + " ]")
+                        print ("headers：[ " + str(headers) + " ]***************数据类型：[ " + str(type(headers)) + " ]")
+                        print ("domain：[ " + str(domain) + " ]***************数据类型：[ " + str(type(domain)) + " ]")
+                        print ("dynamic_dict：[  None  ]********不需要抓取和传入*******数据类型：[ None ]")
+
+                        api_log = Execute_Interface.execute_interface(protocol=protocol,method=method, parameter_format=parameter_format,
                                                           url_path=url_path, parameter=parameter, expected=expected,
                                                           headers=headers, domain=domain, flag=3,
                                                           dynamic=None)  # 执行接口
+                        print ("执行接口后返回执行结果集：%s" % str(api_log))
+                        print ("×××××end×××××××开始调用接口执行引擎××××××××××××××××")
 
                     '''
                     list_i_oder case into table
                     1：返回case执行log和状态，存储数据
                     '''
                     print ("config非空下收集api执行日志和状态***************start**************")
-                    print (api_log[1:1500])
+                    print (api_log[0:1500])
                     status = api_log.split('AutoFW test reslut:')[1].split('\'')[0]#执行结果
-                    print (status)
-                    print (report_id) #report_id
-                    print (list_i_oder) #接口id
-                    print (case_list)
                     print ("config非空下收集api执行日志和状态***************end**************")
                     log_report_id = report_id
                     log_API_id = list_i_oder
                     log_case_id = case_list
-                    log_execute_case = api_log[1:1500]
+                    log_execute_case = api_log[0:1500]
                     status = status
                     execute_case_log_dict = {
                         "log_report_id_id": log_report_id, "log_API_id_id": log_API_id, "log_case_id_id": log_case_id,

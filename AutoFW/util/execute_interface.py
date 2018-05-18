@@ -27,26 +27,42 @@ class Execute_Interface:
 
         protocol = protocol+'://'
 
+        if '' != headers:
+            headers = json.loads(headers)
+
         if flag == 2:#传入动态变量值 修改 header 和 parameter  dynamic入参为{变量名：变量值}
             if headers != '':
-                headers = json.loads(headers)
+            #     headers = json.loads(headers)
                 for h_key in headers.keys():
-                    if headers[h_key] == "${"+dynamic.keys()[0]+"}":
+                    if headers[h_key] == "${"+str(dynamic.keys()[0])+"}":
                         headers[h_key] = dynamic.values()[0]
 
             if parameter != '':
                 if isinstance(parameter,dict):
                     for p_key in parameter.keys():
-                        if parameter[p_key] == "${"+dynamic.keys()[0]+"}":
+                        if parameter[p_key] == "${"+str(dynamic.keys()[0])+"}":
                             parameter[p_key] = dynamic.values()[0]
                 else:
-                    if "${"+dynamic.keys()[0]+"}" in parameter:
-                        old_p = "${"+dynamic.keys()[0]+"}"
-                        new_p = "${"+dynamic.values()[0]+"}"
-                        str(parameter).replace(old_p,new_p)
+                    if "${"+str(dynamic.keys()[0])+"}" in parameter:
+                        old_p = "${"+str(dynamic.keys()[0])+"}"
+                        new_p = str(dynamic.values()[0])
+                        parameter = str(parameter).replace(old_p,new_p)
+
+
+            if "${"+str(dynamic.keys()[0])+"}" in url_path:
+                old_p = "${"+str(dynamic.keys()[0])+"}"
+                new_p = str(dynamic.values()[0])
+                url_path = str(url_path).replace(old_p,new_p)
 
         elif flag == 3:#不需要关联动态变量值
             pass
+
+        print ("####################################################")
+        print ("url_path:"+str(url_path))
+        print ("method:" + str(method))
+        print ("headers:" + str(headers))
+        print ("parameter:"+str(parameter))
+        print ("####################################################")
 
         try:
             if str(method).upper() == "GET":
@@ -122,35 +138,44 @@ class Execute_Interface:
             print (rs_str)
             rs_dic = json.loads(rs_str)
 
-            expected = json.loads(str(expected))#unicode转字典
-            # print type(expected)
+            if ":" in str(expected) and "{" in str(expected):
+                expected_d = json.loads(str(expected))#unicode转字典
 
-            dict_count = len(expected)
-            if dict_count == 1:  # 匹配单参数
-                actual_value = GetDictParam.get_value(rs_dic, expected.keys()[0])
-                if actual_value == expected.get(expected.keys()[0]):
-                    api_log = 'AutoFW test reslut:PASS\'' + "[time_consuming:" + time_consuming + '] ' + \
-                              'response_expected_actual_value:<' + str(expected) + '>: expected_value:' +\
-                              expected.values()[0]+ ' actual_values:'+ str(actual_value)+'] '+str(rs_str)
-                else:
-                    api_log = 'AutoFW test reslut:FAILED\' [By casuse <' + expected.keys()[0] + '>: expected_value:'+\
-                              expected.values()[0]+', actual_values:'+str(actual_value)+'' +'] '+str(rs_str)
+                if isinstance(expected_d, dict):
 
-            elif dict_count > 1:  # 匹配多参数
-                dic_key_str = []
-                for i in range(dict_count):
-                    dic_key_str.append(expected.keys()[i])  # 存放字典所有的key
-                actual_value = GetDictParam.list_for_key_to_dict(rs_dic, dic_key_str)  # 返回一个字典
+                    dict_count = len(expected_d)
+                    if dict_count == 1:  # 匹配单参数
+                        actual_value = GetDictParam.get_value(rs_dic, expected_d.keys()[0])
+                        if actual_value == expected_d.get(expected_d.keys()[0]):
+                            api_log = 'AutoFW test reslut:PASS\'' + "[time_consuming:" + str(time_consuming) + '] ' + \
+                                      'response_expected_actual_value:<' + str(expected) + '>: expected_value:' + \
+                                      str(expected_d.values()[0])+ ' actual_values:'+ str(actual_value) + '] '+str(rs_str)
+                        else:
+                            api_log = 'AutoFW test reslut:FAILED\' [By casuse <' + str(expected_d.keys()[0]) + '>: expected_value:'+ \
+                                      str(expected_d.values()[0])+', actual_values:'+str(actual_value)+'' +'] '+str(rs_str)
 
-                if cmp(expected, actual_value) == 0:  # 返回0，说明两个字典相同，返回其他，说明字典不一样
-                    api_log = 'AutoFW test reslut:PASS\'' + "[time_consuming:" + time_consuming + '] ' + \
-                              'response_expected_actual_value:<' + str(expected) + '>: expected_value:' + \
-                              expected.values()[0] + ' actual_values:' + str(actual_value) + '] '+str(rs_str)
-                else:
-                    api_log = 'AutoFW test reslut:FAILED\' [By casuse <' + expected.keys()[0] + '>: expected_value:' + \
-                              expected.values()[0] + ', actual_values:' + str(actual_value) + '' + '] ' + str(rs_str)
+                    elif dict_count > 1:  # 匹配多参数
+                        dic_key_str = []
+                        for i in range(dict_count):
+                            dic_key_str.append(expected_d.keys()[i])  # 存放字典所有的key
+                        actual_value = GetDictParam.list_for_key_to_dict(rs_dic, dic_key_str)  # 返回一个字典
+
+                        if cmp(expected_d, actual_value) == 0:  # 返回0，说明两个字典相同，返回其他，说明字典不一样
+                            api_log = 'AutoFW test reslut:PASS\'' + "[time_consuming:" + str(time_consuming) + '] ' + \
+                                      'response_expected_actual_value:<' + str(expected) + '>: expected_value:' + \
+                                      str(expected_d.values()[0]) + ' actual_values:' + str(actual_value) + '] '+str(rs_str)
+                        else:
+                            api_log = 'AutoFW test reslut:FAILED\' [By casuse <' + str(expected.keys()[0]) + '>: expected_value:' + \
+                                      str(expected_d.values()[0]) + ', actual_values:' + str(actual_value) + '' + '] ' + str(rs_str)
+                    else:
+                        print ("expected is NULL")
             else:
-                print ("expected is NULL")
+                if str(expected) in rs_str:
+                    api_log = 'AutoFW test reslut:PASS\'' + "[time_consuming:" + str(time_consuming) + '] ' + \
+                              'response_expected_actual_value:<' + str(expected) + '>: expected_value:'+str(expected)+', actual_values:'+str(expected)+' ]' + str(rs_str)
+                else:
+                    api_log = 'AutoFW test reslut:FAILED\'[By casuse <' + str(expected) + '>: expected_value:'+str(expected)+' response:' + str(rs_dic)
+
         except requests.exceptions.ConnectionError:
             mylogging("[" + str(__file__).split('/')[-1] + "][" + protocol + domain + url_path + "] <EXCEPTION>\r" + traceback.format_exc())
             print (traceback.format_exc())
@@ -187,15 +212,15 @@ class Execute_Interface:
             return api_log
 
 if __name__ == "__main__":
-    method = "POST"
+    method = "GET"
     protocol = "HTTPS"
     domain = "test02.2boss.cn"
-    url = "/api/v1/user/login"
-    headers = '' #{"TBSAccessToken":"ab6fa173260d4b58a5e7bd83417a4d2f"}
-    parameter = {"devicesToken":"f8afa393-87c9-3f26-92fa-bee05259c485","customer_id":"4527767","verifyCode":"5446","userAccount":"17607081946"}
-    expected = '{"mobile": "17607081946"}'
+    url = "/rabbit/v1/question/superior/list"
+    headers = ''#{"TBSAccessToken":"d69b6b575a3f40f19d488bdde969c807"}
+    parameter = 'superiorCode=10681955'
+    expected = '{"superiorTel":"18522222222"}'
 
     t = Execute_Interface()
-    dynamic = {"test1":"accessToken"}
+    dynamic = None
     #execute_interface(self,method,parameter_format,domain,url_path,headers,parameter,expected,falg,**dynamic)
-    t.execute_interface(protocol,method,"application/json",domain,url,headers,parameter,expected,1,dynamic)
+    t.execute_interface(protocol,method,"GET方法选该参数格式",domain,url,headers,parameter,expected,3,dynamic)

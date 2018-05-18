@@ -80,9 +80,10 @@
             <td>动态变量</td>
             <td>用例状态</td>
             <td>用例类型</td>
+            <td>注释</td>
         </tr>
         <tr class="case_list_tr">
-            <td colspan="7">暂无数据</td>
+            <td colspan="8">暂无数据</td>
         </tr>
     </table>
 
@@ -128,16 +129,17 @@
                                     '<td class="case_list_tr">'+data.case_list[i].config+'</td>' +
                                     '<td class="case_list_tr">'+data.case_list[i].status+'</td>' +
                                     '<td class="case_list_tr">'+data.case_list[i].script_case_type+'</td>' +
+                                    '<td class="case_list_tr">'+data.case_list[i].remark+'</td>' +
                                     '</tr>')
                             }
 
                     }else if(data.status == "no_date"){
                         $(".case_list_tr").remove();
-                        $("#case_info_list").append('<tr class="case_list_tr"><td colspan="7">暂无数据</td></tr>')
+                        $("#case_info_list").append('<tr class="case_list_tr"><td colspan="8">暂无数据</td></tr>')
                         alert(data.msg);
                     }else if(data.status == "project_name_null"){
                         $(".case_list_tr").remove();
-                        $("#case_info_list").append('<tr class="case_list_tr"><td colspan="7">暂无数据</td></tr>')
+                        $("#case_info_list").append('<tr class="case_list_tr"><td colspan="8">暂无数据</td></tr>')
                         alert(data.msg);
                     }
                 }
