@@ -18,6 +18,9 @@
         }
 
         #c_report_list_t{
+            /*word-wrap 和 word-break 固定table的宽*/
+            word-wrap: break-word;
+            word-break: break-all;
             width: 1200px;
             border: 1px solid #0094ff
         }
@@ -32,7 +35,7 @@
         }
 
         #c_report_list_t .case_report_case_title_name{
-            width: 200px;
+            width: 100px;
             text-align: center;
             background: greenyellow;
         }
@@ -44,7 +47,7 @@
         }
 
         #c_report_list_t .case_report_status_title_name{
-            width: 100px;
+            width: 30px;
             text-align: center;
             background: greenyellow;
         }
@@ -224,9 +227,9 @@
 
                                 $("#c_report_list_t").append(
                                     '<tr id="c_execute_case_log_name_list" class="execute_log_list_tr" >' +
-                                    '<td style="width: 150px" class="c_execute_case_log_name_list">' + data.report_case_execute_obj_list[i].log_case_id + '</td>' +
+                                    '<td style="width: 50px" class="c_execute_case_log_name_list">' + data.report_case_execute_obj_list[i].log_case_id + '</td>' +
                                     '<td colspan="2" id="'+primary_key_id+'" class="c_execute_case_log_name_list" style="width: 500px"><input type="button" class="c_execute_case_log_name_list" value="详情" name="'+data.report_case_execute_obj_list[i].log_case_id +','+ data.report_case_execute_obj_list[i].log_report_id+'" onclick="return case_look_detail(this)" ></td>' +
-                                    '<td style="width: 50px" class="c_execute_case_log_name_list">' + data.report_case_execute_obj_list[i].states + '</td>' +
+                                    '<td style="width: 30px" class="c_execute_case_log_name_list">' + data.report_case_execute_obj_list[i].states + '</td>' +
                                     '</tr>'
                                 );
                             }
@@ -255,7 +258,7 @@
                         $(".case_detail_info_tr").remove();
                         for (var i = 0; i < data.case_detail.length; i++){
                            $("#"+primary_key_id).append(
-                                '<tr class="case_detail_info_tr" style="width: 50%"><td class="case_detail_info_tr">'+data.case_detail[i].api_id+'</td><td class="case_detail_info_tr">'+data.case_detail[i].api_log+'</td><td class="case_detail_info_tr">'+data.case_detail[i].api_status+'</td></tr>'
+                                '<tr class="case_detail_info_tr"><td class="case_detail_info_tr" style="width: 100px">'+data.case_detail[i].api_id+'</td><td class="case_detail_info_tr">'+data.case_detail[i].api_log+'</td><td class="case_detail_info_tr" style="width: 40px">'+data.case_detail[i].api_status+'</td></tr>'
                             );
                         }
                     }
@@ -289,6 +292,37 @@
             }else{
                 window.event.returnValue = false;
             }
+        }
+
+
+        function case_send_email_td(a) {
+            var report_id = $(a).attr("name");//获取report_id
+            var user_list = prompt("请输入要发送邮件的用户帐号，多个以英文‘,’分割");
+            var flags = "case";
+            if(user_list)
+            {
+                alert("您刚输入的是："+ user_list);
+            }else if(user_list==''){//文字为空点击了确认按钮
+                alert("帐号为空");
+                return ;
+            }else{//点击取消按钮
+                return ;
+            }
+
+            $.ajax({
+                url:"/AutoFW/send_email_by_report_list/",
+                type:"get",
+                data:"report_id="+report_id+"&user_list="+user_list+"&flags="+flags,
+                success:function (data) {
+                    if(data.status == "success"){
+                        alert("邮件发送成功！");
+                    }else if(data.status == "fail"){
+                        alert("输入账户格式有误或者账户不存在！");
+                    }
+                }
+
+
+            });
         }
     </script>
 

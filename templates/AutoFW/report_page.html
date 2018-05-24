@@ -243,6 +243,7 @@
         function send_email_td(a){
             var report_id = $(a).attr("name");//获取report_id
             var user_list = prompt("请输入要发送邮件的用户帐号，多个以英文‘,’分割");
+            var flags = "interface";
             if(user_list)
             {
                 alert("您刚输入的是："+ user_list);
@@ -258,7 +259,7 @@
             $.ajax({
                 url:"/AutoFW/send_email_by_report_list/",
                 type:"get",
-                data:"report_id="+report_id+"&user_list="+user_list,
+                data:"report_id="+report_id+"&user_list="+user_list+"&flags="+flags,
                 success:function (data) {
                     if(data.status == "success"){
                         alert("邮件发送成功！");

@@ -217,32 +217,34 @@
 //                                clearInterval(temp);
 //                                jindutiaoN.style.width = '100%';
 //                                jindutiaoN.innerHTML = '100%';
-                                $.messager.show({
-                                    title: '用例执行提示',
-                                    msg: "测试用例执行成功，请去测试模块查看测试报告！：",
-                                    width: 300,
-                                    height: 80,
-                                    showType:null,
-                                    style:{
-
-                                    }
-                                });
-                            }else if(data.status == "email_send_fail"){
+                                alert(data.msg);
+//                                $.messager.show({
+//                                    title: '用例执行提示',
+//                                    msg: "测试用例执行成功，请去测试模块查看测试报告！：",
+//                                    width: 300,
+//                                    height: 80,
+//                                    showType:null,
+//                                    style:{
+//
+//                                    }
+//                                });
+                            }else if(data.status == "failed"){
+                                alert(data.msg);
                                 //进度条控制，此处表示真正的完成
-                                clearInterval(temp);
-                                jindutiaoN.style.width = '100%';
-                                jindutiaoN.innerHTML = '100%';
+//                                clearInterval(temp);
+//                                jindutiaoN.style.width = '100%';
+//                                jindutiaoN.innerHTML = '100%';
 
-                                $.messager.show({
-                                    title: '脚本执行提示',
-                                    msg: "接口测试脚本执行成功，邮箱发送失败，该用户未填写邮箱信息，可前往[用户中心]补填邮箱信息！：",
-                                    width: 300,
-                                    height: 180,
-                                    showType:null,
-                                    style:{
-
-                                    }
-                                });
+//                                $.messager.show({
+//                                    title: '脚本执行提示',
+//                                    msg: "接口测试脚本执行成功，邮箱发送失败，该用户未填写邮箱信息，可前往[用户中心]补填邮箱信息！：",
+//                                    width: 300,
+//                                    height: 180,
+//                                    showType:null,
+//                                    style:{
+//
+//                                    }
+//                                });
                             }
                         }
                     });
