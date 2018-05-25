@@ -6,13 +6,13 @@ import os
 import json
 import urlparse
 import MySQLdb
+from requests.exceptions import ReadTimeout
 util_path = os.path.join(os.path.abspath(os.path.dirname(__file__)+ os.path.sep + "../.."),"util")
 sys.path.append(util_path)
 from Mylogging import mylogging
 from get_token_userid_customer import Get_userId
 from json_d import GetDictParam
 
-from AutoFWOG.AutoFW.models import *
 
 class Execute_Interface:
     @staticmethod
@@ -23,49 +23,87 @@ class Execute_Interface:
         #替换动态值， headers/parameter/url_path
         if '兔博士经济版' == str(project_name):
             mobile_id = '17620367177'
-        elif '兔博士用户端' == str(project_name):
-            mobile_id = '17607081946'
+        # elif '兔博士用户端' == str(project_name):
+        #     mobile_id = '17607081946'
+            user_id,userCode,customer_id = Get_userId.get_user_id_encode(mobile_id)
 
-        userCode = Get_userId.get_user_id_encode(mobile_id)
-        if '${userCode}' in url_path:
-            old_p = "${userCode}"
-            new_p = userCode
-            url_path = str(url_path).replace(old_p, new_p)
+            if '${userCode}' in url_path:
+                old_p = "${userCode}"
+                new_p = userCode
+                url_path = str(url_path).replace(old_p, new_p)
 
-        if headers != '':
-            for h_key in headers.keys():
-                if headers[h_key] == '${userCode}':
-                    headers[h_key] = userCode
-
-        if parameter != '':
-            if isinstance(parameter,dict):
-                for p_key in parameter.keys():
-                    if parameter[p_key] == '${userCode}':
-                        parameter[p_key] = userCode
-            else:
-                if '${userCode}' in parameter:
-                    old_p = '${userCode}'
-                    new_p = userCode
-                    parameter = str(parameter).replace(old_p,new_p)
-
-        if '兔博士用户端' == str(project_name):
-            user_id,access_token,customer_id = Get_userId.get_token_userid_customer("17607081946")
             if '${user_id}' in url_path:
                 old_p = "${user_id}"
                 new_p = user_id
                 url_path = str(url_path).replace(old_p, new_p)
-            if '${access_token}' in url_path:
-                old_p = "${access_token}"
-                new_p = access_token
-                url_path = str(url_path).replace(old_p, new_p)
+
             if '${customer_id}' in url_path:
                 old_p = "${customer_id}"
                 new_p = customer_id
                 url_path = str(url_path).replace(old_p, new_p)
+
+
+            if headers != '':
+                for h_key in headers.keys():
+                    if headers[h_key] == '${userCode}':
+                        headers[h_key] = userCode
+                    if headers[h_key] == '${user_id}':
+                        headers[h_key] = user_id
+                    if headers[h_key] == '${customer_id}':
+                        headers[h_key] = customer_id
+
+            if parameter != '':
+                if isinstance(parameter,dict):
+                    for p_key in parameter.keys():
+                        if parameter[p_key] == '${userCode}':
+                            parameter[p_key] = userCode
+                        if parameter[p_key] == '${user_id}':
+                            parameter[p_key] = user_id
+                        if parameter[p_key] == '${customer_id}':
+                            parameter[p_key] = customer_id
+                else:
+                    if '${userCode}' in parameter:
+                        old_p = '${userCode}'
+                        new_p = userCode
+                        parameter = str(parameter).replace(old_p,new_p)
+                    if '${user_id}' in parameter:
+                        old_p = '${user_id}'
+                        new_p = user_id
+                        parameter = str(parameter).replace(old_p,new_p)
+                    if '${customer_id}' in parameter:
+                        old_p = '${customer_id}'
+                        new_p = customer_id
+                        parameter = str(parameter).replace(old_p,new_p)
+
+        if '兔博士用户端' == str(project_name):
+            mobile_id = '17607081946'
+            user_id,userCode,access_token,customer_id = Get_userId.get_token_userid_customer(mobile_id)
+            if '${user_id}' in url_path:
+                old_p = "${user_id}"
+                new_p = user_id
+                url_path = str(url_path).replace(old_p, new_p)
+
+            if '${userCode}' in url_path:
+                old_p = "${userCode}"
+                new_p = userCode
+                url_path = str(url_path).replace(old_p, new_p)
+
+            if '${access_token}' in url_path:
+                old_p = "${access_token}"
+                new_p = access_token
+                url_path = str(url_path).replace(old_p, new_p)
+
+            if '${customer_id}' in url_path:
+                old_p = "${customer_id}"
+                new_p = customer_id
+                url_path = str(url_path).replace(old_p, new_p)
+
             if headers != '':
                 for h_key in headers.keys():
                     if headers[h_key] == '${user_id}':
                         headers[h_key] = user_id
+                    if headers[h_key] == '${userCode}':
+                        headers[h_key] = userCode
                     if headers[h_key] == '${access_token}':
                         headers[h_key] = access_token
                     if headers[h_key] == '${customer_id}':
@@ -75,6 +113,8 @@ class Execute_Interface:
                     for p_key in parameter.keys():
                         if parameter[p_key] == '${user_id}':
                             parameter[p_key] = user_id
+                        if parameter[p_key] == '${userCode}':
+                            parameter[p_key] = userCode
                         if parameter[p_key] == '${access_token}':
                             parameter[p_key] = access_token
                         if parameter[p_key] == '${customer_id}':
@@ -83,6 +123,10 @@ class Execute_Interface:
                     if '${user_id}' in parameter:
                         old_p = '${user_id}'
                         new_p = user_id
+                        parameter = str(parameter).replace(old_p,new_p)
+                    if '${userCode}' in parameter:
+                        old_p = '${userCode}'
+                        new_p = userCode
                         parameter = str(parameter).replace(old_p,new_p)
                     if '${access_token}' in parameter:
                         old_p = '${access_token}'
@@ -197,61 +241,79 @@ class Execute_Interface:
                     else:
                         r = requests.post(protocol + domain + url_path, headers=headers, json=parameter, timeout=8)
 
-
             time_consuming = str(r.elapsed.total_seconds())  # 计算接口被调用耗时
             # rs = r.json()
 
             rs_str = r.content
+            #rs_str = rs_str.replace("㎡","m")
             print (rs_str)
-            rs_dic = json.loads(rs_str)
+            if rs_str[0] == '{' and rs_str[-1] == '}':#判断返回报文是否是字典
+                rs_dic = json.loads(rs_str)
 
-            if ":" in str(expected) and "{" in str(expected):
-                expected_d = json.loads(str(expected))#unicode转字典
+                if ":" in str(expected) and "{" in str(expected):
+                    expected_d = json.loads(str(expected))#unicode转字典
 
-                if isinstance(expected_d, dict):
+                    if isinstance(expected_d, dict):
 
-                    dict_count = len(expected_d)
-                    if dict_count == 1:  # 匹配单参数
-                        actual_value = GetDictParam.get_value(rs_dic, expected_d.keys()[0])
-                        if actual_value == expected_d.get(expected_d.keys()[0]):
-                            api_log = 'AutoFW test reslut:PASS\'' + "[time_consuming:" + str(time_consuming) + '] ' + \
-                                      'response_expected_actual_value:<' + str(expected) + '>: expected_value:' + \
-                                      str(expected_d.values()[0])+ ' actual_values:'+ str(actual_value) + '] '+str(rs_str)
+                        dict_count = len(expected_d)
+                        if dict_count == 1:  # 匹配单参数
+                            actual_value = GetDictParam.get_value(rs_dic, expected_d.keys()[0])
+                            if actual_value == expected_d.get(expected_d.keys()[0]):
+                                api_log = 'AutoFW test reslut:PASS\'' + "[time_consuming:" + str(time_consuming) + '] ' + \
+                                          'response_expected_actual_value:<' + str(expected) + '>: expected_value:' + \
+                                          str(expected_d.values()[0])+ ' actual_values:'+ str(actual_value) + '] '+str(rs_str)
+                            else:
+                                api_log = 'AutoFW test reslut:FAILED\' [By casuse <' + str(expected_d.keys()[0]) + '>: expected_value:'+ \
+                                          str(expected_d.values()[0])+', actual_values:'+str(actual_value)+'' +'] '+str(rs_str)
+
+                        elif dict_count > 1:  # 匹配多参数
+                            dic_key_str = []
+                            for i in range(dict_count):
+                                dic_key_str.append(expected_d.keys()[i])  # 存放字典所有的key
+                            actual_value = GetDictParam.list_for_key_to_dict(rs_dic, dic_key_str)  # 返回一个字典
+
+                            if cmp(expected_d, actual_value) == 0:  # 返回0，说明两个字典相同，返回其他，说明字典不一样
+                                api_log = 'AutoFW test reslut:PASS\'' + "[time_consuming:" + str(time_consuming) + '] ' + \
+                                          'response_expected_actual_value:<' + str(expected) + '>: expected_value:' + \
+                                          str(expected_d.values()[0]) + ' actual_values:' + str(actual_value) + '] '+str(rs_str)
+                            else:
+                                api_log = 'AutoFW test reslut:FAILED\' [By casuse <' + str(expected.keys()[0]) + '>: expected_value:' + \
+                                          str(expected_d.values()[0]) + ', actual_values:' + str(actual_value) + '' + '] ' + str(rs_str)
                         else:
-                            api_log = 'AutoFW test reslut:FAILED\' [By casuse <' + str(expected_d.keys()[0]) + '>: expected_value:'+ \
-                                      str(expected_d.values()[0])+', actual_values:'+str(actual_value)+'' +'] '+str(rs_str)
-
-                    elif dict_count > 1:  # 匹配多参数
-                        dic_key_str = []
-                        for i in range(dict_count):
-                            dic_key_str.append(expected_d.keys()[i])  # 存放字典所有的key
-                        actual_value = GetDictParam.list_for_key_to_dict(rs_dic, dic_key_str)  # 返回一个字典
-
-                        if cmp(expected_d, actual_value) == 0:  # 返回0，说明两个字典相同，返回其他，说明字典不一样
-                            api_log = 'AutoFW test reslut:PASS\'' + "[time_consuming:" + str(time_consuming) + '] ' + \
-                                      'response_expected_actual_value:<' + str(expected) + '>: expected_value:' + \
-                                      str(expected_d.values()[0]) + ' actual_values:' + str(actual_value) + '] '+str(rs_str)
-                        else:
-                            api_log = 'AutoFW test reslut:FAILED\' [By casuse <' + str(expected.keys()[0]) + '>: expected_value:' + \
-                                      str(expected_d.values()[0]) + ', actual_values:' + str(actual_value) + '' + '] ' + str(rs_str)
+                            print ("expected is NULL")
+                else:
+                    if str(expected) in rs_str:
+                        api_log = 'AutoFW test reslut:PASS\'' + "[time_consuming:" + str(time_consuming) + '] ' + \
+                                  'response_expected_actual_value:<' + str(expected) + '>: expected_value:'+str(expected)+', actual_values:'+str(expected)+' ]' + str(rs_str)
                     else:
-                        print ("expected is NULL")
-            else:
+                        api_log = 'AutoFW test reslut:FAILED\'[By casuse <' + str(expected) + '>: expected_value:'+str(expected)+' response:' + str(rs_str)
+            else:#服务器返回报文不是字典时处理
                 if str(expected) in rs_str:
                     api_log = 'AutoFW test reslut:PASS\'' + "[time_consuming:" + str(time_consuming) + '] ' + \
-                              'response_expected_actual_value:<' + str(expected) + '>: expected_value:'+str(expected)+', actual_values:'+str(expected)+' ]' + str(rs_str)
+                              'response_expected_actual_value:<' + str(expected) + '>: expected_value:' + str(expected) + ', actual_values:' + str(expected) + ' ]' + str(rs_str)
                 else:
-                    api_log = 'AutoFW test reslut:FAILED\'[By casuse <' + str(expected) + '>: expected_value:'+str(expected)+' response:' + str(rs_dic)
+                    api_log = 'AutoFW test reslut:FAILED\'[By casuse <' + str(expected) + '>: expected_value:'+str(expected)+' response:' + str(rs_str)
 
         except requests.exceptions.ConnectionError:
             mylogging("[" + str(__file__).split('/')[-1] + "][" + protocol + domain + url_path + "] <EXCEPTION>\r" + traceback.format_exc())
             print (traceback.format_exc())
+            api_log = 'AutoFW test reslut:FAILED\' requests.exceptions.ConnectionError exception:' + str(traceback.format_exc())
         except requests.exceptions.InvalidHeader:
             mylogging("[" + str(__file__).split('/')[-1] + "]  [" + protocol + domain + url_path + "] <EXCEPTION>\r" + traceback.format_exc())
             print (traceback.format_exc())
+            api_log = 'AutoFW test reslut:FAILED\' requests.exceptions.InvalidHeader exception:' + str(traceback.format_exc())
         except AttributeError:
             mylogging("["+str(__file__).split('/')[-1]+"]  ["+protocol + domain + url_path+"] <EXCEPTION>\r"+traceback.format_exc())
             print (traceback.format_exc())
+            api_log = 'AutoFW test reslut:FAILED\' AttributeError exception:' + str(traceback.format_exc())
+        except ValueError:
+            mylogging("[" + str(__file__).split('/')[-1] + "]  [" + protocol + domain + url_path + "] <EXCEPTION>\r" + traceback.format_exc())
+            print (traceback.format_exc())
+            api_log = 'AutoFW test reslut:FAILED\' ValueError exception:' + str(traceback.format_exc())
+        except ReadTimeout:
+            mylogging("[" + str(__file__).split('/')[-1] + "]  [" + protocol + domain + url_path + "] <EXCEPTION>\r" + traceback.format_exc())
+            print (traceback.format_exc())
+            api_log = 'AutoFW test reslut:FAILED\' ReadTimeout exception:' + str(traceback.format_exc())
 
         if flag == 1:  # 需要抓取动态变量值   **dynamic入参为{需要抓取接口名：变量值}
             #-------start-----抓取验证码特例------------------------
@@ -279,23 +341,16 @@ class Execute_Interface:
             return api_log
 
 if __name__ == "__main__":
-    method = "GET"
+    method = "POST"
     protocol = "HTTPS"
-    domain = "test02.2boss.cn"
-    url = "/rabbit/v1/house/pro-pay"
-    headers = '{"TBSAccessToken":"6c019dddccc94d4b95869584b62c77b5"}'
-    parameter = 'cityId=605&houseId=18048'
-    expected = '{"resultCode":0}'
+    domain = "test.2boss.cn"
+    url = "/superior/v1/sms/mobileVerify"
+    headers = ''#{"TBSAccessToken":"d69b6b575a3f40f19d488bdde969c807"}
+    parameter = {"type":"10","mobile":"17620367177"}
+    expected = '{"superiorTel":"18522222222"}'
 
     t = Execute_Interface()
     dynamic = None
-    #execute_interface(project_name,protocol,method,parameter_format,domain,url_path,headers,parameter,expected,flag,dynamic)
-    log = t.execute_interface("兔博士用户端",protocol,method,"GET方法选该参数格式",domain,url,headers,parameter,expected,3,dynamic)
+    #execute_interface(self,method,parameter_format,domain,url_path,headers,parameter,expected,falg,**dynamic)
+    log = t.execute_interface("兔博士经济版",protocol,method,"application/json",domain,url,headers,parameter,expected,3,dynamic)
     print log
-
-    execute_case_log_dict = {
-        "log_report_id_id": "123", "log_API_id_id": "TBS_ES_JB_014", "log_case_id_id": "TBS_ES_JB_014",
-        "log_execute_case": log, "status": "PASS", "bak1": "testog"
-    }
-
-    Execute_Case_Log.objects.create(**execute_case_log_dict)

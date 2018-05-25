@@ -75,3 +75,12 @@ function deleteProjectAPI(){
       }
     });
 }
+
+
+//查询接口
+function doSearchInterfaceName(){
+	$('#dg_case').datagrid('load',{
+		case_name: $('#case_name').val()
+	});
+	//$('#dg_case').datagrid('reload');
+}

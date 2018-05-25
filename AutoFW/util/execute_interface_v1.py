@@ -17,82 +17,129 @@ from json_d import GetDictParam
 class Execute_Interface:
     @staticmethod
     def execute_interface(project_name,protocol,method,parameter_format,domain,url_path,headers,parameter,expected,flag,dynamic,user_info):
+
         if '' != headers:
             headers = json.loads(headers)
         #替换动态值， headers/parameter/url_path
         if '兔博士经济版' == str(project_name):
-            userInfo = user_info["JJB_userInfo"]
-        elif '兔博士用户端' == str(project_name):
-            userInfo = user_info["YHB_userInfo"]
-        verify = userInfo["verify"] #验证码
-        user_id = userInfo["user_id"]
-        userCode = userInfo["userCode"]
-        customer_id = userInfo["customer_id"]
-        access_token = userInfo["token"]
+            mobile_id = '17620367177'
+        # elif '兔博士用户端' == str(project_name):
+        #     mobile_id = '17607081946'
+            user_id,userCode,customer_id = Get_userId.get_user_id_encode(mobile_id)
 
-        #分表判断 headers/parameter/url_path中是否存在需要替换的变量 ${user_id} ${customer_id} ${access_token} ${userCode}
-        if '${userCode}' in url_path:
-            old_p = "${userCode}"
-            new_p = userCode
-            url_path = str(url_path).replace(old_p, new_p)
+            if '${userCode}' in url_path:
+                old_p = "${userCode}"
+                new_p = userCode
+                url_path = str(url_path).replace(old_p, new_p)
 
-        if '${user_id}' in url_path:
-            old_p = "${user_id}"
-            new_p = user_id
-            url_path = str(url_path).replace(old_p, new_p)
+            if '${user_id}' in url_path:
+                old_p = "${user_id}"
+                new_p = user_id
+                url_path = str(url_path).replace(old_p, new_p)
 
-        if '${customer_id}' in url_path:
-            old_p = "${customer_id}"
-            new_p = customer_id
-            url_path = str(url_path).replace(old_p, new_p)
-
-        if '${access_token}' in url_path:
-            old_p = "${access_token}"
-            new_p = access_token
-            url_path = str(url_path).replace(old_p, new_p)
-
-        if headers != '':
-            for h_key in headers.keys():
-                if headers[h_key] == '${userCode}':
-                    headers[h_key] = userCode
-                if headers[h_key] == '${user_id}':
-                    headers[h_key] = user_id
-                if headers[h_key] == '${customer_id}':
-                    headers[h_key] = customer_id
-                if headers[h_key] == '${access_token}':
-                    headers[h_key] = access_token
+            if '${customer_id}' in url_path:
+                old_p = "${customer_id}"
+                new_p = customer_id
+                url_path = str(url_path).replace(old_p, new_p)
 
 
-        if parameter != '':
-            if isinstance(parameter,dict):
-                for p_key in parameter.keys():
-                    if parameter[p_key] == '${userCode}':
-                        parameter[p_key] = userCode
-                    if parameter[p_key] == '${user_id}':
-                        parameter[p_key] = user_id
-                    if parameter[p_key] == '${customer_id}':
-                        parameter[p_key] = customer_id
-                    if parameter[p_key] == '${access_token}':
-                        parameter[p_key] = access_token
-            else:
-                if '${userCode}' in parameter:
-                    old_p = '${userCode}'
-                    new_p = userCode
-                    parameter = str(parameter).replace(old_p,new_p)
-                if '${user_id}' in parameter:
-                    old_p = '${user_id}'
-                    new_p = user_id
-                    parameter = str(parameter).replace(old_p,new_p)
-                if '${customer_id}' in parameter:
-                    old_p = '${customer_id}'
-                    new_p = customer_id
-                    parameter = str(parameter).replace(old_p,new_p)
-                if '${access_token}' in parameter:
-                    old_p = '${access_token}'
-                    new_p = access_token
-                    parameter = str(parameter).replace(old_p,new_p)
+            if headers != '':
+                for h_key in headers.keys():
+                    if headers[h_key] == '${userCode}':
+                        headers[h_key] = userCode
+                    if headers[h_key] == '${user_id}':
+                        headers[h_key] = user_id
+                    if headers[h_key] == '${customer_id}':
+                        headers[h_key] = customer_id
+
+            if parameter != '':
+                if isinstance(parameter,dict):
+                    for p_key in parameter.keys():
+                        if parameter[p_key] == '${userCode}':
+                            parameter[p_key] = userCode
+                        if parameter[p_key] == '${user_id}':
+                            parameter[p_key] = user_id
+                        if parameter[p_key] == '${customer_id}':
+                            parameter[p_key] = customer_id
+                else:
+                    if '${userCode}' in parameter:
+                        old_p = '${userCode}'
+                        new_p = userCode
+                        parameter = str(parameter).replace(old_p,new_p)
+                    if '${user_id}' in parameter:
+                        old_p = '${user_id}'
+                        new_p = user_id
+                        parameter = str(parameter).replace(old_p,new_p)
+                    if '${customer_id}' in parameter:
+                        old_p = '${customer_id}'
+                        new_p = customer_id
+                        parameter = str(parameter).replace(old_p,new_p)
+
+        if '兔博士用户端' == str(project_name):
+            mobile_id = '17607081946'
+            user_id,userCode,access_token,customer_id = Get_userId.get_token_userid_customer(mobile_id)
+            if '${user_id}' in url_path:
+                old_p = "${user_id}"
+                new_p = user_id
+                url_path = str(url_path).replace(old_p, new_p)
+
+            if '${userCode}' in url_path:
+                old_p = "${userCode}"
+                new_p = userCode
+                url_path = str(url_path).replace(old_p, new_p)
+
+            if '${access_token}' in url_path:
+                old_p = "${access_token}"
+                new_p = access_token
+                url_path = str(url_path).replace(old_p, new_p)
+
+            if '${customer_id}' in url_path:
+                old_p = "${customer_id}"
+                new_p = customer_id
+                url_path = str(url_path).replace(old_p, new_p)
+
+            if headers != '':
+                for h_key in headers.keys():
+                    if headers[h_key] == '${user_id}':
+                        headers[h_key] = user_id
+                    if headers[h_key] == '${userCode}':
+                        headers[h_key] = userCode
+                    if headers[h_key] == '${access_token}':
+                        headers[h_key] = access_token
+                    if headers[h_key] == '${customer_id}':
+                        headers[h_key] = customer_id
+            if parameter != '':
+                if isinstance(parameter,dict):
+                    for p_key in parameter.keys():
+                        if parameter[p_key] == '${user_id}':
+                            parameter[p_key] = user_id
+                        if parameter[p_key] == '${userCode}':
+                            parameter[p_key] = userCode
+                        if parameter[p_key] == '${access_token}':
+                            parameter[p_key] = access_token
+                        if parameter[p_key] == '${customer_id}':
+                            parameter[p_key] = customer_id
+                else:
+                    if '${user_id}' in parameter:
+                        old_p = '${user_id}'
+                        new_p = user_id
+                        parameter = str(parameter).replace(old_p,new_p)
+                    if '${userCode}' in parameter:
+                        old_p = '${userCode}'
+                        new_p = userCode
+                        parameter = str(parameter).replace(old_p,new_p)
+                    if '${access_token}' in parameter:
+                        old_p = '${access_token}'
+                        new_p = user_id
+                        parameter = str(parameter).replace(old_p,new_p)
+                    if '${customer_id}' in parameter:
+                        old_p = '${customer_id}'
+                        new_p = user_id
+                        parameter = str(parameter).replace(old_p,new_p)
 
         protocol = protocol+'://'
+
+
 
         if flag == 2:#传入动态变量值 修改 header 和 parameter  dynamic入参为{变量名：变量值}
             if headers != '':
@@ -271,12 +318,12 @@ class Execute_Interface:
         if flag == 1:  # 需要抓取动态变量值   **dynamic入参为{需要抓取接口名：变量值}
             #-------start-----抓取验证码特例------------------------
             if "verifyCode" == dynamic.values()[0]:# and "login_get_mobileVerifyCode" == dynamic.keys()[0]
-                # conn = MySQLdb.connect(host='mysql.test.tuboshi.co', port=3306, db='sHouseApp_pre', user='gongliping', passwd='rd@HSf12@#Tcba',
-                #                        charset='utf8')
-                # handle = conn.cursor()
-                # verifyCode = handle.execute("SELECT code from sms_log a where a.mobile =17607081946 ORDER BY a.send_time desc LIMIT 1;")
-                # verifyCode = handle.fetchone()[0]
-                return verify,api_log
+                conn = MySQLdb.connect(host='mysql.test.tuboshi.co', port=3306, db='sHouseApp_pre', user='gongliping', passwd='rd@HSf12@#Tcba',
+                                       charset='utf8')
+                handle = conn.cursor()
+                verifyCode = handle.execute("SELECT code from sms_log a where a.mobile ='17607081946' ORDER BY a.send_time desc LIMIT 1;")
+                verifyCode = handle.fetchone()[0]
+                return verifyCode,api_log
             # ---------end---抓取验证码特例------------------------
 
             for k, v in dynamic.items():
@@ -284,7 +331,7 @@ class Execute_Interface:
             dynamic_values = GetDictParam.get_value(rs_dic, dynamic_value)  # 获取动态变量值
             print ("****************dynamic_values:%s"%(dynamic_values))#None为未抓到
             if dynamic_values is None:
-                dynamic_values = "None"
+                dynamic_values = "ab6fa173260d4b58a5e7bd83417a4d2f"
             return dynamic_values,api_log
 
         if flag == 2:

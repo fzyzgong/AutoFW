@@ -55,6 +55,12 @@
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newProjectAPI()">Add Project API</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editProjectAPI()">Edit Project API</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteProjectAPI()">Remove Project API</a>
+        <!--<span style="margin-left: 20px">接口名称:</span><input id="case_name" style="line-height:26px;border:1px solid #ccc">-->
+	    <!--<a href="#" class="easyui-linkbutton" plain="true" onclick="doSearchInterfaceName()">Search</a>-->
+        <div id="searchbox-og" style="float: right;">
+            <input id="case_name" class="easyui-searchbox" searcher="doSearchInterfaceName" prompt="请输入接口名称" style="width: 180px; vertical-align: middle;">
+        </div>
+        <!--easyui-linkbutton  和 easyui-searchbox 都可以实现-->
     </div>
 
     <!--easyui框架问题，不能写两个class="easyui-dialog" 导致不能使用tabs-->
