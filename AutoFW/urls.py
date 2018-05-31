@@ -68,11 +68,15 @@ urlpatterns = [
 
     url(r'^yongli_genirate_page/(.*)',views.yongli_genirate_page),
     url(r'^execute_yongli_page/(.*)',views.execute_yongli_page),
+    url(r'^yongli_update_page/(.*)', views.yongli_update_page),
+
     url(r'^search_interface/$', views.search_interface),
     url(r'^add_script_case/$', views.add_script_case),
     url(r'^search_exe_case/$', views.search_exe_case),
     url(r'^execution_test_case/$', views.execution_test_case),
     url(r'^delete_test_case/$', views.delete_test_case),
+    url(r'^search_case_by_case_id/$', views.search_case_by_case_id),
+    url(r'^update_script_case/$', views.update_script_case),
 
 
     url(r'^search_script/$', views.search_script),
@@ -96,5 +100,7 @@ urlpatterns = [
     url(r'^send_email_by_report_list/', views.send_email_by_report_list),
     url(r'^execute_maoyan_script/', views.execute_maoyan_script),
     url(r'^execute_huigui_script/', views.execute_huigui_script),
+
+    url(r'^upload_file/', views.upload_file),
 
 ]

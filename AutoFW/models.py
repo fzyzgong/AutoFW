@@ -168,6 +168,7 @@ class Script_Case_Info(models.Model):
     script_case_project_name = models.ForeignKey(Project, to_field="project_name")
     script_case_module_name = models.ForeignKey(Project_Module, to_field="module_name")
     execution_order = models.CharField(max_length=1000,null=False)
+    parameter_ddt = models.CharField(max_length=1500,null=False)
     config = models.CharField(max_length=500)
     creator = models.CharField(max_length=30)
     status = models.CharField(max_length=50,default=None)

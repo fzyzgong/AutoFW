@@ -54,7 +54,7 @@ def copyFile(sourceFile, targetFile, fileName, protocol, method, domain, url,hea
                     print ("headers null")
                     line = line.replace('{"demo_headers":"demo_headers"}', "''")
                 elif "TBSAccessToken" in headers:#传入动态TBS值
-                    token = get_TBS_token(171631,1)[1][0]
+                    token = get_TBS_token("17607081946")[0]
                     headers_dic = json.loads(headers)
                     headers_dic.update({"TBSAccessToken":token})
                     line = line.replace('{"demo_headers":"demo_headers"}', json.dumps(headers_dic))

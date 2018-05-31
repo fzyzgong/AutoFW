@@ -199,7 +199,8 @@ class Execute_Interface:
 
             rs_str = r.content
             #rs_str = rs_str.replace("㎡","m")
-            print (rs_str)
+            #rs_str = rs_str.replace("／", "/")
+            #print (rs_str)
             if rs_str[0] == '{' and rs_str[-1] == '}':#判断返回报文是否是字典
                 rs_dic = json.loads(rs_str)
 

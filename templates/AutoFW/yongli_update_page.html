@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+
+		<style type="text/css">
+            h2{
+                text-align: center;
+            }
+
+			#div_2 textarea{
+				margin-right: 50px;
+	            vertical-align: middle;
+            	resize: none;
+			}
+
+		</style>
+	</head>
+	<body>
+		<h2>测试用例维护中心</h2>
+		<hr />
+		<div id=div_head>
+			<div id="div_1">
+				<label>用例编号(精准查询):</label><input type="text" id="project_case_id_id" />
+				<input type="button" value="查询" onclick="search_case()" style="width: 100px;margin-left: 30px;"/>
+			</div>
+			<hr />
+			<label>用例编号:</label><input type="text" id="project_case_id" disabled="disabled" style="margin-left: 7px;width: 150px;"/><br />
+			<label>用例名称:</label><input type="text" id="project_case_name" style="margin-left: 7px;margin-bottom: 3px;width: 150px;"/><br />
+			<div id="div_2">
+				<label>接口顺序:</label><textarea cols="151" rows="7" name="execution_order" form="div_head" id="project_execute_order" style="margin-left: 7px;"></textarea><br />
+				<label>动态变量:</label><textarea cols="151" rows="3" name="catch_var" form="div_head" id="project_config" style="margin-left: 7px;margin-top: 3px;"></textarea><br />
+				<label>参数化:</label><textarea cols="151" rows="10" name="catch_var" form="div_head" id="project_parameter" style="margin-left: 22px;margin-top: 3px;"></textarea><br />
+			</div>
+
+			<label>用例状态:</label>
+			<select id="project_case_status" style="width: 155px;">
+	            <option></option>
+                <option>None</option>
+	            <option>PASS</option>
+	            <option>FAILED</option>
+	            <option>SKIP</option>
+	        </select>
+			<br />
+			<label>用例类型:</label>
+			<select id="project_case_type" style="width: 155px;">
+	            <option></option>
+	            <option>冒烟用例</option>
+	            <option>回归用例</option>
+	            <option>其他</option>
+	        </select>
+			<br />
+			<label>所属项目:</label>
+			<select id="project_name_s" style="width: 155px;">
+	            <option></option>
+	            {% for list in project_name_list %}
+	            <option>{{list.project_name}}</option>
+	            {%endfor%}
+	        </select>
+			<br />
+			<label>所属模块:</label>
+			<select id="project_module_s" style="width: 155px;">
+	            <!--<option></option>-->
+	        </select>
+			<br />
+			<label>创建者:</label><input type="text" id="project_creator" disabled="disabled" style="margin-left: 21px;width: 150px;"/><br />
+			<label>注释:</label><input type="text" id="project_remark" style="margin-left: 36px;width: 450px;"/>
+			<input type="button" value="提交" onclick="update_case()" style="width: 100px;margin-left: 300px;" />
+		</div>
+
+
+        <script type="text/javascript">
+            $("#project_name_s").change(function () {
+                var project_name = $("#project_name_s option:selected").text();
+                $(".project_module_option").remove();
+                $.ajax({
+                   url: "/AutoFW/select_load_module/"+project_name,
+                    type: "get",
+                    success:function (data) {
+                        if(data.status == "success"){
+                            for(var i = 0; i < data.module_name.length;i++){
+                                $('#project_module_s').append('<option class="project_module_option">' + data.module_name[i] + '</option>');
+                            }
+                        }
+                    }
+                });
+            })
+
+
+            function search_case() {
+                var script_case_id = $("#project_case_id_id").val();
+                //查询前清理表单
+                $("#project_case_id").attr("value",'');
+                $("#project_case_name").attr("value",'');
+
+                $("#project_execute_order").val('');
+                $("#project_config").val('');
+                $("#project_parameter").val('');
+
+                $("#project_case_status").val('');
+                $("#project_case_type").val('');
+                $("#project_name_s").val('');
+                $("#project_module_s").empty();
+
+                $("#project_creator").attr("value",'');
+                $("#project_remark").attr("value",'');
+
+                $.ajax({
+                   url:'/AutoFW/search_case_by_case_id/',
+                   type:'get',
+                   data:'script_case_id='+script_case_id,
+                    success:function (data) {
+                       if(data.status == "success"){
+                           $("#project_case_id").attr("value",data.project_case_dict['script_case_id']);
+                           $("#project_case_name").attr("value",data.project_case_dict['script_case_name']);
+
+                           $("#project_execute_order").val(data.project_case_dict['execution_order']);
+                           $("#project_config").val(data.project_case_dict['config']);
+                           $("#project_parameter").val(data.project_case_dict['parameter_ddt']);
+
+                           $("#project_case_status").val(data.project_case_dict['status']);
+                           $("#project_case_type").val(data.project_case_dict['script_case_type']);
+                           $("#project_name_s").val(data.project_case_dict['script_case_project_name_id']);
+                           $("#project_module_s").append('<option class="project_module_option">' + data.project_case_dict['script_case_module_name_id'] + '</option>');
+
+                           $("#project_creator").attr("value",data.project_case_dict['creator']);
+                           $("#project_remark").attr("value",data.project_case_dict['remark']);
+                       }else if(data.status == "failed"){
+                           alert(data.msg);
+                       }else if(data.status == "error"){
+                           alert(data.msg);
+                       }
+
+                    }
+                });
+            }
+
+
+            function update_case() {
+                var script_case_id = $("#project_case_id").val();
+                var script_case_name = $("#project_case_name").val();
+                var execution_order = $("#project_execute_order").val();
+                var config = $("#project_config").val();
+                var parameter_ddt = $("#project_parameter").val();
+                var status = $("#project_case_status option:selected").text();
+                var script_case_type = $("#project_case_type option:selected").text();
+                var script_case_project_name_id = $("#project_name_s option:selected").text();
+                var script_case_module_name_id = $("#project_module_s option:selected").text();
+                var creator = $("#project_creator").val();
+                var remark = $("#project_remark").val();
+
+
+                $.ajax({
+                    url:"/AutoFW/update_script_case/",
+                    type:"get",
+                    data:"script_case_id="+script_case_id+"&script_case_name="+script_case_name+"&execution_order="+
+                        execution_order+"&config="+config+"&parameter_ddt="+parameter_ddt+"&status="+status+"&script_case_type="+
+                        script_case_type+"&script_case_project_name_id="+script_case_project_name_id+"&script_case_module_name_id="+
+                        script_case_module_name_id+"&creator="+creator+"&remark="+remark,
+                        success: function (data) {
+                        if(data.status == "success"){
+                            alert(data.msg);
+                        }else if(data.status == "failed"){
+                            alert(data.msg);
+                        }
+                        else if(data.status == "error"){
+                            alert(data.msg);
+                        }
+                    }
+                })
+            }
+
+        </script>
+	</body>
+</html>

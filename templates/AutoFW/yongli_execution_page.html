@@ -13,14 +13,16 @@
         #case_info_list{
             border: solid 1px;
             border-collapse: collapse;
-            width: 1200px;
+            word-wrap: break-word;/*固定table*/
+            word-break: break-all;
+            width: 1400px;
         }
         #case_info_list_title{
             background: lawngreen;
         }
         #case_info_list td{
             border: solid 1px;
-            width: 200px;
+            /*width: 200px;*/
             text-align: center;
         }
         #execute_case_button{
@@ -73,17 +75,18 @@
     <hr />
     <table id="case_info_list">
         <tr id="case_info_list_title">
-            <td  style="width: 60px;">全选<input type="checkbox" id="complete_selection" onclick="complete_selection()" /></td>
-            <td>用例ID</td>
-            <td>用例名称</td>
-            <td>接口执行顺序</td>
-            <td>动态变量</td>
-            <td>用例状态</td>
-            <td>用例类型</td>
-            <td>注释</td>
+            <td  style="width: 30px;">全选<input type="checkbox" id="complete_selection" onclick="complete_selection()" /></td>
+            <td style="width: 90px">用例ID</td>
+            <td style="width: 90px">用例名称</td>
+            <td style="width: 200px">接口执行顺序</td>
+            <td>参数化</td>
+            <td style="width: 200px">动态变量</td>
+            <td style="width: 50px">用例状态</td>
+            <td style="width: 35px">用例类型</td>
+            <td style="width: 50px">注释</td>
         </tr>
         <tr class="case_list_tr">
-            <td colspan="8">暂无数据</td>
+            <td colspan="9">暂无数据</td>
         </tr>
     </table>
 
@@ -120,12 +123,13 @@
                             for(var i = 0; i < data.case_list.length; i++){
 
                                 $("#case_info_list").append('<tr class="case_list_tr">' +
-                                    '<td class="case_list_tr" style="width: 60px;">' +
+                                    '<td class="case_list_tr" style="width: 30px;">' +
                                     '<input type="checkbox" class="checkbox_case_selection" value="'+data.case_list[i].script_case_id+'" onclick="cancel_complete_selection()" />' +
                                     '</td>' +
                                     '<td class="case_list_tr">'+data.case_list[i].script_case_id+'</td>' +
                                     '<td class="case_list_tr">'+data.case_list[i].script_case_name+'</td>' +
                                     '<td class="case_list_tr">'+data.case_list[i].execution_order+'</td>' +
+                                    '<td class="case_list_tr">'+data.case_list[i].parameter_ttd+'</td>' +
                                     '<td class="case_list_tr">'+data.case_list[i].config+'</td>' +
                                     '<td class="case_list_tr">'+data.case_list[i].status+'</td>' +
                                     '<td class="case_list_tr">'+data.case_list[i].script_case_type+'</td>' +
@@ -135,11 +139,11 @@
 
                     }else if(data.status == "no_date"){
                         $(".case_list_tr").remove();
-                        $("#case_info_list").append('<tr class="case_list_tr"><td colspan="8">暂无数据</td></tr>')
+                        $("#case_info_list").append('<tr class="case_list_tr"><td colspan="9">暂无数据</td></tr>')
                         alert(data.msg);
                     }else if(data.status == "project_name_null"){
                         $(".case_list_tr").remove();
-                        $("#case_info_list").append('<tr class="case_list_tr"><td colspan="8">暂无数据</td></tr>')
+                        $("#case_info_list").append('<tr class="case_list_tr"><td colspan="9">暂无数据</td></tr>')
                         alert(data.msg);
                     }
                 }

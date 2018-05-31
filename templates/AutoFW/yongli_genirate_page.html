@@ -13,6 +13,13 @@
             width: 1200px;
             border: solid 1px;padding: 5px;
         }
+
+        #add_case_upload{
+            width: 1200px;
+            border: solid 1px;padding: 5px;
+            margin-top: 15px;
+        }
+
         #div_1 input,select{
             margin-right: 70px;
         }
@@ -63,12 +70,14 @@
             </select>
         </div>
         <div id="div_2">
-            <label>执行顺序:</label><textarea cols="65" rows="5" name="execution_order" id="s_execution_order" form="add_case_f" placeholder="case1->case2"></textarea>
-            <label>提取变量:</label><textarea cols="65" rows="5" name="catch_var" id="s_catch_var" form="add_case_f" placeholder='{var:{"case1":["case2","case3"]}}'></textarea>
+            <label>执行顺序:</label><textarea cols="65" rows="8" name="execution_order" id="s_execution_order" form="add_case_f" placeholder="case1->case2"></textarea>
+            <label>提取变量:</label><textarea cols="65" rows="8" name="catch_var" id="s_catch_var" form="add_case_f" placeholder='{var:{"case1":["case2","case3"]}}'></textarea>
+            <br />
+            <label>参数化:</label><textarea cols="151" rows="8" name="parame_var" id="s_parame_var" form="add_case_f" placeholder='{interface_name1:{"param_name1":["data1","data2"],"param_name2":["data1","data2"]}}' style="margin-top: 3px;margin-left: 15px"></textarea>
         </div>
         <div id="div_3">
             <label>创建者:</label>
-            <input name="creator" id="creator_i" type="text" value="{{ username }}" readonly = "readonly" ><!--disabled="disabled"  后台获取不到-->
+            <input name="creator" id="creator_i" type="text" value="{{ username }}" readonly = "readonly" style="margin-left: 10px" ><!--disabled="disabled"  后台获取不到-->
             <label>用例类型:</label>
             <select name="case_type" id="case_type_o" style="width: 120px;">
                 <option></option>
@@ -76,11 +85,24 @@
                 <option>冒烟用例</option>
                 <option>其他</option>
             </select>
-            <label>注释:</label><input type="text" name="remark" id="remark" />
+            <label>注释:</label><input type="text" name="remark" id="remark" style="width: 450px" />
             <!--<input type="button" value="取消" style="width: 100px; float: right;" />-->
             <input type="submit" value="提交" onclick="add_script_case()" style="width: 100px; float: right;" />
         </div>
     </div>
+    <div id="add_case_upload">
+        <div>
+            <!--<form method="post" action="/AutoFW/upload_file/" enctype="multipart/form-data">-->
+                <!--<input id="uploadFileUser" type="text" name="{{ username }}" />-->
+            <label style="font-weight: bold">导入文件csv格式，生成用例：</label>
+            <br />
+            <input id='uploadFile' type="file" name="uploadFile" />
+            <input type="button" value="上传并生成用例" onclick="uploadFile()" />
+            <a href="/static/upload/AutoFW_test_case_demo.xlsx" style="float: right">下载用例模板</a>
+            <!--</form>-->
+        </div>
+    </div>
+
 
 
     <hr />
@@ -172,6 +194,7 @@
             var project_name = $("#project_name_select option:selected").text()
             var project_module_select = $("#project_module_select option:selected").text()
             var s_execution_order = $("#s_execution_order").val()
+            var s_parame_var = $("#s_parame_var").val()
             var s_catch_var = $("#s_catch_var").val()
             var creator_i = $("#creator_i").val()
             var case_type_o = $("#case_type_o option:selected").text()
@@ -181,7 +204,7 @@
                 url: "/AutoFW/add_script_case/",
                 type: "get",
                 data: "case_id="+case_id+"&creator="+creator_i+"&case_name="+case_name+"&project_name="+project_name
-                +"&project_module="+project_module_select+"&execution_order="+s_execution_order+"&catch_var="+s_catch_var+"&case_type="+case_type_o+"&remark="+remark,
+                +"&project_module="+project_module_select+"&execution_order="+s_execution_order+"&parameter_ddt="+s_parame_var+"&catch_var="+s_catch_var+"&case_type="+case_type_o+"&remark="+remark,
                 success: function (data) {
                     if(data.status == "success"){
                         alert(data.msg);
@@ -197,6 +220,32 @@
             });
         }
 
+
+        function uploadFile() {
+            //Jquery转换为dom对象：$("#img")[0].files[0];   其中$("#img")是jquery对象， $("#img")[0]是dom对象
+            var uploadFile = $("#uploadFile")[0].files[0];
+            var form = new FormData();
+            form.append('uploadFile',uploadFile);
+
+            $.ajax({
+                url:"/AutoFW/upload_file/",
+                type:"POST",
+                data:form,
+                processData: false,// 告诉jquery要传输data对象
+                contentType: false,// 告诉jquery不需要增加请求头对于contentType的设置
+                success: function (data) {
+                    if(data.status == "success"){
+                        alert(data.msg);
+                    }
+                    else if(data.status == "failed"){
+                        alert(data.msg);
+                    }
+
+                }
+
+            });
+
+        }
 
     </script>
 

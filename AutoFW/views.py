@@ -2,6 +2,7 @@
 import json
 import datetime,time
 import os
+import xlrd
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,JsonResponse,HttpResponseRedirect
 from .util.execute_script_Popen import execute_script_Popen
@@ -1409,6 +1410,93 @@ def execute_yongli_page(request,username):
     return render(request,"AutoFW/yongli_execution_page.html",content)
 
 
+#修改用例页面跳转
+def yongli_update_page(request,username):
+    print ("yongli_genirate_page")
+    # 项目名称ValuesQuerySet
+    project_qs = Project.objects.values("project_name")
+    content = {"project_name_list":project_qs,"username":username}
+    return render(request,"AutoFW/yongli_update_page.html",content)
+
+
+#根据project_case_id查询用例
+def search_case_by_case_id(request):
+    print ("search_case_by_case_id")
+    if request.method == "GET":
+        script_case_id = request.GET.get("script_case_id")
+
+        if script_case_id != "":
+            script_case_obj = Script_Case_Info.objects.filter(script_case_id=script_case_id) #唯一值
+
+
+            if len(script_case_obj) > 0:
+                case = script_case_obj[0]
+                print type(case.status)
+
+                project_case_dict = {"script_case_id":case.script_case_id,"script_case_name":case.script_case_name,
+                                     "execution_order":case.execution_order,"config":case.config,"parameter_ddt":case.parameter_ddt,
+                                     "status":str(case.status),"script_case_type":case.script_case_type,"script_case_project_name_id":
+                                     case.script_case_project_name_id,"script_case_module_name_id":case.script_case_module_name_id,
+                                    "creator":case.creator,"remark":case.remark}
+
+                content = {"status":"success","msg":"search successful","project_case_dict":project_case_dict}
+
+                return JsonResponse(content)
+            else:
+                content = {"status": "failed", "msg": "查询结果：用例编号不存在"}
+                return JsonResponse(content)
+        else:
+            content = {"status": "error", "msg": "用例编号为空"}
+            return JsonResponse(content)
+
+
+#修改用例
+def update_script_case(request):
+    print ("update_script_case")
+    if request.method == "GET":
+        script_case_id = request.GET.get("script_case_id")
+        script_case_name = request.GET.get("script_case_name")
+        execution_order = request.GET.get("execution_order")
+        config = request.GET.get("config")
+        parameter_ddt = request.GET.get("parameter_ddt")
+        status = request.GET.get("status")
+        script_case_type = request.GET.get("script_case_type")
+        script_case_project_name_id = request.GET.get("script_case_project_name_id")
+        script_case_module_name_id = request.GET.get("script_case_module_name_id")
+        creator = request.GET.get("creator")
+        remark = request.GET.get("remark")
+        content = {"status": "status", "msg": "msg"}
+        if script_case_name != '' and execution_order != '' and status != '' and script_case_type != '':
+
+
+            project_case_dict = {"script_case_id": script_case_id, "script_case_name": script_case_name,
+                                 "execution_order": execution_order, "config": config,
+                                 "parameter_ddt": parameter_ddt,
+                                 "status": str(status), "script_case_type": script_case_type,
+                                 "script_case_project_name_id":
+                                     script_case_project_name_id,
+                                 "script_case_module_name_id": script_case_module_name_id,
+                                 "creator": creator, "remark": remark}
+
+            try:
+                Script_Case_Info.objects.filter(script_case_id=script_case_id).update(**project_case_dict)
+                content['status'] = "success"
+                content['msg'] = "更新用例成功"
+            except:
+                content['status'] = "error"
+                content['msg'] = "更新用例失败:"+str(traceback.format_exc())
+                return JsonResponse(content)
+        else:
+            content['status'] = "failed"
+            content['msg'] = "更新用例失败,字段为空"
+            return JsonResponse(content)
+
+        return JsonResponse(content)
+
+
+
+
+
 #查询接口
 def search_interface(request):
     print ("search_interface")
@@ -1445,12 +1533,13 @@ def add_script_case(request):
         project_name = request.GET.get("project_name")
         project_module = request.GET.get("project_module")
         execution_order = request.GET.get("execution_order")
+        parameter_ddt = request.GET.get("parameter_ddt")
         catch_var = request.GET.get("catch_var")
         case_type = request.GET.get("case_type")
         remark = request.GET.get("remark")
 
-        print ("case_id=%s,case_name=%s,project_name=%s,project_module=%s,execution_order=%s,catch_var=%s,creator=%s,case_type=%s,remark=%s"
-               %(case_id,case_name,project_name,project_module,execution_order,catch_var,creator,case_type,remark))
+        print ("case_id=%s,case_name=%s,project_name=%s,project_module=%s,execution_order=%s,parameter_ddt=%s,catch_var=%s,creator=%s,case_type=%s,remark=%s"
+               %(case_id,case_name,project_name,project_module,execution_order,parameter_ddt,catch_var,creator,case_type,remark))
 
         dict = {
             "script_case_id":case_id,
@@ -1458,6 +1547,7 @@ def add_script_case(request):
             "script_case_project_name_id":project_name.replace(' ', ''),
             "script_case_module_name_id":project_module.replace(' ', ''),
             "execution_order":execution_order,
+            "parameter_ddt":parameter_ddt,
             "config":catch_var,
             "creator":creator,
             "status":"None",
@@ -1503,6 +1593,7 @@ def search_exe_case(request):
                         "script_case_project_name_id":list.script_case_project_name.project_name,#外键
                         "script_case_module_name_id": list.script_case_module_name.module_name,#外键
                         "execution_order":list.execution_order,
+                        "parameter_ttd": list.parameter_ddt,
                         "config":list.config,
                         "creator":list.creator,
                         "status":list.status,
@@ -1524,6 +1615,7 @@ def search_exe_case(request):
                         "script_case_project_name_id": list.script_case_project_name.project_name,#外键
                         "script_case_module_name_id": list.script_case_module_name.module_name,#外键
                         "execution_order": list.execution_order,
+                        "parameter_ttd": list.parameter_ddt,
                         "config": list.config,
                         "creator": list.creator,
                         "status": list.status,
@@ -1544,6 +1636,7 @@ def search_exe_case(request):
                         "script_case_project_name_id": list.script_case_project_name.project_name,#外键
                         "script_case_module_name_id": list.script_case_module_name.module_name,#外键
                         "execution_order": list.execution_order,
+                        "parameter_ttd": list.parameter_ddt,
                         "config": list.config,
                         "creator": list.creator,
                         "status": list.status,
@@ -1596,7 +1689,23 @@ def execution_test_case(request):
             print ("##################  执行用例开始  ################## [ %s ]"%str(case_list))
             execution_case = Script_Case_Info.objects.filter(script_case_id=case_list)[0]#获取用例表对象
             config = execution_case.config#获取动态变量值
+            parameter_ddt = execution_case.parameter_ddt#获取该用例所有接口需要用到的参数
+            parameter_ddt_dict = json.loads(parameter_ddt) #将字符串转字典
+            parameter_ddt_list = parameter_ddt_dict.keys()
+            print ("参数化接口名list%s" % str(parameter_ddt_list))
             execution_case_oder_list = str(execution_case.execution_order).split('->')#获取单个用例下面的所有接口
+
+            execution_case_oder_dict = {}
+            execution_case_oder_list_unique = []  # 需要执行的接口去重
+            for unique_list in execution_case_oder_list:
+                if unique_list not in execution_case_oder_list_unique:
+                    execution_case_oder_list_unique.append(unique_list)
+            print (execution_case_oder_list_unique)
+
+            for execution_case_unique in execution_case_oder_list_unique: #用字典保存接口执行的次数
+                execution_case_oder_dict[execution_case_unique] = 0
+
+            print (execution_case_oder_dict)
 
             if '' == config:
                 '''
@@ -1604,6 +1713,9 @@ def execution_test_case(request):
                 '''
                 for list_i_oder in execution_case_oder_list:  # list = Project_Case.case_id 调用接口
                     print ('*********  执行用例['+ str(case_list) +']下的接口 :  ' + str(list_i_oder) + '**********')
+                    execution_case_oder_dict[list_i_oder] = execution_case_oder_dict[list_i_oder] + 1 #调用一次接口累加一次
+
+                    print (execution_case_oder_dict)
 
                     project_case_obj = Project_Case.objects.filter(case_id=list_i_oder)[0]
                     method = project_case_obj.method
@@ -1625,6 +1737,34 @@ def execution_test_case(request):
                     expected = project_case_obj.expected
                     headers = project_case_obj.headers
 
+
+                    #参数替换 包或 headers 和 parameter  expected
+                    if list_i_oder in parameter_ddt_list:
+                        param_dict = parameter_ddt_dict[list_i_oder]#获取该接口的参数字典
+                        param_list = param_dict.keys()
+                        #todo  判断是否为空时
+                        for param_l in param_list:
+                            if "$("+str(param_l)+")" in str(parameter):
+                                print ("parameter=%s" % parameter)
+                                print (execution_case_oder_dict[list_i_oder])
+                                print (param_dict[param_l])
+                                parameter = str(parameter).replace("$("+str(param_l)+")",param_dict[param_l][execution_case_oder_dict[list_i_oder]-1])
+
+                            if "$("+str(param_l)+")" in str(headers):
+                                headers = str(headers).replace("$("+str(param_l)+")",param_dict[param_l][execution_case_oder_dict[list_i_oder]-1])
+                                print ("headers=%s" % headers)
+                                print (execution_case_oder_dict[list_i_oder])
+                            if "$("+str(param_l)+")" in str(url_path):
+                                url_path = str(url_path).replace("$("+str(param_l)+")",param_dict[param_l][execution_case_oder_dict[list_i_oder]-1])
+                                print ("url_path=%s" % url_path)
+                                print (execution_case_oder_dict[list_i_oder])
+                            if "$("+str(param_l)+")" in str(expected):
+                                expected = str(expected).replace("$("+str(param_l)+")",param_dict[param_l][execution_case_oder_dict[list_i_oder]-1])
+                                print ("expected=%s" % expected)
+                                print (execution_case_oder_dict[list_i_oder])
+
+                    print (parameter,url_path,headers,expected)
+
                     try:
                         api_log = Execute_Interface.execute_interface(project_name=project_name_id,protocol=protocol, method=method,
                                                                             parameter_format=parameter_format,
@@ -1635,6 +1775,7 @@ def execution_test_case(request):
 
                         print ("config为空下收集api执行日志和状态*****************************")
                         print (api_log[0:1500])
+                        log_scripts.info("\rreport_id["+report_id+"] ["+str(case_list)+"]用例下的["+str(list_i_oder)+"]接口\r:"+api_log+"\r\n")
                         status = api_log.split('AutoFW test reslut:')[1].split('\'')[0]  # 执行结果
                         print ("config为空下收集api执行日志和状态***************end**************")
                         log_report_id = report_id
@@ -1658,6 +1799,7 @@ def execution_test_case(request):
                         log_API_id = list_i_oder
                         log_case_id = case_list
                         log_execute_case = str(traceback.format_exc())
+                        mylogging("*************["+str(case_list)+"]用例下的["+str(list_i_oder)+"]接口出现异常\r:"+log_execute_case)
 
                         execute_case_log_dict = {
                             "log_report_id_id": log_report_id, "log_API_id_id": log_API_id,
@@ -1769,6 +1911,7 @@ def execution_test_case(request):
                                                                headers=headers,domain=domain,flag=1,dynamic=dynamic_values_from_dict,user_info=userinfo_dict)#执行接口 返回执行结果
                             print ("执行接口后返回需要抓取动态变量值：%s"%str(dynamic_value))
                             print ("执行接口后返回执行结果集：%s"%str(api_log))
+                            log_scripts.info("\rreport_id["+report_id+"] [" + str(case_list) + "]用例下的[" + str(list_i_oder) + "]接口\r:" + api_log+"\r\n")
                             print ("×××××end×××××××开始调用接口执行引擎××××××××××××××××")
                             for list_to_i in to_interfaces:
                                 to_interface_dynamic_value[list_to_i] = dynamic_value#{需要传入动态变量的接口：动态变量值} 1.6
@@ -1804,6 +1947,7 @@ def execution_test_case(request):
                                                               dynamic=dynamic_dict,user_info=userinfo_dict)  # 执行接口
 
                             print ("执行接口后返回执行结果集：%s" % str(api_log))
+                            log_scripts.info("\rreport_id["+report_id+"] [" + str(case_list) + "]用例下的[" + str(list_i_oder) + "]接口\r:" + api_log+"\r\n")
                             print ("×××××end×××××××开始调用接口执行引擎××××××××××××××××")
                         except:
                             print ("*************[" + str(case_list) + "]用例下的[" + str(list_i_oder) + "]接口出现异常")
@@ -1840,6 +1984,7 @@ def execution_test_case(request):
                                                                             dynamic=dynamic_dict,user_info=userinfo_dict)  # 执行接口
 
                             print ("执行接口后返回执行结果集：%s" % str(api_log))
+                            log_scripts.info("\rreport_id["+report_id+"] [" + str(case_list) + "]用例下的[" + str(list_i_oder) + "]接口\r:" + api_log+"\r\n")
                             print ("×××××end×××××××开始调用接口执行引擎××××××××××××××××")
                         except:
                             print ("*************[" + str(case_list) + "]用例下的[" + str(list_i_oder) + "]接口出现异常")
@@ -1867,6 +2012,7 @@ def execution_test_case(request):
                                                                                 dynamic=dynamic_values_from_dict,user_info=userinfo_dict)  # 执行接口 返回执行结果
                             print ("执行接口后返回需要抓取动态变量值：%s" % dynamic_value)
                             print ("执行接口后返回执行结果集：%s" % str(api_log))
+                            log_scripts.info("\rreport_id["+report_id+"] [" + str(case_list) + "]用例下的[" + str(list_i_oder) + "]接口\r:" + api_log+"\r\n")
                             print ("×××××end×××××××开始调用接口执行引擎××××××××××××××××")
 
                             for list_to_i in to_interfaces:
@@ -1900,6 +2046,7 @@ def execution_test_case(request):
                                                               headers=headers, domain=domain, flag=3,
                                                               dynamic=None,user_info=userinfo_dict)  # 执行接口
                             print ("执行接口后返回执行结果集：%s" % str(api_log))
+                            log_scripts.info("\rreport_id["+report_id+"] [" + str(case_list) + "]用例下的[" + str(list_i_oder) + "]接口\r:" + api_log+"\r\n")
                             print ("×××××end×××××××开始调用接口执行引擎××××××××××××××××")
                         except:
                             print ("*************[" + str(case_list) + "]用例下的[" + str(list_i_oder) + "]接口出现异常")
@@ -1940,6 +2087,7 @@ def execution_test_case(request):
                             "log_case_id_id": log_case_id,
                             "log_execute_case": log_execute_case, "status": status, "bak1": "bak1"
                         }
+                        mylogging("*************["+str(case_list)+"]用例下的["+str(list_i_oder)+"]接口出现异常\r:"+log_execute_case)
 
                         Execute_Case_Log.objects.create(**execute_case_log_dict)
         # except:
@@ -2746,3 +2894,62 @@ def execute_huigui_script(request):
                     content = {"status": "email_send_fail","msg":"该用户为填写邮箱信息，请去用户中心补填邮箱信息！"}
             # -------end-------发送测试报告邮件---------------------
             return JsonResponse(content)
+
+
+#导入文件生成测试用例
+def upload_file(request):
+    if request.method == "POST":
+        print ("upload_file")
+        ret = {'status': "failed", 'msg':"还未开始上传"}
+        try:
+            uploadFile = request.FILES.get('uploadFile')
+            print uploadFile
+
+            f = open(os.path.join('static/upload/csv/', uploadFile.name), 'wb')
+            for chunk in uploadFile.chunks(chunk_size=1024):
+                f.write(chunk)
+            ret['status'] = "success"
+            ret['msg'] = str(uploadFile.name)+":上传和生成用例成功"
+        except Exception as e:
+            ret['status'] = "failed"
+            ret['msg'] = e
+            traceback.format_exc()
+
+        finally:
+            f.close()
+
+            if ret['status'] == "success":
+                print ("读取excel")
+                demo_path = 'static/upload/csv/'+str(uploadFile.name)
+                xlrd.Book.encoding = "utf-8"
+                book = xlrd.open_workbook(demo_path)  # 得到Excel文件的book对象，实例化对象
+
+                sheet0 = book.sheet_by_index(0)  # 通过sheet索引获得sheet对象
+                nrows = sheet0.nrows  # 获取行总数
+                # 循环打印每一行的内容
+                for i in range(nrows-2):
+                    case_dict = {}
+                    case_list = sheet0.row_values(i+2)
+
+                    case_dict['script_case_id'] = str(case_list[0])
+                    case_dict['script_case_name'] = str(case_list[1])
+                    case_dict['script_case_project_name_id'] = str(case_list[2])
+                    case_dict['script_case_module_name_id'] = str(case_list[3])
+                    case_dict['execution_order'] = str(case_list[4])
+                    case_dict['parameter_ddt'] = str(case_list[5])
+                    case_dict['config'] = str(case_list[6])
+                    case_dict['creator'] = str(case_list[7])
+                    case_dict['script_case_type'] = str(case_list[8])
+                    case_dict['status'] = str(case_list[9])
+                    case_dict['remark'] = str(case_list[10])
+
+                    try:
+                        Script_Case_Info.objects.create(**case_dict)
+                    except:
+                        ret['status'] = 'failed'
+                        ret['msg'] = "生成用例失败，请检查数据:"+str(traceback.format_exc())
+                        return JsonResponse(ret)
+
+            return JsonResponse(ret)
+
+    return render(request, 'AutoFW/yongli_genirate_page.html')
