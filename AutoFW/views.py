@@ -2905,7 +2905,7 @@ def upload_file(request):
             uploadFile = request.FILES.get('uploadFile')
             print uploadFile
 
-            f = open(os.path.join('static/upload/csv/', uploadFile.name), 'wb')
+            f = open(os.path.join('static/upload/case/', uploadFile.name), 'wb')
             for chunk in uploadFile.chunks(chunk_size=1024):
                 f.write(chunk)
             ret['status'] = "success"
@@ -2920,12 +2920,37 @@ def upload_file(request):
 
             if ret['status'] == "success":
                 print ("读取excel")
-                demo_path = 'static/upload/csv/'+str(uploadFile.name)
+                demo_path = 'static/upload/case/'+str(uploadFile.name)
                 xlrd.Book.encoding = "utf-8"
                 book = xlrd.open_workbook(demo_path)  # 得到Excel文件的book对象，实例化对象
+                try:
+                    sheet0 = book.sheet_by_name("OG-AutoFW-CASE")  # 通过sheet索引获得sheet对象
+                except Exception,e:
+                    ret['status'] = 'errorFile'
+                    ret['msg'] = "上传的文件内容格式不对，请下载最新模板"
+                    return JsonResponse(ret)
 
-                sheet0 = book.sheet_by_index(0)  # 通过sheet索引获得sheet对象
                 nrows = sheet0.nrows  # 获取行总数
+                E_script_case_id_list = sheet0.col_values(0, 2)  # 获取第一列 从第三行开始获取
+                E_script_case_name_list = sheet0.col_values(1, 2)
+                script_case_id_c = Script_Case_Info.objects.filter(script_case_id__in=E_script_case_id_list)
+                script_case_name_c = Script_Case_Info.objects.filter(script_case_name__in=E_script_case_name_list)
+                script_case_id_list = []
+                script_case_name_list = []
+
+                # 插入数据前检查唯一键
+                if script_case_id_c.count() != 0 and script_case_name_c.count() != 0:
+                    ret['status'] = 'blockOut'
+                    for l_script_case_id in script_case_id_c:
+                        script_case_id_list.append(l_script_case_id.script_case_id)
+
+                    for l_script_case_name in script_case_name_c:
+                        script_case_name_list.append(l_script_case_name.script_case_name)
+
+                    ret['msg'] = "接口id和接口名称违反唯一值:case_id[" + str(script_case_id_list) + "] case_name[" + str(
+                        script_case_name_list) + "]"
+                    return JsonResponse(ret)
+
                 # 循环打印每一行的内容
                 for i in range(nrows-2):
                     case_dict = {}
@@ -2945,9 +2970,93 @@ def upload_file(request):
 
                     try:
                         Script_Case_Info.objects.create(**case_dict)
-                    except:
+                    except Exception,e:
                         ret['status'] = 'failed'
-                        ret['msg'] = "生成用例失败，请检查数据:"+str(traceback.format_exc())
+                        ret['msg'] = "生成用例失败，请检查数据:["+str(case_list[0])+"]"+str(e)
+                        return JsonResponse(ret)
+
+            return JsonResponse(ret)
+
+    return render(request, 'AutoFW/yongli_genirate_page.html')
+
+
+#导入文件并生成接口信息
+def upload_interface_file(request):
+    if request.method == "POST":
+        print ("upload_file")
+        ret = {'status': "failed", 'msg':"还未开始上传"}
+        try:
+            uploadFile = request.FILES.get('uploadFile')
+            print uploadFile
+
+            f = open(os.path.join('static/upload/interface/', uploadFile.name), 'wb')
+            for chunk in uploadFile.chunks(chunk_size=1024):
+                f.write(chunk)
+            ret['status'] = "success"
+            ret['msg'] = str(uploadFile.name)+":上传和生成接口成功"
+        except Exception as e:
+            ret['status'] = "failed"
+            ret['msg'] = e
+            traceback.format_exc()
+
+        finally:
+            f.close()
+
+            if ret['status'] == "success":
+                print ("读取excel")
+                demo_path = 'static/upload/interface/'+str(uploadFile.name)
+                xlrd.Book.encoding = "utf-8"
+                book = xlrd.open_workbook(demo_path)  # 得到Excel文件的book对象，实例化对象
+                try:
+                    sheet0 = book.sheet_by_name("OG-AutoFW-API")  # 通过sheet索引获得sheet对象
+                except Exception,e:
+                    ret['status'] = 'errorFile'
+                    ret['msg'] = "上传的文件内容格式不对，请下载最新模板"
+                    return JsonResponse(ret)
+
+                nrows = sheet0.nrows  # 获取行总数
+                E_case_id_list = sheet0.col_values(0,2)#获取第一列 从第三行开始获取
+                E_case_name_list = sheet0.col_values(1,2)
+                case_id_c = Project_Case.objects.filter(case_id__in=E_case_id_list)
+                case_name_c = Project_Case.objects.filter(case_name__in=E_case_name_list)
+                case_id_list = []
+                case_name_list = []
+
+                #插入数据前检查唯一键
+                if case_id_c.count() != 0 and case_name_c.count() != 0:
+                    ret['status'] = 'blockOut'
+                    for l_case_id in case_id_c:
+                        case_id_list.append(l_case_id.case_id)
+
+                    for l_case_name in case_name_c:
+                        case_name_list.append(l_case_name.case_name)
+
+                    ret['msg'] = "接口id和接口名称违反唯一值:case_id["+str(case_id_list)+"] case_name["+str(case_name_list)+"]"
+                    return JsonResponse(ret)
+                # 循环打印每一行的内容
+                for i in range(nrows-2):
+                    case_dict = {}
+                    case_list = sheet0.row_values(i+2)
+
+                    case_dict['case_id'] = str(case_list[0])
+                    case_dict['case_name'] = str(case_list[1])
+                    case_dict['project_name_id'] = str(case_list[2])
+                    case_dict['module_name_id'] = str(case_list[3])
+                    case_dict['url_path'] = str(case_list[4])
+                    case_dict['method'] = str(case_list[5])
+                    case_dict['headers'] = str(case_list[6])
+                    case_dict['parameter_format'] = str(case_list[7])
+                    case_dict['parameter'] = str(case_list[8])
+                    case_dict['expected'] = str(case_list[9])
+                    case_dict['case_type'] = str(case_list[10])
+                    case_dict['description'] = str(case_list[11])
+                    case_dict['creator'] = str(case_list[12])
+
+                    try:
+                        Project_Case.objects.create(**case_dict)
+                    except Exception,e:
+                        ret['status'] = 'failed'
+                        ret['msg'] = "生成接口失败，请检查数据["+str(case_list[0])+"]"+str(e)
                         return JsonResponse(ret)
 
             return JsonResponse(ret)

@@ -84,3 +84,58 @@ function doSearchInterfaceName(){
 	});
 	//$('#dg_case').datagrid('reload');
 }
+
+
+function uploadFile() {
+    var maxsize = 20*1024*1024;//20M 限制最大上传限制
+    var errMsg = "上传的附件文件不能超过20M！！！";
+    //Jquery转换为dom对象：$("#img")[0].files[0];   其中$("#img")是jquery对象， $("#img")[0]是dom对象
+    var uploadFile = $("#uploadFile")[0].files[0];
+    var failenem = uploadFile.name;
+    //取出上传文件的扩展名
+    var index = failenem.lastIndexOf(".");
+    var ext = failenem.substr(index+1);
+
+    if(ext != "xlsx"){
+        alert("上传的文件格式不对");
+        return;
+    }
+
+    if(uploadFile==undefined){
+         alert("请先选择上传文件");
+         return;
+     }
+
+    var filesize = uploadFile.size;//单位字节
+
+    if(filesize>=maxsize){
+        alert(errMsg);
+        return;
+    }
+
+    var form = new FormData();
+    form.append('uploadFile',uploadFile);
+
+    $.ajax({
+        url:"/AutoFW/upload_interface_file/",
+        type:"POST",
+        data:form,
+        processData: false,// 告诉jquery要传输data对象
+        contentType: false,// 告诉jquery不需要增加请求头对于contentType的设置
+        success: function (data) {
+            if(data.status == "success"){
+                alert(data.msg);
+            }
+            else if(data.status == "failed"){
+                alert(data.msg);
+            }
+            else if(data.status == "errorFile"){
+                alert(data.msg);
+            }
+            else if(data.status == "blockOut"){
+                alert(data.msg);
+            }
+        }
+
+    });
+}

@@ -93,7 +93,8 @@
                 var script_case_id = $("#project_case_id_id").val();
                 //查询前清理表单
                 $("#project_case_id").attr("value",'');
-                $("#project_case_name").attr("value",'');
+//                $("#project_case_name").attr("value",""); //bug  编辑之后 不能清空value
+                document.getElementById("project_case_name").value = '';
 
                 $("#project_execute_order").val('');
                 $("#project_config").val('');
@@ -105,7 +106,8 @@
                 $("#project_module_s").empty();
 
                 $("#project_creator").attr("value",'');
-                $("#project_remark").attr("value",'');
+//                $("#project_remark").attr("value",''); //bug  编辑之后 不能清空value
+                document.getElementById("project_remark").value = '';
 
                 $.ajax({
                    url:'/AutoFW/search_case_by_case_id/',
@@ -114,7 +116,8 @@
                     success:function (data) {
                        if(data.status == "success"){
                            $("#project_case_id").attr("value",data.project_case_dict['script_case_id']);
-                           $("#project_case_name").attr("value",data.project_case_dict['script_case_name']);
+//                           $("#project_case_name").attr("value",data.project_case_dict['script_case_name']);
+                           document.getElementById("project_case_name").value = data.project_case_dict['script_case_name'];
 
                            $("#project_execute_order").val(data.project_case_dict['execution_order']);
                            $("#project_config").val(data.project_case_dict['config']);
@@ -126,7 +129,8 @@
                            $("#project_module_s").append('<option class="project_module_option">' + data.project_case_dict['script_case_module_name_id'] + '</option>');
 
                            $("#project_creator").attr("value",data.project_case_dict['creator']);
-                           $("#project_remark").attr("value",data.project_case_dict['remark']);
+//                           $("#project_remark").attr("value",data.project_case_dict['remark']);
+                           document.getElementById("project_remark").value = data.project_case_dict['remark'];
                        }else if(data.status == "failed"){
                            alert(data.msg);
                        }else if(data.status == "error"){
