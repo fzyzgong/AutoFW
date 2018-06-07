@@ -33,7 +33,9 @@
 
         /*列表展示*/
         #case_list_t{
-            width: 1600px;
+            width: 1400px;
+            word-wrap: break-word;
+            word-break: break-all;
         }
         #case_list_t td{
             border: solid 1px;
@@ -89,7 +91,7 @@
                         </select>
                     </td>
                     <td>
-                        <label id="case_status_label">用例状态：</label>
+                        <label id="case_status_label">接口状态：</label>
                         <select id="case_status_section" style="width: 100px">
                             <option></option>
                             <option>PASS</option>
@@ -100,7 +102,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <label id="project_case_name_label">用例名称：</label>
+                        <label id="project_case_name_label">接口名称：</label>
 
                         <input id="project_case_name_input" class="project_case_name_input" type="text">
 
@@ -112,32 +114,34 @@
         <hr />
         <br />
     <div style="padding-left: 300px">
-        <input type="button" value="生成测试脚本" onclick="genritor_test_script()">
         <span style="padding-left: 100px"></span>
+        <input type="button" value="执行接口" id="execute_interface_b" name="{{ username }}" onclick="execute_interface()">
+        <input style="float: right" type="button" value="生成测试脚本[老功能，不建议使用]" onclick="genritor_test_script()">
+
 
     </div>
     <br />
     <div>
         <table id="case_list_t" cellspacing="0" cellpadding="0">
             <tr style="height: 40px;">
-                <td><span>全选</span><input id="chose_all_c" type="checkbox" name="chose_all_c" onclick="chose_all_c()"></td>
-                <td><span>用例名称</span></td>
-                <td><span>所属项目</span></td>
-                <td><span>所属模块</span></td>
-                <td><span>接口地址（URL）</span></td>
-                <td style="width: 50px"><span>方法</span></td>
-                <td><span>服务器地址</span></td>
-                <td style="width: 50px"><span>端口</span></td>
-                <td style="width: 50px"><span>头信息</span></td>
-                <td><span>参数格式</span></td>
-                <td><span>参数</span></td>
-                <td><span>预期结果</span></td>
+                <td style="width: 35px;">全选<input id="chose_all_c" type="checkbox" name="chose_all_c" onclick="chose_all_c()"></td>
+                <td><span>接口名称</span></td>
+                <td style="width: 100px;"><span>所属项目</span></td>
+                <td style="width: 100px;"><span>所属模块</span></td>
+                <td style="width: 600px;"><span>接口地址（URL）</span></td>
+                <td style="width: 50px;"><span>方法</span></td>
+                <!--<td><span>服务器地址</span></td>-->
+                <!--<td style="width: 50px"><span>端口</span></td>-->
+                <!--<td style="width: 50px"><span>头信息</span></td>-->
+                <!--<td><span>参数格式</span></td>-->
+                <!--<td><span>参数</span></td>-->
+                <!--<td><span>预期结果</span></td>-->
                 <td><span>创建者</span></td>
-                <td><span>用例状态</span></td>
-                <td><span>用例ID</span></td>
+                <td style="width: 60px;"><span>接口状态</span></td>
+                <td><span>接口ID</span></td>
             </tr>
-            <tr id="case_list_tr_f" style="background: black">
-                <td colspan="12" style="height: 1px"></td>
+            <tr id="case_list_tr_f" style="background: red">
+                <td colspan="9" style="height: 1px">暂无数据</td>
             </tr>
         </table>
     </div>
@@ -174,10 +178,10 @@
                     alert("项目名称为必选项！");
                     return;
                 }
-                if(project_module.length ==0){
-                    alert("模块名称为必选项！");
-                    return;
-                }
+//                if(project_module.length ==0){
+//                    alert("模块名称为必选项！");
+//                    return;
+//                }
                 //clear td data
                 $(".case_list_td").remove();
                 $.ajax({
@@ -190,25 +194,34 @@
 //                        console.log(data.case_list);
                         if(data.status == "success"){
                             if(data.case_list.length > 0){
+                                $("#case_list_tr_f").remove();
                                 $(".case_list_td").remove();
                                 for(var i = 0; i < data.case_list.length; i++){
     //                                alert(data.case_list[i].case_name);
 
                                     $("#case_list_t").append(
                                         '<tr id="case_list_tr" class="case_list_td">' +
-                                            '<td class="case_list_td"><input class="checkbox_input_case_id" type="checkbox" value="'+data.case_list[i].case_id+'" onclick="cancel_all()"></td><td class="case_list_td">'+data.case_list[i].case_name+'</td><td class="case_list_td">'+data.case_list[i].project_name+'</td>'+
-                                            '<td class="case_list_td">'+data.case_list[i].module_name+'</td><td class="case_list_td">'+data.case_list[i].url_path+'</td>' +
-                                            '<td class="case_list_td">'+data.case_list[i].method+'</td><td class="case_list_td">'+data.case_list[i].ip+'</td>' +
-                                            '<td class="case_list_td">'+data.case_list[i].port+'</td><td class="case_list_td">'+data.case_list[i].headers+'</td><td class="case_list_td">'+data.case_list[i].parameter_format+'</td><td class="case_list_td">'+data.case_list[i].parameter+'</td><td class="case_list_td">'+data.case_list[i].expected+'</td>' +
-                                            '<td class="case_list_td">'+data.case_list[i].creator+'</td><td class="case_list_td">'+data.case_list[i].case_status+'</td>' +
+                                            '<td class="case_list_td" style="width: 30px;"><input class="checkbox_input_case_id" type="checkbox" value="'+data.case_list[i].case_id+'" onclick="cancel_all()"></td>' +
+                                            '<td class="case_list_td">'+data.case_list[i].case_name+'</td><td style="width: 100px;" class="case_list_td">'+data.case_list[i].project_name+'</td>'+
+                                            '<td style="width: 100px;" class="case_list_td">'+data.case_list[i].module_name+'</td><td style="width: 600px;" class="case_list_td">'+data.case_list[i].url_path+'</td>' +
+                                            '<td class="case_list_td">'+data.case_list[i].method+'</td>' +
+                                            '<td class="case_list_td">'+data.case_list[i].creator+'</td><td style="width: 60px;" class="case_list_td">'+data.case_list[i].case_status+'</td>' +
                                             '<td class="case_list_td">'+data.case_list[i].case_id+'</td>' +
                                         '</tr>'
                                     );
+                                    //'<tr id="case_list_tr" class="case_list_td">' +
+                                    //        '<td class="case_list_td"><input class="checkbox_input_case_id" type="checkbox" value="'+data.case_list[i].case_id+'" onclick="cancel_all()"></td><td class="case_list_td">'+data.case_list[i].case_name+'</td><td class="case_list_td">'+data.case_list[i].project_name+'</td>'+
+                                    //       '<td class="case_list_td">'+data.case_list[i].module_name+'</td><td class="case_list_td">'+data.case_list[i].url_path+'</td>' +
+                                    //        '<td class="case_list_td">'+data.case_list[i].method+'</td><td class="case_list_td">'+data.case_list[i].ip+'</td>' +
+                                    //        '<td class="case_list_td">'+data.case_list[i].port+'</td><td class="case_list_td">'+data.case_list[i].headers+'</td><td class="case_list_td">'+data.case_list[i].parameter_format+'</td><td class="case_list_td">'+data.case_list[i].parameter+'</td><td class="case_list_td">'+data.case_list[i].expected+'</td>' +
+                                    //        '<td class="case_list_td">'+data.case_list[i].creator+'</td><td class="case_list_td">'+data.case_list[i].case_status+'</td>' +
+                                    //       '<td class="case_list_td">'+data.case_list[i].case_id+'</td>' +
+                                    //    '</tr>'
                                 }
                             }else {
 //                                alert("没有匹配到数据");
                                 $(".case_list_td").remove();
-                                $("#case_list_t").append('<tr style="text-align: center" class="case_list_td"><td colspan="12" class="case_list_td">没有匹配到数据</td></tr>');
+                                $("#case_list_t").append('<tr style="text-align: center;background: red" class="case_list_td"><td colspan="12" class="case_list_td">暂无数据</td></tr>');
                             }
 
                         }else {
@@ -232,6 +245,54 @@
                         this.checked = true;
                     });
                     isCheckAll = true;
+                }
+            }
+
+            function execute_interface() {
+
+                //判断是否有勾选脚本执行
+                if($(".checkbox_input_case_id:checked").length<1){
+                    alert("请选择要执行的脚本！");
+                    return;
+                }
+
+                var result_name = window.prompt("请为你本次测试命名，用于查询测试结果！[命名规范：模块缩写名+测试人员名字缩写+年月日时分]", "null");
+                var username = document.getElementById("execute_interface_b").name;
+
+                if(result_name==null || result_name=='null' || result_name=='')
+                {
+                    alert("未正确命名！");
+                    return;
+                }
+
+                //判断全选是否勾选
+                var case_id_json = "";
+                if($("#chose_all_c").is(":checked")){
+                    var case_name_list = document.getElementsByClassName("checkbox_input_case_id");
+                    $(".checkbox_input_case_id").each(function () {
+                        case_id_json += $(this).val()+',';
+                    })
+                }else{
+//                    判断没有全选生成测试脚本时
+                    $(".checkbox_input_case_id:checked").each(function () {
+                        case_id_json += $(this).val() + ','
+                    })
+                }
+                if(case_id_json){
+                    $.ajax({
+                        url: "/AutoFW/chose_all_execute_test_interface",
+                        type: "get",
+                        data: "case_id_json="+case_id_json+"&username="+username+"&result_name="+result_name,
+                        success: function (data) {
+                            if(data.status == "success"){
+                                alert(data.msg);
+                            }else if(data.status == "failed"){
+                                alert(data.msg);
+                            }
+                        }
+                    });
+                }else {
+                    alert("未选择要执行的接口！");
                 }
             }
 

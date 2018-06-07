@@ -253,3 +253,13 @@ AttributeError: 'unicode' object has no attribute 'items'
     for header in headers.items():
 AttributeError: 'unicode' object has no attribute 'items'
 
+[Exception][2018-06-07 16:42:31]>>  [execute_fixed_interface.pyc]  [HTTPS://test02.2boss.cn/rabbit/v1/customer/house/search] <EXCEPTION>Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/util/execute_fixed_interface.py", line 137, in execute_interface
+    str(expected_d.values()[0]) + ', actual_values:' + str(actual_value) + '' + '] ' + str(rs_str)
+AttributeError: 'str' object has no attribute 'keys'
+
+[Exception][2018-06-07 16:54:29]>>  [execute_fixed_interface.py]  [HTTPS://test02.2boss.cn/rabbit/v1/customer/house/search] <EXCEPTION>Traceback (most recent call last):
+  File "/home/fzyzgong/project/AutoFWOG/AutoFW/util/execute_fixed_interface.py", line 140, in execute_interface
+    str(expected_d.values()[0]) + ', actual_values:' + str(actual_value) + '' + '] ' + str(rs_str)
+AttributeError: 'str' object has no attribute 'keys'
+

@@ -135,8 +135,14 @@ class Execute_Interface:
                 elif parameter == '':
                     r = requests.get(protocol + domain + url_path, headers=headers, timeout=8)
                 elif headers == '':
+                    #避免中文
+                    param_tmp = urlparse.urlparse(parameter).path
+                    parameter = dict((k, v[0]) for k, v in urlparse.parse_qs(param_tmp).items())
                     r = requests.get(protocol + domain + url_path, params=parameter, timeout=8)
                 else:
+                    # 避免中文
+                    param_tmp = urlparse.urlparse(parameter).path
+                    parameter = dict((k, v[0]) for k, v in urlparse.parse_qs(param_tmp).items())
                     r = requests.get(protocol + domain + url_path, headers=headers, params=parameter, timeout=8)
 
             elif str(method).upper() == "POST":
@@ -163,8 +169,10 @@ class Execute_Interface:
                     elif parameter == '':
                         r = requests.post(protocol + domain + url_path, headers=headers, timeout=8)
                     elif headers == '':
+                        parameter = json.loads(parameter)
                         r = requests.post(protocol + domain + url_path, json=parameter, timeout=8)
                     else:
+                        parameter = json.loads(parameter)
                         r = requests.post(protocol + domain + url_path, headers=headers, json=parameter, timeout=8)
                 elif parameter_format == 'multipart/form-data':
                     if parameter == '' and headers == '':

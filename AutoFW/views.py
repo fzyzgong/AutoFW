@@ -9,6 +9,7 @@ from .util.execute_script_Popen import execute_script_Popen
 from .util.copyFileAndUpdataUtil import copyFile
 from .util.send_mail_batch_report import send_mail
 from .util.execute_interface import Execute_Interface
+from .util.execute_fixed_interface import Execute_Fixed_Interface
 from .util.login_get_userinfo import LoginGetUserInfo
 from models import *
 from django.db.models import Q
@@ -772,7 +773,7 @@ def test_case_genirate_page(request,username):
     creator = Emp_Info.objects.values("name")
 
     print (creator)
-    content = {"project_name_list":project_qs,"creator_list":creator}
+    content = {"project_name_list":project_qs,"creator_list":creator,"username":username}
 
     return render(request,"AutoFW/test_case_genirate_page.html",content)
 
@@ -806,13 +807,15 @@ def search_case(request):
     # unicode转str
     creator_name = creator_name.encode("utf8")
     project_module = get("project_module")
+    # unicode转str
+    project_module = project_module.encode("utf8")
     case_status = get("case_status")
     case_name = get("case_name")
-    print (project_name)
-    print (creator_name)
-    print (project_module)
-    print (str(case_status))
-    print (str(case_name))
+    # print (project_name)
+    # print (creator_name)
+    # print (project_module)
+    # print (str(case_status))
+    # print (str(case_name))
     #获取全局配置IP/PORT变量
     project_obj = Project.objects.filter(project_name=project_name)[0]
     # print (project_obj)
@@ -824,9 +827,78 @@ def search_case(request):
     #存放给前端table用的case数据
     case_obj_list = []
 
+    # 所属模块/创建者/接口状态/接口名 为空时查询分支
+    if project_module == "" and creator_name == "" and str(case_status) == "" and str(case_name) == "":
+        print ("创建者/接口状态/接口名 为空时查询分支")
+        case_obj = Project_Case.objects.filter(project_name=project_name)
+        for list in case_obj:
+            case_obj_dict = {"case_id":list.case_id,"case_name":list.case_name,"project_name":list.project_name_id,"module_name":list.module_name_id,
+                             "url_path":list.url_path,"method":list.method,"headers":list.headers,"ip":prject_config_ip,"parameter_format":list.parameter_format,"parameter":list.parameter,
+                             "expected":list.expected,"port":prject_config_port,"creator":list.creator,"case_status":list.description}
+            case_obj_list.append(case_obj_dict)
+        # print (case_obj_list)
+        content = {"status": "success", "case_list": case_obj_list}
+        print (content)
+        return JsonResponse(content)
+    # 所属模块/创建者/接口状态 为空时查询分支
+    if project_module == "" and creator_name == "" and str(case_status) == "":
+        print ("所属模块/创建者/接口状态 为空时查询分支")
+        case_obj = Project_Case.objects.filter(project_name=project_name,case_name__contains=case_name)
+        for list in case_obj:
+            case_obj_dict = {"case_id":list.case_id,"case_name":list.case_name,"project_name":list.project_name_id,"module_name":list.module_name_id,
+                             "url_path":list.url_path,"method":list.method,"headers":list.headers,"ip":prject_config_ip,"parameter_format":list.parameter_format,"parameter":list.parameter,
+                             "expected":list.expected,"port":prject_config_port,"creator":list.creator,"case_status":list.description}
+            case_obj_list.append(case_obj_dict)
+        # print (case_obj_list)
+        content = {"status": "success", "case_list": case_obj_list}
+        print (content)
+        return JsonResponse(content)
+    # 所属模块/接口状态 为空时查询分支
+    if project_module == "" and str(case_status) == "":
+        print ("所属模块/接口状态 为空时查询分支")
+        # 获取用户id
+        creator_n = Emp_Info.objects.filter(name=creator_name)[0].user_id_id
+        print (creator_n)
+        case_obj = Project_Case.objects.filter(project_name=project_name, case_name__contains=case_name,creator=creator_n)
+        for list in case_obj:
+            case_obj_dict = {"case_id": list.case_id, "case_name": list.case_name,
+                             "project_name": list.project_name_id, "module_name": list.module_name_id,
+                             "url_path": list.url_path, "method": list.method, "headers": list.headers,
+                             "ip": prject_config_ip, "parameter_format": list.parameter_format,
+                             "parameter": list.parameter,
+                             "expected": list.expected, "port": prject_config_port, "creator": list.creator,
+                             "case_status": list.description}
+            case_obj_list.append(case_obj_dict)
+        # print (case_obj_list)
+        content = {"status": "success", "case_list": case_obj_list}
+        print (content)
+        return JsonResponse(content)
+
+    # 所属模块 为空时查询分支
+    if project_module == "":
+        print ("所属模块/接口状态 为空时查询分支")
+        # 获取用户id
+        creator_n = Emp_Info.objects.filter(name=creator_name)[0].user_id_id
+        print (creator_n)
+        case_obj = Project_Case.objects.filter(project_name=project_name, case_name__contains=case_name,
+                                               creator=creator_n,description=case_status)
+        for list in case_obj:
+            case_obj_dict = {"case_id": list.case_id, "case_name": list.case_name,
+                             "project_name": list.project_name_id, "module_name": list.module_name_id,
+                             "url_path": list.url_path, "method": list.method, "headers": list.headers,
+                             "ip": prject_config_ip, "parameter_format": list.parameter_format,
+                             "parameter": list.parameter,
+                             "expected": list.expected, "port": prject_config_port, "creator": list.creator,
+                             "case_status": list.description}
+            case_obj_list.append(case_obj_dict)
+        # print (case_obj_list)
+        content = {"status": "success", "case_list": case_obj_list}
+        print (content)
+        return JsonResponse(content)
+
     #创建者/用例状态/用例名 为空时查询分支
     if creator_name == "" and str(case_status) == "" and str(case_name) == "":
-        print ("创建者/用例状态/用例名 为空时查询分支")
+        print ("创建者/接口状态/接口名 为空时查询分支")
         case_obj = Project_Case.objects.filter(project_name=project_name,module_name=project_module)
         for list in case_obj:
             case_obj_dict = {"case_id":list.case_id,"case_name":list.case_name,"project_name":list.project_name_id,"module_name":list.module_name_id,
@@ -837,9 +909,9 @@ def search_case(request):
         content = {"status": "success", "case_list": case_obj_list}
         print (content)
         return JsonResponse(content)
-    # 创建者/用例状态 为空时查询分支
+    # 创建者/接口状态 为空时查询分支
     elif creator_name == "" and str(case_status) == "":
-        print ("创建者/用例状态 为空时查询分支")
+        print ("创建者/接口状态 为空时查询分支")
         #case_name支持模糊查询
         case_obj = Project_Case.objects.filter(project_name=project_name,
                                                module_name=project_module,case_name__contains=case_name)
@@ -852,9 +924,9 @@ def search_case(request):
         content = {"status": "success", "case_list": case_obj_list}
         print (content)
         return JsonResponse(content)
-    # 创建者/用例名称 为空时查询分支
+    # 创建者/接口名称 为空时查询分支
     elif creator_name == "" and str(case_name) == "":
-        print ("创建者/用例名称 为空时查询分支")
+        print ("创建者/接口名称 为空时查询分支")
         case_obj = Project_Case.objects.filter(project_name=project_name,
                                                module_name=project_module,description=case_status)
         for list in case_obj:
@@ -866,9 +938,9 @@ def search_case(request):
         content = {"status": "success", "case_list": case_obj_list}
         print (content)
         return JsonResponse(content)
-    # 用例名称/用例状态 为空时查询分支
+    # 接口名称/接口状态 为空时查询分支
     elif str(case_status) == "" and str(case_name) == "":
-        print ("用例名称/用例状态 为空时查询分支")
+        print ("接口名称/接口状态 为空时查询分支")
         #获取用户id
         creator_n = Emp_Info.objects.filter(name=creator_name)[0].user_id_id
         print (creator_n)
@@ -903,9 +975,9 @@ def search_case(request):
         content = {"status": "success", "case_list": case_obj_list}
         print (content)
         return JsonResponse(content)
-    # 用例状态 为空时查询分支
+    # 接口状态 为空时查询分支
     elif case_status == "":
-        print ("用例状态 为空时查询分支")
+        print ("接口状态 为空时查询分支")
         # 获取用户id
         creator_n = Emp_Info.objects.filter(name=creator_name)[0].user_id_id
 
@@ -923,9 +995,9 @@ def search_case(request):
         content = {"status": "success", "case_list": case_obj_list}
         print (content)
         return JsonResponse(content)
-    # 用例名称 为空时查询分支
+    # 接口名称 为空时查询分支
     elif case_name == "":
-        print ("用例名称 为空时查询分支")
+        print ("接口名称 为空时查询分支")
         # 获取用户id
         creator_n = Emp_Info.objects.filter(name=creator_name)[0].user_id_id
         case_obj = Project_Case.objects.filter(project_name=project_name,module_name=project_module,
@@ -961,6 +1033,91 @@ def search_case(request):
         print (content)
         return JsonResponse(content)
 
+
+#执行调用接口（接口带有固定参数）
+def chose_all_execute_test_interface(request):
+    print ("chose_all_execute_test_interface")
+    if request.method == "GET":
+        case_id = request.GET.get("case_id_json")
+        case_id_list = str(case_id).split(',')
+        # 移除空列元素
+        case_id_list.remove('')
+
+        passCount = 0
+        failCount = 0
+        skipCount = 0
+
+        report_name = request.GET.get("result_name")  # 执行该批次的测试报告名称
+        execute_man = request.GET.get("username")  # 获取执行人的姓名
+        print execute_man
+        report_id = datetime.datetime.now().strftime("%Y%m%d%H%M%S")  # 报告ID 唯一值 根据当前时间生成
+        API_total = len(case_id_list)  # 本次执行的总API数
+        execute_time = datetime.datetime.now()  # 执行当前时间
+
+        dict_report_id = {"report_id": report_id, "report_name": report_name, "API_total": str(API_total),
+                          "pass_total": str(passCount), "fail_total": str(failCount), "skip_total": str(skipCount),
+                          "execute_man": str(execute_man),
+                          "execute_time": execute_time, "bak1": "bak", "bak2": "bak"}
+
+        Batch_Report.objects.create(**dict_report_id)
+
+        try:
+            for interface in case_id_list:
+                IMPL_obj = Project_Case.objects.filter(case_id=interface)[0]
+                project_name = IMPL_obj.project_name_id
+                project_obj = Project.objects.filter(project_name=project_name)[0]
+                project_id = project_obj.project_code
+                project_config_obj = Project_Config.objects.filter(project_id=project_id)[0]
+
+                ip = str(project_config_obj.ip)
+                domain = project_config_obj.domain.replace(' ', '')  # 去除空格
+                protocol = project_config_obj.protocol.replace(' ', '')  # 去除空格
+                url_path = str(IMPL_obj.url_path).replace(' ', '')  # 去除空格
+                method = str(IMPL_obj.method).replace(' ', '')  # 去除空格
+
+                # headers 和 param 可以为空 GET/POST 不同时分支
+                headers = str(IMPL_obj.headers)
+                parameter_format = str(IMPL_obj.parameter_format)
+                parameter = str(IMPL_obj.parameter)
+                expected = str(IMPL_obj.expected)
+
+                print (headers, parameter, expected)
+                url = str(protocol) + '://' + str(domain) + url_path
+
+                try:
+                    api_log = Execute_Fixed_Interface.execute_interface(url, method, parameter_format, headers, parameter, expected, user_info=1)
+
+                    exe_status = str(api_log).split('\'')[0].split(':')[1]
+                    print exe_status
+                    if 'PASS' == str(exe_status):
+                        passCount += 1
+                    elif 'FAILED' == str(exe_status):
+                        failCount += 1
+                    elif 'SKIP' == str(exe_status):
+                        skipCount += 1
+                    execute_script_log_dict = {"log_report_id_id":report_id,"log_api_name":interface,"log_execute_script":api_log,
+                                               "bak1":"1","status":str(exe_status)}
+                    Execute_Script_Log.objects.create(**execute_script_log_dict)
+                except:
+                    print traceback.print_exc()
+
+            dict_execute = {"report_id": report_id, "report_name": report_name, "API_total": str(API_total),
+                            "pass_total": str(passCount), "fail_total": str(failCount), "skip_total": str(skipCount),
+                            "execute_man": str(execute_man),
+                            "execute_time": execute_time, "bak1": "bak", "bak2": "bak"}
+
+            Batch_Report.objects.filter(report_id=report_id).update(**dict_execute)
+            content = {
+                "status":"success",
+                "msg":"调用接口成功"
+            }
+            return JsonResponse(content)
+        except:
+            content = {
+                "status": "failed",
+                "msg":str(traceback.format_exc())
+            }
+            return JsonResponse(content)
 
 #生成测试脚本（全选模式/单选）
 def chose_all_genritor_test_script(request):
@@ -1731,8 +1888,8 @@ def execution_test_case(request):
                     url_path = project_case_obj.url_path
                     parameter = project_case_obj.parameter
 
-                    if parameter_format == "application/json" and '' != parameter:
-                        parameter = json.loads(parameter)  # unicode转字典
+                    # if parameter_format == "application/json" and '' != parameter:
+                    #     parameter = json.loads(parameter)  # unicode转字典
 
                     expected = project_case_obj.expected
                     headers = project_case_obj.headers
@@ -1745,23 +1902,26 @@ def execution_test_case(request):
                         #todo  判断是否为空时
                         for param_l in param_list:
                             if "$("+str(param_l)+")" in str(parameter):
-                                print ("parameter=%s" % parameter)
-                                print (execution_case_oder_dict[list_i_oder])
-                                print (param_dict[param_l])
-                                parameter = str(parameter).replace("$("+str(param_l)+")",param_dict[param_l][execution_case_oder_dict[list_i_oder]-1])
+                                #print ("parameter=%s" % parameter)
+                                #print (execution_case_oder_dict[list_i_oder])
+                                #print (param_dict[param_l])
+                                if method == "POST" and parameter_format == "application/json" and "\"{" in parameter:
+                                    parameter = str(parameter).replace("\"$("+str(param_l)+")\"",param_dict[param_l][execution_case_oder_dict[list_i_oder]-1])
+                                else:
+                                    parameter = str(parameter).replace("$("+str(param_l)+")",param_dict[param_l][execution_case_oder_dict[list_i_oder]-1])
 
                             if "$("+str(param_l)+")" in str(headers):
                                 headers = str(headers).replace("$("+str(param_l)+")",param_dict[param_l][execution_case_oder_dict[list_i_oder]-1])
-                                print ("headers=%s" % headers)
-                                print (execution_case_oder_dict[list_i_oder])
+                                #print ("headers=%s" % headers)
+                                #print (execution_case_oder_dict[list_i_oder])
                             if "$("+str(param_l)+")" in str(url_path):
                                 url_path = str(url_path).replace("$("+str(param_l)+")",param_dict[param_l][execution_case_oder_dict[list_i_oder]-1])
-                                print ("url_path=%s" % url_path)
-                                print (execution_case_oder_dict[list_i_oder])
+                                #print ("url_path=%s" % url_path)
+                                #print (execution_case_oder_dict[list_i_oder])
                             if "$("+str(param_l)+")" in str(expected):
                                 expected = str(expected).replace("$("+str(param_l)+")",param_dict[param_l][execution_case_oder_dict[list_i_oder]-1])
-                                print ("expected=%s" % expected)
-                                print (execution_case_oder_dict[list_i_oder])
+                                #print ("expected=%s" % expected)
+                                #print (execution_case_oder_dict[list_i_oder])
 
                     print (parameter,url_path,headers,expected)
 
@@ -1876,11 +2036,48 @@ def execution_test_case(request):
                     url_path = project_case_obj.url_path
                     parameter = project_case_obj.parameter
 
-                    if parameter_format == "application/json" and '' != parameter:
-                        parameter = json.loads(parameter)#unicode转字典
+                    # if parameter_format == "application/json" and '' != parameter:
+                    #     parameter = json.loads(parameter)#unicode转字典
 
                     expected = project_case_obj.expected
                     headers = project_case_obj.headers
+
+                    # 参数替换 包或 headers 和 parameter  expected
+                    if list_i_oder in parameter_ddt_list:
+                        param_dict = parameter_ddt_dict[list_i_oder]  # 获取该接口的参数字典
+                        param_list = param_dict.keys()
+                        # todo  判断是否为空时
+                        for param_l in param_list:
+                            if "$(" + str(param_l) + ")" in str(parameter):
+                                # print ("parameter=%s" % parameter)
+                                # print (execution_case_oder_dict[list_i_oder])
+                                # print (param_dict[param_l])
+                                if method == "POST" and parameter_format == "application/json" and "\"{" in parameter:
+                                    parameter = str(parameter).replace("\"$(" + str(param_l) + ")\"",
+                                                                       param_dict[param_l][
+                                                                           execution_case_oder_dict[list_i_oder] - 1])
+                                else:
+                                    parameter = str(parameter).replace("$(" + str(param_l) + ")", param_dict[param_l][
+                                        execution_case_oder_dict[list_i_oder] - 1])
+
+                            if "$(" + str(param_l) + ")" in str(headers):
+                                headers = str(headers).replace("$(" + str(param_l) + ")", param_dict[param_l][
+                                    execution_case_oder_dict[list_i_oder] - 1])
+                                # print ("headers=%s" % headers)
+                                # print (execution_case_oder_dict[list_i_oder])
+                            if "$(" + str(param_l) + ")" in str(url_path):
+                                url_path = str(url_path).replace("$(" + str(param_l) + ")", param_dict[param_l][
+                                    execution_case_oder_dict[list_i_oder] - 1])
+                                # print ("url_path=%s" % url_path)
+                                # print (execution_case_oder_dict[list_i_oder])
+                            if "$(" + str(param_l) + ")" in str(expected):
+                                expected = str(expected).replace("$(" + str(param_l) + ")", param_dict[param_l][
+                                    execution_case_oder_dict[list_i_oder] - 1])
+                                # print ("expected=%s" % expected)
+                                # print (execution_case_oder_dict[list_i_oder])
+
+                    print (parameter, url_path, headers, expected)
+
 
                     if list_i_oder in from_interface_list and list_i_oder not in to_interface_list:#接口在需要提取动态变量名list中
                         print ("执行接口分支 只需要抓取动态变量的接口%s" % str(list_i_oder))
