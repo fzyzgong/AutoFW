@@ -20,7 +20,7 @@ import sys
 
 reload(sys)
 sys.setdefaultencoding('utf8')
-from .util.Mylogging import mylogging  #自定义异常捕获日志
+from .util.Mylogging import Mylogging  #自定义异常捕获日志
 
 import logging
 log_sys = logging.getLogger("django")  #系统日志
@@ -1086,7 +1086,8 @@ def chose_all_execute_test_interface(request):
 
                 try:
                     api_log = Execute_Fixed_Interface.execute_interface(url, method, parameter_format, headers, parameter, expected, user_info=1)
-
+                    Mylogging.interface("[接口日志] ["+interface+"]"+api_log+"\r\n")
+                    Mylogging.interface("--------------------------------------------------------------------------")
                     exe_status = str(api_log).split('\'')[0].split(':')[1]
                     print exe_status
                     if 'PASS' == str(exe_status):
@@ -1481,7 +1482,7 @@ def execute_test_script(request):
         #     except IndexError,e:
         #         # dict = {"script_status": "NONE"}
         #         dict = "NONE"
-        #         mylogging("["+str(list)+"] :"+"未获取脚本执行状态，脚本执行失败")
+        #         Mylogging.error("["+str(list)+"] :"+"未获取脚本执行状态，脚本执行失败")
         #         log_scripts.error(list + ":FAILED:" + " error message [ 未获取脚本执行状态，脚本执行失败 ] \r"+rs)
         #
         #         execute_script_log = str(API_name) + ":<FAILED> " + " error message [脚本运行异常:请查看error.log] \r"+rs
@@ -1492,7 +1493,7 @@ def execute_test_script(request):
         #         skipCount += 1
         #     # except AttributeError,e:
         #     #     dict = {"script_status": "NONE"}
-        #     #     mylogging("[" + str(list) + "] :" + "index error,未获取脚本执行状态，脚本执行失败"+e.args)
+        #     #     Mylogging.error("[" + str(list) + "] :" + "index error,未获取脚本执行状态，脚本执行失败"+e.args)
         #     #     log_scripts.error(list + ":FAILED:" + " error message [ AttributeError ]"+e.args)
         #     Script_Info.objects.filter(script_name=list).update(script_status=dict)
         #     Project_Case.objects.filter(case_name=project_case_name).update(description=dict) #description 为用例执行状态
@@ -1936,6 +1937,7 @@ def execution_test_case(request):
                         print ("config为空下收集api执行日志和状态*****************************")
                         print (api_log[0:1500])
                         log_scripts.info("\rreport_id["+report_id+"] ["+str(case_list)+"]用例下的["+str(list_i_oder)+"]接口\r:"+api_log+"\r\n")
+                        Mylogging.interface("--------------------------------------------------------------------------")
                         status = api_log.split('AutoFW test reslut:')[1].split('\'')[0]  # 执行结果
                         print ("config为空下收集api执行日志和状态***************end**************")
                         log_report_id = report_id
@@ -1959,7 +1961,7 @@ def execution_test_case(request):
                         log_API_id = list_i_oder
                         log_case_id = case_list
                         log_execute_case = str(traceback.format_exc())
-                        mylogging("*************["+str(case_list)+"]用例下的["+str(list_i_oder)+"]接口出现异常\r:"+log_execute_case)
+                        Mylogging.error("*************["+str(case_list)+"]用例下的["+str(list_i_oder)+"]接口出现异常\r:"+log_execute_case)
 
                         execute_case_log_dict = {
                             "log_report_id_id": log_report_id, "log_API_id_id": log_API_id,
@@ -2109,6 +2111,7 @@ def execution_test_case(request):
                             print ("执行接口后返回需要抓取动态变量值：%s"%str(dynamic_value))
                             print ("执行接口后返回执行结果集：%s"%str(api_log))
                             log_scripts.info("\rreport_id["+report_id+"] [" + str(case_list) + "]用例下的[" + str(list_i_oder) + "]接口\r:" + api_log+"\r\n")
+                            Mylogging.interface("--------------------------------------------------------------------------")
                             print ("×××××end×××××××开始调用接口执行引擎××××××××××××××××")
                             for list_to_i in to_interfaces:
                                 to_interface_dynamic_value[list_to_i] = dynamic_value#{需要传入动态变量的接口：动态变量值} 1.6
@@ -2116,6 +2119,7 @@ def execution_test_case(request):
                             print ("*************[" + str(case_list) + "]用例下的[" + str(list_i_oder) + "]接口出现异常")
                             print traceback.format_exc()
                             dynamic_value, api_log = "Exception" , str(traceback.format_exc())
+                            Mylogging.error(api_log)
                             for list_to_i in to_interfaces:
                                 to_interface_dynamic_value[list_to_i] = dynamic_value#{需要传入动态变量的接口：动态变量值} 1.6
                             print ("×××××end×××××××开始调用接口执行引擎××××××××××××××××")
@@ -2145,11 +2149,13 @@ def execution_test_case(request):
 
                             print ("执行接口后返回执行结果集：%s" % str(api_log))
                             log_scripts.info("\rreport_id["+report_id+"] [" + str(case_list) + "]用例下的[" + str(list_i_oder) + "]接口\r:" + api_log+"\r\n")
+                            Mylogging.interface("--------------------------------------------------------------------------")
                             print ("×××××end×××××××开始调用接口执行引擎××××××××××××××××")
                         except:
                             print ("*************[" + str(case_list) + "]用例下的[" + str(list_i_oder) + "]接口出现异常")
                             print traceback.format_exc()
                             api_log = str(traceback.format_exc())
+                            Mylogging.error(api_log)
                             print ("×××××end×××××××开始调用接口执行引擎××××××××××××××××")
 
 
@@ -2182,11 +2188,13 @@ def execution_test_case(request):
 
                             print ("执行接口后返回执行结果集：%s" % str(api_log))
                             log_scripts.info("\rreport_id["+report_id+"] [" + str(case_list) + "]用例下的[" + str(list_i_oder) + "]接口\r:" + api_log+"\r\n")
+                            Mylogging.interface("--------------------------------------------------------------------------")
                             print ("×××××end×××××××开始调用接口执行引擎××××××××××××××××")
                         except:
                             print ("*************[" + str(case_list) + "]用例下的[" + str(list_i_oder) + "]接口出现异常")
                             print traceback.format_exc()
                             api_log = str(traceback.format_exc())
+                            Mylogging.error(api_log)
                             print ("×××××end×××××××开始调用接口执行引擎××××××××××××××××")
 
                         #再抓取
@@ -2210,6 +2218,7 @@ def execution_test_case(request):
                             print ("执行接口后返回需要抓取动态变量值：%s" % dynamic_value)
                             print ("执行接口后返回执行结果集：%s" % str(api_log))
                             log_scripts.info("\rreport_id["+report_id+"] [" + str(case_list) + "]用例下的[" + str(list_i_oder) + "]接口\r:" + api_log+"\r\n")
+                            Mylogging.interface("--------------------------------------------------------------------------")
                             print ("×××××end×××××××开始调用接口执行引擎××××××××××××××××")
 
                             for list_to_i in to_interfaces:
@@ -2218,6 +2227,7 @@ def execution_test_case(request):
                             print ("*************[" + str(case_list) + "]用例下的[" + str(list_i_oder) + "]接口出现异常")
                             print traceback.format_exc()
                             dynamic_value,api_log = "Exception",str(traceback.format_exc())
+                            Mylogging.error(api_log)
                             for list_to_i in to_interfaces:
                                 to_interface_dynamic_value[list_to_i] = dynamic_value  # {需要传入动态变量的接口：动态变量值} 1.6
                             print ("×××××end×××××××开始调用接口执行引擎××××××××××××××××")
@@ -2244,11 +2254,13 @@ def execution_test_case(request):
                                                               dynamic=None,user_info=userinfo_dict)  # 执行接口
                             print ("执行接口后返回执行结果集：%s" % str(api_log))
                             log_scripts.info("\rreport_id["+report_id+"] [" + str(case_list) + "]用例下的[" + str(list_i_oder) + "]接口\r:" + api_log+"\r\n")
+                            Mylogging.interface("--------------------------------------------------------------------------")
                             print ("×××××end×××××××开始调用接口执行引擎××××××××××××××××")
                         except:
                             print ("*************[" + str(case_list) + "]用例下的[" + str(list_i_oder) + "]接口出现异常")
                             print traceback.format_exc()
                             api_log = str(traceback.format_exc())
+                            Mylogging.error(api_log)
                             print ("×××××end×××××××开始调用接口执行引擎××××××××××××××××")
 
                     '''
@@ -2284,7 +2296,7 @@ def execution_test_case(request):
                             "log_case_id_id": log_case_id,
                             "log_execute_case": log_execute_case, "status": status, "bak1": "bak1"
                         }
-                        mylogging("*************["+str(case_list)+"]用例下的["+str(list_i_oder)+"]接口出现异常\r:"+log_execute_case)
+                        Mylogging.error("*************["+str(case_list)+"]用例下的["+str(list_i_oder)+"]接口出现异常\r:"+log_execute_case)
 
                         Execute_Case_Log.objects.create(**execute_case_log_dict)
         # except:
@@ -2868,7 +2880,7 @@ def execute_script_result_analysis_fun(rs,script_path,report_id,case_id,API_name
     except IndexError, e:
         # dict = {"script_status": "NONE"}
         dict = "NONE"
-        mylogging("[" + str(API_name) + "] :" + "未获取脚本执行状态，脚本执行失败\r" + rs)
+        Mylogging.error("[" + str(API_name) + "] :" + "未获取脚本执行状态，脚本执行失败\r" + rs)
         log_scripts.error(API_name + ":FAILED:" + " error message [ 未获取脚本执行状态，脚本执行失败 ] \r" + rs)
 
         execute_script_log = str(API_name) + ":<FAILED> " + " error message [脚本运行异常:请查看error.log] \r" + rs[1:1500]
@@ -2879,7 +2891,7 @@ def execute_script_result_analysis_fun(rs,script_path,report_id,case_id,API_name
         skipCount += 1
         # except AttributeError,e:
         #     dict = {"script_status": "NONE"}
-        #     mylogging("[" + str(list) + "] :" + "index error,未获取脚本执行状态，脚本执行失败"+e.args)
+        #     Mylogging.error("[" + str(list) + "] :" + "index error,未获取脚本执行状态，脚本执行失败"+e.args)
         #     log_scripts.error(list + ":FAILED:" + " error message [ AttributeError ]"+e.args)
     Script_Info.objects.filter(script_name=API_name).update(script_status=dict)
     Project_Case.objects.filter(case_id=case_id).update(description=dict)  # description 为用例执行状态

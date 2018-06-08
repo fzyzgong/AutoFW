@@ -5,18 +5,29 @@ import traceback
 import os
 import json
 import urlparse
+import logging
 from requests.exceptions import ReadTimeout
 util_path = os.path.join(os.path.abspath(os.path.dirname(__file__)+ os.path.sep + "../.."),"util")
 sys.path.append(util_path)
-from Mylogging import mylogging
+from Mylogging import Mylogging
 from json_d import GetDictParam
 
 class Execute_Fixed_Interface:
 
     @staticmethod
     def execute_interface(url,method,parameter_format,headers,parameter,expected,user_info):
+
         if '' != headers:
             headers = json.loads(headers)
+
+        Mylogging.interface("--------------------------------------------------------------------------")
+        Mylogging.interface("####################################################")
+        Mylogging.interface("url_path : " + str(url))
+        Mylogging.interface("method   : " + str(method))
+        Mylogging.interface("headers  : " + str(headers))
+        Mylogging.interface("parameter: " + str(parameter))
+        Mylogging.interface("####################################################")
+
 
         print ("####################################################")
         print ("url_path:" + str(url))
@@ -156,23 +167,23 @@ class Execute_Fixed_Interface:
                     api_log = 'AutoFW test reslut:FAILED\'[By casuse <' + str(expected) + '>: expected_value:'+str(expected)+' response:' + str(rs_str)
 
         except requests.exceptions.ConnectionError:
-            mylogging("[" + str(__file__).split('/')[-1] + "][" + url + "] <EXCEPTION>\r" + traceback.format_exc())
+            Mylogging.error("[" + str(__file__).split('/')[-1] + "][" + url + "] <EXCEPTION>\r" + traceback.format_exc())
             print (traceback.format_exc())
             api_log = 'AutoFW test reslut:SKIP\' requests.exceptions.ConnectionError exception:' + str(traceback.format_exc())
         except requests.exceptions.InvalidHeader:
-            mylogging("[" + str(__file__).split('/')[-1] + "]  [" + url + "] <EXCEPTION>\r" + traceback.format_exc())
+            Mylogging.error("[" + str(__file__).split('/')[-1] + "]  [" + url + "] <EXCEPTION>\r" + traceback.format_exc())
             print (traceback.format_exc())
             api_log = 'AutoFW test reslut:SKIP\' requests.exceptions.InvalidHeader exception:' + str(traceback.format_exc())
         except AttributeError:
-            mylogging("["+str(__file__).split('/')[-1]+"]  ["+url+"] <EXCEPTION>\r"+traceback.format_exc())
+            Mylogging.error("["+str(__file__).split('/')[-1]+"]  ["+url+"] <EXCEPTION>\r"+traceback.format_exc())
             print (traceback.format_exc())
             api_log = 'AutoFW test reslut:SKIP\' AttributeError exception:' + str(traceback.format_exc())
         except ValueError:
-            mylogging("[" + str(__file__).split('/')[-1] + "]  [" + url + "] <EXCEPTION>\r" + traceback.format_exc())
+            Mylogging.error("[" + str(__file__).split('/')[-1] + "]  [" + url + "] <EXCEPTION>\r" + traceback.format_exc())
             print (traceback.format_exc())
             api_log = 'AutoFW test reslut:SKIP\' ValueError exception:' + str(traceback.format_exc())
         except ReadTimeout:
-            mylogging("[" + str(__file__).split('/')[-1] + "]  [" + url + "] <EXCEPTION>\r" + traceback.format_exc())
+            Mylogging.error("[" + str(__file__).split('/')[-1] + "]  [" + url + "] <EXCEPTION>\r" + traceback.format_exc())
             print (traceback.format_exc())
             api_log = 'AutoFW test reslut:SKIP\' ReadTimeout exception:' + str(traceback.format_exc())
 

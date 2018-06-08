@@ -2267,3 +2267,22 @@ INFO 2018-06-07 16:56:44,056 views.py views workon_tabs_api 393: gonglp进入接
 INFO 2018-06-07 17:18:04,357 views.py views login_handle 60: [gonglp] 登录成功
 INFO 2018-06-07 17:54:42,623 views.py views login_handle 60: [gonglp] 登录成功
 INFO 2018-06-07 17:55:22,782 views.py views login_handle 60: [gonglp] 登录成功
+INFO 2018-06-08 09:12:09,915 views.py views login_handle 60: [gonglp] 登录成功
+INFO 2018-06-08 09:12:56,181 execute_fixed_interface.py execute_fixed_interface execute_interface 24: ####################################################
+INFO 2018-06-08 09:12:56,182 execute_fixed_interface.py execute_fixed_interface execute_interface 25: url_path:HTTPS://test02.2boss.cn/estimate/customer/event/recordUserAccessInfo
+INFO 2018-06-08 09:12:56,182 execute_fixed_interface.py execute_fixed_interface execute_interface 26: method:POST
+INFO 2018-06-08 09:12:56,182 execute_fixed_interface.py execute_fixed_interface execute_interface 27: headers:{u'TBSAccessToken': u'2395a9cc328a4091a0c6d25f35178e34'}
+INFO 2018-06-08 09:12:56,183 execute_fixed_interface.py execute_fixed_interface execute_interface 28: parameter:{"eventId":503,"userId":155054,"attrtxtStr":"{\"cityId\":605,\"userId\":155054,\"chanelName\":\"oppo应用商店\",\"appVersion\":\"8.0.2\",\"appName\":\"兔博士用户版\",\"appId\":\"1\",\"machinetype\":\"ONEPLUS A5000_7.1.1\"}"}
+INFO 2018-06-08 09:12:56,183 execute_fixed_interface.py execute_fixed_interface execute_interface 29: ####################################################
+INFO 2018-06-08 09:12:56,846 execute_fixed_interface.py execute_fixed_interface execute_interface 24: ####################################################
+INFO 2018-06-08 09:12:56,847 execute_fixed_interface.py execute_fixed_interface execute_interface 25: url_path:HTTPS://test02.2boss.cn/rabbit/v1/customer/house/search
+INFO 2018-06-08 09:12:56,847 execute_fixed_interface.py execute_fixed_interface execute_interface 26: method:POST
+INFO 2018-06-08 09:12:56,848 execute_fixed_interface.py execute_fixed_interface execute_interface 27: headers:
+INFO 2018-06-08 09:12:56,848 execute_fixed_interface.py execute_fixed_interface execute_interface 28: parameter:{"pageType":0,"pageSize":20,"targetId":0,"page":1,"lat":0.0,"type":3,"cityId":605,"lng":0.0,"keywords":"奉贤金汇"}
+INFO 2018-06-08 09:12:56,848 execute_fixed_interface.py execute_fixed_interface execute_interface 29: ####################################################
+INFO 2018-06-08 09:12:57,319 execute_fixed_interface.py execute_fixed_interface execute_interface 24: ####################################################
+INFO 2018-06-08 09:12:57,320 execute_fixed_interface.py execute_fixed_interface execute_interface 25: url_path:HTTPS://test02.2boss.cn/ubt/api/session
+INFO 2018-06-08 09:12:57,320 execute_fixed_interface.py execute_fixed_interface execute_interface 26: method:PUT
+INFO 2018-06-08 09:12:57,321 execute_fixed_interface.py execute_fixed_interface execute_interface 27: headers:
+INFO 2018-06-08 09:12:57,322 execute_fixed_interface.py execute_fixed_interface execute_interface 28: parameter:{"clientId":"933e801d-a350-4d0a-bae1-8bf06aef4gda","sessionId":"a6373ac4-34ea-4314-abab-29007260c6d1"}
+INFO 2018-06-08 09:12:57,322 execute_fixed_interface.py execute_fixed_interface execute_interface 29: ####################################################

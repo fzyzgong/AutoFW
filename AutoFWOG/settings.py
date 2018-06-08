@@ -138,7 +138,7 @@ LOGGING = {
         'request_handler': {
             'level':'DEBUG',
             'class':'logging.handlers.RotatingFileHandler',
-            'filename': '/home/fzyzgong/project/AutoFWOG/AutoFW/log/script.log',
+            'filename': os.path.join(BASE_DIR,'AutoFW/log/script.log'),
             'maxBytes': 1024*1024*5,
             'backupCount': 5,
             'formatter':'standard',
