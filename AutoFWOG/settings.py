@@ -26,7 +26,7 @@ SECRET_KEY = 'c5f3+by307s#lg&z-2&qae1ha_)zzo!!)yds20i=zefkgwy3ow'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,7 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'AutoFW'
+    'AutoFW',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -51,6 +51,17 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
 )
+
+
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "asgiref.inmemory.ChannelLayer",
+#         "CONFIG": {
+#             "hosts": [os.environ.get('REDIS_URL', 'redis://127.0.0.1:6379/2')],
+#         },
+#         "ROUTING": "AutoFWOG.routing.channel_routing",
+#     },
+# }
 
 ROOT_URLCONF = 'AutoFWOG.urls'
 
@@ -72,6 +83,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'AutoFWOG.wsgi.application'
 
+# AutoFWOG/settings.py
+# Channels
+#ASGI_APPLICATION = "AutoFWOG.routing.application"
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases

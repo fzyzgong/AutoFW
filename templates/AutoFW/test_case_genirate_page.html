@@ -111,16 +111,16 @@
         </table>
     </div>
         <br />
+    <span style="font-size: 10px">系统信息初始化作用:接口需要的参数包含了动态的参数(用户的token/user_id/customer_id/userCode[user_id的编码值]),
+            还有的接口需要的动态值不是服务器返回，需要从数据库中获取，例如：验证码。该功能支持自行扩展初始化内容来适应新的系统要求！</span>
         <hr />
-        <br />
-    <div style="padding-left: 300px">
+    <div>
+        <label>系统信息初始化</label><input type="text" id="system_info_initialization" placeholder='{"项目编号":"初始化参数"}' style="width: 400px;margin-bottom: 5px">
         <span style="padding-left: 100px"></span>
         <input type="button" value="执行接口" id="execute_interface_b" name="{{ username }}" onclick="execute_interface()">
-        <input style="float: right" type="button" value="生成测试脚本[老功能，不建议使用]" onclick="genritor_test_script()">
-
-
+        <!--<input style="float: right" type="button" value="生成测试脚本[老功能，不建议使用]" onclick="genritor_test_script()">-->
     </div>
-    <br />
+
     <div>
         <table id="case_list_t" cellspacing="0" cellpadding="0">
             <tr style="height: 40px;">
@@ -252,7 +252,7 @@
 
                 //判断是否有勾选脚本执行
                 if($(".checkbox_input_case_id:checked").length<1){
-                    alert("请选择要执行的脚本！");
+                    alert("请选择要执行的接口！");
                     return;
                 }
 
@@ -264,6 +264,12 @@
                     alert("未正确命名！");
                     return;
                 }
+
+                var system_info_initialization = $("#system_info_initialization").val();
+                if(system_info_initialization == ''){
+                        alert("初始化信息为空！");
+                        return;
+                    }
 
                 //判断全选是否勾选
                 var case_id_json = "";
@@ -278,11 +284,13 @@
                         case_id_json += $(this).val() + ','
                     })
                 }
+
+
                 if(case_id_json){
                     $.ajax({
                         url: "/AutoFW/chose_all_execute_test_interface",
                         type: "get",
-                        data: "case_id_json="+case_id_json+"&username="+username+"&result_name="+result_name,
+                        data: "case_id_json="+case_id_json+"&username="+username+"&result_name="+result_name+"&system_info_initialization="+system_info_initialization,
                         success: function (data) {
                             if(data.status == "success"){
                                 alert(data.msg);

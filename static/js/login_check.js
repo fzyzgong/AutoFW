@@ -44,6 +44,15 @@ $(function () {
 
     }
 
+    document.onkeydown = function (e) {
+            if (!e) e = window.event;
+            if ((e.keyCode || e.which) == 13) {
+                var obtnLogin = document.getElementById("submit_id");   //submit_btn为按钮ID
+                obtnLogin.focus();
+　　　　　　　　　 fun();//提交按钮触发的方法
+            }
+        }
+
 
     $('#form_input').submit(function () {
         check_username();

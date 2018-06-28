@@ -2286,3 +2286,97 @@ INFO 2018-06-08 09:12:57,320 execute_fixed_interface.py execute_fixed_interface 
 INFO 2018-06-08 09:12:57,321 execute_fixed_interface.py execute_fixed_interface execute_interface 27: headers:
 INFO 2018-06-08 09:12:57,322 execute_fixed_interface.py execute_fixed_interface execute_interface 28: parameter:{"clientId":"933e801d-a350-4d0a-bae1-8bf06aef4gda","sessionId":"a6373ac4-34ea-4314-abab-29007260c6d1"}
 INFO 2018-06-08 09:12:57,322 execute_fixed_interface.py execute_fixed_interface execute_interface 29: ####################################################
+INFO 2018-06-11 09:09:36,845 views.py views login_handle 60: [gonglp] 登录成功
+INFO 2018-06-11 09:10:46,699 views.py views login_handle 60: [gonglp] 登录成功
+INFO 2018-06-11 09:14:40,195 views.py views login_handle 60: [gonglp] 登录成功
+INFO 2018-06-11 09:15:05,584 views.py views login_handle 60: [gonglp] 登录成功
+INFO 2018-06-11 09:21:43,902 views.py views login_handle 63: 请输入正确的用户名和密码！
+INFO 2018-06-11 09:36:06,281 views.py views login_handle 60: [gonglp] 登录成功
+INFO 2018-06-11 09:36:10,865 views.py views project_manage 94: 进入项目中心-->项目管理页面
+INFO 2018-06-11 09:36:10,875 views.py views project_manage 94: 进入项目中心-->项目管理页面
+INFO 2018-06-11 09:36:11,178 views.py views Read_all_project 113: 查询所有项目
+INFO 2018-06-11 09:36:14,493 views.py views income_project 149: gonglp进入项目[20171020]
+INFO 2018-06-11 09:36:16,454 views.py views workon_tabs_api 393: gonglp进入接口管理页面 [20171020]
+INFO 2018-06-11 09:39:58,549 views.py views project_manage 94: 进入项目中心-->项目管理页面
+INFO 2018-06-11 09:39:58,700 views.py views Read_all_project 113: 查询所有项目
+INFO 2018-06-11 09:40:00,490 views.py views income_project 149: gonglp进入项目[20171020]
+INFO 2018-06-11 09:40:02,138 views.py views workon_tabs_api 393: gonglp进入接口管理页面 [20171020]
+INFO 2018-06-12 14:51:43,431 views.py views login_handle 60: [gonglp] 登录成功
+INFO 2018-06-12 14:55:08,421 views.py views login_handle 60: [gonglp] 登录成功
+INFO 2018-06-12 14:59:53,237 views.py views login_handle 60: [gonglp] 登录成功
+INFO 2018-06-12 15:10:21,440 views.py views login_handle 60: [gonglp] 登录成功
+INFO 2018-06-12 15:11:43,510 views.py views login_handle 61: [gonglp] 登录成功
+INFO 2018-06-12 15:13:45,648 views.py views login_handle 61: [gonglp] 登录成功
+INFO 2018-06-12 15:20:03,820 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-12 15:24:17,019 views.py views login_handle 65: 请输入正确的用户名和密码！
+INFO 2018-06-12 15:24:33,711 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-12 15:25:10,846 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-12 15:26:09,983 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-12 15:29:40,650 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-12 15:30:23,250 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-12 15:32:29,201 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-12 15:35:50,504 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-12 15:37:19,514 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-12 15:39:44,234 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-12 15:43:18,983 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-12 15:46:04,462 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-12 15:57:59,640 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-12 16:13:31,993 views.py views login_handle 65: 请输入正确的用户名和密码！
+INFO 2018-06-12 16:13:48,652 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-12 16:14:59,228 views.py views login_handle 65: 请输入正确的用户名和密码！
+INFO 2018-06-12 16:15:04,394 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-12 16:28:41,384 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-12 16:29:51,461 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-12 16:31:17,592 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-12 16:33:07,081 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-12 16:34:46,651 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-12 16:37:49,171 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-12 16:41:20,032 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-12 16:43:30,900 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-12 16:44:57,821 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-12 17:04:01,687 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-12 17:06:01,742 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-12 17:23:31,566 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-12 17:25:50,059 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-13 09:10:39,978 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-13 09:12:31,136 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-13 09:17:10,213 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-13 09:21:15,718 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-13 13:29:10,105 basehttp.py basehttp log_message 124: "GET /AutoFW/login/ HTTP/1.1" 200 1463
+INFO 2018-06-13 13:29:10,373 basehttp.py basehttp log_message 124: "GET /static/js/login_check.js HTTP/1.1" 200 1730
+INFO 2018-06-13 13:29:10,382 basehttp.py basehttp log_message 124: "GET /static/css/style.css HTTP/1.1" 200 1370
+INFO 2018-06-13 13:29:10,394 basehttp.py basehttp log_message 124: "GET /static/js/index.js HTTP/1.1" 200 399
+INFO 2018-06-13 13:29:10,425 basehttp.py basehttp log_message 124: "GET /static/js/jquery-1.12.4.min.js HTTP/1.1" 200 97163
+INFO 2018-06-13 13:29:12,455 basehttp.py basehttp log_message 124: "GET /AutoFW/login_check_name/?username=gonglp HTTP/1.1" 200 12
+INFO 2018-06-13 13:29:14,565 basehttp.py basehttp log_message 124: "POST /AutoFW/login_check_passwd/ HTTP/1.1" 200 12
+INFO 2018-06-13 13:29:14,655 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-13 13:29:14,686 basehttp.py basehttp log_message 124: "POST /AutoFW/login_handle/ HTTP/1.1" 200 16988
+INFO 2018-06-13 13:29:16,272 views.py views project_manage 96: 进入项目中心-->项目管理页面
+INFO 2018-06-13 13:29:16,282 views.py views project_manage 96: 进入项目中心-->项目管理页面
+INFO 2018-06-13 13:29:16,294 basehttp.py basehttp log_message 124: "GET /AutoFW/project_manage/gonglp HTTP/1.1" 200 4608
+INFO 2018-06-13 13:29:16,297 basehttp.py basehttp handle_error 78: - Broken pipe from ('192.168.36.1', 1282)
+
+INFO 2018-06-13 13:29:16,298 basehttp.py basehttp log_message 124: "GET /AutoFW/project_manage/gonglp HTTP/1.1" 200 4608
+INFO 2018-06-13 13:29:16,315 basehttp.py basehttp log_message 124: "GET /static/js/project_manage.js HTTP/1.1" 200 4579
+INFO 2018-06-13 13:29:16,402 basehttp.py basehttp log_message 124: "GET /static/jquery_easyui/themes/icons/ok.png HTTP/1.1" 200 883
+INFO 2018-06-13 13:29:16,403 basehttp.py basehttp log_message 124: "GET /static/jquery_easyui/themes/icons/cancel.png HTTP/1.1" 200 1133
+INFO 2018-06-13 13:29:16,403 basehttp.py basehttp log_message 124: "GET /static/jquery_easyui/themes/icons/edit_remove.png HTTP/1.1" 200 625
+INFO 2018-06-13 13:29:16,403 basehttp.py basehttp log_message 124: "GET /static/jquery_easyui/themes/icons/pencil.png HTTP/1.1" 200 713
+INFO 2018-06-13 13:29:16,406 basehttp.py basehttp log_message 124: "GET /static/jquery_easyui/themes/icons/edit_add.png HTTP/1.1" 200 1088
+INFO 2018-06-13 13:29:16,407 basehttp.py basehttp log_message 124: "GET /static/jquery_easyui/themes/default/images/combo_arrow.png HTTP/1.1" 200 117
+INFO 2018-06-13 13:29:16,420 basehttp.py basehttp log_message 124: "GET /static/jquery_easyui/themes/default/images/calendar_arrows.png HTTP/1.1" 200 173
+INFO 2018-06-13 13:29:16,424 basehttp.py basehttp log_message 124: "GET /static/jquery_easyui/themes/default/images/datebox_arrow.png HTTP/1.1" 200 626
+INFO 2018-06-13 13:29:16,440 basehttp.py basehttp log_message 124: "GET /static/jquery_easyui/themes/default/images/spinner_arrows.png HTTP/1.1" 200 149
+INFO 2018-06-13 13:29:16,471 basehttp.py basehttp log_message 124: "GET /static/jquery_easyui/themes/default/images/pagination_icons.png HTTP/1.1" 200 628
+INFO 2018-06-13 13:29:16,501 basehttp.py basehttp log_message 124: "GET /static/jquery_easyui/themes/default/images/loading.gif HTTP/1.1" 200 1737
+INFO 2018-06-13 13:29:16,504 views.py views Read_all_project 115: 查询所有项目
+INFO 2018-06-13 13:29:16,680 basehttp.py basehttp log_message 124: "POST /AutoFW/read/ HTTP/1.1" 200 869
+INFO 2018-06-13 13:29:19,663 basehttp.py basehttp log_message 124: "GET /AutoFW/display/ HTTP/1.1" 200 1022
+INFO 2018-06-13 13:29:19,669 basehttp.py basehttp log_message 124: "GET /AutoFW/display/ HTTP/1.1" 200 1022
+WARNING 2018-06-13 13:29:27,830 basehttp.py basehttp log_message 124: "GET /AutoFW/echo/ HTTP/1.1" 404 14309
+INFO 2018-06-27 17:08:36,370 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-27 17:10:19,917 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-27 17:12:33,239 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-27 17:24:24,749 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-28 16:26:54,612 views.py views login_handle 62: [gonglp] 登录成功
+INFO 2018-06-28 16:27:39,932 views.py views login_handle 62: [gonglp] 登录成功

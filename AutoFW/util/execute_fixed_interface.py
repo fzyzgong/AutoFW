@@ -15,10 +15,85 @@ from json_d import GetDictParam
 class Execute_Fixed_Interface:
 
     @staticmethod
-    def execute_interface(url,method,parameter_format,headers,parameter,expected,user_info):
+    def execute_interface(url,method,parameter_format,headers,parameter,expected,project_name,user_info):
 
         if '' != headers:
             headers = json.loads(headers)
+
+        if user_info:
+            #替换动态值， headers/parameter/url_path
+            if '兔博士经济版' == str(project_name):
+                userInfo = user_info["JJB_userInfo"]
+            elif '兔博士用户端' == str(project_name):
+                userInfo = user_info["YHB_userInfo"]
+            verify = userInfo["verify"] #验证码
+            user_id = userInfo["user_id"]
+            userCode = userInfo["userCode"]
+            customer_id = userInfo["customer_id"]
+            access_token = userInfo["token"]
+
+            #分表判断 headers/parameter/url_path中是否存在需要替换的变量 ${user_id} ${customer_id} ${access_token} ${userCode}
+            if '${userCode}' in url:
+                old_p = "${userCode}"
+                new_p = userCode
+                url = str(url).replace(old_p, new_p)
+
+            if '${user_id}' in url:
+                old_p = "${user_id}"
+                new_p = user_id
+                url = str(url).replace(old_p, new_p)
+
+            if '${customer_id}' in url:
+                old_p = "${customer_id}"
+                new_p = customer_id
+                url = str(url).replace(old_p, new_p)
+
+            if '${access_token}' in url:
+                old_p = "${access_token}"
+                new_p = access_token
+                url_path = str(url).replace(old_p, new_p)
+
+            if headers != '':
+                for h_key in headers.keys():
+                    if headers[h_key] == '${userCode}':
+                        headers[h_key] = userCode
+                    if headers[h_key] == '${user_id}':
+                        headers[h_key] = user_id
+                    if headers[h_key] == '${customer_id}':
+                        headers[h_key] = customer_id
+                    if headers[h_key] == '${access_token}':
+                        headers[h_key] = access_token
+
+
+            if parameter != '':
+                if isinstance(parameter,dict):
+                    for p_key in parameter.keys():
+                        if parameter[p_key] == '${userCode}':
+                            parameter[p_key] = userCode
+                        if parameter[p_key] == '${user_id}':
+                            parameter[p_key] = user_id
+                        if parameter[p_key] == '${customer_id}':
+                            parameter[p_key] = customer_id
+                        if parameter[p_key] == '${access_token}':
+                            parameter[p_key] = access_token
+                else:
+                    if '${userCode}' in parameter:
+                        old_p = '${userCode}'
+                        new_p = userCode
+                        parameter = str(parameter).replace(old_p,new_p)
+                    if '${user_id}' in parameter:
+                        old_p = '${user_id}'
+                        new_p = user_id
+                        parameter = str(parameter).replace(old_p,new_p)
+                    if '${customer_id}' in parameter:
+                        old_p = '${customer_id}'
+                        new_p = customer_id
+                        parameter = str(parameter).replace(old_p,new_p)
+                    if '${access_token}' in parameter:
+                        old_p = '${access_token}'
+                        new_p = access_token
+                        parameter = str(parameter).replace(old_p,new_p)
+
 
         Mylogging.interface("--------------------------------------------------------------------------")
         Mylogging.interface("####################################################")

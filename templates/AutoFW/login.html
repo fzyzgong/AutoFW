@@ -15,20 +15,20 @@
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:700,600' rel='stylesheet' type='text/css'>
 
 <form method="post" action="/AutoFW/login_handle/" onkeydown="if(event.keyCode==13){return false;}">
-<div class="box">
-<h1>Auto Test FrameWork</h1>
-{%csrf_token%}
-<input type="text" name="username" id="name_input" value="" class="email"  placeholder="请输入用户名" />
-<div class="user_error"></div>
-<input type="password" name="password" id="passwd_input" value="" class="email"  placeholder="请输入密码" />
-<div class="pwd_error"></div>
+    <div class="box">
+        <h1>Auto Test FrameWork</h1>
+        {%csrf_token%}
+        <input type="text" name="username" id="name_input" value="" class="email"  placeholder="请输入用户名" />
+        <div class="user_error"></div>
+            <input type="password" name="password" id="passwd_input" value="" class="email"  placeholder="请输入密码" />
+        <div class="pwd_error"></div>
 
 
-<div class="btn"><input type="submit" value="Sign In" class="input_submit"></div> <!-- End Btn -->
+        <div class="btn"><input type="submit" value="Sign In" id="submit_id" class="input_submit"></div> <!-- End Btn -->
 
-<a href="https://github.com/"><div id="btn2">Sign Up</div></a> <!-- End Btn2 -->
-  
-</div> <!-- End Box -->
+        <a href="#"><div id="btn2">Sign Up</div></a> <!-- End Btn2 -->
+
+    </div> <!-- End Box -->
   
 </form>
 

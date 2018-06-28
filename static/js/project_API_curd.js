@@ -23,17 +23,14 @@ function saveProjectAPI(username){
             if (result=="save"){
                $('#dlg').dialog('close');
                 $('#dg_case').datagrid('reload');
-            }else
-            if (result.errorMsg){
-                $.messager.show({
-                    title: 'Error',
-                    msg: result.errorMsg
-                });
+                alert("新增接口成功！");
+            }else if (result=="error"){
+                alert("新增接口失败,请检查数据！");
             }
-            else {
-                $('#dlg').dialog('close');        // close the dialog
-                $('#dg_case').datagrid('reload');    // reload the user data
-            }
+            // else {
+            //     $('#dlg').dialog('close');        // close the dialog
+            //     $('#dg_case').datagrid('reload');    // reload the user data
+            // }
         }
     });
 }
