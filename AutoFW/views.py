@@ -13,6 +13,7 @@ from .util.send_mail_batch_report import send_mail
 from .util.execute_interface import Execute_Interface
 from .util.execute_fixed_interface import Execute_Fixed_Interface
 from .util.login_get_userinfo import LoginGetUserInfo
+from .util.parse_har_file import Parse_har_file_to_request
 from models import *
 from django.db.models import Q
 import MySQLdb
@@ -1138,8 +1139,10 @@ def chose_all_execute_test_interface(request):
                     execute_script_log_dict = {"log_report_id_id":report_id,"log_api_name":interface,"log_execute_script":api_log,
                                                "bak1":"1","status":str(exe_status)}
                     Execute_Script_Log.objects.create(**execute_script_log_dict)
+                    Project_Case.objects.filter(case_id=interface).update(description=exe_status)
                 except:
                     print traceback.print_exc()
+                    Project_Case.objects.filter(case_id=interface).update(description="SKIP")
 
             dict_execute = {"report_id": report_id, "report_name": report_name, "API_total": str(API_total),
                             "pass_total": str(passCount), "fail_total": str(failCount), "skip_total": str(skipCount),
@@ -1609,11 +1612,85 @@ def execute_yongli_page(request,username):
 
 #修改用例页面跳转
 def yongli_update_page(request,username):
-    print ("yongli_genirate_page")
+    print("yongli_genirate_page")
     # 项目名称ValuesQuerySet
     project_qs = Project.objects.values("project_name")
     content = {"project_name_list":project_qs,"username":username}
     return render(request,"AutoFW/yongli_update_page.html",content)
+
+
+#har方式调用接口
+def har_file_page(request,username):
+    print("har_file_page")
+    content = {"username": username}
+    return render(request, "AutoFW/har_file_page.html",content)
+
+
+#查询har文件路径并展示
+def search_har_file(request):
+    print("search_har_file")
+    if request.method == "GET":
+        file_path = request.GET.get("file_path")
+        search_type = request.GET.get("search_type")#0只获取当前目录文件  1递归查询子目录文件
+        print(file_path)
+        print(search_type)
+
+        har_list = []
+
+        if search_type == '0':
+            file_list = os.listdir(file_path) #只获取当强目录下文件名
+            for f in file_list[:]:
+                if os.path.splitext(f)[1] != '.har':
+                    file_list.remove(f)
+
+            for f in file_list:
+                file_detail_dict = {}
+                file_detail_dict['file_n'] = f
+                file_detail_dict['file_p'] = os.path.join(file_path,f)
+                har_list.append(file_detail_dict)
+        else:
+            for root, dirs, files in os.walk(file_path):
+                for file in files:
+                    file_detail_dict = {}
+                    if os.path.splitext(file)[1] == '.har':
+                        file_detail_dict['file_n'] = file
+                        file_detail_dict['file_p'] = os.path.join(root, file)
+                        har_list.append(file_detail_dict)
+
+        print(har_list)
+
+        content = {"status":"success","har_list":har_list}
+        return JsonResponse(content)
+
+
+#调用执行har文件
+def execution_har_file(request):
+    print("execution_har_file")
+    if request.method == "GET":
+        username = request.GET.get("username")
+        har_path_json = request.GET.get("har_path_json")
+        result_name = request.GET.get("result_name")
+        system_info_initialization = request.GET.get("system_info_initialization")
+
+        #print(username,har_path_json,result_name,system_info_initialization)
+
+        har_path_json_list = str(har_path_json).split(',')
+        har_path_json_list.remove('')  # 移除最后一个空元素
+
+        user_info_dict = Parse_har_file_to_request.get_userinfo(system_info_initialization)
+
+        token = user_info_dict['accessToken']
+
+        for har_f in har_path_json_list:
+            response_text = Parse_har_file_to_request.parse_har(har_f,token)
+            print(response_text)
+
+
+        content = {"status":"success","msg":"调用成功"}
+        return JsonResponse(content)
+
+
+
 
 
 #根据project_case_id查询用例

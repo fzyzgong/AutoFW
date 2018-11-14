@@ -31,6 +31,7 @@ class Execute_Fixed_Interface:
             userCode = userInfo["userCode"]
             customer_id = userInfo["customer_id"]
             access_token = userInfo["token"]
+            clientId = userInfo["clientId"]
 
             #分表判断 headers/parameter/url_path中是否存在需要替换的变量 ${user_id} ${customer_id} ${access_token} ${userCode}
             if '${userCode}' in url:
@@ -53,6 +54,11 @@ class Execute_Fixed_Interface:
                 new_p = access_token
                 url_path = str(url).replace(old_p, new_p)
 
+            if '${clientId}' in url:
+                old_p = "${clientId}"
+                new_p = clientId
+                url_path = str(url).replace(old_p, new_p)
+
             if headers != '':
                 for h_key in headers.keys():
                     if headers[h_key] == '${userCode}':
@@ -63,6 +69,8 @@ class Execute_Fixed_Interface:
                         headers[h_key] = customer_id
                     if headers[h_key] == '${access_token}':
                         headers[h_key] = access_token
+                    if headers[h_key] == '${clientId}':
+                        headers[h_key] = clientId
 
 
             if parameter != '':
@@ -76,6 +84,8 @@ class Execute_Fixed_Interface:
                             parameter[p_key] = customer_id
                         if parameter[p_key] == '${access_token}':
                             parameter[p_key] = access_token
+                        if parameter[p_key] == '${clientId}':
+                            parameter[p_key] = clientId
                 else:
                     if '${userCode}' in parameter:
                         old_p = '${userCode}'
@@ -92,6 +102,10 @@ class Execute_Fixed_Interface:
                     if '${access_token}' in parameter:
                         old_p = '${access_token}'
                         new_p = access_token
+                        parameter = str(parameter).replace(old_p,new_p)
+                    if '${clientId}' in parameter:
+                        old_p = '${clientId}'
+                        new_p = clientId
                         parameter = str(parameter).replace(old_p,new_p)
 
 

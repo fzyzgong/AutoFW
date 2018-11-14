@@ -70,6 +70,10 @@ urlpatterns = [
     url(r'^execute_yongli_page/(.*)',views.execute_yongli_page),
     url(r'^yongli_update_page/(.*)', views.yongli_update_page),
 
+    url(r'^har_file_page/(.*)', views.har_file_page),
+    url(r'^search_har_file/$', views.search_har_file),
+    url(r'^execution_har_file/$', views.execution_har_file),
+
     url(r'^search_interface/$', views.search_interface),
     url(r'^add_script_case/$', views.add_script_case),
     url(r'^search_exe_case/$', views.search_exe_case),
