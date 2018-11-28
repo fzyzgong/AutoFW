@@ -10,11 +10,11 @@ from requests.exceptions import ReadTimeout
 
 class LoginGetUserInfo:
 
-    androidId = '4416fbcb-1ee4-3517-85f2-238389ff16d9'
-    imei = '862484032325188'
-
     @staticmethod
     def login_get_userinfo(**kwargs):
+
+        androidId = '4416fbcb-1ee4-3517-85f2-238389ff16d9'
+        imei = '862484032325188'
         #http://test.2boss.cn/superior/v1/sms/mobileVerify JJB
         #{"type":"10","mobile":"17620367177"}
         #https://test02.2boss.cn/api/v1/sms/mobileVerifyCode2  YHB
@@ -23,6 +23,7 @@ class LoginGetUserInfo:
         userinfo_dict = {}
 
         system_info_initialization_k_list = kwargs.keys()
+        print(system_info_initialization_k_list)
         if 'TBS_USER_20180424' in system_info_initialization_k_list:
 
             #--------------------------------新增clientId-------------------------------------------
@@ -39,9 +40,11 @@ class LoginGetUserInfo:
                 4：绑定当前登录用户
                 POST https://test02.2boss.cn/api/v1/user/current/bindoldcustomer
             '''
-            clientId = LoginGetUserInfo.GetClientId()
-            customerId = LoginGetUserInfo.GetCustomerId()
-            if LoginGetUserInfo.bindCustomerId():
+            clientId = LoginGetUserInfo.getClientId(androidId=androidId, imei=imei)
+            print(clientId)
+            customerId = LoginGetUserInfo.getCustomerId(androidId=androidId, imei=imei)
+            print(customerId)
+            if LoginGetUserInfo.bindCustomerId(androidId=androidId, customerId=customerId):
                 pass
             else:
                 userinfo_dict = 'init_failed'
@@ -63,14 +66,17 @@ class LoginGetUserInfo:
             YHB_userinfo_dict = {}
             if GetDictParam.get_value(YHB_DICT, "success") == "true":  # 判断request的返回值是否正常
                 # print " YHB pass"
-                result2 = handle.execute(
-                    "select c.verify_code,a.userid,a.user_id from customer_info a,users_info b,user_verifycode c where a.user_id=b.user_id and b.mobile=c.uri and b.mobile='" + str(
-                        kwargs['TBS_USER_20180424']) + "' ORDER BY c.create_time desc LIMIT 1;")
+                result2 = handle.execute("select a.verify_code,b.user_id from user_verifycode a,users_info b where a.uri=b.mobile and b.mobile='" + str(
+                        kwargs['TBS_USER_20180424']) + "' ORDER BY a.create_time desc LIMIT 1;")
+                # result2 = handle.execute(
+                #     "select c.verify_code,a.userid,a.user_id from customer_info a,users_info b,user_verifycode c where a.user_id=b.user_id and b.mobile=c.uri and b.mobile='" + str(
+                #         kwargs['TBS_USER_20180424']) + "' ORDER BY c.create_time desc LIMIT 1;")
                 result2 = handle.fetchone()  # 获取验证码元组
+                #print(result2)
                 verifyN = str(result2[0])
-                user_id = str(result2[2])
+                user_id = str(result2[1])
                 userCode = LoginGetUserInfo.encodeUserId(int(user_id))
-                customer_id = str(result2[1])
+                customer_id = str(customerId)
                 handle.close()
                 # print verifyN
                 # YHB_login_url = "https://test02.2boss.cn/api/v1/user/login"
@@ -82,7 +88,7 @@ class LoginGetUserInfo:
                 # YHB_l_dict = YHB_l.json()
                 # # print YHB_l_dict
                 # token = str(GetDictParam.get_value(YHB_l_dict, "accessToken"))  # 获取token
-                token = LoginGetUserInfo.login(mobile=kwargs['TBS_USER_20180424'], veriflyCode=verifyN)
+                token = LoginGetUserInfo.login(mobile=kwargs['TBS_USER_20180424'], veriflyCode=verifyN,customerId=customer_id, clientId=clientId)
                 #-----------------新增clientId  bindUserId-----------------------------
 
                 LoginGetUserInfo.bindUserId(token=token, clientId=clientId, customerId=customer_id)
@@ -195,15 +201,15 @@ class LoginGetUserInfo:
 
 
     @staticmethod
-    def GetClientId():
+    def getClientId(imei, androidId):
         '''
         生成client_id
         :return: ClientId
         '''
         client_URL = 'https://test02.2boss.cn/ubt/api/client'
-        client_param = {"market": "tuboshi", "appName": "兔博士", "imei": LoginGetUserInfo.imei, "brand": "Meizu", "model": "M5",
+        client_param = {"market": "tuboshi", "appName": "兔博士", "imei": imei, "brand": "Meizu", "model": "M5",
                         "userAgent": "Mozilla/5.0 (Linux; Android 6.0; M5 Build/MRA58K; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/44.0.2403.147 Mobile Safari/537.36",
-                        "clientType": "Android", "androidId": LoginGetUserInfo.androidId}
+                        "clientType": "Android", "androidId": androidId}
 
         YHB_client_r = requests.post(url=client_URL, json=client_param, timeout=8)  # 发送验证码请求
         time.sleep(1)
@@ -215,14 +221,14 @@ class LoginGetUserInfo:
 
 
     @staticmethod
-    def GetCustomerId():
+    def getCustomerId(imei, androidId):
         '''
         生成customerId
         :return: customerId
         '''
         url = "https://test02.2boss.cn/uc/other-api/customer-info/id"
 
-        payload = {"token": LoginGetUserInfo.androidId, "imei": LoginGetUserInfo.imei, "osType": 0, "machinetype": "M5"}
+        payload = {"token": androidId, "imei": imei, "osType": 0, "machinetype": "M5"}
 
         response = requests.request("POST", url, json=payload, timeout=8)
         time.sleep(1)
@@ -233,13 +239,13 @@ class LoginGetUserInfo:
 
 
     @staticmethod
-    def bindCustomerId():
+    def bindCustomerId(androidId, customerId):
         '''
             绑定customerId结果
         '''
         url = "https://test02.2boss.cn/rabbit/v1/user/bindUserInfo"
         #clientId = testClientId()
-        customerId = LoginGetUserInfo.GetCustomerId()
+        #customerId = LoginGetUserInfo.getCustomerId()
         # 需要重新建立链接 否则会脏读数据
         conn = MySQLdb.connect(host='10.236.0.71', port=3306, db='sHouseApp_pre', user='gongliping',
                                passwd='rd@HSf12', charset='utf8')
@@ -249,7 +255,7 @@ class LoginGetUserInfo:
         cid_tuple = handle.fetchone()  # 获取验证码元组
         cid = str(cid_tuple[0])
 
-        payload = "customerId="+str(customerId)+"&cid="+cid+"&token="+str(LoginGetUserInfo.androidId)
+        payload = "customerId="+str(customerId)+"&cid="+cid+"&token="+str(androidId)
         headers = {
             'content-type': "application/x-www-form-urlencoded",
         }
@@ -289,7 +295,7 @@ class LoginGetUserInfo:
 
 
     @staticmethod
-    def login(mobile, veriflyCode):
+    def login(mobile, veriflyCode, customerId, clientId):
         '''
         获取用户token
         :param mobile: 手机号码
@@ -299,8 +305,12 @@ class LoginGetUserInfo:
         url = "https://test02.2boss.cn/rabbit/v1/app/login/login-by-verifycode"
 
         payload = {"mobile": mobile, "code": veriflyCode}
-
-        response = requests.request("POST", url, json=payload, timeout=8)
+        headers = {
+            'content-type': "application/json",
+            'customerid': customerId,
+            'clientid': clientId,
+        }
+        response = requests.request("POST", url, json=payload, headers=headers, timeout=8)
 
         accessTokenDict = json.loads(response.content)
 
@@ -309,4 +319,6 @@ class LoginGetUserInfo:
         return token
 
 if __name__ == "__main__":
-    LoginGetUserInfo.login_get_userinfo(YHB_mobile=17607081946,JJB_mobile=17620367177)
+    user_dicts = {"TBS_USER_20180424":"17607081946"}
+    # login = LoginGetUserInfo()#,JJB_mobile=17620367177
+    LoginGetUserInfo.login_get_userinfo(**user_dicts)
